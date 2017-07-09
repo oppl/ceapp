@@ -1,0 +1,35 @@
+
+<div *ngIf="curriculum">
+    <h2><span jhiTranslate="ceappApp.curriculum.detail.title">Curriculum</span> {{curriculum.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="ceappApp.curriculum.curId">Cur Id</span></dt>
+        <dd>
+            <span>{{curriculum.curId}}</span>
+        </dd>
+        <dt><span jhiTranslate="ceappApp.curriculum.curName">Cur Name</span></dt>
+        <dd>
+            <span>{{curriculum.curName}}</span>
+        </dd>
+        <dt><span jhiTranslate="ceappApp.curriculum.institute">Institute</span></dt>
+        <dd>
+            <span *ngFor="let institute of curriculum.institutes; let last = last">
+                <a [routerLink]="['/institute', institute?.id ]">{{institute.instituteName}}</a>{{last ? '' : ', '}}
+            </span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'curriculum/'+ curriculum.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

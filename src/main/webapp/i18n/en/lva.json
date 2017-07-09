@@ -1,0 +1,29 @@
+{
+    "ceappApp": {
+        "lva" : {
+            "home": {
+                "title": "Lvas",
+                "createLabel": "Create a new Lva",
+                "createOrEditLabel": "Create or edit a Lva"
+            },
+            "created": "A new Lva is created with identifier {{ param }}",
+            "updated": "A Lva is updated with identifier {{ param }}",
+            "deleted": "A Lva is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Lva {{ id }}?"
+            },
+            "detail": {
+                "title": "Lva"
+            },
+            "lvaNr": "Lva Nr",
+            "lvaType": "Lva Type",
+            "year": "Year",
+            "semester": "Semester",
+            "appointment": "Appointment",
+            "csl1": "Csl 1",
+            "csl2": "Csl 2",
+            "subject": "Subject",
+            "curriculumsubject": "Curriculumsubject"
+        }
+    }
+}

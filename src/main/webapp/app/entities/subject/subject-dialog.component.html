@@ -1,0 +1,105 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="mySubjectLabel" jhiTranslate="ceappApp.subject.home.createOrEditLabel">Create or edit a Subject</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!subject.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="subject.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="ceappApp.subject.subjectName" for="field_subjectName">Subject Name</label>
+            <input type="text" class="form-control" name="subjectName" id="field_subjectName"
+                [(ngModel)]="subject.subjectName" required />
+            <div [hidden]="!(editForm.controls.subjectName?.dirty && editForm.controls.subjectName?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.subjectName?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="ceappApp.subject.subjectType" for="field_subjectType">Subject Type</label>
+            <select class="form-control" name="subjectType" [(ngModel)]="subject.subjectType" id="field_subjectType"  required>
+                <option value="AG" jhiTranslate="ceappApp.SubjectType.AG">AG</option>
+                <option value="DR" jhiTranslate="ceappApp.SubjectType.DR">DR</option>
+                <option value="DS" jhiTranslate="ceappApp.SubjectType.DS">DS</option>
+                <option value="EX" jhiTranslate="ceappApp.SubjectType.EX">EX</option>
+                <option value="FP" jhiTranslate="ceappApp.SubjectType.FP">FP</option>
+                <option value="FS" jhiTranslate="ceappApp.SubjectType.FS">FS</option>
+                <option value="IK" jhiTranslate="ceappApp.SubjectType.IK">IK</option>
+                <option value="IL" jhiTranslate="ceappApp.SubjectType.IL">IL</option>
+                <option value="KK" jhiTranslate="ceappApp.SubjectType.KK">KK</option>
+                <option value="KL" jhiTranslate="ceappApp.SubjectType.KL">KL</option>
+                <option value="KO" jhiTranslate="ceappApp.SubjectType.KO">KO</option>
+                <option value="KS" jhiTranslate="ceappApp.SubjectType.KS">KS</option>
+                <option value="KT" jhiTranslate="ceappApp.SubjectType.KT">KT</option>
+                <option value="KV" jhiTranslate="ceappApp.SubjectType.KV">KV</option>
+                <option value="MO" jhiTranslate="ceappApp.SubjectType.MO">MO</option>
+                <option value="OL" jhiTranslate="ceappApp.SubjectType.OL">OL</option>
+                <option value="PE" jhiTranslate="ceappApp.SubjectType.PE">PE</option>
+                <option value="PJ" jhiTranslate="ceappApp.SubjectType.PJ">PJ</option>
+                <option value="PL" jhiTranslate="ceappApp.SubjectType.PL">PL</option>
+                <option value="PR" jhiTranslate="ceappApp.SubjectType.PR">PR</option>
+                <option value="PS" jhiTranslate="ceappApp.SubjectType.PS">PS</option>
+                <option value="PV" jhiTranslate="ceappApp.SubjectType.PV">PV</option>
+                <option value="PX" jhiTranslate="ceappApp.SubjectType.PX">PX</option>
+                <option value="RE" jhiTranslate="ceappApp.SubjectType.RE">RE</option>
+                <option value="SE" jhiTranslate="ceappApp.SubjectType.SE">SE</option>
+                <option value="SP" jhiTranslate="ceappApp.SubjectType.SP">SP</option>
+                <option value="SU" jhiTranslate="ceappApp.SubjectType.SU">SU</option>
+                <option value="SV" jhiTranslate="ceappApp.SubjectType.SV">SV</option>
+                <option value="UE" jhiTranslate="ceappApp.SubjectType.UE">UE</option>
+                <option value="VA" jhiTranslate="ceappApp.SubjectType.VA">VA</option>
+                <option value="VK" jhiTranslate="ceappApp.SubjectType.VK">VK</option>
+                <option value="VO" jhiTranslate="ceappApp.SubjectType.VO">VO</option>
+                <option value="VU" jhiTranslate="ceappApp.SubjectType.VU">VU</option>
+                <option value="ZU" jhiTranslate="ceappApp.SubjectType.ZU">ZU</option>
+                <option value="EI" jhiTranslate="ceappApp.SubjectType.EI">EI</option>
+                <option value="ET" jhiTranslate="ceappApp.SubjectType.ET">ET</option>
+                <option value="DK" jhiTranslate="ceappApp.SubjectType.DK">DK</option>
+                <option value="PU" jhiTranslate="ceappApp.SubjectType.PU">PU</option>
+                <option value="IP" jhiTranslate="ceappApp.SubjectType.IP">IP</option>
+                <option value="VL" jhiTranslate="ceappApp.SubjectType.VL">VL</option>
+                <option value="SK" jhiTranslate="ceappApp.SubjectType.SK">SK</option>
+                <option value="KH" jhiTranslate="ceappApp.SubjectType.KH">KH</option>
+                <option value="DW" jhiTranslate="ceappApp.SubjectType.DW">DW</option>
+                <option value="DP" jhiTranslate="ceappApp.SubjectType.DP">DP</option>
+                <option value="GK" jhiTranslate="ceappApp.SubjectType.GK">GK</option>
+                <option value="FA" jhiTranslate="ceappApp.SubjectType.FA">FA</option>
+                <option value="IU" jhiTranslate="ceappApp.SubjectType.IU">IU</option>
+                <option value="KU" jhiTranslate="ceappApp.SubjectType.KU">KU</option>
+                <option value="US" jhiTranslate="ceappApp.SubjectType.US">US</option>
+                <option value="KE" jhiTranslate="ceappApp.SubjectType.KE">KE</option>
+                <option value="WA" jhiTranslate="ceappApp.SubjectType.WA">WA</option>
+                <option value="EU" jhiTranslate="ceappApp.SubjectType.EU">EU</option>
+                <option value="RU" jhiTranslate="ceappApp.SubjectType.RU">RU</option>
+                <option value="EB" jhiTranslate="ceappApp.SubjectType.EB">EB</option>
+                <option value="MU" jhiTranslate="ceappApp.SubjectType.MU">MU</option>
+                <option value="DV" jhiTranslate="ceappApp.SubjectType.DV">DV</option>
+                <option value="LU" jhiTranslate="ceappApp.SubjectType.LU">LU</option>
+                <option value="KG" jhiTranslate="ceappApp.SubjectType.KG">KG</option>
+            </select>
+            <div [hidden]="!(editForm.controls.subjectType?.dirty && editForm.controls.subjectType?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.subjectType?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

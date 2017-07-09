@@ -1,0 +1,43 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "lva",
+            "otherEntityName": "lva",
+            "otherEntityField": "lvaNr"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "startDateTime",
+            "fieldType": "ZonedDateTime",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "endDateTime",
+            "fieldType": "ZonedDateTime",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "isExam",
+            "fieldType": "Boolean",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "room",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20170709150643",
+    "entityTableName": "appointment",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceClass"
+}

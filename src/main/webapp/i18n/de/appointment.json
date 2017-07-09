@@ -1,0 +1,25 @@
+{
+    "ceappApp": {
+        "appointment" : {
+            "home": {
+                "title": "Appointments",
+                "createLabel": "Appointment erstellen",
+                "createOrEditLabel": "Appointment erstellen oder bearbeiten"
+            },
+            "created": "Appointment erstellt mit ID {{ param }}",
+            "updated": "Appointment aktualisiert mit ID {{ param }}",
+            "deleted": "Appointment gelöscht mit ID {{ param }}",
+            "delete": {
+                "question": "Soll Appointment {{ id }} wirklich dauerhaft gelöscht werden?"
+            },
+            "detail": {
+                "title": "Appointment"
+            },
+            "startDateTime": "Start Date Time",
+            "endDateTime": "End Date Time",
+            "isExam": "Is Exam",
+            "room": "Room",
+            "lva": "Lva"
+        }
+    }
+}

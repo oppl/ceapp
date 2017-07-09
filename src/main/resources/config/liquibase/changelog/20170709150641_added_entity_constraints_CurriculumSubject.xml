@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity CurriculumSubject.
+    -->
+    <changeSet id="20170709150641-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="curriculum_subjects_id"
+                                 baseTableName="curriculum_subject_lva"
+                                 constraintName="fk_curriculum_subject_lva_curriculum_subjects_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="curriculum_subject"/>
+        <addForeignKeyConstraint baseColumnNames="lvas_id"
+                                 baseTableName="curriculum_subject_lva"
+                                 constraintName="fk_curriculum_subject_lva_lvas_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="lva"/>
+        
+        <addForeignKeyConstraint baseColumnNames="curriculum_id"
+                                 baseTableName="curriculum_subject"
+                                 constraintName="fk_curriculum_subject_curriculum_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="curriculum"/>
+
+        <addForeignKeyConstraint baseColumnNames="subject_id"
+                                 baseTableName="curriculum_subject"
+                                 constraintName="fk_curriculum_subject_subject_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="subject"/>
+
+    </changeSet>
+</databaseChangeLog>

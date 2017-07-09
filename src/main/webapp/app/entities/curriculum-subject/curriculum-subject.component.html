@@ -1,0 +1,76 @@
+<div>
+    <h2>
+        <span jhiTranslate="ceappApp.curriculumSubject.home.title">Curriculum Subjects</span>
+        <button class="btn btn-primary float-right create-curriculum-subject" [routerLink]="['/', { outlets: { popup: ['curriculum-subject-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="ceappApp.curriculumSubject.home.createLabel">
+            Create new Curriculum Subject
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="curriculumSubjects">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="ceappApp.curriculumSubject.year">Year</span></th>
+            <th><span jhiTranslate="ceappApp.curriculumSubject.semester">Semester</span></th>
+            <th><span jhiTranslate="ceappApp.curriculumSubject.lva">Lva</span></th>
+            <th><span jhiTranslate="ceappApp.curriculumSubject.curriculum">Curriculum</span></th>
+            <th><span jhiTranslate="ceappApp.curriculumSubject.subject">Subject</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let curriculumSubject of curriculumSubjects ;trackBy: trackId">
+                <td><a [routerLink]="['../curriculum-subject', curriculumSubject.id ]">{{curriculumSubject.id}}</a></td>
+                <td>{{curriculumSubject.year}}</td>
+                <td jhiTranslate="{{'ceappApp.Semester.' + curriculumSubject.semester}}">{{curriculumSubject.semester}}</td>
+                <td>
+                    <span *ngFor="let lva of curriculumSubject.lvas; let last = last">
+                            <a class="form-control-static" [routerLink]="['../lva', lva?.id ]">{{lva.lvaNr}}</a>{{last ? '' : ', '}}
+                        </span>
+                </td>
+                <td>
+                    <div *ngIf="curriculumSubject.curriculumId">
+                        <a [routerLink]="['../curriculum', curriculumSubject.curriculumId  ]" >{{curriculumSubject.curriculumCurName}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="curriculumSubject.subjectId">
+                        <a [routerLink]="['../subject', curriculumSubject.subjectId  ]" >{{curriculumSubject.subjectSubjectName}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../curriculum-subject', curriculumSubject.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'curriculum-subject/'+ curriculumSubject.id + '/edit'} }]"
+                                replaceUrl="true"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'curriculum-subject/'+ curriculumSubject.id + '/delete'} }]"
+                                replaceUrl="true"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

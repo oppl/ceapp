@@ -1,0 +1,58 @@
+<div>
+    <h2>
+        <span jhiTranslate="ceappApp.subject.home.title">Subjects</span>
+        <button class="btn btn-primary float-right create-subject" [routerLink]="['/', { outlets: { popup: ['subject-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="ceappApp.subject.home.createLabel">
+            Create new Subject
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="subjects">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="ceappApp.subject.subjectName">Subject Name</span></th>
+            <th><span jhiTranslate="ceappApp.subject.subjectType">Subject Type</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let subject of subjects ;trackBy: trackId">
+                <td><a [routerLink]="['../subject', subject.id ]">{{subject.id}}</a></td>
+                <td>{{subject.subjectName}}</td>
+                <td jhiTranslate="{{'ceappApp.SubjectType.' + subject.subjectType}}">{{subject.subjectType}}</td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../subject', subject.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'subject/'+ subject.id + '/edit'} }]"
+                                replaceUrl="true"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'subject/'+ subject.id + '/delete'} }]"
+                                replaceUrl="true"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

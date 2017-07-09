@@ -1,0 +1,23 @@
+{
+    "ceappApp": {
+        "institute" : {
+            "home": {
+                "title": "Institutes",
+                "createLabel": "Institute erstellen",
+                "createOrEditLabel": "Institute erstellen oder bearbeiten"
+            },
+            "created": "Institute erstellt mit ID {{ param }}",
+            "updated": "Institute aktualisiert mit ID {{ param }}",
+            "deleted": "Institute gelöscht mit ID {{ param }}",
+            "delete": {
+                "question": "Soll Institute {{ id }} wirklich dauerhaft gelöscht werden?"
+            },
+            "detail": {
+                "title": "Institute"
+            },
+            "instituteId": "Institute Id",
+            "instituteName": "Institute Name",
+            "curriculum": "Curriculum"
+        }
+    }
+}

@@ -1,0 +1,47 @@
+
+<div *ngIf="curriculumSubject">
+    <h2><span jhiTranslate="ceappApp.curriculumSubject.detail.title">Curriculum Subject</span> {{curriculumSubject.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="ceappApp.curriculumSubject.year">Year</span></dt>
+        <dd>
+            <span>{{curriculumSubject.year}}</span>
+        </dd>
+        <dt><span jhiTranslate="ceappApp.curriculumSubject.semester">Semester</span></dt>
+        <dd>
+            <span jhiTranslate="{{'ceappApp.Semester.' + curriculumSubject.semester}}">{{curriculumSubject.semester}}</span>
+        </dd>
+        <dt><span jhiTranslate="ceappApp.curriculumSubject.lva">Lva</span></dt>
+        <dd>
+            <span *ngFor="let lva of curriculumSubject.lvas; let last = last">
+                <a [routerLink]="['/lva', lva?.id ]">{{lva.lvaNr}}</a>{{last ? '' : ', '}}
+            </span>
+        </dd>
+        <dt><span jhiTranslate="ceappApp.curriculumSubject.curriculum">Curriculum</span></dt>
+        <dd>
+            <div *ngIf="curriculumSubject.curriculumId">
+                <a [routerLink]="['/curriculum', curriculumSubject.curriculumId]">{{curriculumSubject.curriculumCurName}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="ceappApp.curriculumSubject.subject">Subject</span></dt>
+        <dd>
+            <div *ngIf="curriculumSubject.subjectId">
+                <a [routerLink]="['/subject', curriculumSubject.subjectId]">{{curriculumSubject.subjectSubjectName}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'curriculum-subject/'+ curriculumSubject.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

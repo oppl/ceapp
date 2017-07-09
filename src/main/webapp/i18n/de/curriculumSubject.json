@@ -1,0 +1,27 @@
+{
+    "ceappApp": {
+        "curriculumSubject" : {
+            "home": {
+                "title": "Curriculum Subjects",
+                "createLabel": "Curriculum Subject erstellen",
+                "createOrEditLabel": "Curriculum Subject erstellen oder bearbeiten"
+            },
+            "created": "Curriculum Subject erstellt mit ID {{ param }}",
+            "updated": "Curriculum Subject aktualisiert mit ID {{ param }}",
+            "deleted": "Curriculum Subject gelöscht mit ID {{ param }}",
+            "delete": {
+                "question": "Soll Curriculum Subject {{ id }} wirklich dauerhaft gelöscht werden?"
+            },
+            "detail": {
+                "title": "Curriculum Subject"
+            },
+            "year": "Year",
+            "semester": "Semester",
+            "collCSSource": "Coll CS Source",
+            "collCSTarget": "Coll CS Target",
+            "lva": "Lva",
+            "curriculum": "Curriculum",
+            "subject": "Subject"
+        }
+    }
+}

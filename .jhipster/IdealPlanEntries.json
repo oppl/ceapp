@@ -1,0 +1,38 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "subject",
+            "otherEntityName": "subject",
+            "otherEntityField": "subjectName"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "idealplan",
+            "otherEntityName": "idealPlan",
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "winterSemesterDefault",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "summerSemesterDefault",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20170709150640",
+    "entityTableName": "ideal_plan_entries",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceClass"
+}

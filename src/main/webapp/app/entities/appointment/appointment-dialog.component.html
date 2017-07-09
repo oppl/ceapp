@@ -1,0 +1,82 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myAppointmentLabel" jhiTranslate="ceappApp.appointment.home.createOrEditLabel">Create or edit a Appointment</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!appointment.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="appointment.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="ceappApp.appointment.startDateTime" for="field_startDateTime">Start Date Time</label>
+            <div class="d-flex">
+                <input id="field_startDateTime" type="datetime-local" class="form-control" name="startDateTime" [(ngModel)]="appointment.startDateTime"
+                required  />
+            </div>
+            <div [hidden]="!(editForm.controls.startDateTime?.dirty && editForm.controls.startDateTime?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.startDateTime?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.startDateTime?.errors?.ZonedDateTimelocal" jhiTranslate="entity.validation.ZonedDateTimelocal">
+                    This field should be a date and time.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="ceappApp.appointment.endDateTime" for="field_endDateTime">End Date Time</label>
+            <div class="d-flex">
+                <input id="field_endDateTime" type="datetime-local" class="form-control" name="endDateTime" [(ngModel)]="appointment.endDateTime"
+                required  />
+            </div>
+            <div [hidden]="!(editForm.controls.endDateTime?.dirty && editForm.controls.endDateTime?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.endDateTime?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.endDateTime?.errors?.ZonedDateTimelocal" jhiTranslate="entity.validation.ZonedDateTimelocal">
+                    This field should be a date and time.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="ceappApp.appointment.isExam" for="field_isExam">Is Exam</label>
+            <input type="checkbox" class="form-control" name="isExam" id="field_isExam"
+                [(ngModel)]="appointment.isExam"  />
+            <div [hidden]="!(editForm.controls.isExam?.dirty && editForm.controls.isExam?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.isExam?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="ceappApp.appointment.room" for="field_room">Room</label>
+            <input type="text" class="form-control" name="room" id="field_room"
+                [(ngModel)]="appointment.room"  />
+        </div>
+
+        <div class="form-group">
+            <label jhiTranslate="ceappApp.appointment.lva" for="field_lva">Lva</label>
+            <select class="form-control" id="field_lva" name="lva" [(ngModel)]="appointment.lvaId" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="lvaOption.id" *ngFor="let lvaOption of lvas; trackBy: trackLvaById">{{lvaOption.lvaNr}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

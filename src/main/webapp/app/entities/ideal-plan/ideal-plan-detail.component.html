@@ -1,0 +1,35 @@
+
+<div *ngIf="idealPlan">
+    <h2><span jhiTranslate="ceappApp.idealPlan.detail.title">Ideal Plan</span> {{idealPlan.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="ceappApp.idealPlan.year">Year</span></dt>
+        <dd>
+            <span>{{idealPlan.year}}</span>
+        </dd>
+        <dt><span jhiTranslate="ceappApp.idealPlan.semester">Semester</span></dt>
+        <dd>
+            <span jhiTranslate="{{'ceappApp.Semester.' + idealPlan.semester}}">{{idealPlan.semester}}</span>
+        </dd>
+        <dt><span jhiTranslate="ceappApp.idealPlan.curriculum">Curriculum</span></dt>
+        <dd>
+            <div *ngIf="idealPlan.curriculumId">
+                <a [routerLink]="['/curriculum', idealPlan.curriculumId]">{{idealPlan.curriculumCurName}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'ideal-plan/'+ idealPlan.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

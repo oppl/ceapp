@@ -1,0 +1,24 @@
+{
+    "ceappApp": {
+        "idealPlanEntries" : {
+            "home": {
+                "title": "Ideal Plan Entries",
+                "createLabel": "Ideal Plan Entries erstellen",
+                "createOrEditLabel": "Ideal Plan Entries erstellen oder bearbeiten"
+            },
+            "created": "Ideal Plan Entries erstellt mit ID {{ param }}",
+            "updated": "Ideal Plan Entries aktualisiert mit ID {{ param }}",
+            "deleted": "Ideal Plan Entries gelöscht mit ID {{ param }}",
+            "delete": {
+                "question": "Soll Ideal Plan Entries {{ id }} wirklich dauerhaft gelöscht werden?"
+            },
+            "detail": {
+                "title": "Ideal Plan Entries"
+            },
+            "winterSemesterDefault": "Winter Semester Default",
+            "summerSemesterDefault": "Summer Semester Default",
+            "subject": "Subject",
+            "idealplan": "Idealplan"
+        }
+    }
+}

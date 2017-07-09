@@ -1,0 +1,25 @@
+{
+    "ceappApp": {
+        "collisionSummaryCS" : {
+            "home": {
+                "title": "Collision Summary CS",
+                "createLabel": "Collision Summary CS erstellen",
+                "createOrEditLabel": "Collision Summary CS erstellen oder bearbeiten"
+            },
+            "created": "Collision Summary CS erstellt mit ID {{ param }}",
+            "updated": "Collision Summary CS aktualisiert mit ID {{ param }}",
+            "deleted": "Collision Summary CS gelöscht mit ID {{ param }}",
+            "delete": {
+                "question": "Soll Collision Summary CS {{ id }} wirklich dauerhaft gelöscht werden?"
+            },
+            "detail": {
+                "title": "Collision Summary CS"
+            },
+            "instituteCollision": "Institute Collision",
+            "collisionsummarylva": "Collisionsummarylva",
+            "csSource": "Cs Source",
+            "csTarget": "Cs Target",
+            "idealPlan": "Ideal Plan"
+        }
+    }
+}

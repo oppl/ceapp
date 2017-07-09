@@ -1,0 +1,34 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "collision",
+            "otherEntityName": "collisionSummaryCS",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "l1",
+            "otherEntityName": "lva",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "l2",
+            "otherEntityName": "lva",
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "instituteCollision",
+            "fieldType": "Integer"
+        }
+    ],
+    "changelogDate": "20170709150645",
+    "entityTableName": "collision_summary_lva",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceClass"
+}

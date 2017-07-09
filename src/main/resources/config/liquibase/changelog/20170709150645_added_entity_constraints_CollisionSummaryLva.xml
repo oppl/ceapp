@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity CollisionSummaryLva.
+    -->
+    <changeSet id="20170709150645-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="collision_id"
+                                 baseTableName="collision_summary_lva"
+                                 constraintName="fk_collision_summary_lva_collision_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="collision_summary_cs"/>
+
+        <addForeignKeyConstraint baseColumnNames="l1_id"
+                                 baseTableName="collision_summary_lva"
+                                 constraintName="fk_collision_summary_lva_l1_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="lva"/>
+
+        <addForeignKeyConstraint baseColumnNames="l2_id"
+                                 baseTableName="collision_summary_lva"
+                                 constraintName="fk_collision_summary_lva_l2_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="lva"/>
+
+    </changeSet>
+</databaseChangeLog>

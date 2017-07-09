@@ -1,0 +1,25 @@
+{
+    "ceappApp": {
+        "subject" : {
+            "home": {
+                "title": "Subjects",
+                "createLabel": "Subject erstellen",
+                "createOrEditLabel": "Subject erstellen oder bearbeiten"
+            },
+            "created": "Subject erstellt mit ID {{ param }}",
+            "updated": "Subject aktualisiert mit ID {{ param }}",
+            "deleted": "Subject gelöscht mit ID {{ param }}",
+            "delete": {
+                "question": "Soll Subject {{ id }} wirklich dauerhaft gelöscht werden?"
+            },
+            "detail": {
+                "title": "Subject"
+            },
+            "subjectName": "Subject Name",
+            "subjectType": "Subject Type",
+            "curriculumsubject": "Curriculumsubject",
+            "idealplanentries": "Idealplanentries",
+            "lva": "Lva"
+        }
+    }
+}

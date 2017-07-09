@@ -1,0 +1,45 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "idealplanentries",
+            "otherEntityName": "idealPlanEntries",
+            "otherEntityRelationshipName": "idealplan"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "collisionSummaryCS",
+            "otherEntityName": "collisionSummaryCS",
+            "otherEntityRelationshipName": "idealPlan"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "curriculum",
+            "otherEntityName": "curriculum",
+            "otherEntityField": "curName"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "year",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "semester",
+            "fieldType": "Semester",
+            "fieldValues": "WS,SS",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20170709150639",
+    "entityTableName": "ideal_plan",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceClass"
+}

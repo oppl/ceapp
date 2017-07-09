@@ -1,0 +1,33 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "many-to-many",
+            "relationshipName": "curriculum",
+            "otherEntityName": "curriculum",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "institute"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "instituteId",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "instituteName",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20170709150636",
+    "entityTableName": "institute",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceClass"
+}

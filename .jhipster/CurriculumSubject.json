@@ -1,0 +1,59 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "collCSSource",
+            "otherEntityName": "collisionSummaryCS",
+            "otherEntityRelationshipName": "csSource"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "collCSTarget",
+            "otherEntityName": "collisionSummaryCS",
+            "otherEntityRelationshipName": "csTarget"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "curriculumsubject",
+            "relationshipName": "lva",
+            "otherEntityName": "lva",
+            "otherEntityField": "lvaNr",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "curriculum",
+            "otherEntityName": "curriculum",
+            "otherEntityField": "curName"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "subject",
+            "otherEntityName": "subject",
+            "otherEntityField": "subjectName"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "year",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "semester",
+            "fieldType": "Semester",
+            "fieldValues": "WS,SS",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20170709150641",
+    "entityTableName": "curriculum_subject",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceClass"
+}

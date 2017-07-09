@@ -1,0 +1,70 @@
+<div>
+    <h2>
+        <span jhiTranslate="ceappApp.idealPlanEntries.home.title">Ideal Plan Entries</span>
+        <button class="btn btn-primary float-right create-ideal-plan-entries" [routerLink]="['/', { outlets: { popup: ['ideal-plan-entries-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="ceappApp.idealPlanEntries.home.createLabel">
+            Create new Ideal Plan Entries
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="idealPlanEntries">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="ceappApp.idealPlanEntries.winterSemesterDefault">Winter Semester Default</span></th>
+            <th><span jhiTranslate="ceappApp.idealPlanEntries.summerSemesterDefault">Summer Semester Default</span></th>
+            <th><span jhiTranslate="ceappApp.idealPlanEntries.subject">Subject</span></th>
+            <th><span jhiTranslate="ceappApp.idealPlanEntries.idealplan">Idealplan</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let idealPlanEntries of idealPlanEntries ;trackBy: trackId">
+                <td><a [routerLink]="['../ideal-plan-entries', idealPlanEntries.id ]">{{idealPlanEntries.id}}</a></td>
+                <td>{{idealPlanEntries.winterSemesterDefault}}</td>
+                <td>{{idealPlanEntries.summerSemesterDefault}}</td>
+                <td>
+                    <div *ngIf="idealPlanEntries.subjectId">
+                        <a [routerLink]="['../subject', idealPlanEntries.subjectId  ]" >{{idealPlanEntries.subjectSubjectName}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="idealPlanEntries.idealplanId">
+                        <a [routerLink]="['../ideal-plan', idealPlanEntries.idealplanId  ]" >{{idealPlanEntries.idealplanId}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../ideal-plan-entries', idealPlanEntries.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'ideal-plan-entries/'+ idealPlanEntries.id + '/edit'} }]"
+                                replaceUrl="true"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'ideal-plan-entries/'+ idealPlanEntries.id + '/delete'} }]"
+                                replaceUrl="true"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

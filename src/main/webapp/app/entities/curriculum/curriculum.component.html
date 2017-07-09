@@ -1,0 +1,64 @@
+<div>
+    <h2>
+        <span jhiTranslate="ceappApp.curriculum.home.title">Curricula</span>
+        <button class="btn btn-primary float-right create-curriculum" [routerLink]="['/', { outlets: { popup: ['curriculum-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="ceappApp.curriculum.home.createLabel">
+            Create new Curriculum
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="curricula">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="ceappApp.curriculum.curId">Cur Id</span></th>
+            <th><span jhiTranslate="ceappApp.curriculum.curName">Cur Name</span></th>
+            <th><span jhiTranslate="ceappApp.curriculum.institute">Institute</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let curriculum of curricula ;trackBy: trackId">
+                <td><a [routerLink]="['../curriculum', curriculum.id ]">{{curriculum.id}}</a></td>
+                <td>{{curriculum.curId}}</td>
+                <td>{{curriculum.curName}}</td>
+                <td>
+                    <span *ngFor="let institute of curriculum.institutes; let last = last">
+                            <a class="form-control-static" [routerLink]="['../institute', institute?.id ]">{{institute.instituteName}}</a>{{last ? '' : ', '}}
+                        </span>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../curriculum', curriculum.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'curriculum/'+ curriculum.id + '/edit'} }]"
+                                replaceUrl="true"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'curriculum/'+ curriculum.id + '/delete'} }]"
+                                replaceUrl="true"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

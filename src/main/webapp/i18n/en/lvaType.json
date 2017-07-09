@@ -1,0 +1,9 @@
+{
+    "ceappApp": {
+        "LvaType" : {
+            "null": "",
+            "WEEKLY": "WEEKLY",
+            "BLOCK": "BLOCK"
+        }
+    }
+}

@@ -1,0 +1,46 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "curriculumsubject",
+            "otherEntityName": "curriculumSubject",
+            "otherEntityRelationshipName": "curriculum"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "idealplanentries",
+            "otherEntityName": "idealPlan",
+            "otherEntityRelationshipName": "curriculum"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "curriculum",
+            "relationshipName": "institute",
+            "otherEntityName": "institute",
+            "otherEntityField": "instituteName",
+            "ownerSide": true
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "curId",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "curName",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20170709150637",
+    "entityTableName": "curriculum",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceClass"
+}

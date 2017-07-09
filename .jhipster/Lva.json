@@ -1,0 +1,73 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "appointment",
+            "otherEntityName": "appointment",
+            "otherEntityRelationshipName": "lva"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "csl1",
+            "otherEntityName": "collisionSummaryLva",
+            "otherEntityRelationshipName": "l1"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "csl2",
+            "otherEntityName": "collisionSummaryLva",
+            "otherEntityRelationshipName": "l2"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "subject",
+            "otherEntityName": "subject",
+            "otherEntityField": "subjectName"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "relationshipName": "curriculumsubject",
+            "otherEntityName": "curriculumSubject",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "lva"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "lvaNr",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "lvaType",
+            "fieldType": "LvaType",
+            "fieldValues": "WEEKLY,BLOCK",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "year",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "semester",
+            "fieldType": "Semester",
+            "fieldValues": "WS,SS",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20170709150642",
+    "entityTableName": "lva",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceClass"
+}

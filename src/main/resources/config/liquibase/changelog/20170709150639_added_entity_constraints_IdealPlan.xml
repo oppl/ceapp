@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity IdealPlan.
+    -->
+    <changeSet id="20170709150639-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="curriculum_id"
+                                 baseTableName="ideal_plan"
+                                 constraintName="fk_ideal_plan_curriculum_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="curriculum"/>
+
+    </changeSet>
+</databaseChangeLog>

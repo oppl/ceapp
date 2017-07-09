@@ -1,0 +1,25 @@
+{
+    "ceappApp": {
+        "idealPlan" : {
+            "home": {
+                "title": "Ideal Plans",
+                "createLabel": "Ideal Plan erstellen",
+                "createOrEditLabel": "Ideal Plan erstellen oder bearbeiten"
+            },
+            "created": "Ideal Plan erstellt mit ID {{ param }}",
+            "updated": "Ideal Plan aktualisiert mit ID {{ param }}",
+            "deleted": "Ideal Plan gelöscht mit ID {{ param }}",
+            "delete": {
+                "question": "Soll Ideal Plan {{ id }} wirklich dauerhaft gelöscht werden?"
+            },
+            "detail": {
+                "title": "Ideal Plan"
+            },
+            "year": "Year",
+            "semester": "Semester",
+            "idealplanentries": "Idealplanentries",
+            "collisionSummaryCS": "Collision Summary CS",
+            "curriculum": "Curriculum"
+        }
+    }
+}

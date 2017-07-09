@@ -1,0 +1,25 @@
+{
+    "ceappApp": {
+        "curriculum" : {
+            "home": {
+                "title": "Curricula",
+                "createLabel": "Create a new Curriculum",
+                "createOrEditLabel": "Create or edit a Curriculum"
+            },
+            "created": "A new Curriculum is created with identifier {{ param }}",
+            "updated": "A Curriculum is updated with identifier {{ param }}",
+            "deleted": "A Curriculum is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Curriculum {{ id }}?"
+            },
+            "detail": {
+                "title": "Curriculum"
+            },
+            "curId": "Cur Id",
+            "curName": "Cur Name",
+            "curriculumsubject": "Curriculumsubject",
+            "idealplanentries": "Idealplanentries",
+            "institute": "Institute"
+        }
+    }
+}
