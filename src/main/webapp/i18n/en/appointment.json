@@ -19,6 +19,7 @@
             "endDateTime": "End Date Time",
             "isExam": "Is Exam",
             "room": "Room",
+            "theme": "Theme",
             "lva": "Lva"
         }
     }

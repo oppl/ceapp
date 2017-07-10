@@ -39,6 +39,9 @@ public class Appointment implements Serializable {
     @Column(name = "room")
     private String room;
 
+    @Column(name = "theme")
+    private String theme;
+
     @ManyToOne
     private Lva lva;
 
@@ -102,6 +105,19 @@ public class Appointment implements Serializable {
         this.room = room;
     }
 
+    public String getTheme() {
+        return theme;
+    }
+
+    public Appointment theme(String theme) {
+        this.theme = theme;
+        return this;
+    }
+
+    public void setTheme(String theme) {
+        this.theme = theme;
+    }
+
     public Lva getLva() {
         return lva;
     }
@@ -143,6 +159,7 @@ public class Appointment implements Serializable {
             ", endDateTime='" + getEndDateTime() + "'" +
             ", isExam='" + isIsExam() + "'" +
             ", room='" + getRoom() + "'" +
+            ", theme='" + getTheme() + "'" +
             "}";
     }
 }

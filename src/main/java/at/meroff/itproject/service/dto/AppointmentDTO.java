@@ -26,6 +26,8 @@ public class AppointmentDTO implements Serializable {
 
     private String room;
 
+    private String theme;
+
     private Long lvaId;
 
     private String lvaLvaNr;
@@ -68,6 +70,14 @@ public class AppointmentDTO implements Serializable {
 
     public void setRoom(String room) {
         this.room = room;
+    }
+
+    public String getTheme() {
+        return theme;
+    }
+
+    public void setTheme(String theme) {
+        this.theme = theme;
     }
 
     public Long getLvaId() {
@@ -115,6 +125,7 @@ public class AppointmentDTO implements Serializable {
             ", endDateTime='" + getEndDateTime() + "'" +
             ", isExam='" + isIsExam() + "'" +
             ", room='" + getRoom() + "'" +
+            ", theme='" + getTheme() + "'" +
             "}";
     }
 }

@@ -21,6 +21,7 @@
             <th><span jhiTranslate="ceappApp.appointment.endDateTime">End Date Time</span></th>
             <th><span jhiTranslate="ceappApp.appointment.isExam">Is Exam</span></th>
             <th><span jhiTranslate="ceappApp.appointment.room">Room</span></th>
+            <th><span jhiTranslate="ceappApp.appointment.theme">Theme</span></th>
             <th><span jhiTranslate="ceappApp.appointment.lva">Lva</span></th>
             <th></th>
             </tr>
@@ -32,6 +33,7 @@
                 <td>{{appointment.endDateTime | date:'medium'}}</td>
                 <td>{{appointment.isExam}}</td>
                 <td>{{appointment.room}}</td>
+                <td>{{appointment.theme}}</td>
                 <td>
                     <div *ngIf="appointment.lvaId">
                         <a [routerLink]="['../lva', appointment.lvaId  ]" >{{appointment.lvaLvaNr}}</a>

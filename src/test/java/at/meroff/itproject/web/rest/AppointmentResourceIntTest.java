@@ -57,6 +57,9 @@ public class AppointmentResourceIntTest {
     private static final String DEFAULT_ROOM = "AAAAAAAAAA";
     private static final String UPDATED_ROOM = "BBBBBBBBBB";
 
+    private static final String DEFAULT_THEME = "AAAAAAAAAA";
+    private static final String UPDATED_THEME = "BBBBBBBBBB";
+
     @Autowired
     private AppointmentRepository appointmentRepository;
 
@@ -103,7 +106,8 @@ public class AppointmentResourceIntTest {
             .startDateTime(DEFAULT_START_DATE_TIME)
             .endDateTime(DEFAULT_END_DATE_TIME)
             .isExam(DEFAULT_IS_EXAM)
-            .room(DEFAULT_ROOM);
+            .room(DEFAULT_ROOM)
+            .theme(DEFAULT_THEME);
         return appointment;
     }
 
@@ -132,6 +136,7 @@ public class AppointmentResourceIntTest {
         assertThat(testAppointment.getEndDateTime()).isEqualTo(DEFAULT_END_DATE_TIME);
         assertThat(testAppointment.isIsExam()).isEqualTo(DEFAULT_IS_EXAM);
         assertThat(testAppointment.getRoom()).isEqualTo(DEFAULT_ROOM);
+        assertThat(testAppointment.getTheme()).isEqualTo(DEFAULT_THEME);
     }
 
     @Test
@@ -225,7 +230,8 @@ public class AppointmentResourceIntTest {
             .andExpect(jsonPath("$.[*].startDateTime").value(hasItem(sameInstant(DEFAULT_START_DATE_TIME))))
             .andExpect(jsonPath("$.[*].endDateTime").value(hasItem(sameInstant(DEFAULT_END_DATE_TIME))))
             .andExpect(jsonPath("$.[*].isExam").value(hasItem(DEFAULT_IS_EXAM.booleanValue())))
-            .andExpect(jsonPath("$.[*].room").value(hasItem(DEFAULT_ROOM.toString())));
+            .andExpect(jsonPath("$.[*].room").value(hasItem(DEFAULT_ROOM.toString())))
+            .andExpect(jsonPath("$.[*].theme").value(hasItem(DEFAULT_THEME.toString())));
     }
 
     @Test
@@ -242,7 +248,8 @@ public class AppointmentResourceIntTest {
             .andExpect(jsonPath("$.startDateTime").value(sameInstant(DEFAULT_START_DATE_TIME)))
             .andExpect(jsonPath("$.endDateTime").value(sameInstant(DEFAULT_END_DATE_TIME)))
             .andExpect(jsonPath("$.isExam").value(DEFAULT_IS_EXAM.booleanValue()))
-            .andExpect(jsonPath("$.room").value(DEFAULT_ROOM.toString()));
+            .andExpect(jsonPath("$.room").value(DEFAULT_ROOM.toString()))
+            .andExpect(jsonPath("$.theme").value(DEFAULT_THEME.toString()));
     }
 
     @Test
@@ -266,7 +273,8 @@ public class AppointmentResourceIntTest {
             .startDateTime(UPDATED_START_DATE_TIME)
             .endDateTime(UPDATED_END_DATE_TIME)
             .isExam(UPDATED_IS_EXAM)
-            .room(UPDATED_ROOM);
+            .room(UPDATED_ROOM)
+            .theme(UPDATED_THEME);
         AppointmentDTO appointmentDTO = appointmentMapper.toDto(updatedAppointment);
 
         restAppointmentMockMvc.perform(put("/api/appointments")
@@ -282,6 +290,7 @@ public class AppointmentResourceIntTest {
         assertThat(testAppointment.getEndDateTime()).isEqualTo(UPDATED_END_DATE_TIME);
         assertThat(testAppointment.isIsExam()).isEqualTo(UPDATED_IS_EXAM);
         assertThat(testAppointment.getRoom()).isEqualTo(UPDATED_ROOM);
+        assertThat(testAppointment.getTheme()).isEqualTo(UPDATED_THEME);
     }
 
     @Test

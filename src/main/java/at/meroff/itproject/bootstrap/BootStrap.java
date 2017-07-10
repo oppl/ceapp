@@ -169,8 +169,13 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
                         ), ZoneId.of("GMT+2"))
                     );
                     appointment.setRoom(courseDate.getLocation());
-                    if (courseDate.getTheme().toLowerCase().matches("klausur|test")) {
-                        appointment.isExam(true);
+                    appointment.setTheme(courseDate.getTheme());
+                    if (courseDate.getTheme().toLowerCase().matches(".*klausur.*|.*test.*")) {
+                        if (courseDate.getTheme().toLowerCase().matches(".*einsicht.*|.*vorbereitung.*|.*frage.*")) {
+                            appointment.isExam(false);
+                        } else {
+                            appointment.isExam(true);
+                        }
                     } else {
                         appointment.isExam(false);
                     }

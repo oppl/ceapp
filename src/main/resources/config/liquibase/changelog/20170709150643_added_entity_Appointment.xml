@@ -37,6 +37,10 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="theme" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
             <column name="lva_id" type="bigint">
                 <constraints nullable="true" />
             </column>

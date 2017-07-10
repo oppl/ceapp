@@ -33,11 +33,15 @@
         {
             "fieldName": "room",
             "fieldType": "String"
+        },
+        {
+            "fieldName": "theme",
+            "fieldType": "String"
         }
     ],
     "changelogDate": "20170709150643",
-    "entityTableName": "appointment",
     "dto": "mapstruct",
-    "pagination": "no",
-    "service": "serviceClass"
+    "service": "serviceClass",
+    "entityTableName": "appointment",
+    "pagination": "no"
 }

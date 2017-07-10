@@ -7,6 +7,7 @@ export class Appointment implements BaseEntity {
         public endDateTime?: any,
         public isExam?: boolean,
         public room?: string,
+        public theme?: string,
         public lvaId?: number,
     ) {
         this.isExam = false;
