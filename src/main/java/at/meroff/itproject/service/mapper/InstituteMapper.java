@@ -12,6 +12,7 @@ import org.mapstruct.*;
 public interface InstituteMapper extends EntityMapper <InstituteDTO, Institute> {
     
     @Mapping(target = "curricula", ignore = true)
+    @Mapping(target = "lvas", ignore = true)
     Institute toEntity(InstituteDTO instituteDTO); 
     default Institute fromId(Long id) {
         if (id == null) {

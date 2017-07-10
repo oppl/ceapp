@@ -22,6 +22,7 @@ export class Lva implements BaseEntity {
         public csl2S?: BaseEntity[],
         public subjectId?: number,
         public curriculumsubjects?: BaseEntity[],
+        public instituteId?: number,
     ) {
     }
 }

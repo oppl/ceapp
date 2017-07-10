@@ -67,6 +67,7 @@ public class CacheConfiguration {
             cm.createCache(at.meroff.itproject.domain.CollisionSummaryCS.class.getName(), jcacheConfiguration);
             cm.createCache(at.meroff.itproject.domain.CollisionSummaryCS.class.getName() + ".collisionsummarylvas", jcacheConfiguration);
             cm.createCache(at.meroff.itproject.domain.CollisionSummaryLva.class.getName(), jcacheConfiguration);
+            cm.createCache(at.meroff.itproject.domain.Institute.class.getName() + ".lvas", jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

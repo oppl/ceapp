@@ -22,6 +22,7 @@
             <th><span jhiTranslate="ceappApp.lva.year">Year</span></th>
             <th><span jhiTranslate="ceappApp.lva.semester">Semester</span></th>
             <th><span jhiTranslate="ceappApp.lva.subject">Subject</span></th>
+            <th><span jhiTranslate="ceappApp.lva.institute">Institute</span></th>
             <th></th>
             </tr>
             </thead>
@@ -35,6 +36,11 @@
                 <td>
                     <div *ngIf="lva.subjectId">
                         <a [routerLink]="['../subject', lva.subjectId  ]" >{{lva.subjectSubjectName}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="lva.instituteId">
+                        <a [routerLink]="['../institute', lva.instituteId  ]" >{{lva.instituteId}}</a>
                     </div>
                 </td>
                 <td class="text-right">

@@ -46,6 +46,9 @@ public class IdealPlanEntriesResourceIntTest {
     private static final Integer DEFAULT_SUMMER_SEMESTER_DEFAULT = 1;
     private static final Integer UPDATED_SUMMER_SEMESTER_DEFAULT = 2;
 
+    private static final Boolean DEFAULT_OPTIONAL_SUBJECT = false;
+    private static final Boolean UPDATED_OPTIONAL_SUBJECT = true;
+
     @Autowired
     private IdealPlanEntriesRepository idealPlanEntriesRepository;
 
@@ -90,7 +93,8 @@ public class IdealPlanEntriesResourceIntTest {
     public static IdealPlanEntries createEntity(EntityManager em) {
         IdealPlanEntries idealPlanEntries = new IdealPlanEntries()
             .winterSemesterDefault(DEFAULT_WINTER_SEMESTER_DEFAULT)
-            .summerSemesterDefault(DEFAULT_SUMMER_SEMESTER_DEFAULT);
+            .summerSemesterDefault(DEFAULT_SUMMER_SEMESTER_DEFAULT)
+            .optionalSubject(DEFAULT_OPTIONAL_SUBJECT);
         return idealPlanEntries;
     }
 
@@ -117,6 +121,7 @@ public class IdealPlanEntriesResourceIntTest {
         IdealPlanEntries testIdealPlanEntries = idealPlanEntriesList.get(idealPlanEntriesList.size() - 1);
         assertThat(testIdealPlanEntries.getWinterSemesterDefault()).isEqualTo(DEFAULT_WINTER_SEMESTER_DEFAULT);
         assertThat(testIdealPlanEntries.getSummerSemesterDefault()).isEqualTo(DEFAULT_SUMMER_SEMESTER_DEFAULT);
+        assertThat(testIdealPlanEntries.isOptionalSubject()).isEqualTo(DEFAULT_OPTIONAL_SUBJECT);
     }
 
     @Test
@@ -189,7 +194,8 @@ public class IdealPlanEntriesResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(idealPlanEntries.getId().intValue())))
             .andExpect(jsonPath("$.[*].winterSemesterDefault").value(hasItem(DEFAULT_WINTER_SEMESTER_DEFAULT)))
-            .andExpect(jsonPath("$.[*].summerSemesterDefault").value(hasItem(DEFAULT_SUMMER_SEMESTER_DEFAULT)));
+            .andExpect(jsonPath("$.[*].summerSemesterDefault").value(hasItem(DEFAULT_SUMMER_SEMESTER_DEFAULT)))
+            .andExpect(jsonPath("$.[*].optionalSubject").value(hasItem(DEFAULT_OPTIONAL_SUBJECT.booleanValue())));
     }
 
     @Test
@@ -204,7 +210,8 @@ public class IdealPlanEntriesResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(idealPlanEntries.getId().intValue()))
             .andExpect(jsonPath("$.winterSemesterDefault").value(DEFAULT_WINTER_SEMESTER_DEFAULT))
-            .andExpect(jsonPath("$.summerSemesterDefault").value(DEFAULT_SUMMER_SEMESTER_DEFAULT));
+            .andExpect(jsonPath("$.summerSemesterDefault").value(DEFAULT_SUMMER_SEMESTER_DEFAULT))
+            .andExpect(jsonPath("$.optionalSubject").value(DEFAULT_OPTIONAL_SUBJECT.booleanValue()));
     }
 
     @Test
@@ -226,7 +233,8 @@ public class IdealPlanEntriesResourceIntTest {
         IdealPlanEntries updatedIdealPlanEntries = idealPlanEntriesRepository.findOne(idealPlanEntries.getId());
         updatedIdealPlanEntries
             .winterSemesterDefault(UPDATED_WINTER_SEMESTER_DEFAULT)
-            .summerSemesterDefault(UPDATED_SUMMER_SEMESTER_DEFAULT);
+            .summerSemesterDefault(UPDATED_SUMMER_SEMESTER_DEFAULT)
+            .optionalSubject(UPDATED_OPTIONAL_SUBJECT);
         IdealPlanEntriesDTO idealPlanEntriesDTO = idealPlanEntriesMapper.toDto(updatedIdealPlanEntries);
 
         restIdealPlanEntriesMockMvc.perform(put("/api/ideal-plan-entries")
@@ -240,6 +248,7 @@ public class IdealPlanEntriesResourceIntTest {
         IdealPlanEntries testIdealPlanEntries = idealPlanEntriesList.get(idealPlanEntriesList.size() - 1);
         assertThat(testIdealPlanEntries.getWinterSemesterDefault()).isEqualTo(UPDATED_WINTER_SEMESTER_DEFAULT);
         assertThat(testIdealPlanEntries.getSummerSemesterDefault()).isEqualTo(UPDATED_SUMMER_SEMESTER_DEFAULT);
+        assertThat(testIdealPlanEntries.isOptionalSubject()).isEqualTo(UPDATED_OPTIONAL_SUBJECT);
     }
 
     @Test

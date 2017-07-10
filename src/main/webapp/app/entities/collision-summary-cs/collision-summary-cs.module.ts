@@ -14,6 +14,7 @@ import {
     collisionSummaryCSRoute,
     collisionSummaryCSPopupRoute,
 } from './';
+import {CeappCollisionSummaryLvaModule} from '../collision-summary-lva/collision-summary-lva.module';
 
 const ENTITY_STATES = [
     ...collisionSummaryCSRoute,
@@ -23,6 +24,7 @@ const ENTITY_STATES = [
 @NgModule({
     imports: [
         CeappSharedModule,
+        CeappCollisionSummaryLvaModule,
         RouterModule.forRoot(ENTITY_STATES, { useHash: true })
     ],
     declarations: [

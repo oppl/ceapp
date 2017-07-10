@@ -17,7 +17,8 @@
             },
             "instituteId": "Institute Id",
             "instituteName": "Institute Name",
-            "curriculum": "Curriculum"
+            "curriculum": "Curriculum",
+            "lva": "Lva"
         }
     }
 }

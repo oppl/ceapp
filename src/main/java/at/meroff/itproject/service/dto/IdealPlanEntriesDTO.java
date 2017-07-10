@@ -20,6 +20,8 @@ public class IdealPlanEntriesDTO implements Serializable {
     @NotNull
     private Integer summerSemesterDefault;
 
+    private Boolean optionalSubject;
+
     private Long subjectId;
 
     private String subjectSubjectName;
@@ -48,6 +50,14 @@ public class IdealPlanEntriesDTO implements Serializable {
 
     public void setSummerSemesterDefault(Integer summerSemesterDefault) {
         this.summerSemesterDefault = summerSemesterDefault;
+    }
+
+    public Boolean isOptionalSubject() {
+        return optionalSubject;
+    }
+
+    public void setOptionalSubject(Boolean optionalSubject) {
+        this.optionalSubject = optionalSubject;
     }
 
     public Long getSubjectId() {
@@ -101,6 +111,7 @@ public class IdealPlanEntriesDTO implements Serializable {
             "id=" + getId() +
             ", winterSemesterDefault='" + getWinterSemesterDefault() + "'" +
             ", summerSemesterDefault='" + getSummerSemesterDefault() + "'" +
+            ", optionalSubject='" + isOptionalSubject() + "'" +
             "}";
     }
 }

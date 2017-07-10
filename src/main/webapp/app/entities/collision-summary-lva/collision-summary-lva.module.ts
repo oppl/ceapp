@@ -25,6 +25,9 @@ const ENTITY_STATES = [
         CeappSharedModule,
         RouterModule.forRoot(ENTITY_STATES, { useHash: true })
     ],
+    exports: [
+        CollisionSummaryLvaComponent
+    ],
     declarations: [
         CollisionSummaryLvaComponent,
         CollisionSummaryLvaDetailComponent,

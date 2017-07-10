@@ -29,6 +29,10 @@
                 <constraints nullable="false" />
             </column>
 
+            <column name="optional_subject" type="boolean">
+                <constraints nullable="true" />
+            </column>
+
             <column name="subject_id" type="bigint">
                 <constraints nullable="true" />
             </column>

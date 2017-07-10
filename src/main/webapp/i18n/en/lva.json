@@ -23,7 +23,8 @@
             "csl1": "Csl 1",
             "csl2": "Csl 2",
             "subject": "Subject",
-            "curriculumsubject": "Curriculumsubject"
+            "curriculumsubject": "Curriculumsubject",
+            "institute": "Institute"
         }
     }
 }

@@ -14,14 +14,16 @@ import at.meroff.itproject.service.mapper.InstituteMapper;
 import at.meroff.itproject.xml.XMLQueryTemplate;
 import at.meroff.itproject.xml.models.Subjects;
 import at.meroff.itproject.xml.models.lvas.XmlLvas;
+import org.basex.query.value.item.Int;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.*;
@@ -47,6 +49,7 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
     private CurriculumSubjectRepository curriculumSubjectRepository;
     private LvaRepository lvaRepository;
     private AppointmentRepository appointmentRepository;
+    private ResourceLoader resourceLoader;
 
     public BootStrap(CurriculumService curriculumService,
                      CurriculumMapper curriculumMapper,
@@ -57,7 +60,8 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
                      IdealPlanEntriesRepository idealPlanEntriesRepository,
                      CurriculumSubjectRepository curriculumSubjectRepository,
                      LvaRepository lvaRepository,
-                     AppointmentRepository appointmentRepository) {
+                     AppointmentRepository appointmentRepository,
+                     ResourceLoader resourceLoader) {
         this.curriculumService = curriculumService;
         this.curriculumMapper = curriculumMapper;
         this.instituteService = instituteService;
@@ -68,6 +72,7 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
         this.curriculumSubjectRepository = curriculumSubjectRepository;
         this.lvaRepository = lvaRepository;
         this.appointmentRepository = appointmentRepository;
+        this.resourceLoader = resourceLoader;
     }
 
     @Override
@@ -112,10 +117,27 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
         }
 
         // Termine einlesen
-        ClassLoader classLoader = getClass().getClassLoader();
-        File file2 = new File(classLoader.getResource("xquery/lvas.xq").getFile());
-        XMLQueryTemplate<XmlLvas> xmlQueryTemplate2 = new XMLQueryTemplate<>(file2, XmlLvas.class);
+        //ClassLoader classLoader = getClass().getClassLoader();
+        //File file2 = new File(classLoader.getResource("xquery/lvas.xq").getFile());
+        Resource resource = resourceLoader.getResource("classpath:xquery/lvas.xq");
+        //File file = resource.getFile();
+        BufferedReader br = null;
+        try {
+            br = new BufferedReader(new InputStreamReader(resource.getInputStream()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String response = "";
+        try {
+            for (String line; (line = br.readLine()) != null; response += (line + "\n"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        XMLQueryTemplate<XmlLvas> xmlQueryTemplate2 = new XMLQueryTemplate<>(response, XmlLvas.class);
         XmlLvas result = xmlQueryTemplate2.getResult();
+
+
 
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm");
@@ -131,6 +153,7 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
                 lva.setLvaType(LvaType.WEEKLY);
                 lva.setYear(xmlLva.getTermYear());
                 lva.setSemester(xmlLva.getTermSemester());
+                lva.setInstitute(instituteMapper.toEntity(instituteService.findByInstituteId(Integer.parseInt(xmlLva.getId().substring(0,3)))));
                 Lva save1 = lvaRepository.save(lva);
                 // TODO Institut fehlt!!!
                 Set<Appointment> collect1 = xmlLva.getCourseDates().stream().map(courseDate -> {
@@ -164,20 +187,37 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
     }
 
     private List<Subject> createSubjects(int curId) {
-        ClassLoader classLoader = getClass().getClassLoader();
-        File file = new File(classLoader.getResource("xquery/subjects.xq").getFile());
-        System.out.println(file.getAbsolutePath());
-        XMLQueryTemplate<Subjects> xmlQueryTemplate = new XMLQueryTemplate<>(file, Subjects.class);
-        Subjects xqueryResultSubjects = xmlQueryTemplate.getResult();
-        return subjectRepository.save(xqueryResultSubjects.getSubjects());
+        //ClassLoader classLoader = getClass().getClassLoader();
+        //File file = new File(classLoader.getResource("xquery/subjects.xq").getFile());
+        //System.out.println(file.getAbsolutePath());
+        try {
+            Resource resource = resourceLoader.getResource("classpath:xquery/subjects.xq");
+            //File file = resource.getFile();
+            BufferedReader br = new BufferedReader(new InputStreamReader(resource.getInputStream()));
+
+            String response = "";
+            for (String line; (line = br.readLine()) != null; response += (line + "\n"));
+            XMLQueryTemplate<Subjects> xmlQueryTemplate = new XMLQueryTemplate<>(response, Subjects.class);
+            Subjects xqueryResultSubjects = xmlQueryTemplate.getResult();
+            return subjectRepository.save(xqueryResultSubjects.getSubjects());
+        } catch (Exception e) {
+
+        }
+        return null;
     }
 
 
     private void createInstitutes() {
         try {
-            ClassLoader classLoader = getClass().getClassLoader();
-            File file = new File(classLoader.getResource("imports/institute.csv").getFile());
-            List<Institute> institutes = Files.lines(file.toPath())
+            //ClassLoader classLoader = getClass().getClassLoader();
+            //File file = new File(classLoader.getResource("imports/institute.csv").getFile());
+
+            Resource resource = resourceLoader.getResource("classpath:imports/institute.csv");
+            InputStream inputStream = resource.getInputStream();
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+
+            List<Institute> institutes = br.lines()
                 .map(s -> s.split(";"))
                 .filter(strings -> Integer.parseInt(strings[0].substring(3,4)) == 0)
                 .map(strings -> {
@@ -189,6 +229,7 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
             institutes.forEach(institute -> {
                 instituteService.save(instituteMapper.toDto(institute));
             });
+            br.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -205,6 +246,7 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
         IdealPlanEntries idealPlanEntries = new IdealPlanEntries();
         idealPlanEntries.setIdealplan(idealPlan);
         idealPlanEntries.setSubject(subject);
+        idealPlanEntries.setOptionalSubject(false);
         idealPlanEntries.setWinterSemesterDefault(winterSemesterDefault);
         idealPlanEntries.setSummerSemesterDefault(summerSemesterDefault);
 

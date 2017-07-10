@@ -26,6 +26,12 @@
                 <a [routerLink]="['/subject', lva.subjectId]">{{lva.subjectSubjectName}}</a>
             </div>
         </dd>
+        <dt><span jhiTranslate="ceappApp.lva.institute">Institute</span></dt>
+        <dd>
+            <div *ngIf="lva.instituteId">
+                <a [routerLink]="['/institute', lva.instituteId]">{{lva.instituteId}}</a>
+            </div>
+        </dd>
     </dl>
 
     <button type="submit"

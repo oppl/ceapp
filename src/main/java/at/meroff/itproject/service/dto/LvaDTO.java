@@ -32,6 +32,8 @@ public class LvaDTO implements Serializable {
 
     private String subjectSubjectName;
 
+    private Long instituteId;
+
     public Long getId() {
         return id;
     }
@@ -86,6 +88,14 @@ public class LvaDTO implements Serializable {
 
     public void setSubjectSubjectName(String subjectSubjectName) {
         this.subjectSubjectName = subjectSubjectName;
+    }
+
+    public Long getInstituteId() {
+        return instituteId;
+    }
+
+    public void setInstituteId(Long instituteId) {
+        this.instituteId = instituteId;
     }
 
     @Override

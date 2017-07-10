@@ -31,6 +31,9 @@ public class IdealPlanEntries implements Serializable {
     @Column(name = "summer_semester_default", nullable = false)
     private Integer summerSemesterDefault;
 
+    @Column(name = "optional_subject")
+    private Boolean optionalSubject;
+
     @ManyToOne
     private Subject subject;
 
@@ -69,6 +72,19 @@ public class IdealPlanEntries implements Serializable {
 
     public void setSummerSemesterDefault(Integer summerSemesterDefault) {
         this.summerSemesterDefault = summerSemesterDefault;
+    }
+
+    public Boolean isOptionalSubject() {
+        return optionalSubject;
+    }
+
+    public IdealPlanEntries optionalSubject(Boolean optionalSubject) {
+        this.optionalSubject = optionalSubject;
+        return this;
+    }
+
+    public void setOptionalSubject(Boolean optionalSubject) {
+        this.optionalSubject = optionalSubject;
     }
 
     public Subject getSubject() {
@@ -123,6 +139,7 @@ public class IdealPlanEntries implements Serializable {
             "id=" + getId() +
             ", winterSemesterDefault='" + getWinterSemesterDefault() + "'" +
             ", summerSemesterDefault='" + getSummerSemesterDefault() + "'" +
+            ", optionalSubject='" + isOptionalSubject() + "'" +
             "}";
     }
 }

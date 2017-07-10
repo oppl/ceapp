@@ -26,6 +26,9 @@ import { CeappCollisionSummaryLvaModule } from './collision-summary-lva/collisio
         CeappCollisionSummaryLvaModule,
         /* jhipster-needle-add-entity-module - JHipster will add entity modules here */
     ],
+    exports: [
+        CeappCollisionSummaryLvaModule
+    ],
     declarations: [],
     entryComponents: [],
     providers: [],

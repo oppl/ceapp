@@ -8,11 +8,13 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity Lva and its DTO LvaDTO.
  */
-@Mapper(componentModel = "spring", uses = {SubjectMapper.class, })
+@Mapper(componentModel = "spring", uses = {SubjectMapper.class, InstituteMapper.class, })
 public interface LvaMapper extends EntityMapper <LvaDTO, Lva> {
 
     @Mapping(source = "subject.id", target = "subjectId")
     @Mapping(source = "subject.subjectName", target = "subjectSubjectName")
+
+    @Mapping(source = "institute.id", target = "instituteId")
     LvaDTO toDto(Lva lva); 
     @Mapping(target = "appointments", ignore = true)
     @Mapping(target = "csl1S", ignore = true)
@@ -20,6 +22,8 @@ public interface LvaMapper extends EntityMapper <LvaDTO, Lva> {
 
     @Mapping(source = "subjectId", target = "subject")
     @Mapping(target = "curriculumsubjects", ignore = true)
+
+    @Mapping(source = "instituteId", target = "institute")
     Lva toEntity(LvaDTO lvaDTO); 
     default Lva fromId(Long id) {
         if (id == null) {

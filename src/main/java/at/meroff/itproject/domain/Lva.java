@@ -71,6 +71,9 @@ public class Lva implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<CurriculumSubject> curriculumsubjects = new HashSet<>();
 
+    @ManyToOne
+    private Institute institute;
+
     public Long getId() {
         return id;
     }
@@ -242,6 +245,19 @@ public class Lva implements Serializable {
 
     public void setCurriculumsubjects(Set<CurriculumSubject> curriculumSubjects) {
         this.curriculumsubjects = curriculumSubjects;
+    }
+
+    public Institute getInstitute() {
+        return institute;
+    }
+
+    public Lva institute(Institute institute) {
+        this.institute = institute;
+        return this;
+    }
+
+    public void setInstitute(Institute institute) {
+        this.institute = institute;
     }
 
     @Override

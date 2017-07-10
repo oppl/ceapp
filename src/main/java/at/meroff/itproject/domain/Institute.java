@@ -39,6 +39,11 @@ public class Institute implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Curriculum> curricula = new HashSet<>();
 
+    @OneToMany(mappedBy = "institute")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Lva> lvas = new HashSet<>();
+
     public Long getId() {
         return id;
     }
@@ -96,6 +101,31 @@ public class Institute implements Serializable {
 
     public void setCurricula(Set<Curriculum> curricula) {
         this.curricula = curricula;
+    }
+
+    public Set<Lva> getLvas() {
+        return lvas;
+    }
+
+    public Institute lvas(Set<Lva> lvas) {
+        this.lvas = lvas;
+        return this;
+    }
+
+    public Institute addLva(Lva lva) {
+        this.lvas.add(lva);
+        lva.setInstitute(this);
+        return this;
+    }
+
+    public Institute removeLva(Lva lva) {
+        this.lvas.remove(lva);
+        lva.setInstitute(null);
+        return this;
+    }
+
+    public void setLvas(Set<Lva> lvas) {
+        this.lvas = lvas;
     }
 
     @Override

@@ -6,6 +6,7 @@ export class Institute implements BaseEntity {
         public instituteId?: number,
         public instituteName?: string,
         public curricula?: BaseEntity[],
+        public lvas?: BaseEntity[],
     ) {
     }
 }

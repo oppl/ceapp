@@ -66,7 +66,7 @@ public class CollisionSummaryCSService {
     @Transactional(readOnly = true)
     public CollisionSummaryCSDTO findOne(Long id) {
         log.debug("Request to get CollisionSummaryCS : {}", id);
-        CollisionSummaryCS collisionSummaryCS = collisionSummaryCSRepository.findOne(id);
+        CollisionSummaryCS collisionSummaryCS = collisionSummaryCSRepository.findSomething(id);
         return collisionSummaryCSMapper.toDto(collisionSummaryCS);
     }
 

@@ -28,11 +28,15 @@
             "fieldValidateRules": [
                 "required"
             ]
+        },
+        {
+            "fieldName": "optionalSubject",
+            "fieldType": "Boolean"
         }
     ],
     "changelogDate": "20170709150640",
-    "entityTableName": "ideal_plan_entries",
     "dto": "mapstruct",
-    "pagination": "no",
-    "service": "serviceClass"
+    "service": "serviceClass",
+    "entityTableName": "ideal_plan_entries",
+    "pagination": "no"
 }

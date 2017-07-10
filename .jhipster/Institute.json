@@ -7,6 +7,12 @@
             "otherEntityName": "curriculum",
             "ownerSide": false,
             "otherEntityRelationshipName": "institute"
+        },
+        {
+            "relationshipName": "lva",
+            "otherEntityName": "lva",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "institute"
         }
     ],
     "fields": [
@@ -26,8 +32,8 @@
         }
     ],
     "changelogDate": "20170709150636",
-    "entityTableName": "institute",
     "dto": "mapstruct",
-    "pagination": "no",
-    "service": "serviceClass"
+    "service": "serviceClass",
+    "entityTableName": "institute",
+    "pagination": "no"
 }

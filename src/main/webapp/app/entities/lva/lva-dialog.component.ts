@@ -11,6 +11,7 @@ import { LvaPopupService } from './lva-popup.service';
 import { LvaService } from './lva.service';
 import { Subject, SubjectService } from '../subject';
 import { CurriculumSubject, CurriculumSubjectService } from '../curriculum-subject';
+import { Institute, InstituteService } from '../institute';
 import { ResponseWrapper } from '../../shared';
 
 @Component({
@@ -27,12 +28,15 @@ export class LvaDialogComponent implements OnInit {
 
     curriculumsubjects: CurriculumSubject[];
 
+    institutes: Institute[];
+
     constructor(
         public activeModal: NgbActiveModal,
         private alertService: JhiAlertService,
         private lvaService: LvaService,
         private subjectService: SubjectService,
         private curriculumSubjectService: CurriculumSubjectService,
+        private instituteService: InstituteService,
         private eventManager: JhiEventManager
     ) {
     }
@@ -44,6 +48,8 @@ export class LvaDialogComponent implements OnInit {
             .subscribe((res: ResponseWrapper) => { this.subjects = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
         this.curriculumSubjectService.query()
             .subscribe((res: ResponseWrapper) => { this.curriculumsubjects = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
+        this.instituteService.query()
+            .subscribe((res: ResponseWrapper) => { this.institutes = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
     }
 
     clear() {
@@ -91,6 +97,10 @@ export class LvaDialogComponent implements OnInit {
     }
 
     trackCurriculumSubjectById(index: number, item: CurriculumSubject) {
+        return item.id;
+    }
+
+    trackInstituteById(index: number, item: Institute) {
         return item.id;
     }
 
