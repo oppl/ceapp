@@ -2,6 +2,7 @@ package at.meroff.itproject.service;
 
 import at.meroff.itproject.domain.Lva;
 import at.meroff.itproject.repository.LvaRepository;
+import at.meroff.itproject.repository.search.LvaSearchRepository;
 import at.meroff.itproject.service.dto.LvaDTO;
 import at.meroff.itproject.service.mapper.LvaMapper;
 import org.slf4j.Logger;
@@ -12,6 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
+import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing Lva.
@@ -26,9 +30,12 @@ public class LvaService {
 
     private final LvaMapper lvaMapper;
 
-    public LvaService(LvaRepository lvaRepository, LvaMapper lvaMapper) {
+    private final LvaSearchRepository lvaSearchRepository;
+
+    public LvaService(LvaRepository lvaRepository, LvaMapper lvaMapper, LvaSearchRepository lvaSearchRepository) {
         this.lvaRepository = lvaRepository;
         this.lvaMapper = lvaMapper;
+        this.lvaSearchRepository = lvaSearchRepository;
     }
 
     /**
@@ -41,7 +48,9 @@ public class LvaService {
         log.debug("Request to save Lva : {}", lvaDTO);
         Lva lva = lvaMapper.toEntity(lvaDTO);
         lva = lvaRepository.save(lva);
-        return lvaMapper.toDto(lva);
+        LvaDTO result = lvaMapper.toDto(lva);
+        lvaSearchRepository.save(lva);
+        return result;
     }
 
     /**
@@ -78,5 +87,21 @@ public class LvaService {
     public void delete(Long id) {
         log.debug("Request to delete Lva : {}", id);
         lvaRepository.delete(id);
+        lvaSearchRepository.delete(id);
+    }
+
+    /**
+     * Search for the lva corresponding to the query.
+     *
+     *  @param query the query of the search
+     *  @return the list of entities
+     */
+    @Transactional(readOnly = true)
+    public List<LvaDTO> search(String query) {
+        log.debug("Request to search Lvas for query {}", query);
+        return StreamSupport
+            .stream(lvaSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+            .map(lvaMapper::toDto)
+            .collect(Collectors.toList());
     }
 }

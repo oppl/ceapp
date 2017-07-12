@@ -16,6 +16,9 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.StreamSupport;
+
+import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * REST controller for managing CurriculumSubject.
@@ -115,4 +118,19 @@ public class CurriculumSubjectResource {
         curriculumSubjectService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+
+    /**
+     * SEARCH  /_search/curriculum-subjects?query=:query : search for the curriculumSubject corresponding
+     * to the query.
+     *
+     * @param query the query of the curriculumSubject search
+     * @return the result of the search
+     */
+    @GetMapping("/_search/curriculum-subjects")
+    @Timed
+    public List<CurriculumSubjectDTO> searchCurriculumSubjects(@RequestParam String query) {
+        log.debug("REST request to search CurriculumSubjects for query {}", query);
+        return curriculumSubjectService.search(query);
+    }
+
 }

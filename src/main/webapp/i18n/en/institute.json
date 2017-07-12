@@ -4,7 +4,8 @@
             "home": {
                 "title": "Institutes",
                 "createLabel": "Create a new Institute",
-                "createOrEditLabel": "Create or edit a Institute"
+                "createOrEditLabel": "Create or edit a Institute",
+                "search": "Search for Institute"
             },
             "created": "A new Institute is created with identifier {{ param }}",
             "updated": "A Institute is updated with identifier {{ param }}",

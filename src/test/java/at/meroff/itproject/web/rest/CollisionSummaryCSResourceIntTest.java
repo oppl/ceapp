@@ -5,6 +5,7 @@ import at.meroff.itproject.CeappApp;
 import at.meroff.itproject.domain.CollisionSummaryCS;
 import at.meroff.itproject.repository.CollisionSummaryCSRepository;
 import at.meroff.itproject.service.CollisionSummaryCSService;
+import at.meroff.itproject.repository.search.CollisionSummaryCSSearchRepository;
 import at.meroff.itproject.service.dto.CollisionSummaryCSDTO;
 import at.meroff.itproject.service.mapper.CollisionSummaryCSMapper;
 import at.meroff.itproject.web.rest.errors.ExceptionTranslator;
@@ -53,6 +54,9 @@ public class CollisionSummaryCSResourceIntTest {
     private CollisionSummaryCSService collisionSummaryCSService;
 
     @Autowired
+    private CollisionSummaryCSSearchRepository collisionSummaryCSSearchRepository;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -92,6 +96,7 @@ public class CollisionSummaryCSResourceIntTest {
 
     @Before
     public void initTest() {
+        collisionSummaryCSSearchRepository.deleteAll();
         collisionSummaryCS = createEntity(em);
     }
 
@@ -112,6 +117,10 @@ public class CollisionSummaryCSResourceIntTest {
         assertThat(collisionSummaryCSList).hasSize(databaseSizeBeforeCreate + 1);
         CollisionSummaryCS testCollisionSummaryCS = collisionSummaryCSList.get(collisionSummaryCSList.size() - 1);
         assertThat(testCollisionSummaryCS.getInstituteCollision()).isEqualTo(DEFAULT_INSTITUTE_COLLISION);
+
+        // Validate the CollisionSummaryCS in Elasticsearch
+        CollisionSummaryCS collisionSummaryCSEs = collisionSummaryCSSearchRepository.findOne(testCollisionSummaryCS.getId());
+        assertThat(collisionSummaryCSEs).isEqualToComparingFieldByField(testCollisionSummaryCS);
     }
 
     @Test
@@ -175,6 +184,7 @@ public class CollisionSummaryCSResourceIntTest {
     public void updateCollisionSummaryCS() throws Exception {
         // Initialize the database
         collisionSummaryCSRepository.saveAndFlush(collisionSummaryCS);
+        collisionSummaryCSSearchRepository.save(collisionSummaryCS);
         int databaseSizeBeforeUpdate = collisionSummaryCSRepository.findAll().size();
 
         // Update the collisionSummaryCS
@@ -193,6 +203,10 @@ public class CollisionSummaryCSResourceIntTest {
         assertThat(collisionSummaryCSList).hasSize(databaseSizeBeforeUpdate);
         CollisionSummaryCS testCollisionSummaryCS = collisionSummaryCSList.get(collisionSummaryCSList.size() - 1);
         assertThat(testCollisionSummaryCS.getInstituteCollision()).isEqualTo(UPDATED_INSTITUTE_COLLISION);
+
+        // Validate the CollisionSummaryCS in Elasticsearch
+        CollisionSummaryCS collisionSummaryCSEs = collisionSummaryCSSearchRepository.findOne(testCollisionSummaryCS.getId());
+        assertThat(collisionSummaryCSEs).isEqualToComparingFieldByField(testCollisionSummaryCS);
     }
 
     @Test
@@ -219,6 +233,7 @@ public class CollisionSummaryCSResourceIntTest {
     public void deleteCollisionSummaryCS() throws Exception {
         // Initialize the database
         collisionSummaryCSRepository.saveAndFlush(collisionSummaryCS);
+        collisionSummaryCSSearchRepository.save(collisionSummaryCS);
         int databaseSizeBeforeDelete = collisionSummaryCSRepository.findAll().size();
 
         // Get the collisionSummaryCS
@@ -226,9 +241,28 @@ public class CollisionSummaryCSResourceIntTest {
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
 
+        // Validate Elasticsearch is empty
+        boolean collisionSummaryCSExistsInEs = collisionSummaryCSSearchRepository.exists(collisionSummaryCS.getId());
+        assertThat(collisionSummaryCSExistsInEs).isFalse();
+
         // Validate the database is empty
         List<CollisionSummaryCS> collisionSummaryCSList = collisionSummaryCSRepository.findAll();
         assertThat(collisionSummaryCSList).hasSize(databaseSizeBeforeDelete - 1);
+    }
+
+    @Test
+    @Transactional
+    public void searchCollisionSummaryCS() throws Exception {
+        // Initialize the database
+        collisionSummaryCSRepository.saveAndFlush(collisionSummaryCS);
+        collisionSummaryCSSearchRepository.save(collisionSummaryCS);
+
+        // Search the collisionSummaryCS
+        restCollisionSummaryCSMockMvc.perform(get("/api/_search/collision-summary-cs?query=id:" + collisionSummaryCS.getId()))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(collisionSummaryCS.getId().intValue())))
+            .andExpect(jsonPath("$.[*].instituteCollision").value(hasItem(DEFAULT_INSTITUTE_COLLISION)));
     }
 
     @Test

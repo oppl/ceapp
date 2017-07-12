@@ -16,22 +16,48 @@ export class CurriculumComponent implements OnInit, OnDestroy {
 curricula: Curriculum[];
     currentAccount: any;
     eventSubscriber: Subscription;
+    currentSearch: string;
 
     constructor(
         private curriculumService: CurriculumService,
         private alertService: JhiAlertService,
         private eventManager: JhiEventManager,
+        private activatedRoute: ActivatedRoute,
         private principal: Principal
     ) {
+        this.currentSearch = activatedRoute.snapshot.params['search'] ? activatedRoute.snapshot.params['search'] : '';
     }
 
     loadAll() {
+        if (this.currentSearch) {
+            this.curriculumService.search({
+                query: this.currentSearch,
+                }).subscribe(
+                    (res: ResponseWrapper) => this.curricula = res.json,
+                    (res: ResponseWrapper) => this.onError(res.json)
+                );
+            return;
+       }
         this.curriculumService.query().subscribe(
             (res: ResponseWrapper) => {
                 this.curricula = res.json;
+                this.currentSearch = '';
             },
             (res: ResponseWrapper) => this.onError(res.json)
         );
+    }
+
+    search(query) {
+        if (!query) {
+            return this.clear();
+        }
+        this.currentSearch = query;
+        this.loadAll();
+    }
+
+    clear() {
+        this.currentSearch = '';
+        this.loadAll();
     }
     ngOnInit() {
         this.loadAll();

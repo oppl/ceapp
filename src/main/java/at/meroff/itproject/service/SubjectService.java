@@ -2,6 +2,7 @@ package at.meroff.itproject.service;
 
 import at.meroff.itproject.domain.Subject;
 import at.meroff.itproject.repository.SubjectRepository;
+import at.meroff.itproject.repository.search.SubjectSearchRepository;
 import at.meroff.itproject.service.dto.SubjectDTO;
 import at.meroff.itproject.service.mapper.SubjectMapper;
 import org.slf4j.Logger;
@@ -12,6 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
+import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing Subject.
@@ -26,9 +30,12 @@ public class SubjectService {
 
     private final SubjectMapper subjectMapper;
 
-    public SubjectService(SubjectRepository subjectRepository, SubjectMapper subjectMapper) {
+    private final SubjectSearchRepository subjectSearchRepository;
+
+    public SubjectService(SubjectRepository subjectRepository, SubjectMapper subjectMapper, SubjectSearchRepository subjectSearchRepository) {
         this.subjectRepository = subjectRepository;
         this.subjectMapper = subjectMapper;
+        this.subjectSearchRepository = subjectSearchRepository;
     }
 
     /**
@@ -41,7 +48,9 @@ public class SubjectService {
         log.debug("Request to save Subject : {}", subjectDTO);
         Subject subject = subjectMapper.toEntity(subjectDTO);
         subject = subjectRepository.save(subject);
-        return subjectMapper.toDto(subject);
+        SubjectDTO result = subjectMapper.toDto(subject);
+        subjectSearchRepository.save(subject);
+        return result;
     }
 
     /**
@@ -78,5 +87,21 @@ public class SubjectService {
     public void delete(Long id) {
         log.debug("Request to delete Subject : {}", id);
         subjectRepository.delete(id);
+        subjectSearchRepository.delete(id);
+    }
+
+    /**
+     * Search for the subject corresponding to the query.
+     *
+     *  @param query the query of the search
+     *  @return the list of entities
+     */
+    @Transactional(readOnly = true)
+    public List<SubjectDTO> search(String query) {
+        log.debug("Request to search Subjects for query {}", query);
+        return StreamSupport
+            .stream(subjectSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+            .map(subjectMapper::toDto)
+            .collect(Collectors.toList());
     }
 }

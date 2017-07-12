@@ -2,6 +2,7 @@ package at.meroff.itproject.domain;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -14,6 +15,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "ideal_plan_entries")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Document(indexName = "idealplanentries")
 public class IdealPlanEntries implements Serializable {
 
     private static final long serialVersionUID = 1L;

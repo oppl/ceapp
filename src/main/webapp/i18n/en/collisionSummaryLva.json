@@ -4,7 +4,8 @@
             "home": {
                 "title": "Collision Summary Lvas",
                 "createLabel": "Create a new Collision Summary Lva",
-                "createOrEditLabel": "Create or edit a Collision Summary Lva"
+                "createOrEditLabel": "Create or edit a Collision Summary Lva",
+                "search": "Search for Collision Summary Lva"
             },
             "created": "A new Collision Summary Lva is created with identifier {{ param }}",
             "updated": "A Collision Summary Lva is updated with identifier {{ param }}",

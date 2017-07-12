@@ -15,6 +15,9 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.StreamSupport;
+
+import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * REST controller for managing CollisionSummaryCS.
@@ -114,4 +117,19 @@ public class CollisionSummaryCSResource {
         collisionSummaryCSService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+
+    /**
+     * SEARCH  /_search/collision-summary-cs?query=:query : search for the collisionSummaryCS corresponding
+     * to the query.
+     *
+     * @param query the query of the collisionSummaryCS search
+     * @return the result of the search
+     */
+    @GetMapping("/_search/collision-summary-cs")
+    @Timed
+    public List<CollisionSummaryCSDTO> searchCollisionSummaryCS(@RequestParam String query) {
+        log.debug("REST request to search CollisionSummaryCS for query {}", query);
+        return collisionSummaryCSService.search(query);
+    }
+
 }

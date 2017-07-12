@@ -2,6 +2,7 @@ package at.meroff.itproject.service;
 
 import at.meroff.itproject.domain.CollisionSummaryCS;
 import at.meroff.itproject.repository.CollisionSummaryCSRepository;
+import at.meroff.itproject.repository.search.CollisionSummaryCSSearchRepository;
 import at.meroff.itproject.service.dto.CollisionSummaryCSDTO;
 import at.meroff.itproject.service.mapper.CollisionSummaryCSMapper;
 import org.slf4j.Logger;
@@ -12,6 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
+import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing CollisionSummaryCS.
@@ -26,9 +30,12 @@ public class CollisionSummaryCSService {
 
     private final CollisionSummaryCSMapper collisionSummaryCSMapper;
 
-    public CollisionSummaryCSService(CollisionSummaryCSRepository collisionSummaryCSRepository, CollisionSummaryCSMapper collisionSummaryCSMapper) {
+    private final CollisionSummaryCSSearchRepository collisionSummaryCSSearchRepository;
+
+    public CollisionSummaryCSService(CollisionSummaryCSRepository collisionSummaryCSRepository, CollisionSummaryCSMapper collisionSummaryCSMapper, CollisionSummaryCSSearchRepository collisionSummaryCSSearchRepository) {
         this.collisionSummaryCSRepository = collisionSummaryCSRepository;
         this.collisionSummaryCSMapper = collisionSummaryCSMapper;
+        this.collisionSummaryCSSearchRepository = collisionSummaryCSSearchRepository;
     }
 
     /**
@@ -41,7 +48,9 @@ public class CollisionSummaryCSService {
         log.debug("Request to save CollisionSummaryCS : {}", collisionSummaryCSDTO);
         CollisionSummaryCS collisionSummaryCS = collisionSummaryCSMapper.toEntity(collisionSummaryCSDTO);
         collisionSummaryCS = collisionSummaryCSRepository.save(collisionSummaryCS);
-        return collisionSummaryCSMapper.toDto(collisionSummaryCS);
+        CollisionSummaryCSDTO result = collisionSummaryCSMapper.toDto(collisionSummaryCS);
+        collisionSummaryCSSearchRepository.save(collisionSummaryCS);
+        return result;
     }
 
     /**
@@ -66,7 +75,7 @@ public class CollisionSummaryCSService {
     @Transactional(readOnly = true)
     public CollisionSummaryCSDTO findOne(Long id) {
         log.debug("Request to get CollisionSummaryCS : {}", id);
-        CollisionSummaryCS collisionSummaryCS = collisionSummaryCSRepository.findSomething(id);
+        CollisionSummaryCS collisionSummaryCS = collisionSummaryCSRepository.findOne(id);
         return collisionSummaryCSMapper.toDto(collisionSummaryCS);
     }
 
@@ -78,5 +87,21 @@ public class CollisionSummaryCSService {
     public void delete(Long id) {
         log.debug("Request to delete CollisionSummaryCS : {}", id);
         collisionSummaryCSRepository.delete(id);
+        collisionSummaryCSSearchRepository.delete(id);
+    }
+
+    /**
+     * Search for the collisionSummaryCS corresponding to the query.
+     *
+     *  @param query the query of the search
+     *  @return the list of entities
+     */
+    @Transactional(readOnly = true)
+    public List<CollisionSummaryCSDTO> search(String query) {
+        log.debug("Request to search CollisionSummaryCS for query {}", query);
+        return StreamSupport
+            .stream(collisionSummaryCSSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+            .map(collisionSummaryCSMapper::toDto)
+            .collect(Collectors.toList());
     }
 }

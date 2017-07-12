@@ -16,6 +16,9 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.StreamSupport;
+
+import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * REST controller for managing IdealPlan.
@@ -115,4 +118,19 @@ public class IdealPlanResource {
         idealPlanService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+
+    /**
+     * SEARCH  /_search/ideal-plans?query=:query : search for the idealPlan corresponding
+     * to the query.
+     *
+     * @param query the query of the idealPlan search
+     * @return the result of the search
+     */
+    @GetMapping("/_search/ideal-plans")
+    @Timed
+    public List<IdealPlanDTO> searchIdealPlans(@RequestParam String query) {
+        log.debug("REST request to search IdealPlans for query {}", query);
+        return idealPlanService.search(query);
+    }
+
 }

@@ -5,6 +5,7 @@ import at.meroff.itproject.CeappApp;
 import at.meroff.itproject.domain.Curriculum;
 import at.meroff.itproject.repository.CurriculumRepository;
 import at.meroff.itproject.service.CurriculumService;
+import at.meroff.itproject.repository.search.CurriculumSearchRepository;
 import at.meroff.itproject.service.dto.CurriculumDTO;
 import at.meroff.itproject.service.mapper.CurriculumMapper;
 import at.meroff.itproject.web.rest.errors.ExceptionTranslator;
@@ -56,6 +57,9 @@ public class CurriculumResourceIntTest {
     private CurriculumService curriculumService;
 
     @Autowired
+    private CurriculumSearchRepository curriculumSearchRepository;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -96,6 +100,7 @@ public class CurriculumResourceIntTest {
 
     @Before
     public void initTest() {
+        curriculumSearchRepository.deleteAll();
         curriculum = createEntity(em);
     }
 
@@ -117,6 +122,10 @@ public class CurriculumResourceIntTest {
         Curriculum testCurriculum = curriculumList.get(curriculumList.size() - 1);
         assertThat(testCurriculum.getCurId()).isEqualTo(DEFAULT_CUR_ID);
         assertThat(testCurriculum.getCurName()).isEqualTo(DEFAULT_CUR_NAME);
+
+        // Validate the Curriculum in Elasticsearch
+        Curriculum curriculumEs = curriculumSearchRepository.findOne(testCurriculum.getId());
+        assertThat(curriculumEs).isEqualToComparingFieldByField(testCurriculum);
     }
 
     @Test
@@ -220,6 +229,7 @@ public class CurriculumResourceIntTest {
     public void updateCurriculum() throws Exception {
         // Initialize the database
         curriculumRepository.saveAndFlush(curriculum);
+        curriculumSearchRepository.save(curriculum);
         int databaseSizeBeforeUpdate = curriculumRepository.findAll().size();
 
         // Update the curriculum
@@ -240,6 +250,10 @@ public class CurriculumResourceIntTest {
         Curriculum testCurriculum = curriculumList.get(curriculumList.size() - 1);
         assertThat(testCurriculum.getCurId()).isEqualTo(UPDATED_CUR_ID);
         assertThat(testCurriculum.getCurName()).isEqualTo(UPDATED_CUR_NAME);
+
+        // Validate the Curriculum in Elasticsearch
+        Curriculum curriculumEs = curriculumSearchRepository.findOne(testCurriculum.getId());
+        assertThat(curriculumEs).isEqualToComparingFieldByField(testCurriculum);
     }
 
     @Test
@@ -266,6 +280,7 @@ public class CurriculumResourceIntTest {
     public void deleteCurriculum() throws Exception {
         // Initialize the database
         curriculumRepository.saveAndFlush(curriculum);
+        curriculumSearchRepository.save(curriculum);
         int databaseSizeBeforeDelete = curriculumRepository.findAll().size();
 
         // Get the curriculum
@@ -273,9 +288,29 @@ public class CurriculumResourceIntTest {
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
 
+        // Validate Elasticsearch is empty
+        boolean curriculumExistsInEs = curriculumSearchRepository.exists(curriculum.getId());
+        assertThat(curriculumExistsInEs).isFalse();
+
         // Validate the database is empty
         List<Curriculum> curriculumList = curriculumRepository.findAll();
         assertThat(curriculumList).hasSize(databaseSizeBeforeDelete - 1);
+    }
+
+    @Test
+    @Transactional
+    public void searchCurriculum() throws Exception {
+        // Initialize the database
+        curriculumRepository.saveAndFlush(curriculum);
+        curriculumSearchRepository.save(curriculum);
+
+        // Search the curriculum
+        restCurriculumMockMvc.perform(get("/api/_search/curricula?query=id:" + curriculum.getId()))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(curriculum.getId().intValue())))
+            .andExpect(jsonPath("$.[*].curId").value(hasItem(DEFAULT_CUR_ID)))
+            .andExpect(jsonPath("$.[*].curName").value(hasItem(DEFAULT_CUR_NAME.toString())));
     }
 
     @Test

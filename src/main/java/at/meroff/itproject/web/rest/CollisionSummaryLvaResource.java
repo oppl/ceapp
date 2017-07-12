@@ -15,6 +15,9 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.StreamSupport;
+
+import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * REST controller for managing CollisionSummaryLva.
@@ -114,4 +117,19 @@ public class CollisionSummaryLvaResource {
         collisionSummaryLvaService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+
+    /**
+     * SEARCH  /_search/collision-summary-lvas?query=:query : search for the collisionSummaryLva corresponding
+     * to the query.
+     *
+     * @param query the query of the collisionSummaryLva search
+     * @return the result of the search
+     */
+    @GetMapping("/_search/collision-summary-lvas")
+    @Timed
+    public List<CollisionSummaryLvaDTO> searchCollisionSummaryLvas(@RequestParam String query) {
+        log.debug("REST request to search CollisionSummaryLvas for query {}", query);
+        return collisionSummaryLvaService.search(query);
+    }
+
 }

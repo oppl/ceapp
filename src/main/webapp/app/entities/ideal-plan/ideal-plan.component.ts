@@ -16,22 +16,48 @@ export class IdealPlanComponent implements OnInit, OnDestroy {
 idealPlans: IdealPlan[];
     currentAccount: any;
     eventSubscriber: Subscription;
+    currentSearch: string;
 
     constructor(
         private idealPlanService: IdealPlanService,
         private alertService: JhiAlertService,
         private eventManager: JhiEventManager,
+        private activatedRoute: ActivatedRoute,
         private principal: Principal
     ) {
+        this.currentSearch = activatedRoute.snapshot.params['search'] ? activatedRoute.snapshot.params['search'] : '';
     }
 
     loadAll() {
+        if (this.currentSearch) {
+            this.idealPlanService.search({
+                query: this.currentSearch,
+                }).subscribe(
+                    (res: ResponseWrapper) => this.idealPlans = res.json,
+                    (res: ResponseWrapper) => this.onError(res.json)
+                );
+            return;
+       }
         this.idealPlanService.query().subscribe(
             (res: ResponseWrapper) => {
                 this.idealPlans = res.json;
+                this.currentSearch = '';
             },
             (res: ResponseWrapper) => this.onError(res.json)
         );
+    }
+
+    search(query) {
+        if (!query) {
+            return this.clear();
+        }
+        this.currentSearch = query;
+        this.loadAll();
+    }
+
+    clear() {
+        this.currentSearch = '';
+        this.loadAll();
     }
     ngOnInit() {
         this.loadAll();

@@ -4,7 +4,8 @@
             "home": {
                 "title": "Curriculum Subjects",
                 "createLabel": "Create a new Curriculum Subject",
-                "createOrEditLabel": "Create or edit a Curriculum Subject"
+                "createOrEditLabel": "Create or edit a Curriculum Subject",
+                "search": "Search for Curriculum Subject"
             },
             "created": "A new Curriculum Subject is created with identifier {{ param }}",
             "updated": "A Curriculum Subject is updated with identifier {{ param }}",

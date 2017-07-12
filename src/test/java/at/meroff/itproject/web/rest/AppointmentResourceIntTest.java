@@ -5,6 +5,7 @@ import at.meroff.itproject.CeappApp;
 import at.meroff.itproject.domain.Appointment;
 import at.meroff.itproject.repository.AppointmentRepository;
 import at.meroff.itproject.service.AppointmentService;
+import at.meroff.itproject.repository.search.AppointmentSearchRepository;
 import at.meroff.itproject.service.dto.AppointmentDTO;
 import at.meroff.itproject.service.mapper.AppointmentMapper;
 import at.meroff.itproject.web.rest.errors.ExceptionTranslator;
@@ -70,6 +71,9 @@ public class AppointmentResourceIntTest {
     private AppointmentService appointmentService;
 
     @Autowired
+    private AppointmentSearchRepository appointmentSearchRepository;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -113,6 +117,7 @@ public class AppointmentResourceIntTest {
 
     @Before
     public void initTest() {
+        appointmentSearchRepository.deleteAll();
         appointment = createEntity(em);
     }
 
@@ -137,6 +142,10 @@ public class AppointmentResourceIntTest {
         assertThat(testAppointment.isIsExam()).isEqualTo(DEFAULT_IS_EXAM);
         assertThat(testAppointment.getRoom()).isEqualTo(DEFAULT_ROOM);
         assertThat(testAppointment.getTheme()).isEqualTo(DEFAULT_THEME);
+
+        // Validate the Appointment in Elasticsearch
+        Appointment appointmentEs = appointmentSearchRepository.findOne(testAppointment.getId());
+        assertThat(appointmentEs).isEqualToComparingFieldByField(testAppointment);
     }
 
     @Test
@@ -265,6 +274,7 @@ public class AppointmentResourceIntTest {
     public void updateAppointment() throws Exception {
         // Initialize the database
         appointmentRepository.saveAndFlush(appointment);
+        appointmentSearchRepository.save(appointment);
         int databaseSizeBeforeUpdate = appointmentRepository.findAll().size();
 
         // Update the appointment
@@ -291,6 +301,10 @@ public class AppointmentResourceIntTest {
         assertThat(testAppointment.isIsExam()).isEqualTo(UPDATED_IS_EXAM);
         assertThat(testAppointment.getRoom()).isEqualTo(UPDATED_ROOM);
         assertThat(testAppointment.getTheme()).isEqualTo(UPDATED_THEME);
+
+        // Validate the Appointment in Elasticsearch
+        Appointment appointmentEs = appointmentSearchRepository.findOne(testAppointment.getId());
+        assertThat(appointmentEs).isEqualToComparingFieldByField(testAppointment);
     }
 
     @Test
@@ -317,6 +331,7 @@ public class AppointmentResourceIntTest {
     public void deleteAppointment() throws Exception {
         // Initialize the database
         appointmentRepository.saveAndFlush(appointment);
+        appointmentSearchRepository.save(appointment);
         int databaseSizeBeforeDelete = appointmentRepository.findAll().size();
 
         // Get the appointment
@@ -324,9 +339,32 @@ public class AppointmentResourceIntTest {
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
 
+        // Validate Elasticsearch is empty
+        boolean appointmentExistsInEs = appointmentSearchRepository.exists(appointment.getId());
+        assertThat(appointmentExistsInEs).isFalse();
+
         // Validate the database is empty
         List<Appointment> appointmentList = appointmentRepository.findAll();
         assertThat(appointmentList).hasSize(databaseSizeBeforeDelete - 1);
+    }
+
+    @Test
+    @Transactional
+    public void searchAppointment() throws Exception {
+        // Initialize the database
+        appointmentRepository.saveAndFlush(appointment);
+        appointmentSearchRepository.save(appointment);
+
+        // Search the appointment
+        restAppointmentMockMvc.perform(get("/api/_search/appointments?query=id:" + appointment.getId()))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(appointment.getId().intValue())))
+            .andExpect(jsonPath("$.[*].startDateTime").value(hasItem(sameInstant(DEFAULT_START_DATE_TIME))))
+            .andExpect(jsonPath("$.[*].endDateTime").value(hasItem(sameInstant(DEFAULT_END_DATE_TIME))))
+            .andExpect(jsonPath("$.[*].isExam").value(hasItem(DEFAULT_IS_EXAM.booleanValue())))
+            .andExpect(jsonPath("$.[*].room").value(hasItem(DEFAULT_ROOM.toString())))
+            .andExpect(jsonPath("$.[*].theme").value(hasItem(DEFAULT_THEME.toString())));
     }
 
     @Test

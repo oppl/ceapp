@@ -2,6 +2,7 @@ package at.meroff.itproject.service;
 
 import at.meroff.itproject.domain.Institute;
 import at.meroff.itproject.repository.InstituteRepository;
+import at.meroff.itproject.repository.search.InstituteSearchRepository;
 import at.meroff.itproject.service.dto.InstituteDTO;
 import at.meroff.itproject.service.mapper.InstituteMapper;
 import org.slf4j.Logger;
@@ -12,6 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
+import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing Institute.
@@ -26,9 +30,12 @@ public class InstituteService {
 
     private final InstituteMapper instituteMapper;
 
-    public InstituteService(InstituteRepository instituteRepository, InstituteMapper instituteMapper) {
+    private final InstituteSearchRepository instituteSearchRepository;
+
+    public InstituteService(InstituteRepository instituteRepository, InstituteMapper instituteMapper, InstituteSearchRepository instituteSearchRepository) {
         this.instituteRepository = instituteRepository;
         this.instituteMapper = instituteMapper;
+        this.instituteSearchRepository = instituteSearchRepository;
     }
 
     /**
@@ -41,7 +48,9 @@ public class InstituteService {
         log.debug("Request to save Institute : {}", instituteDTO);
         Institute institute = instituteMapper.toEntity(instituteDTO);
         institute = instituteRepository.save(institute);
-        return instituteMapper.toDto(institute);
+        InstituteDTO result = instituteMapper.toDto(institute);
+        instituteSearchRepository.save(institute);
+        return result;
     }
 
     /**
@@ -85,5 +94,21 @@ public class InstituteService {
     public void delete(Long id) {
         log.debug("Request to delete Institute : {}", id);
         instituteRepository.delete(id);
+        instituteSearchRepository.delete(id);
+    }
+
+    /**
+     * Search for the institute corresponding to the query.
+     *
+     *  @param query the query of the search
+     *  @return the list of entities
+     */
+    @Transactional(readOnly = true)
+    public List<InstituteDTO> search(String query) {
+        log.debug("Request to search Institutes for query {}", query);
+        return StreamSupport
+            .stream(instituteSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+            .map(instituteMapper::toDto)
+            .collect(Collectors.toList());
     }
 }
