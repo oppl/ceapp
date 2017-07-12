@@ -4,7 +4,8 @@
             "home": {
                 "title": "Curricula",
                 "createLabel": "Curriculum erstellen",
-                "createOrEditLabel": "Curriculum erstellen oder bearbeiten"
+                "createOrEditLabel": "Curriculum erstellen oder bearbeiten",
+                "search": "Suche nach Curriculum"
             },
             "created": "Curriculum erstellt mit ID {{ param }}",
             "updated": "Curriculum aktualisiert mit ID {{ param }}",

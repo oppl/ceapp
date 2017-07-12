@@ -4,7 +4,7 @@
       "packageName": "at.meroff.itproject",
       "nativeLanguage": "de"
     },
-    "jhipsterVersion": "4.6.0",
+    "jhipsterVersion": "4.6.1",
     "baseName": "ceapp",
     "packageName": "at.meroff.itproject",
     "packageFolder": "at/meroff/itproject",
@@ -16,7 +16,7 @@
     "databaseType": "sql",
     "devDatabaseType": "h2Memory",
     "prodDatabaseType": "postgresql",
-    "searchEngine": false,
+    "searchEngine": "elasticsearch",
     "messageBroker": false,
     "serviceDiscoveryType": false,
     "buildTool": "maven",

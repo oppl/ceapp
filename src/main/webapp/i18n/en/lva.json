@@ -4,7 +4,8 @@
             "home": {
                 "title": "Lvas",
                 "createLabel": "Create a new Lva",
-                "createOrEditLabel": "Create or edit a Lva"
+                "createOrEditLabel": "Create or edit a Lva",
+                "search": "Search for Lva"
             },
             "created": "A new Lva is created with identifier {{ param }}",
             "updated": "A Lva is updated with identifier {{ param }}",

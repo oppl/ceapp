@@ -16,6 +16,9 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.StreamSupport;
+
+import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * REST controller for managing Lva.
@@ -115,4 +118,19 @@ public class LvaResource {
         lvaService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+
+    /**
+     * SEARCH  /_search/lvas?query=:query : search for the lva corresponding
+     * to the query.
+     *
+     * @param query the query of the lva search
+     * @return the result of the search
+     */
+    @GetMapping("/_search/lvas")
+    @Timed
+    public List<LvaDTO> searchLvas(@RequestParam String query) {
+        log.debug("REST request to search Lvas for query {}", query);
+        return lvaService.search(query);
+    }
+
 }

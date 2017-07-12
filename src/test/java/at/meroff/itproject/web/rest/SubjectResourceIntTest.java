@@ -5,6 +5,7 @@ import at.meroff.itproject.CeappApp;
 import at.meroff.itproject.domain.Subject;
 import at.meroff.itproject.repository.SubjectRepository;
 import at.meroff.itproject.service.SubjectService;
+import at.meroff.itproject.repository.search.SubjectSearchRepository;
 import at.meroff.itproject.service.dto.SubjectDTO;
 import at.meroff.itproject.service.mapper.SubjectMapper;
 import at.meroff.itproject.web.rest.errors.ExceptionTranslator;
@@ -57,6 +58,9 @@ public class SubjectResourceIntTest {
     private SubjectService subjectService;
 
     @Autowired
+    private SubjectSearchRepository subjectSearchRepository;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -97,6 +101,7 @@ public class SubjectResourceIntTest {
 
     @Before
     public void initTest() {
+        subjectSearchRepository.deleteAll();
         subject = createEntity(em);
     }
 
@@ -118,6 +123,10 @@ public class SubjectResourceIntTest {
         Subject testSubject = subjectList.get(subjectList.size() - 1);
         assertThat(testSubject.getSubjectName()).isEqualTo(DEFAULT_SUBJECT_NAME);
         assertThat(testSubject.getSubjectType()).isEqualTo(DEFAULT_SUBJECT_TYPE);
+
+        // Validate the Subject in Elasticsearch
+        Subject subjectEs = subjectSearchRepository.findOne(testSubject.getId());
+        assertThat(subjectEs).isEqualToComparingFieldByField(testSubject);
     }
 
     @Test
@@ -221,6 +230,7 @@ public class SubjectResourceIntTest {
     public void updateSubject() throws Exception {
         // Initialize the database
         subjectRepository.saveAndFlush(subject);
+        subjectSearchRepository.save(subject);
         int databaseSizeBeforeUpdate = subjectRepository.findAll().size();
 
         // Update the subject
@@ -241,6 +251,10 @@ public class SubjectResourceIntTest {
         Subject testSubject = subjectList.get(subjectList.size() - 1);
         assertThat(testSubject.getSubjectName()).isEqualTo(UPDATED_SUBJECT_NAME);
         assertThat(testSubject.getSubjectType()).isEqualTo(UPDATED_SUBJECT_TYPE);
+
+        // Validate the Subject in Elasticsearch
+        Subject subjectEs = subjectSearchRepository.findOne(testSubject.getId());
+        assertThat(subjectEs).isEqualToComparingFieldByField(testSubject);
     }
 
     @Test
@@ -267,6 +281,7 @@ public class SubjectResourceIntTest {
     public void deleteSubject() throws Exception {
         // Initialize the database
         subjectRepository.saveAndFlush(subject);
+        subjectSearchRepository.save(subject);
         int databaseSizeBeforeDelete = subjectRepository.findAll().size();
 
         // Get the subject
@@ -274,9 +289,29 @@ public class SubjectResourceIntTest {
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
 
+        // Validate Elasticsearch is empty
+        boolean subjectExistsInEs = subjectSearchRepository.exists(subject.getId());
+        assertThat(subjectExistsInEs).isFalse();
+
         // Validate the database is empty
         List<Subject> subjectList = subjectRepository.findAll();
         assertThat(subjectList).hasSize(databaseSizeBeforeDelete - 1);
+    }
+
+    @Test
+    @Transactional
+    public void searchSubject() throws Exception {
+        // Initialize the database
+        subjectRepository.saveAndFlush(subject);
+        subjectSearchRepository.save(subject);
+
+        // Search the subject
+        restSubjectMockMvc.perform(get("/api/_search/subjects?query=id:" + subject.getId()))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(subject.getId().intValue())))
+            .andExpect(jsonPath("$.[*].subjectName").value(hasItem(DEFAULT_SUBJECT_NAME.toString())))
+            .andExpect(jsonPath("$.[*].subjectType").value(hasItem(DEFAULT_SUBJECT_TYPE.toString())));
     }
 
     @Test

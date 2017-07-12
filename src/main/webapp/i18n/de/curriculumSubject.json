@@ -4,7 +4,8 @@
             "home": {
                 "title": "Curriculum Subjects",
                 "createLabel": "Curriculum Subject erstellen",
-                "createOrEditLabel": "Curriculum Subject erstellen oder bearbeiten"
+                "createOrEditLabel": "Curriculum Subject erstellen oder bearbeiten",
+                "search": "Suche nach Curriculum Subject"
             },
             "created": "Curriculum Subject erstellt mit ID {{ param }}",
             "updated": "Curriculum Subject aktualisiert mit ID {{ param }}",

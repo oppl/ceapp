@@ -4,7 +4,8 @@
             "home": {
                 "title": "Ideal Plans",
                 "createLabel": "Create a new Ideal Plan",
-                "createOrEditLabel": "Create or edit a Ideal Plan"
+                "createOrEditLabel": "Create or edit a Ideal Plan",
+                "search": "Search for Ideal Plan"
             },
             "created": "A new Ideal Plan is created with identifier {{ param }}",
             "updated": "A Ideal Plan is updated with identifier {{ param }}",

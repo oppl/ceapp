@@ -4,7 +4,8 @@
             "home": {
                 "title": "Ideal Plans",
                 "createLabel": "Ideal Plan erstellen",
-                "createOrEditLabel": "Ideal Plan erstellen oder bearbeiten"
+                "createOrEditLabel": "Ideal Plan erstellen oder bearbeiten",
+                "search": "Suche nach Ideal Plan"
             },
             "created": "Ideal Plan erstellt mit ID {{ param }}",
             "updated": "Ideal Plan aktualisiert mit ID {{ param }}",

@@ -5,6 +5,7 @@ import at.meroff.itproject.CeappApp;
 import at.meroff.itproject.domain.Lva;
 import at.meroff.itproject.repository.LvaRepository;
 import at.meroff.itproject.service.LvaService;
+import at.meroff.itproject.repository.search.LvaSearchRepository;
 import at.meroff.itproject.service.dto.LvaDTO;
 import at.meroff.itproject.service.mapper.LvaMapper;
 import at.meroff.itproject.web.rest.errors.ExceptionTranslator;
@@ -64,6 +65,9 @@ public class LvaResourceIntTest {
     private LvaService lvaService;
 
     @Autowired
+    private LvaSearchRepository lvaSearchRepository;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -106,6 +110,7 @@ public class LvaResourceIntTest {
 
     @Before
     public void initTest() {
+        lvaSearchRepository.deleteAll();
         lva = createEntity(em);
     }
 
@@ -129,6 +134,10 @@ public class LvaResourceIntTest {
         assertThat(testLva.getLvaType()).isEqualTo(DEFAULT_LVA_TYPE);
         assertThat(testLva.getYear()).isEqualTo(DEFAULT_YEAR);
         assertThat(testLva.getSemester()).isEqualTo(DEFAULT_SEMESTER);
+
+        // Validate the Lva in Elasticsearch
+        Lva lvaEs = lvaSearchRepository.findOne(testLva.getId());
+        assertThat(lvaEs).isEqualToComparingFieldByField(testLva);
     }
 
     @Test
@@ -274,6 +283,7 @@ public class LvaResourceIntTest {
     public void updateLva() throws Exception {
         // Initialize the database
         lvaRepository.saveAndFlush(lva);
+        lvaSearchRepository.save(lva);
         int databaseSizeBeforeUpdate = lvaRepository.findAll().size();
 
         // Update the lva
@@ -298,6 +308,10 @@ public class LvaResourceIntTest {
         assertThat(testLva.getLvaType()).isEqualTo(UPDATED_LVA_TYPE);
         assertThat(testLva.getYear()).isEqualTo(UPDATED_YEAR);
         assertThat(testLva.getSemester()).isEqualTo(UPDATED_SEMESTER);
+
+        // Validate the Lva in Elasticsearch
+        Lva lvaEs = lvaSearchRepository.findOne(testLva.getId());
+        assertThat(lvaEs).isEqualToComparingFieldByField(testLva);
     }
 
     @Test
@@ -324,6 +338,7 @@ public class LvaResourceIntTest {
     public void deleteLva() throws Exception {
         // Initialize the database
         lvaRepository.saveAndFlush(lva);
+        lvaSearchRepository.save(lva);
         int databaseSizeBeforeDelete = lvaRepository.findAll().size();
 
         // Get the lva
@@ -331,9 +346,31 @@ public class LvaResourceIntTest {
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
 
+        // Validate Elasticsearch is empty
+        boolean lvaExistsInEs = lvaSearchRepository.exists(lva.getId());
+        assertThat(lvaExistsInEs).isFalse();
+
         // Validate the database is empty
         List<Lva> lvaList = lvaRepository.findAll();
         assertThat(lvaList).hasSize(databaseSizeBeforeDelete - 1);
+    }
+
+    @Test
+    @Transactional
+    public void searchLva() throws Exception {
+        // Initialize the database
+        lvaRepository.saveAndFlush(lva);
+        lvaSearchRepository.save(lva);
+
+        // Search the lva
+        restLvaMockMvc.perform(get("/api/_search/lvas?query=id:" + lva.getId()))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(lva.getId().intValue())))
+            .andExpect(jsonPath("$.[*].lvaNr").value(hasItem(DEFAULT_LVA_NR.toString())))
+            .andExpect(jsonPath("$.[*].lvaType").value(hasItem(DEFAULT_LVA_TYPE.toString())))
+            .andExpect(jsonPath("$.[*].year").value(hasItem(DEFAULT_YEAR)))
+            .andExpect(jsonPath("$.[*].semester").value(hasItem(DEFAULT_SEMESTER.toString())));
     }
 
     @Test

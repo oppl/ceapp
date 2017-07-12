@@ -3,6 +3,7 @@ package at.meroff.itproject.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -19,6 +20,7 @@ import at.meroff.itproject.domain.enumeration.SubjectType;
 @Entity
 @Table(name = "subject")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Document(indexName = "subject")
 public class Subject implements Serializable {
 
     private static final long serialVersionUID = 1L;

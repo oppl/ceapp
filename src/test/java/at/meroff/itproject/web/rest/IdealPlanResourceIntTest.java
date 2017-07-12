@@ -5,6 +5,7 @@ import at.meroff.itproject.CeappApp;
 import at.meroff.itproject.domain.IdealPlan;
 import at.meroff.itproject.repository.IdealPlanRepository;
 import at.meroff.itproject.service.IdealPlanService;
+import at.meroff.itproject.repository.search.IdealPlanSearchRepository;
 import at.meroff.itproject.service.dto.IdealPlanDTO;
 import at.meroff.itproject.service.mapper.IdealPlanMapper;
 import at.meroff.itproject.web.rest.errors.ExceptionTranslator;
@@ -57,6 +58,9 @@ public class IdealPlanResourceIntTest {
     private IdealPlanService idealPlanService;
 
     @Autowired
+    private IdealPlanSearchRepository idealPlanSearchRepository;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -97,6 +101,7 @@ public class IdealPlanResourceIntTest {
 
     @Before
     public void initTest() {
+        idealPlanSearchRepository.deleteAll();
         idealPlan = createEntity(em);
     }
 
@@ -118,6 +123,10 @@ public class IdealPlanResourceIntTest {
         IdealPlan testIdealPlan = idealPlanList.get(idealPlanList.size() - 1);
         assertThat(testIdealPlan.getYear()).isEqualTo(DEFAULT_YEAR);
         assertThat(testIdealPlan.getSemester()).isEqualTo(DEFAULT_SEMESTER);
+
+        // Validate the IdealPlan in Elasticsearch
+        IdealPlan idealPlanEs = idealPlanSearchRepository.findOne(testIdealPlan.getId());
+        assertThat(idealPlanEs).isEqualToComparingFieldByField(testIdealPlan);
     }
 
     @Test
@@ -221,6 +230,7 @@ public class IdealPlanResourceIntTest {
     public void updateIdealPlan() throws Exception {
         // Initialize the database
         idealPlanRepository.saveAndFlush(idealPlan);
+        idealPlanSearchRepository.save(idealPlan);
         int databaseSizeBeforeUpdate = idealPlanRepository.findAll().size();
 
         // Update the idealPlan
@@ -241,6 +251,10 @@ public class IdealPlanResourceIntTest {
         IdealPlan testIdealPlan = idealPlanList.get(idealPlanList.size() - 1);
         assertThat(testIdealPlan.getYear()).isEqualTo(UPDATED_YEAR);
         assertThat(testIdealPlan.getSemester()).isEqualTo(UPDATED_SEMESTER);
+
+        // Validate the IdealPlan in Elasticsearch
+        IdealPlan idealPlanEs = idealPlanSearchRepository.findOne(testIdealPlan.getId());
+        assertThat(idealPlanEs).isEqualToComparingFieldByField(testIdealPlan);
     }
 
     @Test
@@ -267,6 +281,7 @@ public class IdealPlanResourceIntTest {
     public void deleteIdealPlan() throws Exception {
         // Initialize the database
         idealPlanRepository.saveAndFlush(idealPlan);
+        idealPlanSearchRepository.save(idealPlan);
         int databaseSizeBeforeDelete = idealPlanRepository.findAll().size();
 
         // Get the idealPlan
@@ -274,9 +289,29 @@ public class IdealPlanResourceIntTest {
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
 
+        // Validate Elasticsearch is empty
+        boolean idealPlanExistsInEs = idealPlanSearchRepository.exists(idealPlan.getId());
+        assertThat(idealPlanExistsInEs).isFalse();
+
         // Validate the database is empty
         List<IdealPlan> idealPlanList = idealPlanRepository.findAll();
         assertThat(idealPlanList).hasSize(databaseSizeBeforeDelete - 1);
+    }
+
+    @Test
+    @Transactional
+    public void searchIdealPlan() throws Exception {
+        // Initialize the database
+        idealPlanRepository.saveAndFlush(idealPlan);
+        idealPlanSearchRepository.save(idealPlan);
+
+        // Search the idealPlan
+        restIdealPlanMockMvc.perform(get("/api/_search/ideal-plans?query=id:" + idealPlan.getId()))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(idealPlan.getId().intValue())))
+            .andExpect(jsonPath("$.[*].year").value(hasItem(DEFAULT_YEAR)))
+            .andExpect(jsonPath("$.[*].semester").value(hasItem(DEFAULT_SEMESTER.toString())));
     }
 
     @Test

@@ -4,7 +4,8 @@
             "home": {
                 "title": "Curricula",
                 "createLabel": "Create a new Curriculum",
-                "createOrEditLabel": "Create or edit a Curriculum"
+                "createOrEditLabel": "Create or edit a Curriculum",
+                "search": "Search for Curriculum"
             },
             "created": "A new Curriculum is created with identifier {{ param }}",
             "updated": "A Curriculum is updated with identifier {{ param }}",

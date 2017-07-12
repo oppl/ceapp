@@ -4,7 +4,8 @@
             "home": {
                 "title": "Appointments",
                 "createLabel": "Appointment erstellen",
-                "createOrEditLabel": "Appointment erstellen oder bearbeiten"
+                "createOrEditLabel": "Appointment erstellen oder bearbeiten",
+                "search": "Suche nach Appointment"
             },
             "created": "Appointment erstellt mit ID {{ param }}",
             "updated": "Appointment aktualisiert mit ID {{ param }}",

@@ -16,6 +16,9 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.StreamSupport;
+
+import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * REST controller for managing Institute.
@@ -115,4 +118,19 @@ public class InstituteResource {
         instituteService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+
+    /**
+     * SEARCH  /_search/institutes?query=:query : search for the institute corresponding
+     * to the query.
+     *
+     * @param query the query of the institute search
+     * @return the result of the search
+     */
+    @GetMapping("/_search/institutes")
+    @Timed
+    public List<InstituteDTO> searchInstitutes(@RequestParam String query) {
+        log.debug("REST request to search Institutes for query {}", query);
+        return instituteService.search(query);
+    }
+
 }

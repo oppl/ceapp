@@ -5,6 +5,7 @@ import at.meroff.itproject.CeappApp;
 import at.meroff.itproject.domain.Institute;
 import at.meroff.itproject.repository.InstituteRepository;
 import at.meroff.itproject.service.InstituteService;
+import at.meroff.itproject.repository.search.InstituteSearchRepository;
 import at.meroff.itproject.service.dto.InstituteDTO;
 import at.meroff.itproject.service.mapper.InstituteMapper;
 import at.meroff.itproject.web.rest.errors.ExceptionTranslator;
@@ -56,6 +57,9 @@ public class InstituteResourceIntTest {
     private InstituteService instituteService;
 
     @Autowired
+    private InstituteSearchRepository instituteSearchRepository;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -96,6 +100,7 @@ public class InstituteResourceIntTest {
 
     @Before
     public void initTest() {
+        instituteSearchRepository.deleteAll();
         institute = createEntity(em);
     }
 
@@ -117,6 +122,10 @@ public class InstituteResourceIntTest {
         Institute testInstitute = instituteList.get(instituteList.size() - 1);
         assertThat(testInstitute.getInstituteId()).isEqualTo(DEFAULT_INSTITUTE_ID);
         assertThat(testInstitute.getInstituteName()).isEqualTo(DEFAULT_INSTITUTE_NAME);
+
+        // Validate the Institute in Elasticsearch
+        Institute instituteEs = instituteSearchRepository.findOne(testInstitute.getId());
+        assertThat(instituteEs).isEqualToComparingFieldByField(testInstitute);
     }
 
     @Test
@@ -220,6 +229,7 @@ public class InstituteResourceIntTest {
     public void updateInstitute() throws Exception {
         // Initialize the database
         instituteRepository.saveAndFlush(institute);
+        instituteSearchRepository.save(institute);
         int databaseSizeBeforeUpdate = instituteRepository.findAll().size();
 
         // Update the institute
@@ -240,6 +250,10 @@ public class InstituteResourceIntTest {
         Institute testInstitute = instituteList.get(instituteList.size() - 1);
         assertThat(testInstitute.getInstituteId()).isEqualTo(UPDATED_INSTITUTE_ID);
         assertThat(testInstitute.getInstituteName()).isEqualTo(UPDATED_INSTITUTE_NAME);
+
+        // Validate the Institute in Elasticsearch
+        Institute instituteEs = instituteSearchRepository.findOne(testInstitute.getId());
+        assertThat(instituteEs).isEqualToComparingFieldByField(testInstitute);
     }
 
     @Test
@@ -266,6 +280,7 @@ public class InstituteResourceIntTest {
     public void deleteInstitute() throws Exception {
         // Initialize the database
         instituteRepository.saveAndFlush(institute);
+        instituteSearchRepository.save(institute);
         int databaseSizeBeforeDelete = instituteRepository.findAll().size();
 
         // Get the institute
@@ -273,9 +288,29 @@ public class InstituteResourceIntTest {
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
 
+        // Validate Elasticsearch is empty
+        boolean instituteExistsInEs = instituteSearchRepository.exists(institute.getId());
+        assertThat(instituteExistsInEs).isFalse();
+
         // Validate the database is empty
         List<Institute> instituteList = instituteRepository.findAll();
         assertThat(instituteList).hasSize(databaseSizeBeforeDelete - 1);
+    }
+
+    @Test
+    @Transactional
+    public void searchInstitute() throws Exception {
+        // Initialize the database
+        instituteRepository.saveAndFlush(institute);
+        instituteSearchRepository.save(institute);
+
+        // Search the institute
+        restInstituteMockMvc.perform(get("/api/_search/institutes?query=id:" + institute.getId()))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(institute.getId().intValue())))
+            .andExpect(jsonPath("$.[*].instituteId").value(hasItem(DEFAULT_INSTITUTE_ID)))
+            .andExpect(jsonPath("$.[*].instituteName").value(hasItem(DEFAULT_INSTITUTE_NAME.toString())));
     }
 
     @Test
