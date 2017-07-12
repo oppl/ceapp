@@ -4,7 +4,8 @@
             "home": {
                 "title": "Collision Summary CS",
                 "createLabel": "Create a new Collision Summary CS",
-                "createOrEditLabel": "Create or edit a Collision Summary CS"
+                "createOrEditLabel": "Create or edit a Collision Summary CS",
+                "search": "Search for Collision Summary CS"
             },
             "created": "A new Collision Summary CS is created with identifier {{ param }}",
             "updated": "A Collision Summary CS is updated with identifier {{ param }}",

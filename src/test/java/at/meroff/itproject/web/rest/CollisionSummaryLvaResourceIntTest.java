@@ -5,6 +5,7 @@ import at.meroff.itproject.CeappApp;
 import at.meroff.itproject.domain.CollisionSummaryLva;
 import at.meroff.itproject.repository.CollisionSummaryLvaRepository;
 import at.meroff.itproject.service.CollisionSummaryLvaService;
+import at.meroff.itproject.repository.search.CollisionSummaryLvaSearchRepository;
 import at.meroff.itproject.service.dto.CollisionSummaryLvaDTO;
 import at.meroff.itproject.service.mapper.CollisionSummaryLvaMapper;
 import at.meroff.itproject.web.rest.errors.ExceptionTranslator;
@@ -53,6 +54,9 @@ public class CollisionSummaryLvaResourceIntTest {
     private CollisionSummaryLvaService collisionSummaryLvaService;
 
     @Autowired
+    private CollisionSummaryLvaSearchRepository collisionSummaryLvaSearchRepository;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -92,6 +96,7 @@ public class CollisionSummaryLvaResourceIntTest {
 
     @Before
     public void initTest() {
+        collisionSummaryLvaSearchRepository.deleteAll();
         collisionSummaryLva = createEntity(em);
     }
 
@@ -112,6 +117,10 @@ public class CollisionSummaryLvaResourceIntTest {
         assertThat(collisionSummaryLvaList).hasSize(databaseSizeBeforeCreate + 1);
         CollisionSummaryLva testCollisionSummaryLva = collisionSummaryLvaList.get(collisionSummaryLvaList.size() - 1);
         assertThat(testCollisionSummaryLva.getInstituteCollision()).isEqualTo(DEFAULT_INSTITUTE_COLLISION);
+
+        // Validate the CollisionSummaryLva in Elasticsearch
+        CollisionSummaryLva collisionSummaryLvaEs = collisionSummaryLvaSearchRepository.findOne(testCollisionSummaryLva.getId());
+        assertThat(collisionSummaryLvaEs).isEqualToComparingFieldByField(testCollisionSummaryLva);
     }
 
     @Test
@@ -175,6 +184,7 @@ public class CollisionSummaryLvaResourceIntTest {
     public void updateCollisionSummaryLva() throws Exception {
         // Initialize the database
         collisionSummaryLvaRepository.saveAndFlush(collisionSummaryLva);
+        collisionSummaryLvaSearchRepository.save(collisionSummaryLva);
         int databaseSizeBeforeUpdate = collisionSummaryLvaRepository.findAll().size();
 
         // Update the collisionSummaryLva
@@ -193,6 +203,10 @@ public class CollisionSummaryLvaResourceIntTest {
         assertThat(collisionSummaryLvaList).hasSize(databaseSizeBeforeUpdate);
         CollisionSummaryLva testCollisionSummaryLva = collisionSummaryLvaList.get(collisionSummaryLvaList.size() - 1);
         assertThat(testCollisionSummaryLva.getInstituteCollision()).isEqualTo(UPDATED_INSTITUTE_COLLISION);
+
+        // Validate the CollisionSummaryLva in Elasticsearch
+        CollisionSummaryLva collisionSummaryLvaEs = collisionSummaryLvaSearchRepository.findOne(testCollisionSummaryLva.getId());
+        assertThat(collisionSummaryLvaEs).isEqualToComparingFieldByField(testCollisionSummaryLva);
     }
 
     @Test
@@ -219,6 +233,7 @@ public class CollisionSummaryLvaResourceIntTest {
     public void deleteCollisionSummaryLva() throws Exception {
         // Initialize the database
         collisionSummaryLvaRepository.saveAndFlush(collisionSummaryLva);
+        collisionSummaryLvaSearchRepository.save(collisionSummaryLva);
         int databaseSizeBeforeDelete = collisionSummaryLvaRepository.findAll().size();
 
         // Get the collisionSummaryLva
@@ -226,9 +241,28 @@ public class CollisionSummaryLvaResourceIntTest {
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
 
+        // Validate Elasticsearch is empty
+        boolean collisionSummaryLvaExistsInEs = collisionSummaryLvaSearchRepository.exists(collisionSummaryLva.getId());
+        assertThat(collisionSummaryLvaExistsInEs).isFalse();
+
         // Validate the database is empty
         List<CollisionSummaryLva> collisionSummaryLvaList = collisionSummaryLvaRepository.findAll();
         assertThat(collisionSummaryLvaList).hasSize(databaseSizeBeforeDelete - 1);
+    }
+
+    @Test
+    @Transactional
+    public void searchCollisionSummaryLva() throws Exception {
+        // Initialize the database
+        collisionSummaryLvaRepository.saveAndFlush(collisionSummaryLva);
+        collisionSummaryLvaSearchRepository.save(collisionSummaryLva);
+
+        // Search the collisionSummaryLva
+        restCollisionSummaryLvaMockMvc.perform(get("/api/_search/collision-summary-lvas?query=id:" + collisionSummaryLva.getId()))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(collisionSummaryLva.getId().intValue())))
+            .andExpect(jsonPath("$.[*].instituteCollision").value(hasItem(DEFAULT_INSTITUTE_COLLISION)));
     }
 
     @Test
