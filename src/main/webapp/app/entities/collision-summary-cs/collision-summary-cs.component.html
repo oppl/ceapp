@@ -42,18 +42,18 @@
                 <td><a [routerLink]="['../collision-summary-cs', collisionSummaryCS.id ]">{{collisionSummaryCS.id}}</a></td>
                 <td>{{collisionSummaryCS.instituteCollision}}</td>
                 <td>
-                    <div *ngIf="collisionSummaryCS.csSource">
-                        <a [routerLink]="['../curriculum-subject', collisionSummaryCS.csSourceId  ]" >{{collisionSummaryCS.csSource.subject.subjectName}} {{collisionSummaryCS.csSource.subject.subjectType}}</a>
+                    <div *ngIf="collisionSummaryCS.csSourceId">
+                        <a [routerLink]="['../curriculum-subject', collisionSummaryCS.csSourceId  ]" >{{collisionSummaryCS.csSourceId}}</a>
                     </div>
                 </td>
                 <td>
-                    <div *ngIf="collisionSummaryCS.csTarget">
-                        <a [routerLink]="['../curriculum-subject', collisionSummaryCS.csTargetId  ]" >{{collisionSummaryCS.csTarget.subject.subjectName}} {{collisionSummaryCS.csTarget.subject.subjectType}}</a>
+                    <div *ngIf="collisionSummaryCS.csTargetId">
+                        <a [routerLink]="['../curriculum-subject', collisionSummaryCS.csTargetId  ]" >{{collisionSummaryCS.csTargetId}}</a>
                     </div>
                 </td>
                 <td>
-                    <div *ngIf="collisionSummaryCS.idealPlan">
-                        <a [routerLink]="['../ideal-plan', collisionSummaryCS.idealPlanId  ]" >{{collisionSummaryCS.idealPlan.curriculum.curName}} - {{collisionSummaryCS.idealPlan.year}} / {{collisionSummaryCS.idealPlan.semester}}</a>
+                    <div *ngIf="collisionSummaryCS.idealPlanId">
+                        <a [routerLink]="['../ideal-plan', collisionSummaryCS.idealPlanId  ]" >{{collisionSummaryCS.idealPlanId}}</a>
                     </div>
                 </td>
                 <td class="text-right">

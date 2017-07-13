@@ -28,9 +28,6 @@ import { CeappCurriculumSemesterModule } from './curriculum-semester/curriculum-
         CeappCurriculumSemesterModule,
         /* jhipster-needle-add-entity-module - JHipster will add entity modules here */
     ],
-    exports: [
-        CeappCollisionSummaryLvaModule
-    ],
     declarations: [],
     entryComponents: [],
     providers: [],

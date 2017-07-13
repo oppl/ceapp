@@ -11,18 +11,12 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring", uses = {CurriculumSubjectMapper.class, IdealPlanMapper.class, })
 public interface CollisionSummaryCSMapper extends EntityMapper <CollisionSummaryCSDTO, CollisionSummaryCS> {
 
-    @Mapping(source = "csSource", target = "csSource")
-
-    @Mapping(source = "csTarget", target = "csTarget")
-
-    @Mapping(source = "idealPlan", target = "idealPlan")
-
     @Mapping(source = "csSource.id", target = "csSourceId")
 
     @Mapping(source = "csTarget.id", target = "csTargetId")
 
     @Mapping(source = "idealPlan.id", target = "idealPlanId")
-    CollisionSummaryCSDTO toDto(CollisionSummaryCS collisionSummaryCS);
+    CollisionSummaryCSDTO toDto(CollisionSummaryCS collisionSummaryCS); 
     @Mapping(target = "collisionsummarylvas", ignore = true)
 
     @Mapping(source = "csSourceId", target = "csSource")
@@ -30,7 +24,7 @@ public interface CollisionSummaryCSMapper extends EntityMapper <CollisionSummary
     @Mapping(source = "csTargetId", target = "csTarget")
 
     @Mapping(source = "idealPlanId", target = "idealPlan")
-    CollisionSummaryCS toEntity(CollisionSummaryCSDTO collisionSummaryCSDTO);
+    CollisionSummaryCS toEntity(CollisionSummaryCSDTO collisionSummaryCSDTO); 
     default CollisionSummaryCS fromId(Long id) {
         if (id == null) {
             return null;
