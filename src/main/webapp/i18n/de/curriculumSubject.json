@@ -16,13 +16,11 @@
             "detail": {
                 "title": "Curriculum Subject"
             },
-            "year": "Year",
-            "semester": "Semester",
             "collCSSource": "Coll CS Source",
             "collCSTarget": "Coll CS Target",
             "lva": "Lva",
-            "curriculum": "Curriculum",
-            "subject": "Subject"
+            "subject": "Subject",
+            "curriculumSemester": "Curriculum Semester"
         }
     }
 }

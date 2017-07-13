@@ -39,6 +39,10 @@ public class ElasticsearchIndexService {
 
     private final CurriculumSearchRepository curriculumSearchRepository;
 
+    private final CurriculumSemesterRepository curriculumSemesterRepository;
+
+    private final CurriculumSemesterSearchRepository curriculumSemesterSearchRepository;
+
     private final CurriculumSubjectRepository curriculumSubjectRepository;
 
     private final CurriculumSubjectSearchRepository curriculumSubjectSearchRepository;
@@ -80,6 +84,8 @@ public class ElasticsearchIndexService {
         CollisionSummaryLvaSearchRepository collisionSummaryLvaSearchRepository,
         CurriculumRepository curriculumRepository,
         CurriculumSearchRepository curriculumSearchRepository,
+        CurriculumSemesterRepository curriculumSemesterRepository,
+        CurriculumSemesterSearchRepository curriculumSemesterSearchRepository,
         CurriculumSubjectRepository curriculumSubjectRepository,
         CurriculumSubjectSearchRepository curriculumSubjectSearchRepository,
         IdealPlanRepository idealPlanRepository,
@@ -103,6 +109,8 @@ public class ElasticsearchIndexService {
         this.collisionSummaryLvaSearchRepository = collisionSummaryLvaSearchRepository;
         this.curriculumRepository = curriculumRepository;
         this.curriculumSearchRepository = curriculumSearchRepository;
+        this.curriculumSemesterRepository = curriculumSemesterRepository;
+        this.curriculumSemesterSearchRepository = curriculumSemesterSearchRepository;
         this.curriculumSubjectRepository = curriculumSubjectRepository;
         this.curriculumSubjectSearchRepository = curriculumSubjectSearchRepository;
         this.idealPlanRepository = idealPlanRepository;
@@ -125,6 +133,7 @@ public class ElasticsearchIndexService {
         reindexForClass(CollisionSummaryCS.class, collisionSummaryCSRepository, collisionSummaryCSSearchRepository);
         reindexForClass(CollisionSummaryLva.class, collisionSummaryLvaRepository, collisionSummaryLvaSearchRepository);
         reindexForClass(Curriculum.class, curriculumRepository, curriculumSearchRepository);
+        reindexForClass(CurriculumSemester.class, curriculumSemesterRepository, curriculumSemesterSearchRepository);
         reindexForClass(CurriculumSubject.class, curriculumSubjectRepository, curriculumSubjectSearchRepository);
         reindexForClass(IdealPlan.class, idealPlanRepository, idealPlanSearchRepository);
         reindexForClass(IdealPlanEntries.class, idealPlanEntriesRepository, idealPlanEntriesSearchRepository);

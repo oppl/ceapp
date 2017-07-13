@@ -21,19 +21,11 @@
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="jhi_year" type="integer">
-                <constraints nullable="false" />
-            </column>
-
-            <column name="semester" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-
-            <column name="curriculum_id" type="bigint">
+            <column name="subject_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 
-            <column name="subject_id" type="bigint">
+            <column name="curriculum_semester_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 

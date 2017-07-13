@@ -39,11 +39,6 @@ public class Curriculum implements Serializable {
     @OneToMany(mappedBy = "curriculum")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<CurriculumSubject> curriculumsubjects = new HashSet<>();
-
-    @OneToMany(mappedBy = "curriculum")
-    @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<IdealPlan> idealplanentries = new HashSet<>();
 
     @ManyToMany
@@ -52,6 +47,11 @@ public class Curriculum implements Serializable {
                joinColumns = @JoinColumn(name="curricula_id", referencedColumnName="id"),
                inverseJoinColumns = @JoinColumn(name="institutes_id", referencedColumnName="id"))
     private Set<Institute> institutes = new HashSet<>();
+
+    @OneToMany(mappedBy = "curriculum")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<CurriculumSemester> curriculumSemesters = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -85,31 +85,6 @@ public class Curriculum implements Serializable {
 
     public void setCurName(String curName) {
         this.curName = curName;
-    }
-
-    public Set<CurriculumSubject> getCurriculumsubjects() {
-        return curriculumsubjects;
-    }
-
-    public Curriculum curriculumsubjects(Set<CurriculumSubject> curriculumSubjects) {
-        this.curriculumsubjects = curriculumSubjects;
-        return this;
-    }
-
-    public Curriculum addCurriculumsubject(CurriculumSubject curriculumSubject) {
-        this.curriculumsubjects.add(curriculumSubject);
-        curriculumSubject.setCurriculum(this);
-        return this;
-    }
-
-    public Curriculum removeCurriculumsubject(CurriculumSubject curriculumSubject) {
-        this.curriculumsubjects.remove(curriculumSubject);
-        curriculumSubject.setCurriculum(null);
-        return this;
-    }
-
-    public void setCurriculumsubjects(Set<CurriculumSubject> curriculumSubjects) {
-        this.curriculumsubjects = curriculumSubjects;
     }
 
     public Set<IdealPlan> getIdealplanentries() {
@@ -160,6 +135,31 @@ public class Curriculum implements Serializable {
 
     public void setInstitutes(Set<Institute> institutes) {
         this.institutes = institutes;
+    }
+
+    public Set<CurriculumSemester> getCurriculumSemesters() {
+        return curriculumSemesters;
+    }
+
+    public Curriculum curriculumSemesters(Set<CurriculumSemester> curriculumSemesters) {
+        this.curriculumSemesters = curriculumSemesters;
+        return this;
+    }
+
+    public Curriculum addCurriculumSemester(CurriculumSemester curriculumSemester) {
+        this.curriculumSemesters.add(curriculumSemester);
+        curriculumSemester.setCurriculum(this);
+        return this;
+    }
+
+    public Curriculum removeCurriculumSemester(CurriculumSemester curriculumSemester) {
+        this.curriculumSemesters.remove(curriculumSemester);
+        curriculumSemester.setCurriculum(null);
+        return this;
+    }
+
+    public void setCurriculumSemesters(Set<CurriculumSemester> curriculumSemesters) {
+        this.curriculumSemesters = curriculumSemesters;
     }
 
     @Override

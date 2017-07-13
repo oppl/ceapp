@@ -1,0 +1,25 @@
+{
+    "ceappApp": {
+        "curriculumSemester" : {
+            "home": {
+                "title": "Curriculum Semesters",
+                "createLabel": "Curriculum Semester erstellen",
+                "createOrEditLabel": "Curriculum Semester erstellen oder bearbeiten",
+                "search": "Suche nach Curriculum Semester"
+            },
+            "created": "Curriculum Semester erstellt mit ID {{ param }}",
+            "updated": "Curriculum Semester aktualisiert mit ID {{ param }}",
+            "deleted": "Curriculum Semester gelöscht mit ID {{ param }}",
+            "delete": {
+                "question": "Soll Curriculum Semester {{ id }} wirklich dauerhaft gelöscht werden?"
+            },
+            "detail": {
+                "title": "Curriculum Semester"
+            },
+            "year": "Year",
+            "semester": "Semester",
+            "curriculumSubject": "Curriculum Subject",
+            "curriculum": "Curriculum"
+        }
+    }
+}

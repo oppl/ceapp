@@ -10,8 +10,8 @@ import { CurriculumSubject } from './curriculum-subject.model';
 import { CurriculumSubjectPopupService } from './curriculum-subject-popup.service';
 import { CurriculumSubjectService } from './curriculum-subject.service';
 import { Lva, LvaService } from '../lva';
-import { Curriculum, CurriculumService } from '../curriculum';
 import { Subject, SubjectService } from '../subject';
+import { CurriculumSemester, CurriculumSemesterService } from '../curriculum-semester';
 import { ResponseWrapper } from '../../shared';
 
 @Component({
@@ -26,17 +26,17 @@ export class CurriculumSubjectDialogComponent implements OnInit {
 
     lvas: Lva[];
 
-    curricula: Curriculum[];
-
     subjects: Subject[];
+
+    curriculumsemesters: CurriculumSemester[];
 
     constructor(
         public activeModal: NgbActiveModal,
         private alertService: JhiAlertService,
         private curriculumSubjectService: CurriculumSubjectService,
         private lvaService: LvaService,
-        private curriculumService: CurriculumService,
         private subjectService: SubjectService,
+        private curriculumSemesterService: CurriculumSemesterService,
         private eventManager: JhiEventManager
     ) {
     }
@@ -46,10 +46,10 @@ export class CurriculumSubjectDialogComponent implements OnInit {
         this.authorities = ['ROLE_USER', 'ROLE_ADMIN'];
         this.lvaService.query()
             .subscribe((res: ResponseWrapper) => { this.lvas = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
-        this.curriculumService.query()
-            .subscribe((res: ResponseWrapper) => { this.curricula = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
         this.subjectService.query()
             .subscribe((res: ResponseWrapper) => { this.subjects = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
+        this.curriculumSemesterService.query()
+            .subscribe((res: ResponseWrapper) => { this.curriculumsemesters = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
     }
 
     clear() {
@@ -96,11 +96,11 @@ export class CurriculumSubjectDialogComponent implements OnInit {
         return item.id;
     }
 
-    trackCurriculumById(index: number, item: Curriculum) {
+    trackSubjectById(index: number, item: Subject) {
         return item.id;
     }
 
-    trackSubjectById(index: number, item: Subject) {
+    trackCurriculumSemesterById(index: number, item: CurriculumSemester) {
         return item.id;
     }
 

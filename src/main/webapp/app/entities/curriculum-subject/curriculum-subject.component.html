@@ -30,32 +30,28 @@
             <thead>
             <tr>
             <th><span jhiTranslate="global.field.id">ID</span></th>
-            <th><span jhiTranslate="ceappApp.curriculumSubject.year">Year</span></th>
-            <th><span jhiTranslate="ceappApp.curriculumSubject.semester">Semester</span></th>
             <th><span jhiTranslate="ceappApp.curriculumSubject.lva">Lva</span></th>
-            <th><span jhiTranslate="ceappApp.curriculumSubject.curriculum">Curriculum</span></th>
             <th><span jhiTranslate="ceappApp.curriculumSubject.subject">Subject</span></th>
+            <th><span jhiTranslate="ceappApp.curriculumSubject.curriculumSemester">Curriculum Semester</span></th>
             <th></th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let curriculumSubject of curriculumSubjects ;trackBy: trackId">
                 <td><a [routerLink]="['../curriculum-subject', curriculumSubject.id ]">{{curriculumSubject.id}}</a></td>
-                <td>{{curriculumSubject.year}}</td>
-                <td jhiTranslate="{{'ceappApp.Semester.' + curriculumSubject.semester}}">{{curriculumSubject.semester}}</td>
                 <td>
                     <span *ngFor="let lva of curriculumSubject.lvas; let last = last">
                             <a class="form-control-static" [routerLink]="['../lva', lva?.id ]">{{lva.lvaNr}}</a>{{last ? '' : ', '}}
                         </span>
                 </td>
                 <td>
-                    <div *ngIf="curriculumSubject.curriculumId">
-                        <a [routerLink]="['../curriculum', curriculumSubject.curriculumId  ]" >{{curriculumSubject.curriculumCurName}}</a>
+                    <div *ngIf="curriculumSubject.subjectId">
+                        <a [routerLink]="['../subject', curriculumSubject.subjectId  ]" >{{curriculumSubject.subjectSubjectName}}</a>
                     </div>
                 </td>
                 <td>
-                    <div *ngIf="curriculumSubject.subjectId">
-                        <a [routerLink]="['../subject', curriculumSubject.subjectId  ]" >{{curriculumSubject.subjectSubjectName}}</a>
+                    <div *ngIf="curriculumSubject.curriculumSemesterId">
+                        <a [routerLink]="['../curriculum-semester', curriculumSubject.curriculumSemesterId  ]" >{{curriculumSubject.curriculumSemesterId}}</a>
                     </div>
                 </td>
                 <td class="text-right">

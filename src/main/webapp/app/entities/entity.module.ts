@@ -10,6 +10,7 @@ import { CeappLvaModule } from './lva/lva.module';
 import { CeappAppointmentModule } from './appointment/appointment.module';
 import { CeappCollisionSummaryCSModule } from './collision-summary-cs/collision-summary-cs.module';
 import { CeappCollisionSummaryLvaModule } from './collision-summary-lva/collision-summary-lva.module';
+import { CeappCurriculumSemesterModule } from './curriculum-semester/curriculum-semester.module';
 /* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */
 
 @NgModule({
@@ -24,10 +25,8 @@ import { CeappCollisionSummaryLvaModule } from './collision-summary-lva/collisio
         CeappAppointmentModule,
         CeappCollisionSummaryCSModule,
         CeappCollisionSummaryLvaModule,
+        CeappCurriculumSemesterModule,
         /* jhipster-needle-add-entity-module - JHipster will add entity modules here */
-    ],
-    exports: [
-        CeappCollisionSummaryLvaModule
     ],
     declarations: [],
     entryComponents: [],

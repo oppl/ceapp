@@ -11,8 +11,8 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring", uses = {InstituteMapper.class, })
 public interface CurriculumMapper extends EntityMapper <CurriculumDTO, Curriculum> {
     
-    @Mapping(target = "curriculumsubjects", ignore = true)
     @Mapping(target = "idealplanentries", ignore = true)
+    @Mapping(target = "curriculumSemesters", ignore = true)
     Curriculum toEntity(CurriculumDTO curriculumDTO); 
     default Curriculum fromId(Long id) {
         if (id == null) {

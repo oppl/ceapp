@@ -1,0 +1,35 @@
+
+<div *ngIf="curriculumSemester">
+    <h2><span jhiTranslate="ceappApp.curriculumSemester.detail.title">Curriculum Semester</span> {{curriculumSemester.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="ceappApp.curriculumSemester.year">Year</span></dt>
+        <dd>
+            <span>{{curriculumSemester.year}}</span>
+        </dd>
+        <dt><span jhiTranslate="ceappApp.curriculumSemester.semester">Semester</span></dt>
+        <dd>
+            <span jhiTranslate="{{'ceappApp.Semester.' + curriculumSemester.semester}}">{{curriculumSemester.semester}}</span>
+        </dd>
+        <dt><span jhiTranslate="ceappApp.curriculumSemester.curriculum">Curriculum</span></dt>
+        <dd>
+            <div *ngIf="curriculumSemester.curriculumId">
+                <a [routerLink]="['/curriculum', curriculumSemester.curriculumId]">{{curriculumSemester.curriculumCurName}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'curriculum-semester/'+ curriculumSemester.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

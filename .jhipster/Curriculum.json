@@ -3,12 +3,6 @@
     "relationships": [
         {
             "relationshipType": "one-to-many",
-            "relationshipName": "curriculumsubject",
-            "otherEntityName": "curriculumSubject",
-            "otherEntityRelationshipName": "curriculum"
-        },
-        {
-            "relationshipType": "one-to-many",
             "relationshipName": "idealplanentries",
             "otherEntityName": "idealPlan",
             "otherEntityRelationshipName": "curriculum"
@@ -20,6 +14,12 @@
             "otherEntityName": "institute",
             "otherEntityField": "instituteName",
             "ownerSide": true
+        },
+        {
+            "relationshipName": "curriculumSemester",
+            "otherEntityName": "curriculumSemester",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "curriculum"
         }
     ],
     "fields": [
@@ -39,8 +39,8 @@
         }
     ],
     "changelogDate": "20170709150637",
-    "entityTableName": "curriculum",
     "dto": "mapstruct",
-    "pagination": "no",
-    "service": "serviceClass"
+    "service": "serviceClass",
+    "entityTableName": "curriculum",
+    "pagination": "no"
 }

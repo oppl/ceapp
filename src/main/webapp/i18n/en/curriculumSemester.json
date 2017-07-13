@@ -1,0 +1,25 @@
+{
+    "ceappApp": {
+        "curriculumSemester" : {
+            "home": {
+                "title": "Curriculum Semesters",
+                "createLabel": "Create a new Curriculum Semester",
+                "createOrEditLabel": "Create or edit a Curriculum Semester",
+                "search": "Search for Curriculum Semester"
+            },
+            "created": "A new Curriculum Semester is created with identifier {{ param }}",
+            "updated": "A Curriculum Semester is updated with identifier {{ param }}",
+            "deleted": "A Curriculum Semester is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Curriculum Semester {{ id }}?"
+            },
+            "detail": {
+                "title": "Curriculum Semester"
+            },
+            "year": "Year",
+            "semester": "Semester",
+            "curriculumSubject": "Curriculum Subject",
+            "curriculum": "Curriculum"
+        }
+    }
+}

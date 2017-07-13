@@ -32,7 +32,6 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import at.meroff.itproject.domain.enumeration.Semester;
 /**
  * Test class for the CurriculumSubjectResource REST controller.
  *
@@ -41,12 +40,6 @@ import at.meroff.itproject.domain.enumeration.Semester;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = CeappApp.class)
 public class CurriculumSubjectResourceIntTest {
-
-    private static final Integer DEFAULT_YEAR = 1;
-    private static final Integer UPDATED_YEAR = 2;
-
-    private static final Semester DEFAULT_SEMESTER = Semester.WS;
-    private static final Semester UPDATED_SEMESTER = Semester.SS;
 
     @Autowired
     private CurriculumSubjectRepository curriculumSubjectRepository;
@@ -93,9 +86,7 @@ public class CurriculumSubjectResourceIntTest {
      * if they test an entity which requires the current entity.
      */
     public static CurriculumSubject createEntity(EntityManager em) {
-        CurriculumSubject curriculumSubject = new CurriculumSubject()
-            .year(DEFAULT_YEAR)
-            .semester(DEFAULT_SEMESTER);
+        CurriculumSubject curriculumSubject = new CurriculumSubject();
         return curriculumSubject;
     }
 
@@ -121,8 +112,6 @@ public class CurriculumSubjectResourceIntTest {
         List<CurriculumSubject> curriculumSubjectList = curriculumSubjectRepository.findAll();
         assertThat(curriculumSubjectList).hasSize(databaseSizeBeforeCreate + 1);
         CurriculumSubject testCurriculumSubject = curriculumSubjectList.get(curriculumSubjectList.size() - 1);
-        assertThat(testCurriculumSubject.getYear()).isEqualTo(DEFAULT_YEAR);
-        assertThat(testCurriculumSubject.getSemester()).isEqualTo(DEFAULT_SEMESTER);
 
         // Validate the CurriculumSubject in Elasticsearch
         CurriculumSubject curriculumSubjectEs = curriculumSubjectSearchRepository.findOne(testCurriculumSubject.getId());
@@ -151,44 +140,6 @@ public class CurriculumSubjectResourceIntTest {
 
     @Test
     @Transactional
-    public void checkYearIsRequired() throws Exception {
-        int databaseSizeBeforeTest = curriculumSubjectRepository.findAll().size();
-        // set the field null
-        curriculumSubject.setYear(null);
-
-        // Create the CurriculumSubject, which fails.
-        CurriculumSubjectDTO curriculumSubjectDTO = curriculumSubjectMapper.toDto(curriculumSubject);
-
-        restCurriculumSubjectMockMvc.perform(post("/api/curriculum-subjects")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(curriculumSubjectDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<CurriculumSubject> curriculumSubjectList = curriculumSubjectRepository.findAll();
-        assertThat(curriculumSubjectList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkSemesterIsRequired() throws Exception {
-        int databaseSizeBeforeTest = curriculumSubjectRepository.findAll().size();
-        // set the field null
-        curriculumSubject.setSemester(null);
-
-        // Create the CurriculumSubject, which fails.
-        CurriculumSubjectDTO curriculumSubjectDTO = curriculumSubjectMapper.toDto(curriculumSubject);
-
-        restCurriculumSubjectMockMvc.perform(post("/api/curriculum-subjects")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(curriculumSubjectDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<CurriculumSubject> curriculumSubjectList = curriculumSubjectRepository.findAll();
-        assertThat(curriculumSubjectList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void getAllCurriculumSubjects() throws Exception {
         // Initialize the database
         curriculumSubjectRepository.saveAndFlush(curriculumSubject);
@@ -197,9 +148,7 @@ public class CurriculumSubjectResourceIntTest {
         restCurriculumSubjectMockMvc.perform(get("/api/curriculum-subjects?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(curriculumSubject.getId().intValue())))
-            .andExpect(jsonPath("$.[*].year").value(hasItem(DEFAULT_YEAR)))
-            .andExpect(jsonPath("$.[*].semester").value(hasItem(DEFAULT_SEMESTER.toString())));
+            .andExpect(jsonPath("$.[*].id").value(hasItem(curriculumSubject.getId().intValue())));
     }
 
     @Test
@@ -212,9 +161,7 @@ public class CurriculumSubjectResourceIntTest {
         restCurriculumSubjectMockMvc.perform(get("/api/curriculum-subjects/{id}", curriculumSubject.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.id").value(curriculumSubject.getId().intValue()))
-            .andExpect(jsonPath("$.year").value(DEFAULT_YEAR))
-            .andExpect(jsonPath("$.semester").value(DEFAULT_SEMESTER.toString()));
+            .andExpect(jsonPath("$.id").value(curriculumSubject.getId().intValue()));
     }
 
     @Test
@@ -235,9 +182,6 @@ public class CurriculumSubjectResourceIntTest {
 
         // Update the curriculumSubject
         CurriculumSubject updatedCurriculumSubject = curriculumSubjectRepository.findOne(curriculumSubject.getId());
-        updatedCurriculumSubject
-            .year(UPDATED_YEAR)
-            .semester(UPDATED_SEMESTER);
         CurriculumSubjectDTO curriculumSubjectDTO = curriculumSubjectMapper.toDto(updatedCurriculumSubject);
 
         restCurriculumSubjectMockMvc.perform(put("/api/curriculum-subjects")
@@ -249,8 +193,6 @@ public class CurriculumSubjectResourceIntTest {
         List<CurriculumSubject> curriculumSubjectList = curriculumSubjectRepository.findAll();
         assertThat(curriculumSubjectList).hasSize(databaseSizeBeforeUpdate);
         CurriculumSubject testCurriculumSubject = curriculumSubjectList.get(curriculumSubjectList.size() - 1);
-        assertThat(testCurriculumSubject.getYear()).isEqualTo(UPDATED_YEAR);
-        assertThat(testCurriculumSubject.getSemester()).isEqualTo(UPDATED_SEMESTER);
 
         // Validate the CurriculumSubject in Elasticsearch
         CurriculumSubject curriculumSubjectEs = curriculumSubjectSearchRepository.findOne(testCurriculumSubject.getId());
@@ -309,9 +251,7 @@ public class CurriculumSubjectResourceIntTest {
         restCurriculumSubjectMockMvc.perform(get("/api/_search/curriculum-subjects?query=id:" + curriculumSubject.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(curriculumSubject.getId().intValue())))
-            .andExpect(jsonPath("$.[*].year").value(hasItem(DEFAULT_YEAR)))
-            .andExpect(jsonPath("$.[*].semester").value(hasItem(DEFAULT_SEMESTER.toString())));
+            .andExpect(jsonPath("$.[*].id").value(hasItem(curriculumSubject.getId().intValue())));
     }
 
     @Test
