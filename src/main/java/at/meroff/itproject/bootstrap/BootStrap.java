@@ -5,11 +5,11 @@ import at.meroff.itproject.domain.enumeration.LvaType;
 import at.meroff.itproject.domain.enumeration.Semester;
 import at.meroff.itproject.domain.enumeration.SubjectType;
 import at.meroff.itproject.repository.*;
-import at.meroff.itproject.service.CurriculumService;
-import at.meroff.itproject.service.IdealPlanService;
-import at.meroff.itproject.service.InstituteService;
+import at.meroff.itproject.service.*;
 import at.meroff.itproject.service.dto.CurriculumDTO;
+import at.meroff.itproject.service.dto.CurriculumSemesterDTO;
 import at.meroff.itproject.service.mapper.CurriculumMapper;
+import at.meroff.itproject.service.mapper.CurriculumSemesterMapper;
 import at.meroff.itproject.service.mapper.InstituteMapper;
 import at.meroff.itproject.xml.XMLQueryTemplate;
 import at.meroff.itproject.xml.models.Subjects;
@@ -50,6 +50,9 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
     private LvaRepository lvaRepository;
     private AppointmentRepository appointmentRepository;
     private ResourceLoader resourceLoader;
+    private CurriculumSemesterService curriculumSemesterService;
+    private CurriculumSemesterMapper curriculumSemesterMapper;
+    private ElasticsearchIndexService elasticsearchIndexService;
 
     public BootStrap(CurriculumService curriculumService,
                      CurriculumMapper curriculumMapper,
@@ -61,7 +64,10 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
                      CurriculumSubjectRepository curriculumSubjectRepository,
                      LvaRepository lvaRepository,
                      AppointmentRepository appointmentRepository,
-                     ResourceLoader resourceLoader) {
+                     ResourceLoader resourceLoader,
+                     CurriculumSemesterService curriculumSemesterService,
+                     CurriculumSemesterMapper curriculumSemesterMapper,
+                     ElasticsearchIndexService elasticsearchIndexService) {
         this.curriculumService = curriculumService;
         this.curriculumMapper = curriculumMapper;
         this.instituteService = instituteService;
@@ -73,6 +79,9 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
         this.lvaRepository = lvaRepository;
         this.appointmentRepository = appointmentRepository;
         this.resourceLoader = resourceLoader;
+        this.curriculumSemesterService = curriculumSemesterService;
+        this.curriculumSemesterMapper = curriculumSemesterMapper;
+        this.elasticsearchIndexService = elasticsearchIndexService;
     }
 
     @Override
@@ -109,10 +118,18 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
             createIdealPlanEntity(save, subject, semesterIntegerMap.get(Semester.WS),semesterIntegerMap.get(Semester.SS));
         });
 
+
+        CurriculumSemesterDTO curriculumSemesterDTO = new CurriculumSemesterDTO();
+        curriculumSemesterDTO.setCurriculumId(wirtschaftsinformatik.getId());
+        curriculumSemesterDTO.setYear(2017);
+        curriculumSemesterDTO.setSemester(Semester.SS);
+
+        curriculumSemesterDTO = curriculumSemesterService.save(curriculumSemesterDTO);
+
         // Verbindung Curriculum - Subjects
         Set<CurriculumSubject> curriculumSubjects = new HashSet<>();
         for (Subject subject : subjects) {
-            CurriculumSubject curriculumSubjectEntity = createCurriculumSubjectEntity(curriculumMapper.toEntity(curriculum), subject, 2017, Semester.SS);
+            CurriculumSubject curriculumSubjectEntity = createCurriculumSubjectEntity(curriculumSemesterDTO, subject);
             curriculumSubjects.add(curriculumSubjectEntity);
         }
 
@@ -193,6 +210,8 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
         });
 
         List<CurriculumSubject> saveCS = curriculumSubjectRepository.save(curriculumSubjects);
+
+        elasticsearchIndexService.reindexAll();
 
     }
 
@@ -387,12 +406,10 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
         return ret;
     }
 
-    private CurriculumSubject createCurriculumSubjectEntity(Curriculum curriculum, Subject subject, int year, Semester semester) {
+    private CurriculumSubject createCurriculumSubjectEntity(CurriculumSemesterDTO curriculumSemesterDTO, Subject subject) {
         CurriculumSubject curriculumSubject = new CurriculumSubject();
-        curriculumSubject.setCurriculum(curriculum);
+        curriculumSubject.setCurriculumSemester(curriculumSemesterMapper.toEntity(curriculumSemesterDTO));
         curriculumSubject.setSubject(subject);
-        curriculumSubject.setYear(year);
-        curriculumSubject.setSemester(semester);
         return curriculumSubjectRepository.save(curriculumSubject);
     }
 }

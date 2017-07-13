@@ -15,6 +15,7 @@
     <include file="classpath:config/liquibase/changelog/20170709150643_added_entity_Appointment.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170709150644_added_entity_CollisionSummaryCS.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170709150645_added_entity_CollisionSummaryLva.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20170713150915_added_entity_CurriculumSemester.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="classpath:config/liquibase/changelog/20170709150637_added_entity_constraints_Curriculum.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170709150639_added_entity_constraints_IdealPlan.xml" relativeToChangelogFile="false"/>
@@ -24,5 +25,6 @@
     <include file="classpath:config/liquibase/changelog/20170709150643_added_entity_constraints_Appointment.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170709150644_added_entity_constraints_CollisionSummaryCS.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170709150645_added_entity_constraints_CollisionSummaryLva.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20170713150915_added_entity_constraints_CurriculumSemester.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

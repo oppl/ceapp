@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -46,7 +45,7 @@ public class CurriculumSubjectResource {
      */
     @PostMapping("/curriculum-subjects")
     @Timed
-    public ResponseEntity<CurriculumSubjectDTO> createCurriculumSubject(@Valid @RequestBody CurriculumSubjectDTO curriculumSubjectDTO) throws URISyntaxException {
+    public ResponseEntity<CurriculumSubjectDTO> createCurriculumSubject(@RequestBody CurriculumSubjectDTO curriculumSubjectDTO) throws URISyntaxException {
         log.debug("REST request to save CurriculumSubject : {}", curriculumSubjectDTO);
         if (curriculumSubjectDTO.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new curriculumSubject cannot already have an ID")).body(null);
@@ -68,7 +67,7 @@ public class CurriculumSubjectResource {
      */
     @PutMapping("/curriculum-subjects")
     @Timed
-    public ResponseEntity<CurriculumSubjectDTO> updateCurriculumSubject(@Valid @RequestBody CurriculumSubjectDTO curriculumSubjectDTO) throws URISyntaxException {
+    public ResponseEntity<CurriculumSubjectDTO> updateCurriculumSubject(@RequestBody CurriculumSubjectDTO curriculumSubjectDTO) throws URISyntaxException {
         log.debug("REST request to update CurriculumSubject : {}", curriculumSubjectDTO);
         if (curriculumSubjectDTO.getId() == null) {
             return createCurriculumSubject(curriculumSubjectDTO);

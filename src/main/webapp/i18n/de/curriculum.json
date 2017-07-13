@@ -18,9 +18,9 @@
             },
             "curId": "Cur Id",
             "curName": "Cur Name",
-            "curriculumsubject": "Curriculumsubject",
             "idealplanentries": "Idealplanentries",
-            "institute": "Institute"
+            "institute": "Institute",
+            "curriculumSemester": "Curriculum Semester"
         }
     }
 }

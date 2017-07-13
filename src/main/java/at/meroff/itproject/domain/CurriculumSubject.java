@@ -6,13 +6,10 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
-
-import at.meroff.itproject.domain.enumeration.Semester;
 
 /**
  * A CurriculumSubject.
@@ -29,15 +26,6 @@ public class CurriculumSubject implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
-
-    @NotNull
-    @Column(name = "jhi_year", nullable = false)
-    private Integer year;
-
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "semester", nullable = false)
-    private Semester semester;
 
     @OneToMany(mappedBy = "csSource")
     @JsonIgnore
@@ -57,10 +45,10 @@ public class CurriculumSubject implements Serializable {
     private Set<Lva> lvas = new HashSet<>();
 
     @ManyToOne
-    private Curriculum curriculum;
+    private Subject subject;
 
     @ManyToOne
-    private Subject subject;
+    private CurriculumSemester curriculumSemester;
 
     public Long getId() {
         return id;
@@ -68,32 +56,6 @@ public class CurriculumSubject implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Integer getYear() {
-        return year;
-    }
-
-    public CurriculumSubject year(Integer year) {
-        this.year = year;
-        return this;
-    }
-
-    public void setYear(Integer year) {
-        this.year = year;
-    }
-
-    public Semester getSemester() {
-        return semester;
-    }
-
-    public CurriculumSubject semester(Semester semester) {
-        this.semester = semester;
-        return this;
-    }
-
-    public void setSemester(Semester semester) {
-        this.semester = semester;
     }
 
     public Set<CollisionSummaryCS> getCollCSSources() {
@@ -171,19 +133,6 @@ public class CurriculumSubject implements Serializable {
         this.lvas = lvas;
     }
 
-    public Curriculum getCurriculum() {
-        return curriculum;
-    }
-
-    public CurriculumSubject curriculum(Curriculum curriculum) {
-        this.curriculum = curriculum;
-        return this;
-    }
-
-    public void setCurriculum(Curriculum curriculum) {
-        this.curriculum = curriculum;
-    }
-
     public Subject getSubject() {
         return subject;
     }
@@ -195,6 +144,19 @@ public class CurriculumSubject implements Serializable {
 
     public void setSubject(Subject subject) {
         this.subject = subject;
+    }
+
+    public CurriculumSemester getCurriculumSemester() {
+        return curriculumSemester;
+    }
+
+    public CurriculumSubject curriculumSemester(CurriculumSemester curriculumSemester) {
+        this.curriculumSemester = curriculumSemester;
+        return this;
+    }
+
+    public void setCurriculumSemester(CurriculumSemester curriculumSemester) {
+        this.curriculumSemester = curriculumSemester;
     }
 
     @Override
@@ -221,8 +183,6 @@ public class CurriculumSubject implements Serializable {
     public String toString() {
         return "CurriculumSubject{" +
             "id=" + getId() +
-            ", year='" + getYear() + "'" +
-            ", semester='" + getSemester() + "'" +
             "}";
     }
 }

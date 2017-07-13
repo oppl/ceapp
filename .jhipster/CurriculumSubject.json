@@ -23,37 +23,21 @@
         },
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "curriculum",
-            "otherEntityName": "curriculum",
-            "otherEntityField": "curName"
-        },
-        {
-            "relationshipType": "many-to-one",
             "relationshipName": "subject",
             "otherEntityName": "subject",
             "otherEntityField": "subjectName"
-        }
-    ],
-    "fields": [
-        {
-            "fieldName": "year",
-            "fieldType": "Integer",
-            "fieldValidateRules": [
-                "required"
-            ]
         },
         {
-            "fieldName": "semester",
-            "fieldType": "Semester",
-            "fieldValues": "WS,SS",
-            "fieldValidateRules": [
-                "required"
-            ]
+            "relationshipName": "curriculumSemester",
+            "otherEntityName": "curriculumSemester",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
         }
     ],
+    "fields": [],
     "changelogDate": "20170709150641",
-    "entityTableName": "curriculum_subject",
     "dto": "mapstruct",
-    "pagination": "no",
-    "service": "serviceClass"
+    "service": "serviceClass",
+    "entityTableName": "curriculum_subject",
+    "pagination": "no"
 }

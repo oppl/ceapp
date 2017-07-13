@@ -7,9 +7,9 @@ import org.slf4j.LoggerFactory
 import scala.concurrent.duration._
 
 /**
- * Performance test for the CurriculumSubject entity.
+ * Performance test for the CurriculumSemester entity.
  */
-class CurriculumSubjectGatlingTest extends Simulation {
+class CurriculumSemesterGatlingTest extends Simulation {
 
     val context: LoggerContext = LoggerFactory.getILoggerFactory.asInstanceOf[LoggerContext]
     // Log all HTTP requests
@@ -42,7 +42,7 @@ class CurriculumSubjectGatlingTest extends Simulation {
         "Authorization" -> "${access_token}"
     )
 
-    val scn = scenario("Test the CurriculumSubject entity")
+    val scn = scenario("Test the CurriculumSemester entity")
         .exec(http("First unauthenticated request")
         .get("/api/account")
         .headers(headers_http)
@@ -60,26 +60,26 @@ class CurriculumSubjectGatlingTest extends Simulation {
         .check(status.is(200)))
         .pause(10)
         .repeat(2) {
-            exec(http("Get all curriculumSubjects")
-            .get("/api/curriculum-subjects")
+            exec(http("Get all curriculumSemesters")
+            .get("/api/curriculum-semesters")
             .headers(headers_http_authenticated)
             .check(status.is(200)))
             .pause(10 seconds, 20 seconds)
-            .exec(http("Create new curriculumSubject")
-            .post("/api/curriculum-subjects")
+            .exec(http("Create new curriculumSemester")
+            .post("/api/curriculum-semesters")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null}""")).asJSON
+            .body(StringBody("""{"id":null, "year":"0", "semester":null}""")).asJSON
             .check(status.is(201))
-            .check(headerRegex("Location", "(.*)").saveAs("new_curriculumSubject_url"))).exitHereIfFailed
+            .check(headerRegex("Location", "(.*)").saveAs("new_curriculumSemester_url"))).exitHereIfFailed
             .pause(10)
             .repeat(5) {
-                exec(http("Get created curriculumSubject")
-                .get("${new_curriculumSubject_url}")
+                exec(http("Get created curriculumSemester")
+                .get("${new_curriculumSemester_url}")
                 .headers(headers_http_authenticated))
                 .pause(10)
             }
-            .exec(http("Delete created curriculumSubject")
-            .delete("${new_curriculumSubject_url}")
+            .exec(http("Delete created curriculumSemester")
+            .delete("${new_curriculumSemester_url}")
             .headers(headers_http_authenticated))
             .pause(10)
         }

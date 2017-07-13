@@ -12,34 +12,6 @@
             <input type="text" class="form-control" id="id" name="id"
                    [(ngModel)]="curriculumSubject.id" readonly />
         </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="ceappApp.curriculumSubject.year" for="field_year">Year</label>
-            <input type="number" class="form-control" name="year" id="field_year"
-                [(ngModel)]="curriculumSubject.year" required />
-            <div [hidden]="!(editForm.controls.year?.dirty && editForm.controls.year?.invalid)">
-                <small class="form-text text-danger"
-                   [hidden]="!editForm.controls.year?.errors?.required" jhiTranslate="entity.validation.required">
-                   This field is required.
-                </small>
-                <small class="form-text text-danger"
-                    [hidden]="!editForm.controls.year?.errors?.number" jhiTranslate="entity.validation.number">
-                    This field should be a number.
-                </small>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="ceappApp.curriculumSubject.semester" for="field_semester">Semester</label>
-            <select class="form-control" name="semester" [(ngModel)]="curriculumSubject.semester" id="field_semester"  required>
-                <option value="WS" jhiTranslate="ceappApp.Semester.WS">WS</option>
-                <option value="SS" jhiTranslate="ceappApp.Semester.SS">SS</option>
-            </select>
-            <div [hidden]="!(editForm.controls.semester?.dirty && editForm.controls.semester?.invalid)">
-                <small class="form-text text-danger"
-                   [hidden]="!editForm.controls.semester?.errors?.required" jhiTranslate="entity.validation.required">
-                   This field is required.
-                </small>
-            </div>
-        </div>
 
         <div class="form-group">
             <label jhiTranslate="ceappApp.curriculumSubject.lva" for="field_lva">Lva</label>
@@ -48,17 +20,17 @@
             </select>
         </div>
         <div class="form-group">
-            <label jhiTranslate="ceappApp.curriculumSubject.curriculum" for="field_curriculum">Curriculum</label>
-            <select class="form-control" id="field_curriculum" name="curriculum" [(ngModel)]="curriculumSubject.curriculumId" >
-                <option [ngValue]="null"></option>
-                <option [ngValue]="curriculumOption.id" *ngFor="let curriculumOption of curricula; trackBy: trackCurriculumById">{{curriculumOption.curName}}</option>
-            </select>
-        </div>
-        <div class="form-group">
             <label jhiTranslate="ceappApp.curriculumSubject.subject" for="field_subject">Subject</label>
             <select class="form-control" id="field_subject" name="subject" [(ngModel)]="curriculumSubject.subjectId" >
                 <option [ngValue]="null"></option>
                 <option [ngValue]="subjectOption.id" *ngFor="let subjectOption of subjects; trackBy: trackSubjectById">{{subjectOption.subjectName}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label jhiTranslate="ceappApp.curriculumSubject.curriculumSemester" for="field_curriculumSemester">Curriculum Semester</label>
+            <select class="form-control" id="field_curriculumSemester" name="curriculumSemester" [(ngModel)]="curriculumSubject.curriculumSemesterId" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="curriculumSemesterOption.id" *ngFor="let curriculumSemesterOption of curriculumsemesters; trackBy: trackCurriculumSemesterById">{{curriculumSemesterOption.id}}</option>
             </select>
         </div>
     </div>

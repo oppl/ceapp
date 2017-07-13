@@ -1,0 +1,33 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "curriculumSubject",
+            "otherEntityName": "curriculumSubject",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "curriculumSemester"
+        },
+        {
+            "relationshipName": "curriculum",
+            "otherEntityName": "curriculum",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "curName"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "year",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "semester",
+            "fieldType": "Semester",
+            "fieldValues": "WS,SS"
+        }
+    ],
+    "changelogDate": "20170713150915",
+    "dto": "mapstruct",
+    "service": "serviceClass",
+    "entityTableName": "curriculum_semester",
+    "pagination": "no"
+}

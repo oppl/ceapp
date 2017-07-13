@@ -1,10 +1,10 @@
 <div>
     <h2>
-        <span jhiTranslate="ceappApp.curriculumSubject.home.title">Curriculum Subjects</span>
-        <button class="btn btn-primary float-right create-curriculum-subject" [routerLink]="['/', { outlets: { popup: ['curriculum-subject-new'] } }]">
+        <span jhiTranslate="ceappApp.curriculumSemester.home.title">Curriculum Semesters</span>
+        <button class="btn btn-primary float-right create-curriculum-semester" [routerLink]="['/', { outlets: { popup: ['curriculum-semester-new'] } }]">
             <span class="fa fa-plus"></span>
-            <span class="hidden-sm-down"  jhiTranslate="ceappApp.curriculumSubject.home.createLabel">
-            Create new Curriculum Subject
+            <span class="hidden-sm-down"  jhiTranslate="ceappApp.curriculumSemester.home.createLabel">
+            Create new Curriculum Semester
             </span>
         </button>
     </h2>
@@ -13,7 +13,7 @@
         <div class="col-sm-12">
             <form name="searchForm" class="form-inline">
                 <div class="input-group w-100 mt-3">
-                    <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" placeholder="{{ 'ceappApp.curriculumSubject.home.search' | translate }}">
+                    <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" placeholder="{{ 'ceappApp.curriculumSemester.home.search' | translate }}">
                     <button class="input-group-addon btn btn-info" (click)="search(currentSearch)">
                         <span class="fa fa-search"></span>
                     </button>
@@ -25,52 +25,44 @@
         </div>
     </div>
     <br/>
-    <div class="table-responsive" *ngIf="curriculumSubjects">
+    <div class="table-responsive" *ngIf="curriculumSemesters">
         <table class="table table-striped">
             <thead>
             <tr>
             <th><span jhiTranslate="global.field.id">ID</span></th>
-            <th><span jhiTranslate="ceappApp.curriculumSubject.lva">Lva</span></th>
-            <th><span jhiTranslate="ceappApp.curriculumSubject.subject">Subject</span></th>
-            <th><span jhiTranslate="ceappApp.curriculumSubject.curriculumSemester">Curriculum Semester</span></th>
+            <th><span jhiTranslate="ceappApp.curriculumSemester.year">Year</span></th>
+            <th><span jhiTranslate="ceappApp.curriculumSemester.semester">Semester</span></th>
+            <th><span jhiTranslate="ceappApp.curriculumSemester.curriculum">Curriculum</span></th>
             <th></th>
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let curriculumSubject of curriculumSubjects ;trackBy: trackId">
-                <td><a [routerLink]="['../curriculum-subject', curriculumSubject.id ]">{{curriculumSubject.id}}</a></td>
+            <tr *ngFor="let curriculumSemester of curriculumSemesters ;trackBy: trackId">
+                <td><a [routerLink]="['../curriculum-semester', curriculumSemester.id ]">{{curriculumSemester.id}}</a></td>
+                <td>{{curriculumSemester.year}}</td>
+                <td jhiTranslate="{{'ceappApp.Semester.' + curriculumSemester.semester}}">{{curriculumSemester.semester}}</td>
                 <td>
-                    <span *ngFor="let lva of curriculumSubject.lvas; let last = last">
-                            <a class="form-control-static" [routerLink]="['../lva', lva?.id ]">{{lva.lvaNr}}</a>{{last ? '' : ', '}}
-                        </span>
-                </td>
-                <td>
-                    <div *ngIf="curriculumSubject.subjectId">
-                        <a [routerLink]="['../subject', curriculumSubject.subjectId  ]" >{{curriculumSubject.subjectSubjectName}}</a>
-                    </div>
-                </td>
-                <td>
-                    <div *ngIf="curriculumSubject.curriculumSemesterId">
-                        <a [routerLink]="['../curriculum-semester', curriculumSubject.curriculumSemesterId  ]" >{{curriculumSubject.curriculumSemesterId}}</a>
+                    <div *ngIf="curriculumSemester.curriculumId">
+                        <a [routerLink]="['../curriculum', curriculumSemester.curriculumId  ]" >{{curriculumSemester.curriculumCurName}}</a>
                     </div>
                 </td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"
-                                [routerLink]="['../curriculum-subject', curriculumSubject.id ]"
+                                [routerLink]="['../curriculum-semester', curriculumSemester.id ]"
                                 class="btn btn-info btn-sm">
                             <span class="fa fa-eye"></span>
                             <span class="hidden-md-down" jhiTranslate="entity.action.view">View</span>
                         </button>
                         <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'curriculum-subject/'+ curriculumSubject.id + '/edit'} }]"
+                                [routerLink]="['/', { outlets: { popup: 'curriculum-semester/'+ curriculumSemester.id + '/edit'} }]"
                                 replaceUrl="true"
                                 class="btn btn-primary btn-sm">
                             <span class="fa fa-pencil"></span>
                             <span class="hidden-md-down" jhiTranslate="entity.action.edit">Edit</span>
                         </button>
                         <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'curriculum-subject/'+ curriculumSubject.id + '/delete'} }]"
+                                [routerLink]="['/', { outlets: { popup: 'curriculum-semester/'+ curriculumSemester.id + '/delete'} }]"
                                 replaceUrl="true"
                                 class="btn btn-danger btn-sm">
                             <span class="fa fa-remove"></span>
