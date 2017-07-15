@@ -79,13 +79,6 @@ public class InstituteService {
         return instituteMapper.toDto(institute);
     }
 
-    @Transactional(readOnly = true)
-    public InstituteDTO findByInstituteId(Integer instituteId) {
-        log.debug("Request to get Institute by instituteId : {}", instituteId);
-        Institute institute = instituteRepository.findByInstituteId(instituteId);
-        return instituteMapper.toDto(institute);
-    }
-
     /**
      *  Delete the  institute by id.
      *
