@@ -8,16 +8,18 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity CurriculumSemester and its DTO CurriculumSemesterDTO.
  */
-@Mapper(componentModel = "spring", uses = {CurriculumMapper.class, })
+@Mapper(componentModel = "spring", uses = {CurriculumMapper.class, CurriculumSubjectMapper.class})
 public interface CurriculumSemesterMapper extends EntityMapper <CurriculumSemesterDTO, CurriculumSemester> {
 
     @Mapping(source = "curriculum.id", target = "curriculumId")
     @Mapping(source = "curriculum.curName", target = "curriculumCurName")
-    CurriculumSemesterDTO toDto(CurriculumSemester curriculumSemester); 
+    @Mapping(source = "curriculum.curId", target = "curriculumCurId")
+    @Mapping(target = "curriculumSubjects")
+    CurriculumSemesterDTO toDto(CurriculumSemester curriculumSemester);
     @Mapping(target = "curriculumSubjects", ignore = true)
 
     @Mapping(source = "curriculumId", target = "curriculum")
-    CurriculumSemester toEntity(CurriculumSemesterDTO curriculumSemesterDTO); 
+    CurriculumSemester toEntity(CurriculumSemesterDTO curriculumSemesterDTO);
     default CurriculumSemester fromId(Long id) {
         if (id == null) {
             return null;

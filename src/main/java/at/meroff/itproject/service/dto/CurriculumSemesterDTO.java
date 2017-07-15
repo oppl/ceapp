@@ -20,7 +20,11 @@ public class CurriculumSemesterDTO implements Serializable {
 
     private Long curriculumId;
 
+    private Integer curriculumCurId;
+
     private String curriculumCurName;
+
+    private Set<CurriculumSubjectDTO> curriculumSubjects = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -60,6 +64,22 @@ public class CurriculumSemesterDTO implements Serializable {
 
     public void setCurriculumCurName(String curriculumCurName) {
         this.curriculumCurName = curriculumCurName;
+    }
+
+    public Set<CurriculumSubjectDTO> getCurriculumSubjects() {
+        return curriculumSubjects;
+    }
+
+    public void setCurriculumSubjects(Set<CurriculumSubjectDTO> curriculumSubjects) {
+        this.curriculumSubjects = curriculumSubjects;
+    }
+
+    public Integer getCurriculumCurId() {
+        return curriculumCurId;
+    }
+
+    public void setCurriculumCurId(Integer curriculumCurId) {
+        this.curriculumCurId = curriculumCurId;
     }
 
     @Override
