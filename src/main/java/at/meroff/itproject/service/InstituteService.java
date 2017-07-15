@@ -80,6 +80,19 @@ public class InstituteService {
     }
 
     /**
+     *  Get one institute by id.
+     *
+     *  @param id the id of the entity
+     *  @return the entity
+     */
+    @Transactional(readOnly = true)
+    public InstituteDTO findByInstituteId(Integer id) {
+        log.debug("Request to get Institute : {}", id);
+        Institute institute = instituteRepository.findByInstituteId(id);
+        return instituteMapper.toDto(institute);
+    }
+
+    /**
      *  Delete the  institute by id.
      *
      *  @param id the id of the entity
