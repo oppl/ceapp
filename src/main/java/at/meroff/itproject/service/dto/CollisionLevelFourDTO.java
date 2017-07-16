@@ -15,6 +15,10 @@ public class CollisionLevelFourDTO implements Serializable {
 
     private Integer examCollision;
 
+    private Integer instituteCollision;
+
+    private Integer curriculumCollision;
+
     private Long collisionLevelThreeId;
 
     private Long lvaId;
@@ -35,6 +39,22 @@ public class CollisionLevelFourDTO implements Serializable {
 
     public void setExamCollision(Integer examCollision) {
         this.examCollision = examCollision;
+    }
+
+    public Integer getInstituteCollision() {
+        return instituteCollision;
+    }
+
+    public void setInstituteCollision(Integer instituteCollision) {
+        this.instituteCollision = instituteCollision;
+    }
+
+    public Integer getCurriculumCollision() {
+        return curriculumCollision;
+    }
+
+    public void setCurriculumCollision(Integer curriculumCollision) {
+        this.curriculumCollision = curriculumCollision;
     }
 
     public Long getCollisionLevelThreeId() {
@@ -87,6 +107,8 @@ public class CollisionLevelFourDTO implements Serializable {
         return "CollisionLevelFourDTO{" +
             "id=" + getId() +
             ", examCollision='" + getExamCollision() + "'" +
+            ", instituteCollision='" + getInstituteCollision() + "'" +
+            ", curriculumCollision='" + getCurriculumCollision() + "'" +
             "}";
     }
 }

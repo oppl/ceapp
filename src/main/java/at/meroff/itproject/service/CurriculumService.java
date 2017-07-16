@@ -80,6 +80,19 @@ public class CurriculumService {
     }
 
     /**
+     *  Get one curriculum by id.
+     *
+     *  @param curId the id of the entity
+     *  @return the entity
+     */
+    @Transactional(readOnly = true)
+    public CurriculumDTO findByCurId(Integer curId) {
+        log.debug("Request to get Curriculum : {}", curId);
+        Curriculum curriculum = curriculumRepository.findByCurId(curId);
+        return curriculumMapper.toDto(curriculum);
+    }
+
+    /**
      *  Delete the  curriculum by id.
      *
      *  @param id the id of the entity
