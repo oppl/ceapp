@@ -17,6 +17,10 @@ public class CollisionLevelFourDTO implements Serializable {
 
     private Long collisionLevelThreeId;
 
+    private Set<AppointmentDTO> sourceAppointments = new HashSet<>();
+
+    private Set<AppointmentDTO> targetAppointments = new HashSet<>();
+
     public Long getId() {
         return id;
     }
@@ -39,6 +43,22 @@ public class CollisionLevelFourDTO implements Serializable {
 
     public void setCollisionLevelThreeId(Long collisionLevelThreeId) {
         this.collisionLevelThreeId = collisionLevelThreeId;
+    }
+
+    public Set<AppointmentDTO> getSourceAppointments() {
+        return sourceAppointments;
+    }
+
+    public void setSourceAppointments(Set<AppointmentDTO> appointments) {
+        this.sourceAppointments = appointments;
+    }
+
+    public Set<AppointmentDTO> getTargetAppointments() {
+        return targetAppointments;
+    }
+
+    public void setTargetAppointments(Set<AppointmentDTO> appointments) {
+        this.targetAppointments = appointments;
     }
 
     @Override

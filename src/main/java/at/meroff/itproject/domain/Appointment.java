@@ -1,5 +1,6 @@
 package at.meroff.itproject.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -8,6 +9,8 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -46,6 +49,16 @@ public class Appointment implements Serializable {
 
     @ManyToOne
     private Lva lva;
+
+    @ManyToMany(mappedBy = "sourceAppointments")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<CollisionLevelFour> sourceCollisionLevelFours = new HashSet<>();
+
+    @ManyToMany(mappedBy = "targetAppointments")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<CollisionLevelFour> targetCollisionLevelFours = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -131,6 +144,56 @@ public class Appointment implements Serializable {
 
     public void setLva(Lva lva) {
         this.lva = lva;
+    }
+
+    public Set<CollisionLevelFour> getSourceCollisionLevelFours() {
+        return sourceCollisionLevelFours;
+    }
+
+    public Appointment sourceCollisionLevelFours(Set<CollisionLevelFour> collisionLevelFours) {
+        this.sourceCollisionLevelFours = collisionLevelFours;
+        return this;
+    }
+
+    public Appointment addSourceCollisionLevelFour(CollisionLevelFour collisionLevelFour) {
+        this.sourceCollisionLevelFours.add(collisionLevelFour);
+        collisionLevelFour.getSourceAppointments().add(this);
+        return this;
+    }
+
+    public Appointment removeSourceCollisionLevelFour(CollisionLevelFour collisionLevelFour) {
+        this.sourceCollisionLevelFours.remove(collisionLevelFour);
+        collisionLevelFour.getSourceAppointments().remove(this);
+        return this;
+    }
+
+    public void setSourceCollisionLevelFours(Set<CollisionLevelFour> collisionLevelFours) {
+        this.sourceCollisionLevelFours = collisionLevelFours;
+    }
+
+    public Set<CollisionLevelFour> getTargetCollisionLevelFours() {
+        return targetCollisionLevelFours;
+    }
+
+    public Appointment targetCollisionLevelFours(Set<CollisionLevelFour> collisionLevelFours) {
+        this.targetCollisionLevelFours = collisionLevelFours;
+        return this;
+    }
+
+    public Appointment addTargetCollisionLevelFour(CollisionLevelFour collisionLevelFour) {
+        this.targetCollisionLevelFours.add(collisionLevelFour);
+        collisionLevelFour.getTargetAppointments().add(this);
+        return this;
+    }
+
+    public Appointment removeTargetCollisionLevelFour(CollisionLevelFour collisionLevelFour) {
+        this.targetCollisionLevelFours.remove(collisionLevelFour);
+        collisionLevelFour.getTargetAppointments().remove(this);
+        return this;
+    }
+
+    public void setTargetCollisionLevelFours(Set<CollisionLevelFour> collisionLevelFours) {
+        this.targetCollisionLevelFours = collisionLevelFours;
     }
 
     @Override

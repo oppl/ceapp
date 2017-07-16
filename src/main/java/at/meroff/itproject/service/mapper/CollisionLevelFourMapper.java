@@ -8,7 +8,7 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity CollisionLevelFour and its DTO CollisionLevelFourDTO.
  */
-@Mapper(componentModel = "spring", uses = {CollisionLevelThreeMapper.class, })
+@Mapper(componentModel = "spring", uses = {CollisionLevelThreeMapper.class, AppointmentMapper.class, })
 public interface CollisionLevelFourMapper extends EntityMapper <CollisionLevelFourDTO, CollisionLevelFour> {
 
     @Mapping(source = "collisionLevelThree.id", target = "collisionLevelThreeId")

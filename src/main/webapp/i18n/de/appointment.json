@@ -21,7 +21,9 @@
             "isExam": "Is Exam",
             "room": "Room",
             "theme": "Theme",
-            "lva": "Lva"
+            "lva": "Lva",
+            "sourceCollisionLevelFour": "Source Collision Level Four",
+            "targetCollisionLevelFour": "Target Collision Level Four"
         }
     }
 }

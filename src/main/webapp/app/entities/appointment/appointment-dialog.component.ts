@@ -10,6 +10,7 @@ import { Appointment } from './appointment.model';
 import { AppointmentPopupService } from './appointment-popup.service';
 import { AppointmentService } from './appointment.service';
 import { Lva, LvaService } from '../lva';
+import { CollisionLevelFour, CollisionLevelFourService } from '../collision-level-four';
 import { ResponseWrapper } from '../../shared';
 
 @Component({
@@ -24,11 +25,14 @@ export class AppointmentDialogComponent implements OnInit {
 
     lvas: Lva[];
 
+    collisionlevelfours: CollisionLevelFour[];
+
     constructor(
         public activeModal: NgbActiveModal,
         private alertService: JhiAlertService,
         private appointmentService: AppointmentService,
         private lvaService: LvaService,
+        private collisionLevelFourService: CollisionLevelFourService,
         private eventManager: JhiEventManager
     ) {
     }
@@ -38,6 +42,8 @@ export class AppointmentDialogComponent implements OnInit {
         this.authorities = ['ROLE_USER', 'ROLE_ADMIN'];
         this.lvaService.query()
             .subscribe((res: ResponseWrapper) => { this.lvas = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
+        this.collisionLevelFourService.query()
+            .subscribe((res: ResponseWrapper) => { this.collisionlevelfours = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
     }
 
     clear() {
@@ -82,6 +88,21 @@ export class AppointmentDialogComponent implements OnInit {
 
     trackLvaById(index: number, item: Lva) {
         return item.id;
+    }
+
+    trackCollisionLevelFourById(index: number, item: CollisionLevelFour) {
+        return item.id;
+    }
+
+    getSelected(selectedVals: Array<any>, option: any) {
+        if (selectedVals) {
+            for (let i = 0; i < selectedVals.length; i++) {
+                if (option.id === selectedVals[i].id) {
+                    return selectedVals[i];
+                }
+            }
+        }
+        return option;
     }
 }
 

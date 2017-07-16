@@ -10,6 +10,7 @@ import { CollisionLevelFour } from './collision-level-four.model';
 import { CollisionLevelFourPopupService } from './collision-level-four-popup.service';
 import { CollisionLevelFourService } from './collision-level-four.service';
 import { CollisionLevelThree, CollisionLevelThreeService } from '../collision-level-three';
+import { Appointment, AppointmentService } from '../appointment';
 import { ResponseWrapper } from '../../shared';
 
 @Component({
@@ -24,11 +25,14 @@ export class CollisionLevelFourDialogComponent implements OnInit {
 
     collisionlevelthrees: CollisionLevelThree[];
 
+    appointments: Appointment[];
+
     constructor(
         public activeModal: NgbActiveModal,
         private alertService: JhiAlertService,
         private collisionLevelFourService: CollisionLevelFourService,
         private collisionLevelThreeService: CollisionLevelThreeService,
+        private appointmentService: AppointmentService,
         private eventManager: JhiEventManager
     ) {
     }
@@ -38,6 +42,8 @@ export class CollisionLevelFourDialogComponent implements OnInit {
         this.authorities = ['ROLE_USER', 'ROLE_ADMIN'];
         this.collisionLevelThreeService.query()
             .subscribe((res: ResponseWrapper) => { this.collisionlevelthrees = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
+        this.appointmentService.query()
+            .subscribe((res: ResponseWrapper) => { this.appointments = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
     }
 
     clear() {
@@ -82,6 +88,21 @@ export class CollisionLevelFourDialogComponent implements OnInit {
 
     trackCollisionLevelThreeById(index: number, item: CollisionLevelThree) {
         return item.id;
+    }
+
+    trackAppointmentById(index: number, item: Appointment) {
+        return item.id;
+    }
+
+    getSelected(selectedVals: Array<any>, option: any) {
+        if (selectedVals) {
+            for (let i = 0; i < selectedVals.length; i++) {
+                if (option.id === selectedVals[i].id) {
+                    return selectedVals[i];
+                }
+            }
+        }
+        return option;
     }
 }
 

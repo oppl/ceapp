@@ -9,6 +9,8 @@ export class Appointment implements BaseEntity {
         public room?: string,
         public theme?: string,
         public lvaId?: number,
+        public sourceCollisionLevelFours?: BaseEntity[],
+        public targetCollisionLevelFours?: BaseEntity[],
     ) {
         this.isExam = false;
     }

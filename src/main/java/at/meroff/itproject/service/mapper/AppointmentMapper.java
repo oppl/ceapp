@@ -16,6 +16,8 @@ public interface AppointmentMapper extends EntityMapper <AppointmentDTO, Appoint
     AppointmentDTO toDto(Appointment appointment); 
 
     @Mapping(source = "lvaId", target = "lva")
+    @Mapping(target = "sourceCollisionLevelFours", ignore = true)
+    @Mapping(target = "targetCollisionLevelFours", ignore = true)
     Appointment toEntity(AppointmentDTO appointmentDTO); 
     default Appointment fromId(Long id) {
         if (id == null) {

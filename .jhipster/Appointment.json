@@ -6,6 +6,20 @@
             "relationshipName": "lva",
             "otherEntityName": "lva",
             "otherEntityField": "lvaNr"
+        },
+        {
+            "relationshipName": "sourceCollisionLevelFour",
+            "otherEntityName": "collisionLevelFour",
+            "relationshipType": "many-to-many",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "sourceAppointment"
+        },
+        {
+            "relationshipName": "targetCollisionLevelFour",
+            "otherEntityName": "collisionLevelFour",
+            "relationshipType": "many-to-many",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "targetAppointment"
         }
     ],
     "fields": [

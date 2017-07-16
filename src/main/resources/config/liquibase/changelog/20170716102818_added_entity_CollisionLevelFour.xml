@@ -32,5 +32,27 @@
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
         
+        <createTable tableName="collision_level_four_source_appointment">
+            <column name="source_appointments_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="collision_level_fours_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="collision_level_fours_id, source_appointments_id" tableName="collision_level_four_source_appointment"/>
+        
+        <createTable tableName="collision_level_four_target_appointment">
+            <column name="target_appointments_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="collision_level_fours_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="collision_level_fours_id, target_appointments_id" tableName="collision_level_four_target_appointment"/>
+        
     </changeSet>
 </databaseChangeLog>
