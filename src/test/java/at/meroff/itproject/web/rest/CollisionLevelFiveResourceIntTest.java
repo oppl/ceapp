@@ -44,6 +44,9 @@ public class CollisionLevelFiveResourceIntTest {
     private static final Integer DEFAULT_EXAM_COLLISION = 1;
     private static final Integer UPDATED_EXAM_COLLISION = 2;
 
+    private static final Double DEFAULT_COLLISION_VALUE = 1D;
+    private static final Double UPDATED_COLLISION_VALUE = 2D;
+
     @Autowired
     private CollisionLevelFiveRepository collisionLevelFiveRepository;
 
@@ -90,7 +93,8 @@ public class CollisionLevelFiveResourceIntTest {
      */
     public static CollisionLevelFive createEntity(EntityManager em) {
         CollisionLevelFive collisionLevelFive = new CollisionLevelFive()
-            .examCollision(DEFAULT_EXAM_COLLISION);
+            .examCollision(DEFAULT_EXAM_COLLISION)
+            .collisionValue(DEFAULT_COLLISION_VALUE);
         return collisionLevelFive;
     }
 
@@ -117,6 +121,7 @@ public class CollisionLevelFiveResourceIntTest {
         assertThat(collisionLevelFiveList).hasSize(databaseSizeBeforeCreate + 1);
         CollisionLevelFive testCollisionLevelFive = collisionLevelFiveList.get(collisionLevelFiveList.size() - 1);
         assertThat(testCollisionLevelFive.getExamCollision()).isEqualTo(DEFAULT_EXAM_COLLISION);
+        assertThat(testCollisionLevelFive.getCollisionValue()).isEqualTo(DEFAULT_COLLISION_VALUE);
 
         // Validate the CollisionLevelFive in Elasticsearch
         CollisionLevelFive collisionLevelFiveEs = collisionLevelFiveSearchRepository.findOne(testCollisionLevelFive.getId());
@@ -154,7 +159,8 @@ public class CollisionLevelFiveResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(collisionLevelFive.getId().intValue())))
-            .andExpect(jsonPath("$.[*].examCollision").value(hasItem(DEFAULT_EXAM_COLLISION)));
+            .andExpect(jsonPath("$.[*].examCollision").value(hasItem(DEFAULT_EXAM_COLLISION)))
+            .andExpect(jsonPath("$.[*].collisionValue").value(hasItem(DEFAULT_COLLISION_VALUE.doubleValue())));
     }
 
     @Test
@@ -168,7 +174,8 @@ public class CollisionLevelFiveResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(collisionLevelFive.getId().intValue()))
-            .andExpect(jsonPath("$.examCollision").value(DEFAULT_EXAM_COLLISION));
+            .andExpect(jsonPath("$.examCollision").value(DEFAULT_EXAM_COLLISION))
+            .andExpect(jsonPath("$.collisionValue").value(DEFAULT_COLLISION_VALUE.doubleValue()));
     }
 
     @Test
@@ -190,7 +197,8 @@ public class CollisionLevelFiveResourceIntTest {
         // Update the collisionLevelFive
         CollisionLevelFive updatedCollisionLevelFive = collisionLevelFiveRepository.findOne(collisionLevelFive.getId());
         updatedCollisionLevelFive
-            .examCollision(UPDATED_EXAM_COLLISION);
+            .examCollision(UPDATED_EXAM_COLLISION)
+            .collisionValue(UPDATED_COLLISION_VALUE);
         CollisionLevelFiveDTO collisionLevelFiveDTO = collisionLevelFiveMapper.toDto(updatedCollisionLevelFive);
 
         restCollisionLevelFiveMockMvc.perform(put("/api/collision-level-fives")
@@ -203,6 +211,7 @@ public class CollisionLevelFiveResourceIntTest {
         assertThat(collisionLevelFiveList).hasSize(databaseSizeBeforeUpdate);
         CollisionLevelFive testCollisionLevelFive = collisionLevelFiveList.get(collisionLevelFiveList.size() - 1);
         assertThat(testCollisionLevelFive.getExamCollision()).isEqualTo(UPDATED_EXAM_COLLISION);
+        assertThat(testCollisionLevelFive.getCollisionValue()).isEqualTo(UPDATED_COLLISION_VALUE);
 
         // Validate the CollisionLevelFive in Elasticsearch
         CollisionLevelFive collisionLevelFiveEs = collisionLevelFiveSearchRepository.findOne(testCollisionLevelFive.getId());
@@ -262,7 +271,8 @@ public class CollisionLevelFiveResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(collisionLevelFive.getId().intValue())))
-            .andExpect(jsonPath("$.[*].examCollision").value(hasItem(DEFAULT_EXAM_COLLISION)));
+            .andExpect(jsonPath("$.[*].examCollision").value(hasItem(DEFAULT_EXAM_COLLISION)))
+            .andExpect(jsonPath("$.[*].collisionValue").value(hasItem(DEFAULT_COLLISION_VALUE.doubleValue())));
     }
 
     @Test
