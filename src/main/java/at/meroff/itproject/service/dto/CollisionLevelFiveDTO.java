@@ -15,6 +15,8 @@ public class CollisionLevelFiveDTO implements Serializable {
 
     private Integer examCollision;
 
+    private Double collisionValue;
+
     private Long collisionLevelFourId;
 
     private Long sourceAppointmentId;
@@ -35,6 +37,14 @@ public class CollisionLevelFiveDTO implements Serializable {
 
     public void setExamCollision(Integer examCollision) {
         this.examCollision = examCollision;
+    }
+
+    public Double getCollisionValue() {
+        return collisionValue;
+    }
+
+    public void setCollisionValue(Double collisionValue) {
+        this.collisionValue = collisionValue;
     }
 
     public Long getCollisionLevelFourId() {
@@ -87,6 +97,7 @@ public class CollisionLevelFiveDTO implements Serializable {
         return "CollisionLevelFiveDTO{" +
             "id=" + getId() +
             ", examCollision='" + getExamCollision() + "'" +
+            ", collisionValue='" + getCollisionValue() + "'" +
             "}";
     }
 }

@@ -17,6 +17,7 @@
                 "title": "Collision Level Five"
             },
             "examCollision": "Exam Collision",
+            "collisionValue": "Collision Value",
             "collisionLevelFour": "Collision Level Four",
             "sourceAppointment": "Source Appointment",
             "targetAppointment": "Target Appointment"
