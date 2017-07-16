@@ -13,11 +13,13 @@ import java.util.List;
 @SuppressWarnings("unused")
 @Repository
 public interface CurriculumSubjectRepository extends JpaRepository<CurriculumSubject,Long> {
-    
+
     @Query("select distinct curriculum_subject from CurriculumSubject curriculum_subject left join fetch curriculum_subject.lvas")
     List<CurriculumSubject> findAllWithEagerRelationships();
 
     @Query("select curriculum_subject from CurriculumSubject curriculum_subject left join fetch curriculum_subject.lvas where curriculum_subject.id =:id")
     CurriculumSubject findOneWithEagerRelationships(@Param("id") Long id);
-    
+
+    List<CurriculumSubject> findByCurriculumSemester_Id(@Param("id") Long id);
+
 }

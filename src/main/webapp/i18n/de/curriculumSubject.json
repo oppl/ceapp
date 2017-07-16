@@ -16,11 +16,10 @@
             "detail": {
                 "title": "Curriculum Subject"
             },
-            "collCSSource": "Coll CS Source",
-            "collCSTarget": "Coll CS Target",
             "lva": "Lva",
             "subject": "Subject",
-            "curriculumSemester": "Curriculum Semester"
+            "curriculumSemester": "Curriculum Semester",
+            "collisionLevelOne": "Collision Level One"
         }
     }
 }

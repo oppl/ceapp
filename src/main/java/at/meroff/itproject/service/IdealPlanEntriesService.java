@@ -67,6 +67,19 @@ public class IdealPlanEntriesService {
     }
 
     /**
+     *  Get all the idealPlanEntries.
+     *
+     *  @return the list of entities
+     */
+    @Transactional(readOnly = true)
+    public List<IdealPlanEntriesDTO> findByIdealplan_Id(Long id) {
+        log.debug("Request to get all IdealPlanEntries");
+        return idealPlanEntriesRepository.findByIdealplan_Id(id).stream()
+            .map(idealPlanEntriesMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    /**
      *  Get one idealPlanEntries by id.
      *
      *  @param id the id of the entity

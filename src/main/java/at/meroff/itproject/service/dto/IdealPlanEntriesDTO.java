@@ -1,6 +1,8 @@
 package at.meroff.itproject.service.dto;
 
 
+import at.meroff.itproject.domain.enumeration.SubjectType;
+
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -25,6 +27,8 @@ public class IdealPlanEntriesDTO implements Serializable {
     private Long subjectId;
 
     private String subjectSubjectName;
+
+    private SubjectType subjectSubjectType;
 
     private Long idealplanId;
 
@@ -82,6 +86,14 @@ public class IdealPlanEntriesDTO implements Serializable {
 
     public void setIdealplanId(Long idealPlanId) {
         this.idealplanId = idealPlanId;
+    }
+
+    public SubjectType getSubjectSubjectType() {
+        return subjectSubjectType;
+    }
+
+    public void setSubjectSubjectType(SubjectType subjectSubjectType) {
+        this.subjectSubjectType = subjectSubjectType;
     }
 
     @Override

@@ -70,6 +70,20 @@ public class CacheConfiguration {
             cm.createCache(at.meroff.itproject.domain.CollisionSummaryLva.class.getName(), jcacheConfiguration);
             cm.createCache(at.meroff.itproject.domain.CurriculumSemester.class.getName(), jcacheConfiguration);
             cm.createCache(at.meroff.itproject.domain.CurriculumSemester.class.getName() + ".curriculumSubjects", jcacheConfiguration);
+            cm.createCache(at.meroff.itproject.domain.CollisionLevelOne.class.getName(), jcacheConfiguration);
+            cm.createCache(at.meroff.itproject.domain.CurriculumSubject.class.getName() + ".collisionLevelOnes", jcacheConfiguration);
+            cm.createCache(at.meroff.itproject.domain.CollisionLevelOne.class.getName() + ".collisionLevelTwos", jcacheConfiguration);
+            cm.createCache(at.meroff.itproject.domain.CollisionLevelTwo.class.getName(), jcacheConfiguration);
+            cm.createCache(at.meroff.itproject.domain.CollisionLevelTwo.class.getName() + ".collisionLevelThrees", jcacheConfiguration);
+            cm.createCache(at.meroff.itproject.domain.CollisionLevelThree.class.getName(), jcacheConfiguration);
+            cm.createCache(at.meroff.itproject.domain.CollisionLevelThree.class.getName() + ".collisionLevelFours", jcacheConfiguration);
+            cm.createCache(at.meroff.itproject.domain.CollisionLevelFour.class.getName(), jcacheConfiguration);
+            cm.createCache(at.meroff.itproject.domain.CollisionLevelFour.class.getName() + ".sourceAppointments", jcacheConfiguration);
+            cm.createCache(at.meroff.itproject.domain.CollisionLevelFour.class.getName() + ".targetAppointments", jcacheConfiguration);
+            cm.createCache(at.meroff.itproject.domain.Appointment.class.getName() + ".sourceCollisionLevelFours", jcacheConfiguration);
+            cm.createCache(at.meroff.itproject.domain.Appointment.class.getName() + ".targetCollisionLevelFours", jcacheConfiguration);
+            cm.createCache(at.meroff.itproject.domain.CollisionLevelFour.class.getName() + ".collisionLevelFives", jcacheConfiguration);
+            cm.createCache(at.meroff.itproject.domain.CollisionLevelFive.class.getName(), jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

@@ -1,6 +1,7 @@
 package at.meroff.itproject.service;
 
 import at.meroff.itproject.domain.CurriculumSemester;
+import at.meroff.itproject.domain.enumeration.Semester;
 import at.meroff.itproject.repository.CurriculumSemesterRepository;
 import at.meroff.itproject.repository.search.CurriculumSemesterSearchRepository;
 import at.meroff.itproject.service.dto.CurriculumSemesterDTO;
@@ -76,6 +77,19 @@ public class CurriculumSemesterService {
     public CurriculumSemesterDTO findOne(Long id) {
         log.debug("Request to get CurriculumSemester : {}", id);
         CurriculumSemester curriculumSemester = curriculumSemesterRepository.findOne(id);
+        return curriculumSemesterMapper.toDto(curriculumSemester);
+    }
+
+    /**
+     *  Get one curriculumSemester by id.
+     *
+     *  @param id the id of the entity
+     *  @return the entity
+     */
+    @Transactional(readOnly = true)
+    public CurriculumSemesterDTO findOne(Integer curId, Integer year, Semester semester) {
+        log.debug("Request to get CurriculumSemester : {}", curId);
+        CurriculumSemester curriculumSemester = curriculumSemesterRepository.findByCurriculum_CurIdAndYearAndSemester(curId, year, semester);
         return curriculumSemesterMapper.toDto(curriculumSemester);
     }
 

@@ -1,0 +1,43 @@
+
+<div *ngIf="collisionLevelFive">
+    <h2><span jhiTranslate="ceappApp.collisionLevelFive.detail.title">Collision Level Five</span> {{collisionLevelFive.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="ceappApp.collisionLevelFive.examCollision">Exam Collision</span></dt>
+        <dd>
+            <span>{{collisionLevelFive.examCollision}}</span>
+        </dd>
+        <dt><span jhiTranslate="ceappApp.collisionLevelFive.collisionLevelFour">Collision Level Four</span></dt>
+        <dd>
+            <div *ngIf="collisionLevelFive.collisionLevelFourId">
+                <a [routerLink]="['/collision-level-four', collisionLevelFive.collisionLevelFourId]">{{collisionLevelFive.collisionLevelFourId}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="ceappApp.collisionLevelFive.sourceAppointment">Source Appointment</span></dt>
+        <dd>
+            <div *ngIf="collisionLevelFive.sourceAppointmentId">
+                <a [routerLink]="['/appointment', collisionLevelFive.sourceAppointmentId]">{{collisionLevelFive.sourceAppointmentId}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="ceappApp.collisionLevelFive.targetAppointment">Target Appointment</span></dt>
+        <dd>
+            <div *ngIf="collisionLevelFive.targetAppointmentId">
+                <a [routerLink]="['/appointment', collisionLevelFive.targetAppointmentId]">{{collisionLevelFive.targetAppointmentId}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'collision-level-five/'+ collisionLevelFive.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

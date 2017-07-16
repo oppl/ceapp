@@ -1,0 +1,25 @@
+{
+    "ceappApp": {
+        "collisionLevelFour" : {
+            "home": {
+                "title": "Collision Level Fours",
+                "createLabel": "Create a new Collision Level Four",
+                "createOrEditLabel": "Create or edit a Collision Level Four",
+                "search": "Search for Collision Level Four"
+            },
+            "created": "A new Collision Level Four is created with identifier {{ param }}",
+            "updated": "A Collision Level Four is updated with identifier {{ param }}",
+            "deleted": "A Collision Level Four is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Collision Level Four {{ id }}?"
+            },
+            "detail": {
+                "title": "Collision Level Four"
+            },
+            "examCollision": "Exam Collision",
+            "collisionLevelThree": "Collision Level Three",
+            "collisionLevelFive": "Collision Level Five",
+            "lva": "Lva"
+        }
+    }
+}

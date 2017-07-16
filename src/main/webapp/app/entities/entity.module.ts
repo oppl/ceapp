@@ -11,6 +11,11 @@ import { CeappAppointmentModule } from './appointment/appointment.module';
 import { CeappCollisionSummaryCSModule } from './collision-summary-cs/collision-summary-cs.module';
 import { CeappCollisionSummaryLvaModule } from './collision-summary-lva/collision-summary-lva.module';
 import { CeappCurriculumSemesterModule } from './curriculum-semester/curriculum-semester.module';
+import { CeappCollisionLevelOneModule } from './collision-level-one/collision-level-one.module';
+import { CeappCollisionLevelTwoModule } from './collision-level-two/collision-level-two.module';
+import { CeappCollisionLevelThreeModule } from './collision-level-three/collision-level-three.module';
+import { CeappCollisionLevelFourModule } from './collision-level-four/collision-level-four.module';
+import { CeappCollisionLevelFiveModule } from './collision-level-five/collision-level-five.module';
 /* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */
 
 @NgModule({
@@ -26,6 +31,11 @@ import { CeappCurriculumSemesterModule } from './curriculum-semester/curriculum-
         CeappCollisionSummaryCSModule,
         CeappCollisionSummaryLvaModule,
         CeappCurriculumSemesterModule,
+        CeappCollisionLevelOneModule,
+        CeappCollisionLevelTwoModule,
+        CeappCollisionLevelThreeModule,
+        CeappCollisionLevelFourModule,
+        CeappCollisionLevelFiveModule,
         /* jhipster-needle-add-entity-module - JHipster will add entity modules here */
     ],
     declarations: [],

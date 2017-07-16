@@ -1,6 +1,7 @@
 package at.meroff.itproject.service;
 
 import at.meroff.itproject.domain.IdealPlan;
+import at.meroff.itproject.domain.enumeration.Semester;
 import at.meroff.itproject.repository.IdealPlanRepository;
 import at.meroff.itproject.repository.search.IdealPlanSearchRepository;
 import at.meroff.itproject.service.dto.IdealPlanDTO;
@@ -76,6 +77,19 @@ public class IdealPlanService {
     public IdealPlanDTO findOne(Long id) {
         log.debug("Request to get IdealPlan : {}", id);
         IdealPlan idealPlan = idealPlanRepository.findOne(id);
+        return idealPlanMapper.toDto(idealPlan);
+    }
+
+    /**
+     *  Get one idealPlan by id.
+     *
+     *  @param id the id of the entity
+     *  @return the entity
+     */
+    @Transactional(readOnly = true)
+    public IdealPlanDTO findByCurriculum_CurIdAndYearAndSemester(Integer curId, Integer year, Semester semester) {
+        log.debug("Request to get IdealPlan : {}", curId);
+        IdealPlan idealPlan = idealPlanRepository.findByCurriculum_CurIdAndYearAndSemester(curId, year, semester);
         return idealPlanMapper.toDto(idealPlan);
     }
 

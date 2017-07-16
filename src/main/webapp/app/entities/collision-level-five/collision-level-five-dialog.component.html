@@ -1,0 +1,51 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myCollisionLevelFiveLabel" jhiTranslate="ceappApp.collisionLevelFive.home.createOrEditLabel">Create or edit a Collision Level Five</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!collisionLevelFive.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="collisionLevelFive.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="ceappApp.collisionLevelFive.examCollision" for="field_examCollision">Exam Collision</label>
+            <input type="number" class="form-control" name="examCollision" id="field_examCollision"
+                [(ngModel)]="collisionLevelFive.examCollision"  />
+        </div>
+
+        <div class="form-group">
+            <label jhiTranslate="ceappApp.collisionLevelFive.collisionLevelFour" for="field_collisionLevelFour">Collision Level Four</label>
+            <select class="form-control" id="field_collisionLevelFour" name="collisionLevelFour" [(ngModel)]="collisionLevelFive.collisionLevelFourId" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="collisionLevelFourOption.id" *ngFor="let collisionLevelFourOption of collisionlevelfours; trackBy: trackCollisionLevelFourById">{{collisionLevelFourOption.id}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label jhiTranslate="ceappApp.collisionLevelFive.sourceAppointment" for="field_sourceAppointment">Source Appointment</label>
+            <select class="form-control" id="field_sourceAppointment" name="sourceAppointment" [(ngModel)]="collisionLevelFive.sourceAppointmentId" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="appointmentOption.id" *ngFor="let appointmentOption of appointments; trackBy: trackAppointmentById">{{appointmentOption.id}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label jhiTranslate="ceappApp.collisionLevelFive.targetAppointment" for="field_targetAppointment">Target Appointment</label>
+            <select class="form-control" id="field_targetAppointment" name="targetAppointment" [(ngModel)]="collisionLevelFive.targetAppointmentId" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="appointmentOption.id" *ngFor="let appointmentOption of appointments; trackBy: trackAppointmentById">{{appointmentOption.id}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

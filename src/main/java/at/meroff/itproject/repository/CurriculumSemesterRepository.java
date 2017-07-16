@@ -1,6 +1,7 @@
 package at.meroff.itproject.repository;
 
 import at.meroff.itproject.domain.CurriculumSemester;
+import at.meroff.itproject.domain.enumeration.Semester;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
@@ -16,5 +17,7 @@ public interface CurriculumSemesterRepository extends JpaRepository<CurriculumSe
 
     @Query("select cs from CurriculumSemester cs left join fetch cs.curriculumSubjects where cs.id = :id")
     CurriculumSemester findOne(@Param("id") Long id);
+
+    CurriculumSemester findByCurriculum_CurIdAndYearAndSemester(@Param("curId") Integer curId, @Param("year") Integer year, @Param("semester") Semester semester);
 
 }

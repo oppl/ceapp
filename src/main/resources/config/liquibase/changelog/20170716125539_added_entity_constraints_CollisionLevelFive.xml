@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity CollisionLevelFive.
+    -->
+    <changeSet id="20170716125539-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="collision_level_four_id"
+                                 baseTableName="collision_level_five"
+                                 constraintName="fk_collision_level_five_collision_level_four_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="collision_level_four"/>
+
+        <addForeignKeyConstraint baseColumnNames="source_appointment_id"
+                                 baseTableName="collision_level_five"
+                                 constraintName="fk_collision_level_five_source_appointment_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="appointment"/>
+
+        <addForeignKeyConstraint baseColumnNames="target_appointment_id"
+                                 baseTableName="collision_level_five"
+                                 constraintName="fk_collision_level_five_target_appointment_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="appointment"/>
+
+    </changeSet>
+</databaseChangeLog>

@@ -2,18 +2,6 @@
     "fluentMethods": true,
     "relationships": [
         {
-            "relationshipType": "one-to-many",
-            "relationshipName": "collCSSource",
-            "otherEntityName": "collisionSummaryCS",
-            "otherEntityRelationshipName": "csSource"
-        },
-        {
-            "relationshipType": "one-to-many",
-            "relationshipName": "collCSTarget",
-            "otherEntityName": "collisionSummaryCS",
-            "otherEntityRelationshipName": "csTarget"
-        },
-        {
             "relationshipType": "many-to-many",
             "otherEntityRelationshipName": "curriculumsubject",
             "relationshipName": "lva",
@@ -32,6 +20,12 @@
             "otherEntityName": "curriculumSemester",
             "relationshipType": "many-to-one",
             "otherEntityField": "id"
+        },
+        {
+            "relationshipName": "collisionLevelOne",
+            "otherEntityName": "collisionLevelOne",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "curriculumSubject"
         }
     ],
     "fields": [],

@@ -1,0 +1,24 @@
+{
+    "ceappApp": {
+        "collisionLevelOne" : {
+            "home": {
+                "title": "Collision Level Ones",
+                "createLabel": "Create a new Collision Level One",
+                "createOrEditLabel": "Create or edit a Collision Level One",
+                "search": "Search for Collision Level One"
+            },
+            "created": "A new Collision Level One is created with identifier {{ param }}",
+            "updated": "A Collision Level One is updated with identifier {{ param }}",
+            "deleted": "A Collision Level One is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Collision Level One {{ id }}?"
+            },
+            "detail": {
+                "title": "Collision Level One"
+            },
+            "examCollision": "Exam Collision",
+            "curriculumSubject": "Curriculum Subject",
+            "collisionLevelTwo": "Collision Level Two"
+        }
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "curriculumSubject",
+            "otherEntityName": "curriculumSubject",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipName": "collisionLevelTwo",
+            "otherEntityName": "collisionLevelTwo",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "collisionLevelOne"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "examCollision",
+            "fieldType": "Integer"
+        }
+    ],
+    "changelogDate": "20170716095855",
+    "dto": "mapstruct",
+    "service": "serviceClass",
+    "entityTableName": "collision_level_one",
+    "pagination": "no"
+}

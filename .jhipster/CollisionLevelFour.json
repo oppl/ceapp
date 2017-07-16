@@ -1,0 +1,34 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "collisionLevelThree",
+            "otherEntityName": "collisionLevelThree",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipName": "collisionLevelFive",
+            "otherEntityName": "collisionLevelFive",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "collisionLevelFour"
+        },
+        {
+            "relationshipName": "lva",
+            "otherEntityName": "lva",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "lvaNr"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "examCollision",
+            "fieldType": "Integer"
+        }
+    ],
+    "changelogDate": "20170716102818",
+    "dto": "mapstruct",
+    "service": "serviceClass",
+    "entityTableName": "collision_level_four",
+    "pagination": "no"
+}
