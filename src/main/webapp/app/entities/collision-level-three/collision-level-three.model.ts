@@ -5,6 +5,7 @@ export class CollisionLevelThree implements BaseEntity {
         public id?: number,
         public examCollision?: number,
         public collisionLevelTwoId?: number,
+        public collisionLevelFours?: BaseEntity[],
     ) {
     }
 }
