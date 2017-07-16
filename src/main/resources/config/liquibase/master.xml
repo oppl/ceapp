@@ -20,6 +20,7 @@
     <include file="classpath:config/liquibase/changelog/20170716102200_added_entity_CollisionLevelTwo.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170716102450_added_entity_CollisionLevelThree.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170716102818_added_entity_CollisionLevelFour.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20170716125539_added_entity_CollisionLevelFive.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="classpath:config/liquibase/changelog/20170709150637_added_entity_constraints_Curriculum.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170709150639_added_entity_constraints_IdealPlan.xml" relativeToChangelogFile="false"/>
@@ -34,5 +35,6 @@
     <include file="classpath:config/liquibase/changelog/20170716102200_added_entity_constraints_CollisionLevelTwo.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170716102450_added_entity_constraints_CollisionLevelThree.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170716102818_added_entity_constraints_CollisionLevelFour.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20170716125539_added_entity_constraints_CollisionLevelFive.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

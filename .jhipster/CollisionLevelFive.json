@@ -1,0 +1,22 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "collisionLevelFour",
+            "otherEntityName": "collisionLevelFour",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "examCollision",
+            "fieldType": "Integer"
+        }
+    ],
+    "changelogDate": "20170716125539",
+    "dto": "mapstruct",
+    "service": "serviceClass",
+    "entityTableName": "collision_level_five",
+    "pagination": "no"
+}

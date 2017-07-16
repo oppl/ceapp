@@ -15,6 +15,7 @@ public interface CollisionLevelFourMapper extends EntityMapper <CollisionLevelFo
     CollisionLevelFourDTO toDto(CollisionLevelFour collisionLevelFour); 
 
     @Mapping(source = "collisionLevelThreeId", target = "collisionLevelThree")
+    @Mapping(target = "collisionLevelFives", ignore = true)
     CollisionLevelFour toEntity(CollisionLevelFourDTO collisionLevelFourDTO); 
     default CollisionLevelFour fromId(Long id) {
         if (id == null) {

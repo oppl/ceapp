@@ -6,6 +6,12 @@
             "otherEntityName": "collisionLevelThree",
             "relationshipType": "many-to-one",
             "otherEntityField": "id"
+        },
+        {
+            "relationshipName": "collisionLevelFive",
+            "otherEntityName": "collisionLevelFive",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "collisionLevelFour"
         }
     ],
     "fields": [

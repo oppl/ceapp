@@ -82,6 +82,8 @@ public class CacheConfiguration {
             cm.createCache(at.meroff.itproject.domain.CollisionLevelFour.class.getName() + ".targetAppointments", jcacheConfiguration);
             cm.createCache(at.meroff.itproject.domain.Appointment.class.getName() + ".sourceCollisionLevelFours", jcacheConfiguration);
             cm.createCache(at.meroff.itproject.domain.Appointment.class.getName() + ".targetCollisionLevelFours", jcacheConfiguration);
+            cm.createCache(at.meroff.itproject.domain.CollisionLevelFour.class.getName() + ".collisionLevelFives", jcacheConfiguration);
+            cm.createCache(at.meroff.itproject.domain.CollisionLevelFive.class.getName(), jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

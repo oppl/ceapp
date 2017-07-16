@@ -1,0 +1,23 @@
+{
+    "ceappApp": {
+        "collisionLevelFive" : {
+            "home": {
+                "title": "Collision Level Fives",
+                "createLabel": "Collision Level Five erstellen",
+                "createOrEditLabel": "Collision Level Five erstellen oder bearbeiten",
+                "search": "Suche nach Collision Level Five"
+            },
+            "created": "Collision Level Five erstellt mit ID {{ param }}",
+            "updated": "Collision Level Five aktualisiert mit ID {{ param }}",
+            "deleted": "Collision Level Five gelöscht mit ID {{ param }}",
+            "delete": {
+                "question": "Soll Collision Level Five {{ id }} wirklich dauerhaft gelöscht werden?"
+            },
+            "detail": {
+                "title": "Collision Level Five"
+            },
+            "examCollision": "Exam Collision",
+            "collisionLevelFour": "Collision Level Four"
+        }
+    }
+}

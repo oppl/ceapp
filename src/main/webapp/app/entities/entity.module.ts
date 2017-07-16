@@ -15,6 +15,7 @@ import { CeappCollisionLevelOneModule } from './collision-level-one/collision-le
 import { CeappCollisionLevelTwoModule } from './collision-level-two/collision-level-two.module';
 import { CeappCollisionLevelThreeModule } from './collision-level-three/collision-level-three.module';
 import { CeappCollisionLevelFourModule } from './collision-level-four/collision-level-four.module';
+import { CeappCollisionLevelFiveModule } from './collision-level-five/collision-level-five.module';
 /* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */
 
 @NgModule({
@@ -34,6 +35,7 @@ import { CeappCollisionLevelFourModule } from './collision-level-four/collision-
         CeappCollisionLevelTwoModule,
         CeappCollisionLevelThreeModule,
         CeappCollisionLevelFourModule,
+        CeappCollisionLevelFiveModule,
         /* jhipster-needle-add-entity-module - JHipster will add entity modules here */
     ],
     declarations: [],
