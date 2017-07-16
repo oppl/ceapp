@@ -21,6 +21,7 @@ public interface CurriculumSubjectMapper extends EntityMapper <CurriculumSubject
     @Mapping(source = "subjectId", target = "subject")
 
     @Mapping(source = "curriculumSemesterId", target = "curriculumSemester")
+    @Mapping(target = "collisionLevelOnes", ignore = true)
     CurriculumSubject toEntity(CurriculumSubjectDTO curriculumSubjectDTO);
     default CurriculumSubject fromId(Long id) {
         if (id == null) {

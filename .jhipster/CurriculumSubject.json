@@ -20,6 +20,12 @@
             "otherEntityName": "curriculumSemester",
             "relationshipType": "many-to-one",
             "otherEntityField": "id"
+        },
+        {
+            "relationshipName": "collisionLevelOne",
+            "otherEntityName": "collisionLevelOne",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "curriculumSubject"
         }
     ],
     "fields": [],

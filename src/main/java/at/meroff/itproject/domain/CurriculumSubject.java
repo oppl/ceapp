@@ -1,5 +1,6 @@
 package at.meroff.itproject.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -38,6 +39,11 @@ public class CurriculumSubject implements Serializable {
 
     @ManyToOne
     private CurriculumSemester curriculumSemester;
+
+    @OneToMany(mappedBy = "curriculumSubject")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<CollisionLevelOne> collisionLevelOnes = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -96,6 +102,31 @@ public class CurriculumSubject implements Serializable {
 
     public void setCurriculumSemester(CurriculumSemester curriculumSemester) {
         this.curriculumSemester = curriculumSemester;
+    }
+
+    public Set<CollisionLevelOne> getCollisionLevelOnes() {
+        return collisionLevelOnes;
+    }
+
+    public CurriculumSubject collisionLevelOnes(Set<CollisionLevelOne> collisionLevelOnes) {
+        this.collisionLevelOnes = collisionLevelOnes;
+        return this;
+    }
+
+    public CurriculumSubject addCollisionLevelOne(CollisionLevelOne collisionLevelOne) {
+        this.collisionLevelOnes.add(collisionLevelOne);
+        collisionLevelOne.setCurriculumSubject(this);
+        return this;
+    }
+
+    public CurriculumSubject removeCollisionLevelOne(CollisionLevelOne collisionLevelOne) {
+        this.collisionLevelOnes.remove(collisionLevelOne);
+        collisionLevelOne.setCurriculumSubject(null);
+        return this;
+    }
+
+    public void setCollisionLevelOnes(Set<CollisionLevelOne> collisionLevelOnes) {
+        this.collisionLevelOnes = collisionLevelOnes;
     }
 
     @Override

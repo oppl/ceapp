@@ -6,6 +6,7 @@ export class CurriculumSubject implements BaseEntity {
         public lvas?: BaseEntity[],
         public subjectId?: number,
         public curriculumSemesterId?: number,
+        public collisionLevelOnes?: BaseEntity[],
     ) {
     }
 }

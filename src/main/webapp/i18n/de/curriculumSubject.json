@@ -18,7 +18,8 @@
             },
             "lva": "Lva",
             "subject": "Subject",
-            "curriculumSemester": "Curriculum Semester"
+            "curriculumSemester": "Curriculum Semester",
+            "collisionLevelOne": "Collision Level One"
         }
     }
 }
