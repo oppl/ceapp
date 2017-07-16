@@ -31,6 +31,10 @@ public class ElasticsearchIndexService {
 
     private final CollisionLevelOneSearchRepository collisionLevelOneSearchRepository;
 
+    private final CollisionLevelTwoRepository collisionLevelTwoRepository;
+
+    private final CollisionLevelTwoSearchRepository collisionLevelTwoSearchRepository;
+
     private final CollisionSummaryCSRepository collisionSummaryCSRepository;
 
     private final CollisionSummaryCSSearchRepository collisionSummaryCSSearchRepository;
@@ -84,6 +88,8 @@ public class ElasticsearchIndexService {
         AppointmentSearchRepository appointmentSearchRepository,
         CollisionLevelOneRepository collisionLevelOneRepository,
         CollisionLevelOneSearchRepository collisionLevelOneSearchRepository,
+        CollisionLevelTwoRepository collisionLevelTwoRepository,
+        CollisionLevelTwoSearchRepository collisionLevelTwoSearchRepository,
         CollisionSummaryCSRepository collisionSummaryCSRepository,
         CollisionSummaryCSSearchRepository collisionSummaryCSSearchRepository,
         CollisionSummaryLvaRepository collisionSummaryLvaRepository,
@@ -111,6 +117,8 @@ public class ElasticsearchIndexService {
         this.appointmentSearchRepository = appointmentSearchRepository;
         this.collisionLevelOneRepository = collisionLevelOneRepository;
         this.collisionLevelOneSearchRepository = collisionLevelOneSearchRepository;
+        this.collisionLevelTwoRepository = collisionLevelTwoRepository;
+        this.collisionLevelTwoSearchRepository = collisionLevelTwoSearchRepository;
         this.collisionSummaryCSRepository = collisionSummaryCSRepository;
         this.collisionSummaryCSSearchRepository = collisionSummaryCSSearchRepository;
         this.collisionSummaryLvaRepository = collisionSummaryLvaRepository;
@@ -139,6 +147,7 @@ public class ElasticsearchIndexService {
     public void reindexAll() {
         reindexForClass(Appointment.class, appointmentRepository, appointmentSearchRepository);
         reindexForClass(CollisionLevelOne.class, collisionLevelOneRepository, collisionLevelOneSearchRepository);
+        reindexForClass(CollisionLevelTwo.class, collisionLevelTwoRepository, collisionLevelTwoSearchRepository);
         reindexForClass(CollisionSummaryCS.class, collisionSummaryCSRepository, collisionSummaryCSSearchRepository);
         reindexForClass(CollisionSummaryLva.class, collisionSummaryLvaRepository, collisionSummaryLvaSearchRepository);
         reindexForClass(Curriculum.class, curriculumRepository, curriculumSearchRepository);

@@ -1,0 +1,31 @@
+
+<div *ngIf="collisionLevelTwo">
+    <h2><span jhiTranslate="ceappApp.collisionLevelTwo.detail.title">Collision Level Two</span> {{collisionLevelTwo.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="ceappApp.collisionLevelTwo.examCollision">Exam Collision</span></dt>
+        <dd>
+            <span>{{collisionLevelTwo.examCollision}}</span>
+        </dd>
+        <dt><span jhiTranslate="ceappApp.collisionLevelTwo.collisionLevelOne">Collision Level One</span></dt>
+        <dd>
+            <div *ngIf="collisionLevelTwo.collisionLevelOneId">
+                <a [routerLink]="['/collision-level-one', collisionLevelTwo.collisionLevelOneId]">{{collisionLevelTwo.collisionLevelOneId}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'collision-level-two/'+ collisionLevelTwo.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

@@ -6,6 +6,12 @@
             "otherEntityName": "curriculumSubject",
             "relationshipType": "many-to-one",
             "otherEntityField": "id"
+        },
+        {
+            "relationshipName": "collisionLevelTwo",
+            "otherEntityName": "collisionLevelTwo",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "collisionLevelOne"
         }
     ],
     "fields": [

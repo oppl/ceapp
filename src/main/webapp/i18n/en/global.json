@@ -19,6 +19,7 @@
                 "collisionSummaryLva": "Collision Summary Lva",
                 "curriculumSemester": "Curriculum Semester",
                 "collisionLevelOne": "Collision Level One",
+                "collisionLevelTwo": "Collision Level Two",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

@@ -17,7 +17,8 @@
                 "title": "Collision Level One"
             },
             "examCollision": "Exam Collision",
-            "curriculumSubject": "Curriculum Subject"
+            "curriculumSubject": "Curriculum Subject",
+            "collisionLevelTwo": "Collision Level Two"
         }
     }
 }
