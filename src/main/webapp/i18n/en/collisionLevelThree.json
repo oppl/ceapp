@@ -1,0 +1,23 @@
+{
+    "ceappApp": {
+        "collisionLevelThree" : {
+            "home": {
+                "title": "Collision Level Threes",
+                "createLabel": "Create a new Collision Level Three",
+                "createOrEditLabel": "Create or edit a Collision Level Three",
+                "search": "Search for Collision Level Three"
+            },
+            "created": "A new Collision Level Three is created with identifier {{ param }}",
+            "updated": "A Collision Level Three is updated with identifier {{ param }}",
+            "deleted": "A Collision Level Three is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Collision Level Three {{ id }}?"
+            },
+            "detail": {
+                "title": "Collision Level Three"
+            },
+            "examCollision": "Exam Collision",
+            "collisionLevelTwo": "Collision Level Two"
+        }
+    }
+}

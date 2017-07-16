@@ -1,11 +1,14 @@
 package at.meroff.itproject.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -29,6 +32,11 @@ public class CollisionLevelTwo implements Serializable {
 
     @ManyToOne
     private CollisionLevelOne collisionLevelOne;
+
+    @OneToMany(mappedBy = "collisionLevelTwo")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<CollisionLevelThree> collisionLevelThrees = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -62,6 +70,31 @@ public class CollisionLevelTwo implements Serializable {
 
     public void setCollisionLevelOne(CollisionLevelOne collisionLevelOne) {
         this.collisionLevelOne = collisionLevelOne;
+    }
+
+    public Set<CollisionLevelThree> getCollisionLevelThrees() {
+        return collisionLevelThrees;
+    }
+
+    public CollisionLevelTwo collisionLevelThrees(Set<CollisionLevelThree> collisionLevelThrees) {
+        this.collisionLevelThrees = collisionLevelThrees;
+        return this;
+    }
+
+    public CollisionLevelTwo addCollisionLevelThree(CollisionLevelThree collisionLevelThree) {
+        this.collisionLevelThrees.add(collisionLevelThree);
+        collisionLevelThree.setCollisionLevelTwo(this);
+        return this;
+    }
+
+    public CollisionLevelTwo removeCollisionLevelThree(CollisionLevelThree collisionLevelThree) {
+        this.collisionLevelThrees.remove(collisionLevelThree);
+        collisionLevelThree.setCollisionLevelTwo(null);
+        return this;
+    }
+
+    public void setCollisionLevelThrees(Set<CollisionLevelThree> collisionLevelThrees) {
+        this.collisionLevelThrees = collisionLevelThrees;
     }
 
     @Override

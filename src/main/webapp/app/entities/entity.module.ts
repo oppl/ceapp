@@ -13,6 +13,7 @@ import { CeappCollisionSummaryLvaModule } from './collision-summary-lva/collisio
 import { CeappCurriculumSemesterModule } from './curriculum-semester/curriculum-semester.module';
 import { CeappCollisionLevelOneModule } from './collision-level-one/collision-level-one.module';
 import { CeappCollisionLevelTwoModule } from './collision-level-two/collision-level-two.module';
+import { CeappCollisionLevelThreeModule } from './collision-level-three/collision-level-three.module';
 /* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */
 
 @NgModule({
@@ -30,6 +31,7 @@ import { CeappCollisionLevelTwoModule } from './collision-level-two/collision-le
         CeappCurriculumSemesterModule,
         CeappCollisionLevelOneModule,
         CeappCollisionLevelTwoModule,
+        CeappCollisionLevelThreeModule,
         /* jhipster-needle-add-entity-module - JHipster will add entity modules here */
     ],
     declarations: [],

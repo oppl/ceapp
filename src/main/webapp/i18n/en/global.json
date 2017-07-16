@@ -20,6 +20,7 @@
                 "curriculumSemester": "Curriculum Semester",
                 "collisionLevelOne": "Collision Level One",
                 "collisionLevelTwo": "Collision Level Two",
+                "collisionLevelThree": "Collision Level Three",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

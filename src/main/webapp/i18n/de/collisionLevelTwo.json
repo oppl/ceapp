@@ -17,7 +17,8 @@
                 "title": "Collision Level Two"
             },
             "examCollision": "Exam Collision",
-            "collisionLevelOne": "Collision Level One"
+            "collisionLevelOne": "Collision Level One",
+            "collisionLevelThree": "Collision Level Three"
         }
     }
 }
