@@ -10,10 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -104,8 +101,8 @@ public class CollisionService {
         Set<AppointmentDTO> appointmentsTarget = lvaDTO1.getAppointments();
 
         System.out.println(lvaDTO.getSubjectSubjectName() + " --> " + lvaDTO1.getSubjectSubjectName());
-        appointmentsSource.forEach(appointmentDTO -> {
-            Set<CollisionLevelFiveDTO> collect = appointmentsTarget
+        Set<CollisionLevelFiveDTO> collect = appointmentsSource.stream().map(appointmentDTO -> {
+            return appointmentsTarget
                 .stream()
                 .filter(appointmentDTO1 -> detectCollision(appointmentDTO, appointmentDTO1))
                 .map(appointmentDTO1 -> {
@@ -114,9 +111,21 @@ public class CollisionService {
                     collisionLevelFiveDTO.setTargetAppointmentId(appointmentDTO1.getId());
                     if (appointmentDTO.isIsExam() && appointmentDTO1.isIsExam())
                         collisionLevelFiveDTO.setExamCollision(1);
-                    return collisionLevelFiveService.save(collisionLevelFiveDTO);
+                    return collisionLevelFiveDTO;
                 }).collect(Collectors.toSet());
-        });
+        }).flatMap(Collection::stream).collect(Collectors.toSet());
+
+        if (collect.size() > 0) {
+            CollisionLevelFourDTO collisionLevelFourDTO = new CollisionLevelFourDTO();
+            collisionLevelFourDTO = collisionLevelFourService.save(collisionLevelFourDTO);
+            CollisionLevelFourDTO finalCollisionLevelFourDTO = collisionLevelFourDTO;
+            collect.forEach(collisionLevelFiveDTO -> {
+                collisionLevelFiveDTO.setCollisionLevelFourId(finalCollisionLevelFourDTO.getId());
+                collisionLevelFiveService.save(collisionLevelFiveDTO);
+            });
+        }
+
+
 
     }
 
