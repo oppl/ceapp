@@ -25,6 +25,8 @@ public class CollisionService {
 
     private final CurriculumSubjectService curriculumSubjectService;
 
+    private final CurriculumService curriculumService;
+
     private final IdealPlanService idealPlanService;
     private final IdealPlanEntriesService idealPlanEntriesService;
 
@@ -45,7 +47,8 @@ public class CollisionService {
                             CollisionLevelThreeService collisionLevelThreeService,
                             CollisionLevelFourService collisionLevelFourService,
                             CollisionLevelFiveService collisionLevelFiveService,
-                            AppointmentService appointmentService) {
+                            AppointmentService appointmentService,
+                            CurriculumService curriculumService) {
         this.curriculumSemesterService = curriculumSemesterService;
         this.curriculumSubjectService = curriculumSubjectService;
         this.idealPlanService = idealPlanService;
@@ -56,6 +59,7 @@ public class CollisionService {
         this.collisionLevelFourService = collisionLevelFourService;
         this.collisionLevelFiveService = collisionLevelFiveService;
         this.appointmentService = appointmentService;
+        this.curriculumService = curriculumService;
     }
 
     public void calculateCollisions() {
@@ -64,6 +68,10 @@ public class CollisionService {
 
         // load CurriculumSubject
         CurriculumSemesterDTO one = curriculumSemesterService.findOne(204, 2017, Semester.SS);
+
+        // load Curriculum
+        CurriculumDTO curriculumDTO = curriculumService.findByCurId(204);
+        List<Long> instituteIds = curriculumDTO.getInstitutes().stream().map(instituteDTO -> instituteDTO.getId()).collect(Collectors.toList());
 
         List<CurriculumSubjectDTO> all = curriculumSubjectService.findAll(one.getId());
 
@@ -91,7 +99,7 @@ public class CollisionService {
                             CurriculumSubjectDTO curriculumSubjectDTO1 = targetSubject.get();
                             Set<LvaDTO> lvas1 = curriculumSubjectDTO1.getLvas();
                             Set<CollisionLevelFourDTO> collect = lvas1.stream()
-                                .map(lvaDTO1 -> checkCollisionLva(lvaDTO, lvaDTO1))
+                                .map(lvaDTO1 -> checkCollisionLva(lvaDTO, lvaDTO1, instituteIds))
                                 .filter(Objects::nonNull)
                                 .collect(Collectors.toSet());
                             CollisionLevelThreeDTO collisionLevelThreeDTO = new CollisionLevelThreeDTO();
@@ -146,7 +154,7 @@ public class CollisionService {
 
     }
 
-    private CollisionLevelFourDTO checkCollisionLva(LvaDTO lvaDTO, LvaDTO lvaDTO1) {
+    private CollisionLevelFourDTO checkCollisionLva(LvaDTO lvaDTO, LvaDTO lvaDTO1, List<Long> instituteIds) {
         Set<AppointmentDTO> appointmentsSource = lvaDTO.getAppointments();
         Set<AppointmentDTO> appointmentsTarget = lvaDTO1.getAppointments();
 
@@ -175,6 +183,18 @@ public class CollisionService {
         if (collect.size() > 0) {
 
             collisionLevelFourDTO.setLvaId(lvaDTO1.getId());
+            if (lvaDTO.getInstituteId() == lvaDTO1.getInstituteId()) {
+                collisionLevelFourDTO.setInstituteCollision(1);
+            } else {
+                collisionLevelFourDTO.setInstituteCollision(0);
+            }
+
+            if (instituteIds.contains(lvaDTO.getInstituteId()) && instituteIds.contains(lvaDTO1.getInstituteId())) {
+                collisionLevelFourDTO.setCurriculumCollision(1);
+            } else {
+                collisionLevelFourDTO.setCurriculumCollision(0);
+            }
+
             collisionLevelFourDTO = collisionLevelFourService.save(collisionLevelFourDTO);
 
             collisionLevelFourDTO.setExamCollision(collect.stream().mapToInt(collisionLevelFiveDTO -> collisionLevelFiveDTO.getExamCollision()).sum());

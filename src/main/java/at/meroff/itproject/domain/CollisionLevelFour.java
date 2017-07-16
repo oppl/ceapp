@@ -30,6 +30,12 @@ public class CollisionLevelFour implements Serializable {
     @Column(name = "exam_collision")
     private Integer examCollision;
 
+    @Column(name = "institute_collision")
+    private Integer instituteCollision;
+
+    @Column(name = "curriculum_collision")
+    private Integer curriculumCollision;
+
     @ManyToOne
     private CollisionLevelThree collisionLevelThree;
 
@@ -60,6 +66,32 @@ public class CollisionLevelFour implements Serializable {
 
     public void setExamCollision(Integer examCollision) {
         this.examCollision = examCollision;
+    }
+
+    public Integer getInstituteCollision() {
+        return instituteCollision;
+    }
+
+    public CollisionLevelFour instituteCollision(Integer instituteCollision) {
+        this.instituteCollision = instituteCollision;
+        return this;
+    }
+
+    public void setInstituteCollision(Integer instituteCollision) {
+        this.instituteCollision = instituteCollision;
+    }
+
+    public Integer getCurriculumCollision() {
+        return curriculumCollision;
+    }
+
+    public CollisionLevelFour curriculumCollision(Integer curriculumCollision) {
+        this.curriculumCollision = curriculumCollision;
+        return this;
+    }
+
+    public void setCurriculumCollision(Integer curriculumCollision) {
+        this.curriculumCollision = curriculumCollision;
     }
 
     public CollisionLevelThree getCollisionLevelThree() {
@@ -138,6 +170,8 @@ public class CollisionLevelFour implements Serializable {
         return "CollisionLevelFour{" +
             "id=" + getId() +
             ", examCollision='" + getExamCollision() + "'" +
+            ", instituteCollision='" + getInstituteCollision() + "'" +
+            ", curriculumCollision='" + getCurriculumCollision() + "'" +
             "}";
     }
 }
