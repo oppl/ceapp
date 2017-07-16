@@ -13,14 +13,15 @@ public interface IdealPlanEntriesMapper extends EntityMapper <IdealPlanEntriesDT
 
     @Mapping(source = "subject.id", target = "subjectId")
     @Mapping(source = "subject.subjectName", target = "subjectSubjectName")
+    @Mapping(source = "subject.subjectType", target = "subjectSubjectType")
 
     @Mapping(source = "idealplan.id", target = "idealplanId")
-    IdealPlanEntriesDTO toDto(IdealPlanEntries idealPlanEntries); 
+    IdealPlanEntriesDTO toDto(IdealPlanEntries idealPlanEntries);
 
     @Mapping(source = "subjectId", target = "subject")
 
     @Mapping(source = "idealplanId", target = "idealplan")
-    IdealPlanEntries toEntity(IdealPlanEntriesDTO idealPlanEntriesDTO); 
+    IdealPlanEntries toEntity(IdealPlanEntriesDTO idealPlanEntriesDTO);
     default IdealPlanEntries fromId(Long id) {
         if (id == null) {
             return null;

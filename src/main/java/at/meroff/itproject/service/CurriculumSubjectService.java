@@ -67,6 +67,19 @@ public class CurriculumSubjectService {
     }
 
     /**
+     *  Get all the curriculumSubjects.
+     *
+     *  @return the list of entities
+     */
+    @Transactional(readOnly = true)
+    public List<CurriculumSubjectDTO> findAll(Long id) {
+        log.debug("Request to get all CurriculumSubjects");
+        return curriculumSubjectRepository.findByCurriculumSemester_Id(id).stream()
+            .map(curriculumSubjectMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    /**
      *  Get one curriculumSubject by id.
      *
      *  @param id the id of the entity

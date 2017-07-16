@@ -48,6 +48,7 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
     private ImportService importService;
     private IdealPlanService idealPlanService;
     private IdealPlanEntriesService idealPlanEntriesService;
+    private CollisionService collisionService;
 
     public BootStrap(CurriculumService curriculumService,
                      CurriculumMapper curriculumMapper,
@@ -65,7 +66,8 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
                      CurriculumSemesterMapper curriculumSemesterMapper,
                      ElasticsearchIndexService elasticsearchIndexService,
                      ImportService importService,
-                     IdealPlanEntriesService idealPlanEntriesService) {
+                     IdealPlanEntriesService idealPlanEntriesService,
+                     CollisionService collisionService) {
         this.curriculumService = curriculumService;
         this.curriculumMapper = curriculumMapper;
         this.instituteService = instituteService;
@@ -83,6 +85,7 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
         this.importService = importService;
         this.idealPlanService = idealPlanService;
         this.idealPlanEntriesService = idealPlanEntriesService;
+        this.collisionService = collisionService;
     }
 
     @Override
@@ -132,6 +135,8 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
             Map<Semester, Integer> semesterIntegerMap = idealPath.get(key);
             createIdealPlanEntity(finalIdealPlanDTO, subject, semesterIntegerMap.get(Semester.WS),semesterIntegerMap.get(Semester.SS));
         });
+
+        collisionService.calculateCollisions();
 
         /*
         wirtschaftsinformatik.addInstitute(instituteMapper.toEntity(instituteService.findByInstituteId(256)));
