@@ -1,21 +1,16 @@
 package at.meroff.itproject.bootstrap;
 
 import at.meroff.itproject.domain.*;
-import at.meroff.itproject.domain.enumeration.LvaType;
 import at.meroff.itproject.domain.enumeration.Semester;
 import at.meroff.itproject.domain.enumeration.SubjectType;
 import at.meroff.itproject.repository.*;
 import at.meroff.itproject.service.*;
-import at.meroff.itproject.service.dto.CurriculumDTO;
-import at.meroff.itproject.service.dto.CurriculumSemesterDTO;
-import at.meroff.itproject.service.dto.SubjectDTO;
+import at.meroff.itproject.service.dto.*;
 import at.meroff.itproject.service.mapper.CurriculumMapper;
 import at.meroff.itproject.service.mapper.CurriculumSemesterMapper;
 import at.meroff.itproject.service.mapper.InstituteMapper;
 import at.meroff.itproject.xml.XMLQueryTemplate;
 import at.meroff.itproject.xml.models.Subjects;
-import at.meroff.itproject.xml.models.lvas.XmlLvas;
-import org.basex.query.value.item.Int;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationListener;
@@ -25,10 +20,6 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.time.*;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -55,12 +46,15 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
     private CurriculumSemesterMapper curriculumSemesterMapper;
     private ElasticsearchIndexService elasticsearchIndexService;
     private ImportService importService;
+    private IdealPlanService idealPlanService;
+    private IdealPlanEntriesService idealPlanEntriesService;
 
     public BootStrap(CurriculumService curriculumService,
                      CurriculumMapper curriculumMapper,
                      InstituteService instituteService,
                      InstituteMapper instituteMapper,
                      SubjectRepository subjectRepository,
+                     IdealPlanService idealPlanService,
                      IdealPlanRepository idealPlanRepository,
                      IdealPlanEntriesRepository idealPlanEntriesRepository,
                      CurriculumSubjectRepository curriculumSubjectRepository,
@@ -70,7 +64,8 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
                      CurriculumSemesterService curriculumSemesterService,
                      CurriculumSemesterMapper curriculumSemesterMapper,
                      ElasticsearchIndexService elasticsearchIndexService,
-                     ImportService importService) {
+                     ImportService importService,
+                     IdealPlanEntriesService idealPlanEntriesService) {
         this.curriculumService = curriculumService;
         this.curriculumMapper = curriculumMapper;
         this.instituteService = instituteService;
@@ -86,6 +81,8 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
         this.curriculumSemesterMapper = curriculumSemesterMapper;
         this.elasticsearchIndexService = elasticsearchIndexService;
         this.importService = importService;
+        this.idealPlanService = idealPlanService;
+        this.idealPlanEntriesService = idealPlanEntriesService;
     }
 
     @Override
@@ -98,6 +95,17 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
 
         Curriculum wirtschaftsinformatik = createCurriculum(204, "Wirtschaftsinformatik");
 
+
+        Set<Institute> institute = new HashSet<>();
+        institute.add(instituteMapper.toEntity(instituteService.findByInstituteId(256)));
+        institute.add(instituteMapper.toEntity(instituteService.findByInstituteId(257)));
+        institute.add(instituteMapper.toEntity(instituteService.findByInstituteId(258)));
+        institute.add(instituteMapper.toEntity(instituteService.findByInstituteId(259)));
+
+        wirtschaftsinformatik.setInstitutes(institute);
+
+        curriculumService.save(curriculumMapper.toDto(wirtschaftsinformatik));
+
         CurriculumSemesterDTO curriculumSemesterDTO = new CurriculumSemesterDTO();
         curriculumSemesterDTO.setCurriculumId(wirtschaftsinformatik.getId());
         curriculumSemesterDTO.setYear(2017);
@@ -109,9 +117,21 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
 
         importService.verifyLvas(curriculumSemesterDTO);
 
-        //importService.updateCuriculumSubjects(curriculumSemesterDTO);
+        IdealPlanDTO idealPlanDTO = new IdealPlanDTO();
+        idealPlanDTO.setYear(2016);
+        idealPlanDTO.setSemester(Semester.WS);
+        idealPlanDTO.setCurriculumId(wirtschaftsinformatik.getId());
 
+        idealPlanDTO = idealPlanService.save(idealPlanDTO);
 
+        Map<Map<String, SubjectType>, Map<Semester, Integer>> idealPath = getIdealPath();
+        IdealPlanDTO finalIdealPlanDTO = idealPlanDTO;
+        subjectDTOS.forEach(subject -> {
+            Map<String, SubjectType> key = new HashMap<>();
+            key.put(subject.getSubjectName(), subject.getSubjectType());
+            Map<Semester, Integer> semesterIntegerMap = idealPath.get(key);
+            createIdealPlanEntity(finalIdealPlanDTO, subject, semesterIntegerMap.get(Semester.WS),semesterIntegerMap.get(Semester.SS));
+        });
 
         /*
         wirtschaftsinformatik.addInstitute(instituteMapper.toEntity(instituteService.findByInstituteId(256)));
@@ -291,15 +311,15 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
         return curriculumMapper.toEntity(curriculumService.save(curriculumMapper.toDto(curriculum)));
     }
 
-    private IdealPlanEntries createIdealPlanEntity(IdealPlan idealPlan, Subject subject, int winterSemesterDefault, int summerSemesterDefault) {
-        IdealPlanEntries idealPlanEntries = new IdealPlanEntries();
-        idealPlanEntries.setIdealplan(idealPlan);
-        idealPlanEntries.setSubject(subject);
+    private IdealPlanEntriesDTO createIdealPlanEntity(IdealPlanDTO idealPlanDTO, SubjectDTO subjectDTO, int winterSemesterDefault, int summerSemesterDefault) {
+        IdealPlanEntriesDTO idealPlanEntries = new IdealPlanEntriesDTO();
+        idealPlanEntries.setIdealplanId(idealPlanDTO.getId());
+        idealPlanEntries.setSubjectId(subjectDTO.getId());
         idealPlanEntries.setOptionalSubject(false);
         idealPlanEntries.setWinterSemesterDefault(winterSemesterDefault);
         idealPlanEntries.setSummerSemesterDefault(summerSemesterDefault);
 
-        return idealPlanEntriesRepository.save(idealPlanEntries);
+        return idealPlanEntriesService.save(idealPlanEntries);
     }
 
     public Map<Map<String, SubjectType>, Map<Semester, Integer>> getIdealPath() {
