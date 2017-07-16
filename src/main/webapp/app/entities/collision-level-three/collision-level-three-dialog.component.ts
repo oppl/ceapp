@@ -10,6 +10,7 @@ import { CollisionLevelThree } from './collision-level-three.model';
 import { CollisionLevelThreePopupService } from './collision-level-three-popup.service';
 import { CollisionLevelThreeService } from './collision-level-three.service';
 import { CollisionLevelTwo, CollisionLevelTwoService } from '../collision-level-two';
+import { CurriculumSubject, CurriculumSubjectService } from '../curriculum-subject';
 import { ResponseWrapper } from '../../shared';
 
 @Component({
@@ -24,11 +25,14 @@ export class CollisionLevelThreeDialogComponent implements OnInit {
 
     collisionleveltwos: CollisionLevelTwo[];
 
+    curriculumsubjects: CurriculumSubject[];
+
     constructor(
         public activeModal: NgbActiveModal,
         private alertService: JhiAlertService,
         private collisionLevelThreeService: CollisionLevelThreeService,
         private collisionLevelTwoService: CollisionLevelTwoService,
+        private curriculumSubjectService: CurriculumSubjectService,
         private eventManager: JhiEventManager
     ) {
     }
@@ -38,6 +42,8 @@ export class CollisionLevelThreeDialogComponent implements OnInit {
         this.authorities = ['ROLE_USER', 'ROLE_ADMIN'];
         this.collisionLevelTwoService.query()
             .subscribe((res: ResponseWrapper) => { this.collisionleveltwos = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
+        this.curriculumSubjectService.query()
+            .subscribe((res: ResponseWrapper) => { this.curriculumsubjects = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
     }
 
     clear() {
@@ -81,6 +87,10 @@ export class CollisionLevelThreeDialogComponent implements OnInit {
     }
 
     trackCollisionLevelTwoById(index: number, item: CollisionLevelTwo) {
+        return item.id;
+    }
+
+    trackCurriculumSubjectById(index: number, item: CurriculumSubject) {
         return item.id;
     }
 }

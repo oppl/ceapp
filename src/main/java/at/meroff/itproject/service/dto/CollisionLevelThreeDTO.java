@@ -17,6 +17,8 @@ public class CollisionLevelThreeDTO implements Serializable {
 
     private Long collisionLevelTwoId;
 
+    private Long curriculumSubjectId;
+
     public Long getId() {
         return id;
     }
@@ -39,6 +41,14 @@ public class CollisionLevelThreeDTO implements Serializable {
 
     public void setCollisionLevelTwoId(Long collisionLevelTwoId) {
         this.collisionLevelTwoId = collisionLevelTwoId;
+    }
+
+    public Long getCurriculumSubjectId() {
+        return curriculumSubjectId;
+    }
+
+    public void setCurriculumSubjectId(Long curriculumSubjectId) {
+        this.curriculumSubjectId = curriculumSubjectId;
     }
 
     @Override

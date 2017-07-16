@@ -10,6 +10,7 @@ import { CollisionLevelTwo } from './collision-level-two.model';
 import { CollisionLevelTwoPopupService } from './collision-level-two-popup.service';
 import { CollisionLevelTwoService } from './collision-level-two.service';
 import { CollisionLevelOne, CollisionLevelOneService } from '../collision-level-one';
+import { Lva, LvaService } from '../lva';
 import { ResponseWrapper } from '../../shared';
 
 @Component({
@@ -24,11 +25,14 @@ export class CollisionLevelTwoDialogComponent implements OnInit {
 
     collisionlevelones: CollisionLevelOne[];
 
+    lvas: Lva[];
+
     constructor(
         public activeModal: NgbActiveModal,
         private alertService: JhiAlertService,
         private collisionLevelTwoService: CollisionLevelTwoService,
         private collisionLevelOneService: CollisionLevelOneService,
+        private lvaService: LvaService,
         private eventManager: JhiEventManager
     ) {
     }
@@ -38,6 +42,8 @@ export class CollisionLevelTwoDialogComponent implements OnInit {
         this.authorities = ['ROLE_USER', 'ROLE_ADMIN'];
         this.collisionLevelOneService.query()
             .subscribe((res: ResponseWrapper) => { this.collisionlevelones = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
+        this.lvaService.query()
+            .subscribe((res: ResponseWrapper) => { this.lvas = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
     }
 
     clear() {
@@ -81,6 +87,10 @@ export class CollisionLevelTwoDialogComponent implements OnInit {
     }
 
     trackCollisionLevelOneById(index: number, item: CollisionLevelOne) {
+        return item.id;
+    }
+
+    trackLvaById(index: number, item: Lva) {
         return item.id;
     }
 }

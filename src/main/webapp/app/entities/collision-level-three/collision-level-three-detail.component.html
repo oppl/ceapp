@@ -14,6 +14,12 @@
                 <a [routerLink]="['/collision-level-two', collisionLevelThree.collisionLevelTwoId]">{{collisionLevelThree.collisionLevelTwoId}}</a>
             </div>
         </dd>
+        <dt><span jhiTranslate="ceappApp.collisionLevelThree.curriculumSubject">Curriculum Subject</span></dt>
+        <dd>
+            <div *ngIf="collisionLevelThree.curriculumSubjectId">
+                <a [routerLink]="['/curriculum-subject', collisionLevelThree.curriculumSubjectId]">{{collisionLevelThree.curriculumSubjectId}}</a>
+            </div>
+        </dd>
     </dl>
 
     <button type="submit"

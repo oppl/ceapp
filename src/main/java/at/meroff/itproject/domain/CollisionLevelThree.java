@@ -38,6 +38,9 @@ public class CollisionLevelThree implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<CollisionLevelFour> collisionLevelFours = new HashSet<>();
 
+    @ManyToOne
+    private CurriculumSubject curriculumSubject;
+
     public Long getId() {
         return id;
     }
@@ -95,6 +98,19 @@ public class CollisionLevelThree implements Serializable {
 
     public void setCollisionLevelFours(Set<CollisionLevelFour> collisionLevelFours) {
         this.collisionLevelFours = collisionLevelFours;
+    }
+
+    public CurriculumSubject getCurriculumSubject() {
+        return curriculumSubject;
+    }
+
+    public CollisionLevelThree curriculumSubject(CurriculumSubject curriculumSubject) {
+        this.curriculumSubject = curriculumSubject;
+        return this;
+    }
+
+    public void setCurriculumSubject(CurriculumSubject curriculumSubject) {
+        this.curriculumSubject = curriculumSubject;
     }
 
     @Override

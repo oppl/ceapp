@@ -8,14 +8,19 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity CollisionLevelFour and its DTO CollisionLevelFourDTO.
  */
-@Mapper(componentModel = "spring", uses = {CollisionLevelThreeMapper.class, })
+@Mapper(componentModel = "spring", uses = {CollisionLevelThreeMapper.class, LvaMapper.class, })
 public interface CollisionLevelFourMapper extends EntityMapper <CollisionLevelFourDTO, CollisionLevelFour> {
 
     @Mapping(source = "collisionLevelThree.id", target = "collisionLevelThreeId")
+
+    @Mapping(source = "lva.id", target = "lvaId")
+    @Mapping(source = "lva.lvaNr", target = "lvaLvaNr")
     CollisionLevelFourDTO toDto(CollisionLevelFour collisionLevelFour); 
 
     @Mapping(source = "collisionLevelThreeId", target = "collisionLevelThree")
     @Mapping(target = "collisionLevelFives", ignore = true)
+
+    @Mapping(source = "lvaId", target = "lva")
     CollisionLevelFour toEntity(CollisionLevelFourDTO collisionLevelFourDTO); 
     default CollisionLevelFour fromId(Long id) {
         if (id == null) {

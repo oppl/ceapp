@@ -12,6 +12,12 @@
             "otherEntityName": "collisionLevelFive",
             "relationshipType": "one-to-many",
             "otherEntityRelationshipName": "collisionLevelFour"
+        },
+        {
+            "relationshipName": "lva",
+            "otherEntityName": "lva",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "lvaNr"
         }
     ],
     "fields": [

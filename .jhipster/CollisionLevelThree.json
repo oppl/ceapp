@@ -12,6 +12,12 @@
             "otherEntityName": "collisionLevelFour",
             "relationshipType": "one-to-many",
             "otherEntityRelationshipName": "collisionLevelThree"
+        },
+        {
+            "relationshipName": "curriculumSubject",
+            "otherEntityName": "curriculumSubject",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
         }
     ],
     "fields": [

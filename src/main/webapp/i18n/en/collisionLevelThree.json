@@ -18,7 +18,8 @@
             },
             "examCollision": "Exam Collision",
             "collisionLevelTwo": "Collision Level Two",
-            "collisionLevelFour": "Collision Level Four"
+            "collisionLevelFour": "Collision Level Four",
+            "curriculumSubject": "Curriculum Subject"
         }
     }
 }

@@ -17,6 +17,10 @@ public class CollisionLevelFourDTO implements Serializable {
 
     private Long collisionLevelThreeId;
 
+    private Long lvaId;
+
+    private String lvaLvaNr;
+
     public Long getId() {
         return id;
     }
@@ -39,6 +43,22 @@ public class CollisionLevelFourDTO implements Serializable {
 
     public void setCollisionLevelThreeId(Long collisionLevelThreeId) {
         this.collisionLevelThreeId = collisionLevelThreeId;
+    }
+
+    public Long getLvaId() {
+        return lvaId;
+    }
+
+    public void setLvaId(Long lvaId) {
+        this.lvaId = lvaId;
+    }
+
+    public String getLvaLvaNr() {
+        return lvaLvaNr;
+    }
+
+    public void setLvaLvaNr(String lvaLvaNr) {
+        this.lvaLvaNr = lvaLvaNr;
     }
 
     @Override

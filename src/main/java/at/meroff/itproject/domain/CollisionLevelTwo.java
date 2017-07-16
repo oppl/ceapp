@@ -38,6 +38,9 @@ public class CollisionLevelTwo implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<CollisionLevelThree> collisionLevelThrees = new HashSet<>();
 
+    @ManyToOne
+    private Lva lva;
+
     public Long getId() {
         return id;
     }
@@ -95,6 +98,19 @@ public class CollisionLevelTwo implements Serializable {
 
     public void setCollisionLevelThrees(Set<CollisionLevelThree> collisionLevelThrees) {
         this.collisionLevelThrees = collisionLevelThrees;
+    }
+
+    public Lva getLva() {
+        return lva;
+    }
+
+    public CollisionLevelTwo lva(Lva lva) {
+        this.lva = lva;
+        return this;
+    }
+
+    public void setLva(Lva lva) {
+        this.lva = lva;
     }
 
     @Override

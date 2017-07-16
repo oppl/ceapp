@@ -18,7 +18,8 @@
             },
             "examCollision": "Exam Collision",
             "collisionLevelOne": "Collision Level One",
-            "collisionLevelThree": "Collision Level Three"
+            "collisionLevelThree": "Collision Level Three",
+            "lva": "Lva"
         }
     }
 }

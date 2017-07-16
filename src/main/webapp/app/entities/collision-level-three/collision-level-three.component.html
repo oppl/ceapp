@@ -32,6 +32,7 @@
             <th><span jhiTranslate="global.field.id">ID</span></th>
             <th><span jhiTranslate="ceappApp.collisionLevelThree.examCollision">Exam Collision</span></th>
             <th><span jhiTranslate="ceappApp.collisionLevelThree.collisionLevelTwo">Collision Level Two</span></th>
+            <th><span jhiTranslate="ceappApp.collisionLevelThree.curriculumSubject">Curriculum Subject</span></th>
             <th></th>
             </tr>
             </thead>
@@ -42,6 +43,11 @@
                 <td>
                     <div *ngIf="collisionLevelThree.collisionLevelTwoId">
                         <a [routerLink]="['../collision-level-two', collisionLevelThree.collisionLevelTwoId  ]" >{{collisionLevelThree.collisionLevelTwoId}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="collisionLevelThree.curriculumSubjectId">
+                        <a [routerLink]="['../curriculum-subject', collisionLevelThree.curriculumSubjectId  ]" >{{collisionLevelThree.curriculumSubjectId}}</a>
                     </div>
                 </td>
                 <td class="text-right">

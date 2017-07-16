@@ -25,6 +25,13 @@
                 <option [ngValue]="collisionLevelOneOption.id" *ngFor="let collisionLevelOneOption of collisionlevelones; trackBy: trackCollisionLevelOneById">{{collisionLevelOneOption.id}}</option>
             </select>
         </div>
+        <div class="form-group">
+            <label jhiTranslate="ceappApp.collisionLevelTwo.lva" for="field_lva">Lva</label>
+            <select class="form-control" id="field_lva" name="lva" [(ngModel)]="collisionLevelTwo.lvaId" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="lvaOption.id" *ngFor="let lvaOption of lvas; trackBy: trackLvaById">{{lvaOption.lvaNr}}</option>
+            </select>
+        </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">

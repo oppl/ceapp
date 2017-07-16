@@ -1,6 +1,6 @@
 package at.meroff.itproject.service;
 
-import at.meroff.itproject.domain.*;
+import at.meroff.itproject.domain.CollisionLevelTwo;
 import at.meroff.itproject.domain.enumeration.Semester;
 import at.meroff.itproject.domain.enumeration.SubjectType;
 import at.meroff.itproject.service.dto.*;
@@ -81,22 +81,67 @@ public class CollisionService {
 
                 // Abrufen der LVAs des Ursprungsfachs
                 Set<LvaDTO> lvas = curriculumSubjectDTO.getLvas();
-                lvas.forEach(lvaDTO -> {
+                Set<CollisionLevelTwoDTO> collect3 = lvas.stream().map(lvaDTO -> {
                     //Prüfen einer LVA des Ursprungsfachs gegen alle möglichen Kollisionsfächer
-                    possibleCollisions.forEach(targetSubject -> {
+                    Set<CollisionLevelThreeDTO> collect1 = possibleCollisions.stream().map(targetSubject -> {
                         if (targetSubject.isPresent()) {
+                            // Zusammenfassung auf Fach Ziel
                             CurriculumSubjectDTO curriculumSubjectDTO1 = targetSubject.get();
                             Set<LvaDTO> lvas1 = curriculumSubjectDTO1.getLvas();
-                            lvas1.forEach(lvaDTO1 -> checkCollisionLva(lvaDTO, lvaDTO1));
+                            Set<CollisionLevelFourDTO> collect = lvas1.stream()
+                                .map(lvaDTO1 -> checkCollisionLva(lvaDTO, lvaDTO1))
+                                .filter(Objects::nonNull)
+                                .collect(Collectors.toSet());
+                            CollisionLevelThreeDTO collisionLevelThreeDTO = new CollisionLevelThreeDTO();
+
+                            if (collect.size() > 0) {
+                                collisionLevelThreeDTO.setCurriculumSubjectId(targetSubject.get().getId());
+                                collisionLevelThreeDTO = collisionLevelThreeService.save(collisionLevelThreeDTO);
+                                CollisionLevelThreeDTO finalCollisionLevelThreeDTO = collisionLevelThreeDTO;
+                                collect.forEach(collisionLevelFourDTO -> {
+                                    collisionLevelFourDTO.setCollisionLevelThreeId(finalCollisionLevelThreeDTO.getId());
+                                    collisionLevelFourService.save(collisionLevelFourDTO);
+                                });
+                                return collisionLevelThreeDTO;
+                            }
+                            return null;
                         }
+                        return null;
+                    }).filter(Objects::nonNull)
+                        .collect(Collectors.toSet());
+
+                    CollisionLevelTwoDTO collisionLevelTwoDTO = new CollisionLevelTwoDTO();
+
+                    if (collect1.size() > 0) {
+                        collisionLevelTwoDTO.setLvaId(lvaDTO.getId());
+                        collisionLevelTwoDTO = collisionLevelTwoService.save(collisionLevelTwoDTO);
+                        CollisionLevelTwoDTO finalCollisionLevelTwoDTO = collisionLevelTwoDTO;
+                        collect1.forEach(collisionLevelThreeDTO -> {
+                            collisionLevelThreeDTO.setCollisionLevelTwoId(finalCollisionLevelTwoDTO.getId());
+                            collisionLevelThreeService.save(collisionLevelThreeDTO);
+                        });
+                        return collisionLevelTwoDTO;
+                    }
+                    return null;
+
+                }).filter(Objects::nonNull).collect(Collectors.toSet());
+
+                CollisionLevelOneDTO collisionLevelOneDTO = new CollisionLevelOneDTO();
+                if (collect3.size() > 0) {
+                    collisionLevelOneDTO.setCurriculumSubjectId(curriculumSubjectDTO.getId());
+                    collisionLevelOneDTO = collisionLevelOneService.save(collisionLevelOneDTO);
+                    CollisionLevelOneDTO finalCollisionLevelOneDTO = collisionLevelOneDTO;
+                    collect3.forEach(collisionLevelTwoDTO -> {
+                        collisionLevelTwoDTO.setCollisionLevelOneId(finalCollisionLevelOneDTO.getId());
+                        collisionLevelTwoService.save(collisionLevelTwoDTO);
                     });
-                });
+                }
 
             });
 
     }
 
-    private void checkCollisionLva(LvaDTO lvaDTO, LvaDTO lvaDTO1) {
+    private CollisionLevelFourDTO checkCollisionLva(LvaDTO lvaDTO, LvaDTO lvaDTO1) {
         Set<AppointmentDTO> appointmentsSource = lvaDTO.getAppointments();
         Set<AppointmentDTO> appointmentsTarget = lvaDTO1.getAppointments();
 
@@ -115,15 +160,21 @@ public class CollisionService {
                 }).collect(Collectors.toSet());
         }).flatMap(Collection::stream).collect(Collectors.toSet());
 
+        CollisionLevelFourDTO collisionLevelFourDTO = new CollisionLevelFourDTO();
+
         if (collect.size() > 0) {
-            CollisionLevelFourDTO collisionLevelFourDTO = new CollisionLevelFourDTO();
+
+            collisionLevelFourDTO.setLvaId(lvaDTO1.getId());
             collisionLevelFourDTO = collisionLevelFourService.save(collisionLevelFourDTO);
             CollisionLevelFourDTO finalCollisionLevelFourDTO = collisionLevelFourDTO;
             collect.forEach(collisionLevelFiveDTO -> {
                 collisionLevelFiveDTO.setCollisionLevelFourId(finalCollisionLevelFourDTO.getId());
                 collisionLevelFiveService.save(collisionLevelFiveDTO);
             });
+            return collisionLevelFourDTO;
         }
+
+        return null;
 
 
 

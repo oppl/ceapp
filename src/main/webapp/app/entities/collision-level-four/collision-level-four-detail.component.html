@@ -14,6 +14,12 @@
                 <a [routerLink]="['/collision-level-three', collisionLevelFour.collisionLevelThreeId]">{{collisionLevelFour.collisionLevelThreeId}}</a>
             </div>
         </dd>
+        <dt><span jhiTranslate="ceappApp.collisionLevelFour.lva">Lva</span></dt>
+        <dd>
+            <div *ngIf="collisionLevelFour.lvaId">
+                <a [routerLink]="['/lva', collisionLevelFour.lvaId]">{{collisionLevelFour.lvaLvaNr}}</a>
+            </div>
+        </dd>
     </dl>
 
     <button type="submit"
