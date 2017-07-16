@@ -1,9 +1,6 @@
 package at.meroff.itproject.service;
 
-import at.meroff.itproject.domain.CollisionLevelFour;
-import at.meroff.itproject.domain.CollisionLevelThree;
-import at.meroff.itproject.domain.CollisionLevelTwo;
-import at.meroff.itproject.domain.IdealPlanEntries;
+import at.meroff.itproject.domain.*;
 import at.meroff.itproject.domain.enumeration.Semester;
 import at.meroff.itproject.domain.enumeration.SubjectType;
 import at.meroff.itproject.service.dto.*;
@@ -36,6 +33,7 @@ public class CollisionService {
     private final CollisionLevelTwoService collisionLevelTwoService;
     private final CollisionLevelThreeService collisionLevelThreeService;
     private final CollisionLevelFourService collisionLevelFourService;
+    private final CollisionLevelFiveService collisionLevelFiveService;
 
     private final AppointmentService appointmentService;
 
@@ -47,6 +45,7 @@ public class CollisionService {
                             CollisionLevelTwoService collisionLevelTwoService,
                             CollisionLevelThreeService collisionLevelThreeService,
                             CollisionLevelFourService collisionLevelFourService,
+                            CollisionLevelFiveService collisionLevelFiveService,
                             AppointmentService appointmentService) {
         this.curriculumSemesterService = curriculumSemesterService;
         this.curriculumSubjectService = curriculumSubjectService;
@@ -56,6 +55,7 @@ public class CollisionService {
         this.collisionLevelTwoService = collisionLevelTwoService;
         this.collisionLevelThreeService = collisionLevelThreeService;
         this.collisionLevelFourService = collisionLevelFourService;
+        this.collisionLevelFiveService = collisionLevelFiveService;
         this.appointmentService = appointmentService;
     }
 
@@ -69,7 +69,7 @@ public class CollisionService {
         List<CurriculumSubjectDTO> all = curriculumSubjectService.findAll(one.getId());
 
         all.stream()
-            .filter(curriculumSubjectDTO -> curriculumSubjectDTO.getSubjectSubjectName().equals("Formale Grundlagen der Wirtschaftsinformatik") && curriculumSubjectDTO.getSubjectSubjectType().equals(SubjectType.VL))
+            //.filter(curriculumSubjectDTO -> curriculumSubjectDTO.getSubjectSubjectName().equals("Formale Grundlagen der Wirtschaftsinformatik") && curriculumSubjectDTO.getSubjectSubjectType().equals(SubjectType.VL))
             .forEach(curriculumSubjectDTO -> {
                 // suche nach möglichen Kollisionsfächern
                 Set<Optional<CurriculumSubjectDTO>> possibleCollisions = getPossibleCollisions(idealPlan, all, curriculumSubjectDTO);
@@ -104,16 +104,19 @@ public class CollisionService {
         Set<AppointmentDTO> appointmentsTarget = lvaDTO1.getAppointments();
 
         System.out.println(lvaDTO.getSubjectSubjectName() + " --> " + lvaDTO1.getSubjectSubjectName());
-        /*appointmentsSource.forEach(appointmentDTO -> {
-            appointmentsTarget
+        appointmentsSource.forEach(appointmentDTO -> {
+            Set<CollisionLevelFiveDTO> collect = appointmentsTarget
                 .stream()
                 .filter(appointmentDTO1 -> detectCollision(appointmentDTO, appointmentDTO1))
                 .map(appointmentDTO1 -> {
-                    CollisionLevelFour collisionLevelFour = new CollisionLevelFour();
-
-                })
-            });
-        });*/
+                    CollisionLevelFiveDTO collisionLevelFiveDTO = new CollisionLevelFiveDTO();
+                    collisionLevelFiveDTO.setSourceAppointmentId(appointmentDTO.getId());
+                    collisionLevelFiveDTO.setTargetAppointmentId(appointmentDTO1.getId());
+                    if (appointmentDTO.isIsExam() && appointmentDTO1.isIsExam())
+                        collisionLevelFiveDTO.setExamCollision(1);
+                    return collisionLevelFiveService.save(collisionLevelFiveDTO);
+                }).collect(Collectors.toSet());
+        });
 
     }
 
