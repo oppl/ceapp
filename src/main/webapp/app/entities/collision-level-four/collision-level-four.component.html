@@ -32,8 +32,6 @@
             <th><span jhiTranslate="global.field.id">ID</span></th>
             <th><span jhiTranslate="ceappApp.collisionLevelFour.examCollision">Exam Collision</span></th>
             <th><span jhiTranslate="ceappApp.collisionLevelFour.collisionLevelThree">Collision Level Three</span></th>
-            <th><span jhiTranslate="ceappApp.collisionLevelFour.sourceAppointment">Source Appointment</span></th>
-            <th><span jhiTranslate="ceappApp.collisionLevelFour.targetAppointment">Target Appointment</span></th>
             <th></th>
             </tr>
             </thead>
@@ -45,16 +43,6 @@
                     <div *ngIf="collisionLevelFour.collisionLevelThreeId">
                         <a [routerLink]="['../collision-level-three', collisionLevelFour.collisionLevelThreeId  ]" >{{collisionLevelFour.collisionLevelThreeId}}</a>
                     </div>
-                </td>
-                <td>
-                    <span *ngFor="let sourceAppointment of collisionLevelFour.sourceAppointments; let last = last">
-                            <a class="form-control-static" [routerLink]="['../appointment', sourceAppointment?.id ]">{{sourceAppointment.id}}</a>{{last ? '' : ', '}}
-                        </span>
-                </td>
-                <td>
-                    <span *ngFor="let targetAppointment of collisionLevelFour.targetAppointments; let last = last">
-                            <a class="form-control-static" [routerLink]="['../appointment', targetAppointment?.id ]">{{targetAppointment.id}}</a>{{last ? '' : ', '}}
-                        </span>
                 </td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">

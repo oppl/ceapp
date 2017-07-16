@@ -61,7 +61,7 @@ public class CollisionLevelFourService {
     @Transactional(readOnly = true)
     public List<CollisionLevelFourDTO> findAll() {
         log.debug("Request to get all CollisionLevelFours");
-        return collisionLevelFourRepository.findAllWithEagerRelationships().stream()
+        return collisionLevelFourRepository.findAll().stream()
             .map(collisionLevelFourMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
     }
@@ -75,7 +75,7 @@ public class CollisionLevelFourService {
     @Transactional(readOnly = true)
     public CollisionLevelFourDTO findOne(Long id) {
         log.debug("Request to get CollisionLevelFour : {}", id);
-        CollisionLevelFour collisionLevelFour = collisionLevelFourRepository.findOneWithEagerRelationships(id);
+        CollisionLevelFour collisionLevelFour = collisionLevelFourRepository.findOne(id);
         return collisionLevelFourMapper.toDto(collisionLevelFour);
     }
 

@@ -17,9 +17,7 @@
                 "title": "Collision Level Four"
             },
             "examCollision": "Exam Collision",
-            "collisionLevelThree": "Collision Level Three",
-            "sourceAppointment": "Source Appointment",
-            "targetAppointment": "Target Appointment"
+            "collisionLevelThree": "Collision Level Three"
         }
     }
 }

@@ -6,8 +6,6 @@ import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -31,20 +29,6 @@ public class CollisionLevelFour implements Serializable {
 
     @ManyToOne
     private CollisionLevelThree collisionLevelThree;
-
-    @ManyToMany
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "collision_level_four_source_appointment",
-               joinColumns = @JoinColumn(name="collision_level_fours_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="source_appointments_id", referencedColumnName="id"))
-    private Set<Appointment> sourceAppointments = new HashSet<>();
-
-    @ManyToMany
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "collision_level_four_target_appointment",
-               joinColumns = @JoinColumn(name="collision_level_fours_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="target_appointments_id", referencedColumnName="id"))
-    private Set<Appointment> targetAppointments = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -78,56 +62,6 @@ public class CollisionLevelFour implements Serializable {
 
     public void setCollisionLevelThree(CollisionLevelThree collisionLevelThree) {
         this.collisionLevelThree = collisionLevelThree;
-    }
-
-    public Set<Appointment> getSourceAppointments() {
-        return sourceAppointments;
-    }
-
-    public CollisionLevelFour sourceAppointments(Set<Appointment> appointments) {
-        this.sourceAppointments = appointments;
-        return this;
-    }
-
-    public CollisionLevelFour addSourceAppointment(Appointment appointment) {
-        this.sourceAppointments.add(appointment);
-        appointment.getSourceCollisionLevelFours().add(this);
-        return this;
-    }
-
-    public CollisionLevelFour removeSourceAppointment(Appointment appointment) {
-        this.sourceAppointments.remove(appointment);
-        appointment.getSourceCollisionLevelFours().remove(this);
-        return this;
-    }
-
-    public void setSourceAppointments(Set<Appointment> appointments) {
-        this.sourceAppointments = appointments;
-    }
-
-    public Set<Appointment> getTargetAppointments() {
-        return targetAppointments;
-    }
-
-    public CollisionLevelFour targetAppointments(Set<Appointment> appointments) {
-        this.targetAppointments = appointments;
-        return this;
-    }
-
-    public CollisionLevelFour addTargetAppointment(Appointment appointment) {
-        this.targetAppointments.add(appointment);
-        appointment.getTargetCollisionLevelFours().add(this);
-        return this;
-    }
-
-    public CollisionLevelFour removeTargetAppointment(Appointment appointment) {
-        this.targetAppointments.remove(appointment);
-        appointment.getTargetCollisionLevelFours().remove(this);
-        return this;
-    }
-
-    public void setTargetAppointments(Set<Appointment> appointments) {
-        this.targetAppointments = appointments;
     }
 
     @Override

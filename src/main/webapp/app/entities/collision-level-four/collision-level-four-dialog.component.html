@@ -25,18 +25,6 @@
                 <option [ngValue]="collisionLevelThreeOption.id" *ngFor="let collisionLevelThreeOption of collisionlevelthrees; trackBy: trackCollisionLevelThreeById">{{collisionLevelThreeOption.id}}</option>
             </select>
         </div>
-        <div class="form-group">
-            <label jhiTranslate="ceappApp.collisionLevelFour.sourceAppointment" for="field_sourceAppointment">Source Appointment</label>
-            <select class="form-control" id="field_sourceAppointment" multiple name="sourceAppointment" [(ngModel)]="collisionLevelFour.sourceAppointments">
-                <option [ngValue]="getSelected(collisionLevelFour.sourceAppointments, appointmentOption)" *ngFor="let appointmentOption of appointments; trackBy: trackAppointmentById">{{appointmentOption.id}}</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label jhiTranslate="ceappApp.collisionLevelFour.targetAppointment" for="field_targetAppointment">Target Appointment</label>
-            <select class="form-control" id="field_targetAppointment" multiple name="targetAppointment" [(ngModel)]="collisionLevelFour.targetAppointments">
-                <option [ngValue]="getSelected(collisionLevelFour.targetAppointments, appointmentOption)" *ngFor="let appointmentOption of appointments; trackBy: trackAppointmentById">{{appointmentOption.id}}</option>
-            </select>
-        </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">

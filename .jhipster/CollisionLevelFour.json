@@ -6,22 +6,6 @@
             "otherEntityName": "collisionLevelThree",
             "relationshipType": "many-to-one",
             "otherEntityField": "id"
-        },
-        {
-            "relationshipName": "sourceAppointment",
-            "otherEntityName": "appointment",
-            "relationshipType": "many-to-many",
-            "otherEntityField": "id",
-            "ownerSide": true,
-            "otherEntityRelationshipName": "sourceCollisionLevelFour"
-        },
-        {
-            "relationshipName": "targetAppointment",
-            "otherEntityName": "appointment",
-            "relationshipType": "many-to-many",
-            "otherEntityField": "id",
-            "ownerSide": true,
-            "otherEntityRelationshipName": "targetCollisionLevelFour"
         }
     ],
     "fields": [
