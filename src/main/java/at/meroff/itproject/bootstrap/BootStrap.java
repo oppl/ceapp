@@ -8,6 +8,7 @@ import at.meroff.itproject.repository.*;
 import at.meroff.itproject.service.*;
 import at.meroff.itproject.service.dto.CurriculumDTO;
 import at.meroff.itproject.service.dto.CurriculumSemesterDTO;
+import at.meroff.itproject.service.dto.SubjectDTO;
 import at.meroff.itproject.service.mapper.CurriculumMapper;
 import at.meroff.itproject.service.mapper.CurriculumSemesterMapper;
 import at.meroff.itproject.service.mapper.InstituteMapper;
@@ -53,6 +54,7 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
     private CurriculumSemesterService curriculumSemesterService;
     private CurriculumSemesterMapper curriculumSemesterMapper;
     private ElasticsearchIndexService elasticsearchIndexService;
+    private ImportService importService;
 
     public BootStrap(CurriculumService curriculumService,
                      CurriculumMapper curriculumMapper,
@@ -67,7 +69,8 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
                      ResourceLoader resourceLoader,
                      CurriculumSemesterService curriculumSemesterService,
                      CurriculumSemesterMapper curriculumSemesterMapper,
-                     ElasticsearchIndexService elasticsearchIndexService) {
+                     ElasticsearchIndexService elasticsearchIndexService,
+                     ImportService importService) {
         this.curriculumService = curriculumService;
         this.curriculumMapper = curriculumMapper;
         this.instituteService = instituteService;
@@ -82,6 +85,7 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
         this.curriculumSemesterService = curriculumSemesterService;
         this.curriculumSemesterMapper = curriculumSemesterMapper;
         this.elasticsearchIndexService = elasticsearchIndexService;
+        this.importService = importService;
     }
 
     @Override
@@ -94,6 +98,22 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
 
         Curriculum wirtschaftsinformatik = createCurriculum(204, "Wirtschaftsinformatik");
 
+        CurriculumSemesterDTO curriculumSemesterDTO = new CurriculumSemesterDTO();
+        curriculumSemesterDTO.setCurriculumId(wirtschaftsinformatik.getId());
+        curriculumSemesterDTO.setYear(2017);
+        curriculumSemesterDTO.setSemester(Semester.SS);
+
+        curriculumSemesterDTO = curriculumSemesterService.save(curriculumSemesterDTO);
+
+        Set<SubjectDTO> subjectDTOS = importService.verifySubjects(curriculumSemesterDTO);
+
+        importService.verifyLvas(curriculumSemesterDTO);
+
+        //importService.updateCuriculumSubjects(curriculumSemesterDTO);
+
+
+
+        /*
         wirtschaftsinformatik.addInstitute(instituteMapper.toEntity(instituteService.findByInstituteId(256)));
         wirtschaftsinformatik.addInstitute(instituteMapper.toEntity(instituteService.findByInstituteId(257)));
         wirtschaftsinformatik.addInstitute(instituteMapper.toEntity(instituteService.findByInstituteId(258)));
@@ -212,7 +232,7 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
         List<CurriculumSubject> saveCS = curriculumSubjectRepository.save(curriculumSubjects);
 
         elasticsearchIndexService.reindexAll();
-
+*/
     }
 
     private List<Subject> createSubjects(int curId) {

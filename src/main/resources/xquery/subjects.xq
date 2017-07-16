@@ -12,7 +12,7 @@ declare function functx:distinct-deep
 
    some $nodeInSeq in $seq satisfies deep-equal($nodeInSeq,$node)
  } ;
-let $course := doc('https://www.kusss.jku.at/kusss/select-course.action?curId=204&amp;schedule=true&amp;type=xml')//course
+let $course := doc('https://www.kusss.jku.at/kusss/select-course.action?curId=INSERTCURID&amp;semester=INSERTYEARSEMESTER&amp;schedule=true&amp;type=xml')//course
 let $sepp := functx:distinct-deep((
 for $c in $course
 return

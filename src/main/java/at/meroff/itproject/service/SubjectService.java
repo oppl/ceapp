@@ -1,6 +1,7 @@
 package at.meroff.itproject.service;
 
 import at.meroff.itproject.domain.Subject;
+import at.meroff.itproject.domain.enumeration.SubjectType;
 import at.meroff.itproject.repository.SubjectRepository;
 import at.meroff.itproject.repository.search.SubjectSearchRepository;
 import at.meroff.itproject.service.dto.SubjectDTO;
@@ -76,6 +77,13 @@ public class SubjectService {
     public SubjectDTO findOne(Long id) {
         log.debug("Request to get Subject : {}", id);
         Subject subject = subjectRepository.findOne(id);
+        return subjectMapper.toDto(subject);
+    }
+
+    @Transactional(readOnly = true)
+    public SubjectDTO findBySubjectNameAndSubjectType(String subjectName, SubjectType subjectType) {
+        log.debug("Request to get Subject ; {}", subjectName + " " + subjectType.name());
+        Subject subject = subjectRepository.findBySubjectNameAndSubjectType(subjectName, subjectType);
         return subjectMapper.toDto(subject);
     }
 

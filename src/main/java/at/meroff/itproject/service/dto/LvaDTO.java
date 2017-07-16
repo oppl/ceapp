@@ -34,6 +34,8 @@ public class LvaDTO implements Serializable {
 
     private Long instituteId;
 
+    private Set<AppointmentDTO> appointments;
+
     public Long getId() {
         return id;
     }
@@ -96,6 +98,14 @@ public class LvaDTO implements Serializable {
 
     public void setInstituteId(Long instituteId) {
         this.instituteId = instituteId;
+    }
+
+    public Set<AppointmentDTO> getAppointments() {
+        return appointments;
+    }
+
+    public void setAppointments(Set<AppointmentDTO> appointments) {
+        this.appointments = appointments;
     }
 
     @Override

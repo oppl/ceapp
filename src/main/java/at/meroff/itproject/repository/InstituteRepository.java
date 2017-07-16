@@ -13,7 +13,5 @@ import org.springframework.data.jpa.repository.*;
 @SuppressWarnings("unused")
 @Repository
 public interface InstituteRepository extends JpaRepository<Institute,Long> {
-
     Institute findByInstituteId(@Param("instituteId") Integer instituteId);
-
 }

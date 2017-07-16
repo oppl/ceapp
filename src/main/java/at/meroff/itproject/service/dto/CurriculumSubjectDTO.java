@@ -1,6 +1,8 @@
 package at.meroff.itproject.service.dto;
 
 
+import at.meroff.itproject.domain.enumeration.SubjectType;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,6 +20,8 @@ public class CurriculumSubjectDTO implements Serializable {
     private Long subjectId;
 
     private String subjectSubjectName;
+
+    private SubjectType subjectSubjectType;
 
     private Long curriculumSemesterId;
 
@@ -59,6 +63,14 @@ public class CurriculumSubjectDTO implements Serializable {
 
     public void setCurriculumSemesterId(Long curriculumSemesterId) {
         this.curriculumSemesterId = curriculumSemesterId;
+    }
+
+    public SubjectType getSubjectSubjectType() {
+        return subjectSubjectType;
+    }
+
+    public void setSubjectSubjectType(SubjectType subjectSubjectType) {
+        this.subjectSubjectType = subjectSubjectType;
     }
 
     @Override
