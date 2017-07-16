@@ -96,6 +96,7 @@ public class CollisionService {
 
                             if (collect.size() > 0) {
                                 collisionLevelThreeDTO.setCurriculumSubjectId(targetSubject.get().getId());
+                                collisionLevelThreeDTO.setExamCollision(collect.stream().mapToInt(value -> value.getExamCollision()).sum());
                                 collisionLevelThreeDTO = collisionLevelThreeService.save(collisionLevelThreeDTO);
                                 CollisionLevelThreeDTO finalCollisionLevelThreeDTO = collisionLevelThreeDTO;
                                 collect.forEach(collisionLevelFourDTO -> {
@@ -114,6 +115,7 @@ public class CollisionService {
 
                     if (collect1.size() > 0) {
                         collisionLevelTwoDTO.setLvaId(lvaDTO.getId());
+                        collisionLevelTwoDTO.setExamCollision(collect1.stream().mapToInt(value -> value.getExamCollision()).sum());
                         collisionLevelTwoDTO = collisionLevelTwoService.save(collisionLevelTwoDTO);
                         CollisionLevelTwoDTO finalCollisionLevelTwoDTO = collisionLevelTwoDTO;
                         collect1.forEach(collisionLevelThreeDTO -> {
@@ -129,6 +131,7 @@ public class CollisionService {
                 CollisionLevelOneDTO collisionLevelOneDTO = new CollisionLevelOneDTO();
                 if (collect3.size() > 0) {
                     collisionLevelOneDTO.setCurriculumSubjectId(curriculumSubjectDTO.getId());
+                    collisionLevelOneDTO.setExamCollision(collect3.stream().mapToInt(value -> value.getExamCollision()).sum());
                     collisionLevelOneDTO = collisionLevelOneService.save(collisionLevelOneDTO);
                     CollisionLevelOneDTO finalCollisionLevelOneDTO = collisionLevelOneDTO;
                     collect3.forEach(collisionLevelTwoDTO -> {
@@ -154,11 +157,14 @@ public class CollisionService {
                     CollisionLevelFiveDTO collisionLevelFiveDTO = new CollisionLevelFiveDTO();
                     collisionLevelFiveDTO.setSourceAppointmentId(appointmentDTO.getId());
                     collisionLevelFiveDTO.setTargetAppointmentId(appointmentDTO1.getId());
-                    if (appointmentDTO.isIsExam() && appointmentDTO1.isIsExam())
+                    if (appointmentDTO.isIsExam() && appointmentDTO1.isIsExam()) {
                         collisionLevelFiveDTO.setExamCollision(1);
+                    } else {
+                        collisionLevelFiveDTO.setExamCollision(0);
+                    }
                     return collisionLevelFiveDTO;
                 }).collect(Collectors.toSet());
-        }).flatMap(Collection::stream).collect(Collectors.toSet());
+        }).flatMap(Collection::stream).filter(Objects::nonNull).collect(Collectors.toSet());
 
         CollisionLevelFourDTO collisionLevelFourDTO = new CollisionLevelFourDTO();
 
@@ -166,7 +172,11 @@ public class CollisionService {
 
             collisionLevelFourDTO.setLvaId(lvaDTO1.getId());
             collisionLevelFourDTO = collisionLevelFourService.save(collisionLevelFourDTO);
+
+            collisionLevelFourDTO.setExamCollision(collect.stream().mapToInt(collisionLevelFiveDTO -> collisionLevelFiveDTO.getExamCollision()).sum());
+
             CollisionLevelFourDTO finalCollisionLevelFourDTO = collisionLevelFourDTO;
+
             collect.forEach(collisionLevelFiveDTO -> {
                 collisionLevelFiveDTO.setCollisionLevelFourId(finalCollisionLevelFourDTO.getId());
                 collisionLevelFiveService.save(collisionLevelFiveDTO);
