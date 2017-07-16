@@ -17,8 +17,6 @@ public interface CurriculumSubjectMapper extends EntityMapper <CurriculumSubject
 
     @Mapping(source = "curriculumSemester.id", target = "curriculumSemesterId")
     CurriculumSubjectDTO toDto(CurriculumSubject curriculumSubject);
-    @Mapping(target = "collCSSources", ignore = true)
-    @Mapping(target = "collCSTargets", ignore = true)
 
     @Mapping(source = "subjectId", target = "subject")
 

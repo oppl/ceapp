@@ -1,6 +1,5 @@
 package at.meroff.itproject.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -27,16 +26,6 @@ public class CurriculumSubject implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
-    @OneToMany(mappedBy = "csSource")
-    @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<CollisionSummaryCS> collCSSources = new HashSet<>();
-
-    @OneToMany(mappedBy = "csTarget")
-    @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<CollisionSummaryCS> collCSTargets = new HashSet<>();
-
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "curriculum_subject_lva",
@@ -56,56 +45,6 @@ public class CurriculumSubject implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Set<CollisionSummaryCS> getCollCSSources() {
-        return collCSSources;
-    }
-
-    public CurriculumSubject collCSSources(Set<CollisionSummaryCS> collisionSummaryCS) {
-        this.collCSSources = collisionSummaryCS;
-        return this;
-    }
-
-    public CurriculumSubject addCollCSSource(CollisionSummaryCS collisionSummaryCS) {
-        this.collCSSources.add(collisionSummaryCS);
-        collisionSummaryCS.setCsSource(this);
-        return this;
-    }
-
-    public CurriculumSubject removeCollCSSource(CollisionSummaryCS collisionSummaryCS) {
-        this.collCSSources.remove(collisionSummaryCS);
-        collisionSummaryCS.setCsSource(null);
-        return this;
-    }
-
-    public void setCollCSSources(Set<CollisionSummaryCS> collisionSummaryCS) {
-        this.collCSSources = collisionSummaryCS;
-    }
-
-    public Set<CollisionSummaryCS> getCollCSTargets() {
-        return collCSTargets;
-    }
-
-    public CurriculumSubject collCSTargets(Set<CollisionSummaryCS> collisionSummaryCS) {
-        this.collCSTargets = collisionSummaryCS;
-        return this;
-    }
-
-    public CurriculumSubject addCollCSTarget(CollisionSummaryCS collisionSummaryCS) {
-        this.collCSTargets.add(collisionSummaryCS);
-        collisionSummaryCS.setCsTarget(this);
-        return this;
-    }
-
-    public CurriculumSubject removeCollCSTarget(CollisionSummaryCS collisionSummaryCS) {
-        this.collCSTargets.remove(collisionSummaryCS);
-        collisionSummaryCS.setCsTarget(null);
-        return this;
-    }
-
-    public void setCollCSTargets(Set<CollisionSummaryCS> collisionSummaryCS) {
-        this.collCSTargets = collisionSummaryCS;
     }
 
     public Set<Lva> getLvas() {
