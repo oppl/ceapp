@@ -10,6 +10,7 @@ import { CollisionLevelFive } from './collision-level-five.model';
 import { CollisionLevelFivePopupService } from './collision-level-five-popup.service';
 import { CollisionLevelFiveService } from './collision-level-five.service';
 import { CollisionLevelFour, CollisionLevelFourService } from '../collision-level-four';
+import { Appointment, AppointmentService } from '../appointment';
 import { ResponseWrapper } from '../../shared';
 
 @Component({
@@ -24,11 +25,14 @@ export class CollisionLevelFiveDialogComponent implements OnInit {
 
     collisionlevelfours: CollisionLevelFour[];
 
+    appointments: Appointment[];
+
     constructor(
         public activeModal: NgbActiveModal,
         private alertService: JhiAlertService,
         private collisionLevelFiveService: CollisionLevelFiveService,
         private collisionLevelFourService: CollisionLevelFourService,
+        private appointmentService: AppointmentService,
         private eventManager: JhiEventManager
     ) {
     }
@@ -38,6 +42,8 @@ export class CollisionLevelFiveDialogComponent implements OnInit {
         this.authorities = ['ROLE_USER', 'ROLE_ADMIN'];
         this.collisionLevelFourService.query()
             .subscribe((res: ResponseWrapper) => { this.collisionlevelfours = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
+        this.appointmentService.query()
+            .subscribe((res: ResponseWrapper) => { this.appointments = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
     }
 
     clear() {
@@ -81,6 +87,10 @@ export class CollisionLevelFiveDialogComponent implements OnInit {
     }
 
     trackCollisionLevelFourById(index: number, item: CollisionLevelFour) {
+        return item.id;
+    }
+
+    trackAppointmentById(index: number, item: Appointment) {
         return item.id;
     }
 }

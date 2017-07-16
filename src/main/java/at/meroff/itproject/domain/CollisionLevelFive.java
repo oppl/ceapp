@@ -30,6 +30,12 @@ public class CollisionLevelFive implements Serializable {
     @ManyToOne
     private CollisionLevelFour collisionLevelFour;
 
+    @ManyToOne
+    private Appointment sourceAppointment;
+
+    @ManyToOne
+    private Appointment targetAppointment;
+
     public Long getId() {
         return id;
     }
@@ -62,6 +68,32 @@ public class CollisionLevelFive implements Serializable {
 
     public void setCollisionLevelFour(CollisionLevelFour collisionLevelFour) {
         this.collisionLevelFour = collisionLevelFour;
+    }
+
+    public Appointment getSourceAppointment() {
+        return sourceAppointment;
+    }
+
+    public CollisionLevelFive sourceAppointment(Appointment appointment) {
+        this.sourceAppointment = appointment;
+        return this;
+    }
+
+    public void setSourceAppointment(Appointment appointment) {
+        this.sourceAppointment = appointment;
+    }
+
+    public Appointment getTargetAppointment() {
+        return targetAppointment;
+    }
+
+    public CollisionLevelFive targetAppointment(Appointment appointment) {
+        this.targetAppointment = appointment;
+        return this;
+    }
+
+    public void setTargetAppointment(Appointment appointment) {
+        this.targetAppointment = appointment;
     }
 
     @Override

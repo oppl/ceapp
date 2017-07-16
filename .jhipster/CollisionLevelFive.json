@@ -6,6 +6,18 @@
             "otherEntityName": "collisionLevelFour",
             "relationshipType": "many-to-one",
             "otherEntityField": "id"
+        },
+        {
+            "relationshipName": "sourceAppointment",
+            "otherEntityName": "appointment",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipName": "targetAppointment",
+            "otherEntityName": "appointment",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
         }
     ],
     "fields": [

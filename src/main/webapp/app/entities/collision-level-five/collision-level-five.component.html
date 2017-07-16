@@ -32,6 +32,8 @@
             <th><span jhiTranslate="global.field.id">ID</span></th>
             <th><span jhiTranslate="ceappApp.collisionLevelFive.examCollision">Exam Collision</span></th>
             <th><span jhiTranslate="ceappApp.collisionLevelFive.collisionLevelFour">Collision Level Four</span></th>
+            <th><span jhiTranslate="ceappApp.collisionLevelFive.sourceAppointment">Source Appointment</span></th>
+            <th><span jhiTranslate="ceappApp.collisionLevelFive.targetAppointment">Target Appointment</span></th>
             <th></th>
             </tr>
             </thead>
@@ -42,6 +44,16 @@
                 <td>
                     <div *ngIf="collisionLevelFive.collisionLevelFourId">
                         <a [routerLink]="['../collision-level-four', collisionLevelFive.collisionLevelFourId  ]" >{{collisionLevelFive.collisionLevelFourId}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="collisionLevelFive.sourceAppointmentId">
+                        <a [routerLink]="['../appointment', collisionLevelFive.sourceAppointmentId  ]" >{{collisionLevelFive.sourceAppointmentId}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="collisionLevelFive.targetAppointmentId">
+                        <a [routerLink]="['../appointment', collisionLevelFive.targetAppointmentId  ]" >{{collisionLevelFive.targetAppointmentId}}</a>
                     </div>
                 </td>
                 <td class="text-right">

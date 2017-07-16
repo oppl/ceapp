@@ -14,6 +14,18 @@
                 <a [routerLink]="['/collision-level-four', collisionLevelFive.collisionLevelFourId]">{{collisionLevelFive.collisionLevelFourId}}</a>
             </div>
         </dd>
+        <dt><span jhiTranslate="ceappApp.collisionLevelFive.sourceAppointment">Source Appointment</span></dt>
+        <dd>
+            <div *ngIf="collisionLevelFive.sourceAppointmentId">
+                <a [routerLink]="['/appointment', collisionLevelFive.sourceAppointmentId]">{{collisionLevelFive.sourceAppointmentId}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="ceappApp.collisionLevelFive.targetAppointment">Target Appointment</span></dt>
+        <dd>
+            <div *ngIf="collisionLevelFive.targetAppointmentId">
+                <a [routerLink]="['/appointment', collisionLevelFive.targetAppointmentId]">{{collisionLevelFive.targetAppointmentId}}</a>
+            </div>
+        </dd>
     </dl>
 
     <button type="submit"
