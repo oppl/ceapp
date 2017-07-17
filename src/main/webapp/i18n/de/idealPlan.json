@@ -18,6 +18,7 @@
             },
             "year": "Year",
             "semester": "Semester",
+            "active": "Active",
             "idealplanentries": "Idealplanentries",
             "collisionSummaryCS": "Collision Summary CS",
             "curriculum": "Curriculum"

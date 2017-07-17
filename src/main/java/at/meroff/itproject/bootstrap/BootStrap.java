@@ -123,6 +123,7 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
         IdealPlanDTO idealPlanDTO = new IdealPlanDTO();
         idealPlanDTO.setYear(2016);
         idealPlanDTO.setSemester(Semester.WS);
+        idealPlanDTO.setActive(true);
         idealPlanDTO.setCurriculumId(wirtschaftsinformatik.getId());
 
         idealPlanDTO = idealPlanService.save(idealPlanDTO);
