@@ -28,7 +28,12 @@
             "otherEntityRelationshipName": "curriculumSubject"
         }
     ],
-    "fields": [],
+    "fields": [
+        {
+            "fieldName": "countLvas",
+            "fieldType": "Integer"
+        }
+    ],
     "changelogDate": "20170709150641",
     "dto": "mapstruct",
     "service": "serviceClass",

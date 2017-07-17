@@ -16,6 +16,7 @@
             "detail": {
                 "title": "Curriculum Subject"
             },
+            "countLvas": "Count Lvas",
             "lva": "Lva",
             "subject": "Subject",
             "curriculumSemester": "Curriculum Semester",

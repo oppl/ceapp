@@ -114,6 +114,7 @@ public class ImportService {
     private void createCurriculumSubject(CurriculumSemesterDTO finalCurriculumSemesterDTO, SubjectDTO subjectDTO) {
         CurriculumSubjectDTO cs = new CurriculumSubjectDTO();
         cs.setCurriculumSemesterId(finalCurriculumSemesterDTO.getId());
+        cs.setCountLvas(0);
         cs.setSubjectId(subjectDTO.getId());
         curriculumSubjectService.save(cs);
     }
@@ -161,6 +162,7 @@ public class ImportService {
                 lvaDTO.setCountAppointments(countAppointments);
                 lvaDTO = lvaService.save(lvaDTO);
                 ret.add(lvaDTO);
+                curriculumSubjectDTO.setCountLvas(curriculumSubjectDTO.getCountLvas() + 1);
                 curriculumSubjectDTO.getLvas().add(lvaDTO);
             });
 

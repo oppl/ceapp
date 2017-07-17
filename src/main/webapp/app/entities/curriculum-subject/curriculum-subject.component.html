@@ -30,6 +30,7 @@
             <thead>
             <tr>
             <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="ceappApp.curriculumSubject.countLvas">Count Lvas</span></th>
             <th><span jhiTranslate="ceappApp.curriculumSubject.lva">Lva</span></th>
             <th><span jhiTranslate="ceappApp.curriculumSubject.subject">Subject</span></th>
             <th><span jhiTranslate="ceappApp.curriculumSubject.curriculumSemester">Curriculum Semester</span></th>
@@ -39,6 +40,7 @@
             <tbody>
             <tr *ngFor="let curriculumSubject of curriculumSubjects ;trackBy: trackId">
                 <td><a [routerLink]="['../curriculum-subject', curriculumSubject.id ]">{{curriculumSubject.id}}</a></td>
+                <td>{{curriculumSubject.countLvas}}</td>
                 <td>
                     <span *ngFor="let lva of curriculumSubject.lvas; let last = last">
                             <a class="form-control-static" [routerLink]="['../lva', lva?.id ]">{{lva.lvaNr}}</a>{{last ? '' : ', '}}
