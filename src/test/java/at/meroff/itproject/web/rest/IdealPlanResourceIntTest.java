@@ -48,6 +48,9 @@ public class IdealPlanResourceIntTest {
     private static final Semester DEFAULT_SEMESTER = Semester.WS;
     private static final Semester UPDATED_SEMESTER = Semester.SS;
 
+    private static final Boolean DEFAULT_ACTIVE = false;
+    private static final Boolean UPDATED_ACTIVE = true;
+
     @Autowired
     private IdealPlanRepository idealPlanRepository;
 
@@ -95,7 +98,8 @@ public class IdealPlanResourceIntTest {
     public static IdealPlan createEntity(EntityManager em) {
         IdealPlan idealPlan = new IdealPlan()
             .year(DEFAULT_YEAR)
-            .semester(DEFAULT_SEMESTER);
+            .semester(DEFAULT_SEMESTER)
+            .active(DEFAULT_ACTIVE);
         return idealPlan;
     }
 
@@ -123,6 +127,7 @@ public class IdealPlanResourceIntTest {
         IdealPlan testIdealPlan = idealPlanList.get(idealPlanList.size() - 1);
         assertThat(testIdealPlan.getYear()).isEqualTo(DEFAULT_YEAR);
         assertThat(testIdealPlan.getSemester()).isEqualTo(DEFAULT_SEMESTER);
+        assertThat(testIdealPlan.isActive()).isEqualTo(DEFAULT_ACTIVE);
 
         // Validate the IdealPlan in Elasticsearch
         IdealPlan idealPlanEs = idealPlanSearchRepository.findOne(testIdealPlan.getId());
@@ -199,7 +204,8 @@ public class IdealPlanResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(idealPlan.getId().intValue())))
             .andExpect(jsonPath("$.[*].year").value(hasItem(DEFAULT_YEAR)))
-            .andExpect(jsonPath("$.[*].semester").value(hasItem(DEFAULT_SEMESTER.toString())));
+            .andExpect(jsonPath("$.[*].semester").value(hasItem(DEFAULT_SEMESTER.toString())))
+            .andExpect(jsonPath("$.[*].active").value(hasItem(DEFAULT_ACTIVE.booleanValue())));
     }
 
     @Test
@@ -214,7 +220,8 @@ public class IdealPlanResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(idealPlan.getId().intValue()))
             .andExpect(jsonPath("$.year").value(DEFAULT_YEAR))
-            .andExpect(jsonPath("$.semester").value(DEFAULT_SEMESTER.toString()));
+            .andExpect(jsonPath("$.semester").value(DEFAULT_SEMESTER.toString()))
+            .andExpect(jsonPath("$.active").value(DEFAULT_ACTIVE.booleanValue()));
     }
 
     @Test
@@ -237,7 +244,8 @@ public class IdealPlanResourceIntTest {
         IdealPlan updatedIdealPlan = idealPlanRepository.findOne(idealPlan.getId());
         updatedIdealPlan
             .year(UPDATED_YEAR)
-            .semester(UPDATED_SEMESTER);
+            .semester(UPDATED_SEMESTER)
+            .active(UPDATED_ACTIVE);
         IdealPlanDTO idealPlanDTO = idealPlanMapper.toDto(updatedIdealPlan);
 
         restIdealPlanMockMvc.perform(put("/api/ideal-plans")
@@ -251,6 +259,7 @@ public class IdealPlanResourceIntTest {
         IdealPlan testIdealPlan = idealPlanList.get(idealPlanList.size() - 1);
         assertThat(testIdealPlan.getYear()).isEqualTo(UPDATED_YEAR);
         assertThat(testIdealPlan.getSemester()).isEqualTo(UPDATED_SEMESTER);
+        assertThat(testIdealPlan.isActive()).isEqualTo(UPDATED_ACTIVE);
 
         // Validate the IdealPlan in Elasticsearch
         IdealPlan idealPlanEs = idealPlanSearchRepository.findOne(testIdealPlan.getId());
@@ -311,7 +320,8 @@ public class IdealPlanResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(idealPlan.getId().intValue())))
             .andExpect(jsonPath("$.[*].year").value(hasItem(DEFAULT_YEAR)))
-            .andExpect(jsonPath("$.[*].semester").value(hasItem(DEFAULT_SEMESTER.toString())));
+            .andExpect(jsonPath("$.[*].semester").value(hasItem(DEFAULT_SEMESTER.toString())))
+            .andExpect(jsonPath("$.[*].active").value(hasItem(DEFAULT_ACTIVE.booleanValue())));
     }
 
     @Test
