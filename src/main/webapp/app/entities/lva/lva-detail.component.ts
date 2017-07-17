@@ -5,6 +5,7 @@ import { JhiEventManager  } from 'ng-jhipster';
 
 import { Lva } from './lva.model';
 import { LvaService } from './lva.service';
+import {Appointment} from "../appointment/appointment.model";
 
 @Component({
     selector: 'jhi-lva-detail',
@@ -13,6 +14,7 @@ import { LvaService } from './lva.service';
 export class LvaDetailComponent implements OnInit, OnDestroy {
 
     lva: Lva;
+    appointments: Appointment[];
     private subscription: Subscription;
     private eventSubscriber: Subscription;
 
@@ -33,6 +35,7 @@ export class LvaDetailComponent implements OnInit, OnDestroy {
     load(id) {
         this.lvaService.find(id).subscribe((lva) => {
             this.lva = lva;
+            this.appointments = lva.appointments;
         });
     }
     previousState() {

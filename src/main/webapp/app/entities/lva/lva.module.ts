@@ -14,6 +14,7 @@ import {
     lvaRoute,
     lvaPopupRoute,
 } from './';
+import {CeappAppointmentModule} from '../appointment/appointment.module';
 
 const ENTITY_STATES = [
     ...lvaRoute,
@@ -23,6 +24,7 @@ const ENTITY_STATES = [
 @NgModule({
     imports: [
         CeappSharedModule,
+        CeappAppointmentModule,
         RouterModule.forRoot(ENTITY_STATES, { useHash: true })
     ],
     declarations: [
