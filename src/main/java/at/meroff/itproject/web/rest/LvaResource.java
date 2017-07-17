@@ -5,6 +5,7 @@ import at.meroff.itproject.service.LvaService;
 import at.meroff.itproject.web.rest.util.HeaderUtil;
 import at.meroff.itproject.service.dto.LvaDTO;
 import io.github.jhipster.web.util.ResponseUtil;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -45,6 +46,7 @@ public class LvaResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/lvas")
+    @ApiOperation(value = "Create a LVA", notes = "Creates a LVA item")
     @Timed
     public ResponseEntity<LvaDTO> createLva(@Valid @RequestBody LvaDTO lvaDTO) throws URISyntaxException {
         log.debug("REST request to save Lva : {}", lvaDTO);

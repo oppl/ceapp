@@ -1,0 +1,4 @@
+jhipster:
+    swagger:
+        contactName: at.meroff.itproject
+        contactEmail: at.meroff.itproject@example.org

@@ -153,3 +153,20 @@ To configure CI for your project, run the ci-cd sub-generator (`jhipster ci-cd`)
 [Protractor]: https://angular.github.io/protractor/
 [Leaflet]: http://leafletjs.com/
 [DefinitelyTyped]: http://definitelytyped.org/
+
+# Zusätzliche Module
+https://github.com/atomfrede/generator-jhipster-swagger2markup
+
+`npm install -g generator-jhipster-swagger2markup`
+
+`yo jhipster-swagger2markup default`
+
+# Create PDF
+Download von 
+http://localhost:8080/v2/api-docs
+
+Speichern unter target/swagger/swagger.json
+
+`./mvnw test swagger2markup:convertSwagger2markup install`
+
+`mvn install -DskipTests=true`
