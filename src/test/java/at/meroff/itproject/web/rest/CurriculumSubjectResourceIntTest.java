@@ -41,6 +41,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = CeappApp.class)
 public class CurriculumSubjectResourceIntTest {
 
+    private static final Integer DEFAULT_COUNT_LVAS = 1;
+    private static final Integer UPDATED_COUNT_LVAS = 2;
+
     @Autowired
     private CurriculumSubjectRepository curriculumSubjectRepository;
 
@@ -86,7 +89,8 @@ public class CurriculumSubjectResourceIntTest {
      * if they test an entity which requires the current entity.
      */
     public static CurriculumSubject createEntity(EntityManager em) {
-        CurriculumSubject curriculumSubject = new CurriculumSubject();
+        CurriculumSubject curriculumSubject = new CurriculumSubject()
+            .countLvas(DEFAULT_COUNT_LVAS);
         return curriculumSubject;
     }
 
@@ -112,6 +116,7 @@ public class CurriculumSubjectResourceIntTest {
         List<CurriculumSubject> curriculumSubjectList = curriculumSubjectRepository.findAll();
         assertThat(curriculumSubjectList).hasSize(databaseSizeBeforeCreate + 1);
         CurriculumSubject testCurriculumSubject = curriculumSubjectList.get(curriculumSubjectList.size() - 1);
+        assertThat(testCurriculumSubject.getCountLvas()).isEqualTo(DEFAULT_COUNT_LVAS);
 
         // Validate the CurriculumSubject in Elasticsearch
         CurriculumSubject curriculumSubjectEs = curriculumSubjectSearchRepository.findOne(testCurriculumSubject.getId());
@@ -148,7 +153,8 @@ public class CurriculumSubjectResourceIntTest {
         restCurriculumSubjectMockMvc.perform(get("/api/curriculum-subjects?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(curriculumSubject.getId().intValue())));
+            .andExpect(jsonPath("$.[*].id").value(hasItem(curriculumSubject.getId().intValue())))
+            .andExpect(jsonPath("$.[*].countLvas").value(hasItem(DEFAULT_COUNT_LVAS)));
     }
 
     @Test
@@ -161,7 +167,8 @@ public class CurriculumSubjectResourceIntTest {
         restCurriculumSubjectMockMvc.perform(get("/api/curriculum-subjects/{id}", curriculumSubject.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.id").value(curriculumSubject.getId().intValue()));
+            .andExpect(jsonPath("$.id").value(curriculumSubject.getId().intValue()))
+            .andExpect(jsonPath("$.countLvas").value(DEFAULT_COUNT_LVAS));
     }
 
     @Test
@@ -182,6 +189,8 @@ public class CurriculumSubjectResourceIntTest {
 
         // Update the curriculumSubject
         CurriculumSubject updatedCurriculumSubject = curriculumSubjectRepository.findOne(curriculumSubject.getId());
+        updatedCurriculumSubject
+            .countLvas(UPDATED_COUNT_LVAS);
         CurriculumSubjectDTO curriculumSubjectDTO = curriculumSubjectMapper.toDto(updatedCurriculumSubject);
 
         restCurriculumSubjectMockMvc.perform(put("/api/curriculum-subjects")
@@ -193,6 +202,7 @@ public class CurriculumSubjectResourceIntTest {
         List<CurriculumSubject> curriculumSubjectList = curriculumSubjectRepository.findAll();
         assertThat(curriculumSubjectList).hasSize(databaseSizeBeforeUpdate);
         CurriculumSubject testCurriculumSubject = curriculumSubjectList.get(curriculumSubjectList.size() - 1);
+        assertThat(testCurriculumSubject.getCountLvas()).isEqualTo(UPDATED_COUNT_LVAS);
 
         // Validate the CurriculumSubject in Elasticsearch
         CurriculumSubject curriculumSubjectEs = curriculumSubjectSearchRepository.findOne(testCurriculumSubject.getId());
@@ -251,7 +261,8 @@ public class CurriculumSubjectResourceIntTest {
         restCurriculumSubjectMockMvc.perform(get("/api/_search/curriculum-subjects?query=id:" + curriculumSubject.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(curriculumSubject.getId().intValue())));
+            .andExpect(jsonPath("$.[*].id").value(hasItem(curriculumSubject.getId().intValue())))
+            .andExpect(jsonPath("$.[*].countLvas").value(hasItem(DEFAULT_COUNT_LVAS)));
     }
 
     @Test
