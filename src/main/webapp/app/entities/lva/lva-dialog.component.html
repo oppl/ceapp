@@ -64,6 +64,11 @@
                 </small>
             </div>
         </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="ceappApp.lva.countAppointments" for="field_countAppointments">Count Appointments</label>
+            <input type="number" class="form-control" name="countAppointments" id="field_countAppointments"
+                [(ngModel)]="lva.countAppointments"  />
+        </div>
 
         <div class="form-group">
             <label jhiTranslate="ceappApp.lva.subject" for="field_subject">Subject</label>

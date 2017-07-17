@@ -17,6 +17,7 @@ export class Lva implements BaseEntity {
         public lvaType?: LvaType,
         public year?: number,
         public semester?: Semester,
+        public countAppointments?: number,
         public appointments?: BaseEntity[],
         public csl1S?: BaseEntity[],
         public csl2S?: BaseEntity[],

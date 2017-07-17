@@ -69,6 +69,10 @@
             "fieldValidateRules": [
                 "required"
             ]
+        },
+        {
+            "fieldName": "countAppointments",
+            "fieldType": "Integer"
         }
     ],
     "changelogDate": "20170709150642",

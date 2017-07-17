@@ -20,6 +20,10 @@
         <dd>
             <span jhiTranslate="{{'ceappApp.Semester.' + lva.semester}}">{{lva.semester}}</span>
         </dd>
+        <dt><span jhiTranslate="ceappApp.lva.countAppointments">Count Appointments</span></dt>
+        <dd>
+            <span>{{lva.countAppointments}}</span>
+        </dd>
         <dt><span jhiTranslate="ceappApp.lva.subject">Subject</span></dt>
         <dd>
             <div *ngIf="lva.subjectId">
