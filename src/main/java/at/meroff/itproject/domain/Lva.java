@@ -50,6 +50,9 @@ public class Lva implements Serializable {
     @Column(name = "semester", nullable = false)
     private Semester semester;
 
+    @Column(name = "count_appointments")
+    private Integer countAppointments;
+
     @OneToMany(mappedBy = "lva")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -134,6 +137,19 @@ public class Lva implements Serializable {
 
     public void setSemester(Semester semester) {
         this.semester = semester;
+    }
+
+    public Integer getCountAppointments() {
+        return countAppointments;
+    }
+
+    public Lva countAppointments(Integer countAppointments) {
+        this.countAppointments = countAppointments;
+        return this;
+    }
+
+    public void setCountAppointments(Integer countAppointments) {
+        this.countAppointments = countAppointments;
     }
 
     public Set<Appointment> getAppointments() {
@@ -290,6 +306,7 @@ public class Lva implements Serializable {
             ", lvaType='" + getLvaType() + "'" +
             ", year='" + getYear() + "'" +
             ", semester='" + getSemester() + "'" +
+            ", countAppointments='" + getCountAppointments() + "'" +
             "}";
     }
 }

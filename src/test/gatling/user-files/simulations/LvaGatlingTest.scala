@@ -68,7 +68,7 @@ class LvaGatlingTest extends Simulation {
             .exec(http("Create new lva")
             .post("/api/lvas")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "lvaNr":"SAMPLE_TEXT", "lvaType":null, "year":"0", "semester":null}""")).asJSON
+            .body(StringBody("""{"id":null, "lvaNr":"SAMPLE_TEXT", "lvaType":null, "year":"0", "semester":null, "countAppointments":"0"}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_lva_url"))).exitHereIfFailed
             .pause(10)

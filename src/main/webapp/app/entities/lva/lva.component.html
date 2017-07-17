@@ -34,6 +34,7 @@
             <th><span jhiTranslate="ceappApp.lva.lvaType">Lva Type</span></th>
             <th><span jhiTranslate="ceappApp.lva.year">Year</span></th>
             <th><span jhiTranslate="ceappApp.lva.semester">Semester</span></th>
+            <th><span jhiTranslate="ceappApp.lva.countAppointments">Count Appointments</span></th>
             <th><span jhiTranslate="ceappApp.lva.subject">Subject</span></th>
             <th><span jhiTranslate="ceappApp.lva.institute">Institute</span></th>
             <th></th>
@@ -46,6 +47,7 @@
                 <td jhiTranslate="{{'ceappApp.LvaType.' + lva.lvaType}}">{{lva.lvaType}}</td>
                 <td>{{lva.year}}</td>
                 <td jhiTranslate="{{'ceappApp.Semester.' + lva.semester}}">{{lva.semester}}</td>
+                <td>{{lva.countAppointments}}</td>
                 <td>
                     <div *ngIf="lva.subjectId">
                         <a [routerLink]="['../subject', lva.subjectId  ]" >{{lva.subjectSubjectName}}</a>

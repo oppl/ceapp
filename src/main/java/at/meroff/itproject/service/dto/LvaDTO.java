@@ -28,6 +28,8 @@ public class LvaDTO implements Serializable {
     @NotNull
     private Semester semester;
 
+    private Integer countAppointments;
+
     private Long subjectId;
 
     private String subjectSubjectName;
@@ -74,6 +76,14 @@ public class LvaDTO implements Serializable {
 
     public void setSemester(Semester semester) {
         this.semester = semester;
+    }
+
+    public Integer getCountAppointments() {
+        return countAppointments;
+    }
+
+    public void setCountAppointments(Integer countAppointments) {
+        this.countAppointments = countAppointments;
     }
 
     public Long getSubjectId() {
@@ -137,6 +147,7 @@ public class LvaDTO implements Serializable {
             ", lvaType='" + getLvaType() + "'" +
             ", year='" + getYear() + "'" +
             ", semester='" + getSemester() + "'" +
+            ", countAppointments='" + getCountAppointments() + "'" +
             "}";
     }
 }
