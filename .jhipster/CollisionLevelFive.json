@@ -24,6 +24,10 @@
         {
             "fieldName": "examCollision",
             "fieldType": "Integer"
+        },
+        {
+            "fieldName": "collisionValue",
+            "fieldType": "Double"
         }
     ],
     "changelogDate": "20170716125539",

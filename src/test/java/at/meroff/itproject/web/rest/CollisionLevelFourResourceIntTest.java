@@ -44,6 +44,12 @@ public class CollisionLevelFourResourceIntTest {
     private static final Integer DEFAULT_EXAM_COLLISION = 1;
     private static final Integer UPDATED_EXAM_COLLISION = 2;
 
+    private static final Integer DEFAULT_INSTITUTE_COLLISION = 1;
+    private static final Integer UPDATED_INSTITUTE_COLLISION = 2;
+
+    private static final Integer DEFAULT_CURRICULUM_COLLISION = 1;
+    private static final Integer UPDATED_CURRICULUM_COLLISION = 2;
+
     @Autowired
     private CollisionLevelFourRepository collisionLevelFourRepository;
 
@@ -90,7 +96,9 @@ public class CollisionLevelFourResourceIntTest {
      */
     public static CollisionLevelFour createEntity(EntityManager em) {
         CollisionLevelFour collisionLevelFour = new CollisionLevelFour()
-            .examCollision(DEFAULT_EXAM_COLLISION);
+            .examCollision(DEFAULT_EXAM_COLLISION)
+            .instituteCollision(DEFAULT_INSTITUTE_COLLISION)
+            .curriculumCollision(DEFAULT_CURRICULUM_COLLISION);
         return collisionLevelFour;
     }
 
@@ -117,6 +125,8 @@ public class CollisionLevelFourResourceIntTest {
         assertThat(collisionLevelFourList).hasSize(databaseSizeBeforeCreate + 1);
         CollisionLevelFour testCollisionLevelFour = collisionLevelFourList.get(collisionLevelFourList.size() - 1);
         assertThat(testCollisionLevelFour.getExamCollision()).isEqualTo(DEFAULT_EXAM_COLLISION);
+        assertThat(testCollisionLevelFour.getInstituteCollision()).isEqualTo(DEFAULT_INSTITUTE_COLLISION);
+        assertThat(testCollisionLevelFour.getCurriculumCollision()).isEqualTo(DEFAULT_CURRICULUM_COLLISION);
 
         // Validate the CollisionLevelFour in Elasticsearch
         CollisionLevelFour collisionLevelFourEs = collisionLevelFourSearchRepository.findOne(testCollisionLevelFour.getId());
@@ -154,7 +164,9 @@ public class CollisionLevelFourResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(collisionLevelFour.getId().intValue())))
-            .andExpect(jsonPath("$.[*].examCollision").value(hasItem(DEFAULT_EXAM_COLLISION)));
+            .andExpect(jsonPath("$.[*].examCollision").value(hasItem(DEFAULT_EXAM_COLLISION)))
+            .andExpect(jsonPath("$.[*].instituteCollision").value(hasItem(DEFAULT_INSTITUTE_COLLISION)))
+            .andExpect(jsonPath("$.[*].curriculumCollision").value(hasItem(DEFAULT_CURRICULUM_COLLISION)));
     }
 
     @Test
@@ -168,7 +180,9 @@ public class CollisionLevelFourResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(collisionLevelFour.getId().intValue()))
-            .andExpect(jsonPath("$.examCollision").value(DEFAULT_EXAM_COLLISION));
+            .andExpect(jsonPath("$.examCollision").value(DEFAULT_EXAM_COLLISION))
+            .andExpect(jsonPath("$.instituteCollision").value(DEFAULT_INSTITUTE_COLLISION))
+            .andExpect(jsonPath("$.curriculumCollision").value(DEFAULT_CURRICULUM_COLLISION));
     }
 
     @Test
@@ -190,7 +204,9 @@ public class CollisionLevelFourResourceIntTest {
         // Update the collisionLevelFour
         CollisionLevelFour updatedCollisionLevelFour = collisionLevelFourRepository.findOne(collisionLevelFour.getId());
         updatedCollisionLevelFour
-            .examCollision(UPDATED_EXAM_COLLISION);
+            .examCollision(UPDATED_EXAM_COLLISION)
+            .instituteCollision(UPDATED_INSTITUTE_COLLISION)
+            .curriculumCollision(UPDATED_CURRICULUM_COLLISION);
         CollisionLevelFourDTO collisionLevelFourDTO = collisionLevelFourMapper.toDto(updatedCollisionLevelFour);
 
         restCollisionLevelFourMockMvc.perform(put("/api/collision-level-fours")
@@ -203,6 +219,8 @@ public class CollisionLevelFourResourceIntTest {
         assertThat(collisionLevelFourList).hasSize(databaseSizeBeforeUpdate);
         CollisionLevelFour testCollisionLevelFour = collisionLevelFourList.get(collisionLevelFourList.size() - 1);
         assertThat(testCollisionLevelFour.getExamCollision()).isEqualTo(UPDATED_EXAM_COLLISION);
+        assertThat(testCollisionLevelFour.getInstituteCollision()).isEqualTo(UPDATED_INSTITUTE_COLLISION);
+        assertThat(testCollisionLevelFour.getCurriculumCollision()).isEqualTo(UPDATED_CURRICULUM_COLLISION);
 
         // Validate the CollisionLevelFour in Elasticsearch
         CollisionLevelFour collisionLevelFourEs = collisionLevelFourSearchRepository.findOne(testCollisionLevelFour.getId());
@@ -262,7 +280,9 @@ public class CollisionLevelFourResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(collisionLevelFour.getId().intValue())))
-            .andExpect(jsonPath("$.[*].examCollision").value(hasItem(DEFAULT_EXAM_COLLISION)));
+            .andExpect(jsonPath("$.[*].examCollision").value(hasItem(DEFAULT_EXAM_COLLISION)))
+            .andExpect(jsonPath("$.[*].instituteCollision").value(hasItem(DEFAULT_INSTITUTE_COLLISION)))
+            .andExpect(jsonPath("$.[*].curriculumCollision").value(hasItem(DEFAULT_CURRICULUM_COLLISION)));
     }
 
     @Test

@@ -68,7 +68,7 @@ class IdealPlanGatlingTest extends Simulation {
             .exec(http("Create new idealPlan")
             .post("/api/ideal-plans")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "year":"0", "semester":null}""")).asJSON
+            .body(StringBody("""{"id":null, "year":"0", "semester":null, "active":null}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_idealPlan_url"))).exitHereIfFailed
             .pause(10)

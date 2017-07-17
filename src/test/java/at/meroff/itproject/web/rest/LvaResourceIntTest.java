@@ -55,6 +55,9 @@ public class LvaResourceIntTest {
     private static final Semester DEFAULT_SEMESTER = Semester.WS;
     private static final Semester UPDATED_SEMESTER = Semester.SS;
 
+    private static final Integer DEFAULT_COUNT_APPOINTMENTS = 1;
+    private static final Integer UPDATED_COUNT_APPOINTMENTS = 2;
+
     @Autowired
     private LvaRepository lvaRepository;
 
@@ -104,7 +107,8 @@ public class LvaResourceIntTest {
             .lvaNr(DEFAULT_LVA_NR)
             .lvaType(DEFAULT_LVA_TYPE)
             .year(DEFAULT_YEAR)
-            .semester(DEFAULT_SEMESTER);
+            .semester(DEFAULT_SEMESTER)
+            .countAppointments(DEFAULT_COUNT_APPOINTMENTS);
         return lva;
     }
 
@@ -134,6 +138,7 @@ public class LvaResourceIntTest {
         assertThat(testLva.getLvaType()).isEqualTo(DEFAULT_LVA_TYPE);
         assertThat(testLva.getYear()).isEqualTo(DEFAULT_YEAR);
         assertThat(testLva.getSemester()).isEqualTo(DEFAULT_SEMESTER);
+        assertThat(testLva.getCountAppointments()).isEqualTo(DEFAULT_COUNT_APPOINTMENTS);
 
         // Validate the Lva in Elasticsearch
         Lva lvaEs = lvaSearchRepository.findOne(testLva.getId());
@@ -250,7 +255,8 @@ public class LvaResourceIntTest {
             .andExpect(jsonPath("$.[*].lvaNr").value(hasItem(DEFAULT_LVA_NR.toString())))
             .andExpect(jsonPath("$.[*].lvaType").value(hasItem(DEFAULT_LVA_TYPE.toString())))
             .andExpect(jsonPath("$.[*].year").value(hasItem(DEFAULT_YEAR)))
-            .andExpect(jsonPath("$.[*].semester").value(hasItem(DEFAULT_SEMESTER.toString())));
+            .andExpect(jsonPath("$.[*].semester").value(hasItem(DEFAULT_SEMESTER.toString())))
+            .andExpect(jsonPath("$.[*].countAppointments").value(hasItem(DEFAULT_COUNT_APPOINTMENTS)));
     }
 
     @Test
@@ -267,7 +273,8 @@ public class LvaResourceIntTest {
             .andExpect(jsonPath("$.lvaNr").value(DEFAULT_LVA_NR.toString()))
             .andExpect(jsonPath("$.lvaType").value(DEFAULT_LVA_TYPE.toString()))
             .andExpect(jsonPath("$.year").value(DEFAULT_YEAR))
-            .andExpect(jsonPath("$.semester").value(DEFAULT_SEMESTER.toString()));
+            .andExpect(jsonPath("$.semester").value(DEFAULT_SEMESTER.toString()))
+            .andExpect(jsonPath("$.countAppointments").value(DEFAULT_COUNT_APPOINTMENTS));
     }
 
     @Test
@@ -292,7 +299,8 @@ public class LvaResourceIntTest {
             .lvaNr(UPDATED_LVA_NR)
             .lvaType(UPDATED_LVA_TYPE)
             .year(UPDATED_YEAR)
-            .semester(UPDATED_SEMESTER);
+            .semester(UPDATED_SEMESTER)
+            .countAppointments(UPDATED_COUNT_APPOINTMENTS);
         LvaDTO lvaDTO = lvaMapper.toDto(updatedLva);
 
         restLvaMockMvc.perform(put("/api/lvas")
@@ -308,6 +316,7 @@ public class LvaResourceIntTest {
         assertThat(testLva.getLvaType()).isEqualTo(UPDATED_LVA_TYPE);
         assertThat(testLva.getYear()).isEqualTo(UPDATED_YEAR);
         assertThat(testLva.getSemester()).isEqualTo(UPDATED_SEMESTER);
+        assertThat(testLva.getCountAppointments()).isEqualTo(UPDATED_COUNT_APPOINTMENTS);
 
         // Validate the Lva in Elasticsearch
         Lva lvaEs = lvaSearchRepository.findOne(testLva.getId());
@@ -370,7 +379,8 @@ public class LvaResourceIntTest {
             .andExpect(jsonPath("$.[*].lvaNr").value(hasItem(DEFAULT_LVA_NR.toString())))
             .andExpect(jsonPath("$.[*].lvaType").value(hasItem(DEFAULT_LVA_TYPE.toString())))
             .andExpect(jsonPath("$.[*].year").value(hasItem(DEFAULT_YEAR)))
-            .andExpect(jsonPath("$.[*].semester").value(hasItem(DEFAULT_SEMESTER.toString())));
+            .andExpect(jsonPath("$.[*].semester").value(hasItem(DEFAULT_SEMESTER.toString())))
+            .andExpect(jsonPath("$.[*].countAppointments").value(hasItem(DEFAULT_COUNT_APPOINTMENTS)));
     }
 
     @Test

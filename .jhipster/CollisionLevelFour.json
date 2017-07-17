@@ -24,6 +24,14 @@
         {
             "fieldName": "examCollision",
             "fieldType": "Integer"
+        },
+        {
+            "fieldName": "instituteCollision",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "curriculumCollision",
+            "fieldType": "Integer"
         }
     ],
     "changelogDate": "20170716102818",

@@ -15,6 +15,8 @@ public class CurriculumSubjectDTO implements Serializable {
 
     private Long id;
 
+    private Integer countLvas;
+
     private Set<LvaDTO> lvas = new HashSet<>();
 
     private Long subjectId;
@@ -31,6 +33,14 @@ public class CurriculumSubjectDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Integer getCountLvas() {
+        return countLvas;
+    }
+
+    public void setCountLvas(Integer countLvas) {
+        this.countLvas = countLvas;
     }
 
     public Set<LvaDTO> getLvas() {
@@ -98,6 +108,7 @@ public class CurriculumSubjectDTO implements Serializable {
     public String toString() {
         return "CurriculumSubjectDTO{" +
             "id=" + getId() +
+            ", countLvas='" + getCountLvas() + "'" +
             "}";
     }
 }

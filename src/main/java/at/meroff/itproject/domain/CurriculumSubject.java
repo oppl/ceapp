@@ -27,6 +27,9 @@ public class CurriculumSubject implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
+    @Column(name = "count_lvas")
+    private Integer countLvas;
+
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "curriculum_subject_lva",
@@ -51,6 +54,19 @@ public class CurriculumSubject implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Integer getCountLvas() {
+        return countLvas;
+    }
+
+    public CurriculumSubject countLvas(Integer countLvas) {
+        this.countLvas = countLvas;
+        return this;
+    }
+
+    public void setCountLvas(Integer countLvas) {
+        this.countLvas = countLvas;
     }
 
     public Set<Lva> getLvas() {
@@ -153,6 +169,7 @@ public class CurriculumSubject implements Serializable {
     public String toString() {
         return "CurriculumSubject{" +
             "id=" + getId() +
+            ", countLvas='" + getCountLvas() + "'" +
             "}";
     }
 }

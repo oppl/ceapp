@@ -21,6 +21,8 @@ public class IdealPlanDTO implements Serializable {
     @NotNull
     private Semester semester;
 
+    private Boolean active;
+
     private Long curriculumId;
 
     private String curriculumCurName;
@@ -47,6 +49,14 @@ public class IdealPlanDTO implements Serializable {
 
     public void setSemester(Semester semester) {
         this.semester = semester;
+    }
+
+    public Boolean isActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     public Long getCurriculumId() {
@@ -92,6 +102,7 @@ public class IdealPlanDTO implements Serializable {
             "id=" + getId() +
             ", year='" + getYear() + "'" +
             ", semester='" + getSemester() + "'" +
+            ", active='" + isActive() + "'" +
             "}";
     }
 }

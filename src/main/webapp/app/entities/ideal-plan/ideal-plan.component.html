@@ -32,6 +32,7 @@
             <th><span jhiTranslate="global.field.id">ID</span></th>
             <th><span jhiTranslate="ceappApp.idealPlan.year">Year</span></th>
             <th><span jhiTranslate="ceappApp.idealPlan.semester">Semester</span></th>
+            <th><span jhiTranslate="ceappApp.idealPlan.active">Active</span></th>
             <th><span jhiTranslate="ceappApp.idealPlan.curriculum">Curriculum</span></th>
             <th></th>
             </tr>
@@ -41,6 +42,7 @@
                 <td><a [routerLink]="['../ideal-plan', idealPlan.id ]">{{idealPlan.id}}</a></td>
                 <td>{{idealPlan.year}}</td>
                 <td jhiTranslate="{{'ceappApp.Semester.' + idealPlan.semester}}">{{idealPlan.semester}}</td>
+                <td>{{idealPlan.active}}</td>
                 <td>
                     <div *ngIf="idealPlan.curriculumId">
                         <a [routerLink]="['../curriculum', idealPlan.curriculumId  ]" >{{idealPlan.curriculumCurName}}</a>

@@ -39,6 +39,9 @@ public class IdealPlan implements Serializable {
     @Column(name = "semester", nullable = false)
     private Semester semester;
 
+    @Column(name = "active")
+    private Boolean active;
+
     @OneToMany(mappedBy = "idealplan")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -84,6 +87,19 @@ public class IdealPlan implements Serializable {
 
     public void setSemester(Semester semester) {
         this.semester = semester;
+    }
+
+    public Boolean isActive() {
+        return active;
+    }
+
+    public IdealPlan active(Boolean active) {
+        this.active = active;
+        return this;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     public Set<IdealPlanEntries> getIdealplanentries() {
@@ -175,6 +191,7 @@ public class IdealPlan implements Serializable {
             "id=" + getId() +
             ", year='" + getYear() + "'" +
             ", semester='" + getSemester() + "'" +
+            ", active='" + isActive() + "'" +
             "}";
     }
 }

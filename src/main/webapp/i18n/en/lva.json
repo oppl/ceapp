@@ -20,6 +20,7 @@
             "lvaType": "Lva Type",
             "year": "Year",
             "semester": "Semester",
+            "countAppointments": "Count Appointments",
             "appointment": "Appointment",
             "csl1": "Csl 1",
             "csl2": "Csl 2",

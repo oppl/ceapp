@@ -3,6 +3,7 @@ import { BaseEntity } from './../../shared';
 export class CurriculumSubject implements BaseEntity {
     constructor(
         public id?: number,
+        public countLvas?: number,
         public lvas?: BaseEntity[],
         public subjectId?: number,
         public curriculumSemesterId?: number,
