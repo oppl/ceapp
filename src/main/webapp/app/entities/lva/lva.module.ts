@@ -2,6 +2,9 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { CeappSharedModule } from '../../shared';
+
+import {DataTableModule, SharedModule} from 'primeng/primeng';
+
 import {
     LvaService,
     LvaPopupService,
@@ -25,7 +28,9 @@ const ENTITY_STATES = [
     imports: [
         CeappSharedModule,
         CeappAppointmentModule,
-        RouterModule.forRoot(ENTITY_STATES, { useHash: true })
+        RouterModule.forRoot(ENTITY_STATES, { useHash: true }),
+        DataTableModule,
+        SharedModule
     ],
     declarations: [
         LvaComponent,
