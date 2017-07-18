@@ -5,7 +5,7 @@ import { JhiEventManager  } from 'ng-jhipster';
 
 import { Lva } from './lva.model';
 import { LvaService } from './lva.service';
-import {Appointment} from "../appointment/appointment.model";
+import {Appointment} from '../appointment/appointment.model';
 
 @Component({
     selector: 'jhi-lva-detail',

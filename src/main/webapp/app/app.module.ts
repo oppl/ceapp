@@ -2,6 +2,7 @@ import './vendor.ts';
 
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Ng2Webstorage } from 'ng2-webstorage';
 
 import { CeappSharedModule, UserRouteAccessService } from './shared';
@@ -30,6 +31,7 @@ import {
     imports: [
         BrowserModule,
         LayoutRoutingModule,
+        BrowserAnimationsModule,
         Ng2Webstorage.forRoot({ prefix: 'jhi', separator: '-'}),
         CeappSharedModule,
         CeappHomeModule,

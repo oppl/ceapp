@@ -106,3 +106,10 @@
         </tbody>
     </table>
 </div>
+<p-dataTable [value]="appointments">
+    <p-column field="startDateTime" header="Start"></p-column>
+    <p-column field="endDateTime" header="Ende"></p-column>
+    <p-column field="room" header="Raum"></p-column>
+    <p-column field="theme" header="Thema"></p-column>
+    <p-column field="isExam" header="P-Collision"></p-column>
+</p-dataTable>
