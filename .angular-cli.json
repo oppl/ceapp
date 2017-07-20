@@ -22,7 +22,11 @@
             "content/css/vendor.css",
             "content/css/global.css"
         ],
-        "scripts": []
+        "scripts": [
+            "./node_modules/jquery/dist/jquery.min.js",
+            "./node_modules/moment/min/moment.min.js",
+            "./node_modules/fullcalendar/dist/fullcalendar.min.js"
+        ]
     }],
     "e2e": {
         "protractor": {

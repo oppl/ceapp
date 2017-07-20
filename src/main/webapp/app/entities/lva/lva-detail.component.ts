@@ -17,6 +17,8 @@ export class LvaDetailComponent implements OnInit, OnDestroy {
     appointments: Appointment[];
     private subscription: Subscription;
     private eventSubscriber: Subscription;
+    events: any[];
+    headerConfig: any;
 
     constructor(
         private eventManager: JhiEventManager,
@@ -30,6 +32,35 @@ export class LvaDetailComponent implements OnInit, OnDestroy {
             this.load(params['id']);
         });
         this.registerChangeInLvas();
+        this.headerConfig = {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'month,agendaWeek,agendaDay'
+        };
+        this.events = [
+            {
+                'title': 'All Day Event',
+                'start': '2016-01-01'
+            },
+            {
+                'title': 'Long Event',
+                'start': '2016-01-07',
+                'end': '2016-01-10'
+            },
+            {
+                'title': 'Repeating Event',
+                'start': '2016-01-09T16:00:00'
+            },
+            {
+                'title': 'Repeating Event',
+                'start': '2016-01-16T16:00:00'
+            },
+            {
+                'title': 'Conference',
+                'start': '2016-01-11',
+                'end': '2016-01-13'
+            }
+        ];
     }
 
     load(id) {
