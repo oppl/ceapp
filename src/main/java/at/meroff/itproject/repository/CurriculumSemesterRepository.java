@@ -2,6 +2,7 @@ package at.meroff.itproject.repository;
 
 import at.meroff.itproject.domain.CurriculumSemester;
 import at.meroff.itproject.domain.enumeration.Semester;
+import at.meroff.itproject.service.dto.CurriculumSemesterDTO;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
