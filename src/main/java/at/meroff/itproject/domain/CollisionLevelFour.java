@@ -11,6 +11,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
 
+import at.meroff.itproject.domain.enumeration.CollisionType;
+
 /**
  * A CollisionLevelFour.
  */
@@ -35,6 +37,10 @@ public class CollisionLevelFour implements Serializable {
 
     @Column(name = "curriculum_collision")
     private Integer curriculumCollision;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "collision_type")
+    private CollisionType collisionType;
 
     @ManyToOne
     private CollisionLevelThree collisionLevelThree;
@@ -92,6 +98,19 @@ public class CollisionLevelFour implements Serializable {
 
     public void setCurriculumCollision(Integer curriculumCollision) {
         this.curriculumCollision = curriculumCollision;
+    }
+
+    public CollisionType getCollisionType() {
+        return collisionType;
+    }
+
+    public CollisionLevelFour collisionType(CollisionType collisionType) {
+        this.collisionType = collisionType;
+        return this;
+    }
+
+    public void setCollisionType(CollisionType collisionType) {
+        this.collisionType = collisionType;
     }
 
     public CollisionLevelThree getCollisionLevelThree() {
@@ -172,6 +191,7 @@ public class CollisionLevelFour implements Serializable {
             ", examCollision='" + getExamCollision() + "'" +
             ", instituteCollision='" + getInstituteCollision() + "'" +
             ", curriculumCollision='" + getCurriculumCollision() + "'" +
+            ", collisionType='" + getCollisionType() + "'" +
             "}";
     }
 }

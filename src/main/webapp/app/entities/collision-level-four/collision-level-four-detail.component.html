@@ -16,6 +16,10 @@
         <dd>
             <span>{{collisionLevelFour.curriculumCollision}}</span>
         </dd>
+        <dt><span jhiTranslate="ceappApp.collisionLevelFour.collisionType">Collision Type</span></dt>
+        <dd>
+            <span jhiTranslate="{{'ceappApp.CollisionType.' + collisionLevelFour.collisionType}}">{{collisionLevelFour.collisionType}}</span>
+        </dd>
         <dt><span jhiTranslate="ceappApp.collisionLevelFour.collisionLevelThree">Collision Level Three</span></dt>
         <dd>
             <div *ngIf="collisionLevelFour.collisionLevelThreeId">

@@ -19,6 +19,7 @@
             "examCollision": "Exam Collision",
             "instituteCollision": "Institute Collision",
             "curriculumCollision": "Curriculum Collision",
+            "collisionType": "Collision Type",
             "collisionLevelThree": "Collision Level Three",
             "collisionLevelFive": "Collision Level Five",
             "lva": "Lva"
