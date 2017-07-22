@@ -20,6 +20,7 @@
             "instituteCollision": "Institute Collision",
             "curriculumCollision": "Curriculum Collision",
             "collisionType": "Collision Type",
+            "collisionValue": "Collision Value",
             "collisionLevelThree": "Collision Level Three",
             "collisionLevelFive": "Collision Level Five",
             "lva": "Lva"

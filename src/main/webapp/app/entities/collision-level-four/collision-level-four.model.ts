@@ -17,6 +17,7 @@ export class CollisionLevelFour implements BaseEntity {
         public instituteCollision?: number,
         public curriculumCollision?: number,
         public collisionType?: CollisionType,
+        public collisionValue?: number,
         public collisionLevelThreeId?: number,
         public collisionLevelFives?: BaseEntity[],
         public lvaId?: number,

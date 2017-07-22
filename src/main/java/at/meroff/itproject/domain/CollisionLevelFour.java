@@ -42,6 +42,9 @@ public class CollisionLevelFour implements Serializable {
     @Column(name = "collision_type")
     private CollisionType collisionType;
 
+    @Column(name = "collision_value")
+    private Double collisionValue;
+
     @ManyToOne
     private CollisionLevelThree collisionLevelThree;
 
@@ -111,6 +114,19 @@ public class CollisionLevelFour implements Serializable {
 
     public void setCollisionType(CollisionType collisionType) {
         this.collisionType = collisionType;
+    }
+
+    public Double getCollisionValue() {
+        return collisionValue;
+    }
+
+    public CollisionLevelFour collisionValue(Double collisionValue) {
+        this.collisionValue = collisionValue;
+        return this;
+    }
+
+    public void setCollisionValue(Double collisionValue) {
+        this.collisionValue = collisionValue;
     }
 
     public CollisionLevelThree getCollisionLevelThree() {
@@ -192,6 +208,7 @@ public class CollisionLevelFour implements Serializable {
             ", instituteCollision='" + getInstituteCollision() + "'" +
             ", curriculumCollision='" + getCurriculumCollision() + "'" +
             ", collisionType='" + getCollisionType() + "'" +
+            ", collisionValue='" + getCollisionValue() + "'" +
             "}";
     }
 }

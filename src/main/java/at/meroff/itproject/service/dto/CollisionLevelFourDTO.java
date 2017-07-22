@@ -22,6 +22,8 @@ public class CollisionLevelFourDTO implements Serializable {
 
     private CollisionType collisionType;
 
+    private Double collisionValue;
+
     private Long collisionLevelThreeId;
 
     private Long lvaId;
@@ -66,6 +68,14 @@ public class CollisionLevelFourDTO implements Serializable {
 
     public void setCollisionType(CollisionType collisionType) {
         this.collisionType = collisionType;
+    }
+
+    public Double getCollisionValue() {
+        return collisionValue;
+    }
+
+    public void setCollisionValue(Double collisionValue) {
+        this.collisionValue = collisionValue;
     }
 
     public Long getCollisionLevelThreeId() {
@@ -121,6 +131,7 @@ public class CollisionLevelFourDTO implements Serializable {
             ", instituteCollision='" + getInstituteCollision() + "'" +
             ", curriculumCollision='" + getCurriculumCollision() + "'" +
             ", collisionType='" + getCollisionType() + "'" +
+            ", collisionValue='" + getCollisionValue() + "'" +
             "}";
     }
 }
