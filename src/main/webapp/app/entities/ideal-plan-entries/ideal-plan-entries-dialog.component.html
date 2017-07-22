@@ -47,6 +47,11 @@
             <input type="checkbox" class="form-control" name="optionalSubject" id="field_optionalSubject"
                 [(ngModel)]="idealPlanEntries.optionalSubject"  />
         </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="ceappApp.idealPlanEntries.exclusive" for="field_exclusive">Exclusive</label>
+            <input type="checkbox" class="form-control" name="exclusive" id="field_exclusive"
+                [(ngModel)]="idealPlanEntries.exclusive"  />
+        </div>
 
         <div class="form-group">
             <label jhiTranslate="ceappApp.idealPlanEntries.subject" for="field_subject">Subject</label>

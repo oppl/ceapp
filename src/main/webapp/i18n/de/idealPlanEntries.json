@@ -19,6 +19,7 @@
             "winterSemesterDefault": "Winter Semester Default",
             "summerSemesterDefault": "Summer Semester Default",
             "optionalSubject": "Optional Subject",
+            "exclusive": "Exclusive",
             "subject": "Subject",
             "idealplan": "Idealplan"
         }
