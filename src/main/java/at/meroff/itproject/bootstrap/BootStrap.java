@@ -137,7 +137,9 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
             createIdealPlanEntity(finalIdealPlanDTO, subject, semesterIntegerMap.get(Semester.WS),semesterIntegerMap.get(Semester.SS));
         });
 
-        collisionService.calculateCollisions();
+        collisionService.calculateCollisions(204, 2016, Semester.WS, 2017, Semester.SS);
+
+        elasticsearchIndexService.reindexAll();
 
         /*
         wirtschaftsinformatik.addInstitute(instituteMapper.toEntity(instituteService.findByInstituteId(256)));
@@ -322,6 +324,7 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
         idealPlanEntries.setIdealplanId(idealPlanDTO.getId());
         idealPlanEntries.setSubjectId(subjectDTO.getId());
         idealPlanEntries.setOptionalSubject(false);
+        idealPlanEntries.setExclusive(false);
         idealPlanEntries.setWinterSemesterDefault(winterSemesterDefault);
         idealPlanEntries.setSummerSemesterDefault(summerSemesterDefault);
 

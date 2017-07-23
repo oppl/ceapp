@@ -36,6 +36,9 @@ public class IdealPlanEntries implements Serializable {
     @Column(name = "optional_subject")
     private Boolean optionalSubject;
 
+    @Column(name = "jhi_exclusive")
+    private Boolean exclusive;
+
     @ManyToOne
     private Subject subject;
 
@@ -87,6 +90,19 @@ public class IdealPlanEntries implements Serializable {
 
     public void setOptionalSubject(Boolean optionalSubject) {
         this.optionalSubject = optionalSubject;
+    }
+
+    public Boolean isExclusive() {
+        return exclusive;
+    }
+
+    public IdealPlanEntries exclusive(Boolean exclusive) {
+        this.exclusive = exclusive;
+        return this;
+    }
+
+    public void setExclusive(Boolean exclusive) {
+        this.exclusive = exclusive;
     }
 
     public Subject getSubject() {
@@ -142,6 +158,7 @@ public class IdealPlanEntries implements Serializable {
             ", winterSemesterDefault='" + getWinterSemesterDefault() + "'" +
             ", summerSemesterDefault='" + getSummerSemesterDefault() + "'" +
             ", optionalSubject='" + isOptionalSubject() + "'" +
+            ", exclusive='" + isExclusive() + "'" +
             "}";
     }
 }

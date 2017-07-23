@@ -33,6 +33,14 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="collision_type" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="collision_value" type="double">
+                <constraints nullable="true" />
+            </column>
+
             <column name="collision_level_three_id" type="bigint">
                 <constraints nullable="true" />
             </column>

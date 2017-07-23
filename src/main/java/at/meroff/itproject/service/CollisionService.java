@@ -1,8 +1,10 @@
 package at.meroff.itproject.service;
 
+import at.meroff.itproject.domain.*;
+import at.meroff.itproject.domain.enumeration.CollisionType;
 import at.meroff.itproject.domain.enumeration.Semester;
 import at.meroff.itproject.domain.enumeration.SubjectType;
-import at.meroff.itproject.service.dto.*;
+import at.meroff.itproject.repository.*;
 import javafx.util.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,233 +23,355 @@ public class CollisionService {
 
     private final Logger log = LoggerFactory.getLogger(CollisionService.class);
 
-    private final CurriculumSemesterService curriculumSemesterService;
+    private final CurriculumSemesterRepository curriculumSemesterRepository;
 
-    private final CurriculumSubjectService curriculumSubjectService;
+    private final CurriculumSubjectRepository curriculumSubjectRepository;
 
-    private final CurriculumService curriculumService;
+    private final CurriculumRepository curriculumRepository;
 
-    private final IdealPlanService idealPlanService;
-    private final IdealPlanEntriesService idealPlanEntriesService;
+    private final IdealPlanRepository idealPlanRepository;
+    private final IdealPlanEntriesRepository idealPlanEntriesRepository;
 
-    private final CollisionLevelOneService collisionLevelOneService;
-    private final CollisionLevelTwoService collisionLevelTwoService;
-    private final CollisionLevelThreeService collisionLevelThreeService;
-    private final CollisionLevelFourService collisionLevelFourService;
-    private final CollisionLevelFiveService collisionLevelFiveService;
+    private final CollisionLevelOneRepository collisionLevelOneRepository;
+    private final CollisionLevelTwoRepository collisionLevelTwoRepository;
+    private final CollisionLevelThreeRepository collisionLevelThreeRepository;
+    private final CollisionLevelFourRepository collisionLevelFourRepository;
+    private final CollisionLevelFiveRepository collisionLevelFiveRepository;
 
-    private final AppointmentService appointmentService;
+    private final AppointmentRepository appointmentRepository;
 
-    public CollisionService(CurriculumSemesterService curriculumSemesterService,
-                            CurriculumSubjectService curriculumSubjectService,
-                            IdealPlanService idealPlanService,
-                            IdealPlanEntriesService idealPlanEntriesService,
-                            CollisionLevelOneService collisionLevelOneService,
-                            CollisionLevelTwoService collisionLevelTwoService,
-                            CollisionLevelThreeService collisionLevelThreeService,
-                            CollisionLevelFourService collisionLevelFourService,
-                            CollisionLevelFiveService collisionLevelFiveService,
-                            AppointmentService appointmentService,
-                            CurriculumService curriculumService) {
-        this.curriculumSemesterService = curriculumSemesterService;
-        this.curriculumSubjectService = curriculumSubjectService;
-        this.idealPlanService = idealPlanService;
-        this.idealPlanEntriesService = idealPlanEntriesService;
-        this.collisionLevelOneService = collisionLevelOneService;
-        this.collisionLevelTwoService = collisionLevelTwoService;
-        this.collisionLevelThreeService = collisionLevelThreeService;
-        this.collisionLevelFourService = collisionLevelFourService;
-        this.collisionLevelFiveService = collisionLevelFiveService;
-        this.appointmentService = appointmentService;
-        this.curriculumService = curriculumService;
+    public CollisionService(CurriculumSemesterRepository curriculumSemesterRepository,
+                            CurriculumSubjectRepository curriculumSubjectRepository,
+                            CurriculumRepository curriculumRepository,
+                            IdealPlanRepository idealPlanRepository,
+                            IdealPlanEntriesRepository idealPlanEntriesRepository,
+                            CollisionLevelOneRepository collisionLevelOneRepository,
+                            CollisionLevelTwoRepository collisionLevelTwoRepository,
+                            CollisionLevelThreeRepository collisionLevelThreeRepository,
+                            CollisionLevelFourRepository collisionLevelFourRepository,
+                            CollisionLevelFiveRepository collisionLevelFiveRepository,
+                            AppointmentRepository appointmentRepository) {
+        this.curriculumSemesterRepository = curriculumSemesterRepository;
+        this.curriculumSubjectRepository = curriculumSubjectRepository;
+        this.curriculumRepository = curriculumRepository;
+        this.idealPlanRepository = idealPlanRepository;
+        this.idealPlanEntriesRepository = idealPlanEntriesRepository;
+        this.collisionLevelOneRepository = collisionLevelOneRepository;
+        this.collisionLevelTwoRepository = collisionLevelTwoRepository;
+        this.collisionLevelThreeRepository = collisionLevelThreeRepository;
+        this.collisionLevelFourRepository = collisionLevelFourRepository;
+        this.collisionLevelFiveRepository = collisionLevelFiveRepository;
+        this.appointmentRepository = appointmentRepository;
     }
 
-    public void calculateCollisions() {
+    /**
+     * Diese Methode berechnet für ein gegebenes Curriculum für ein Semster die Kollisionen
+     * in Abhängigkeit von einem spezifischen idealtypischen Studienverlauf
+     * @param curId
+     * @param idealPlanYear
+     * @param idealPlanSemester
+     * @param year
+     * @param semester
+     */
+    // TODO Idealtypischen Studienplan (Objekt) als Parameter verwenden
+    // TODO Curriculum Objekt als Parameter verwenden
+    public void calculateCollisions(Integer curId, Integer idealPlanYear, Semester idealPlanSemester, Integer year, Semester semester) {
+
+        // load CurriculumSemester
+        CurriculumSemester currSemester = curriculumSemesterRepository.findByCurriculum_CurIdAndYearAndSemester(curId, year, semester);
+
+        // load idealPlan
+        IdealPlan idealPlan = idealPlanRepository.findByCurriculum_CurIdAndYearAndSemester(curId, idealPlanYear, idealPlanSemester);
+
+        calculateCollisions(currSemester, idealPlan);
+
+    }
+
+    public void calculateCollisions(CurriculumSemester cSem, IdealPlan idealPlan) {
         // load ideal plan as map
-        Map<Pair<String, SubjectType>, IdealPlanEntriesDTO> idealPlan = getIdealPlanMap(204, 2016, Semester.WS);
+        Map<Pair<String, SubjectType>, IdealPlanEntries> idealPlanMap = getIdealPlanMap(idealPlan);
 
-        // load CurriculumSubject
-        CurriculumSemesterDTO one = curriculumSemesterService.findOne(204, 2017, Semester.SS);
+        // find institutes linked with the curriculum
+        List<Long> curriculumInstitutes = getCurriculumInstitutes(idealPlan);
 
-        // load Curriculum
-        CurriculumDTO curriculumDTO = curriculumService.findByCurId(204);
-        List<Long> instituteIds = curriculumDTO.getInstitutes().stream().map(instituteDTO -> instituteDTO.getId()).collect(Collectors.toList());
+        // find all CurriculumSubjects for a given CurriculumSemester
+        List<CurriculumSubject> csAll = curriculumSubjectRepository.findByCurriculumSemester_Id(cSem.getId());
 
-        List<CurriculumSubjectDTO> all = curriculumSubjectService.findAll(one.getId());
+        // filtering for testing only!!!
+        /*csAll = csAll
+            .stream()
+            //.filter(cs -> cs.getSubject().getSubjectName().equals("Formale Grundlagen der Wirtschaftsinformatik"))
+            .collect(Collectors.toList());*/
 
-        all.stream()
-            //.filter(curriculumSubjectDTO -> curriculumSubjectDTO.getSubjectSubjectName().equals("Formale Grundlagen der Wirtschaftsinformatik") && curriculumSubjectDTO.getSubjectSubjectType().equals(SubjectType.VL))
-            .forEach(curriculumSubjectDTO -> {
-                // suche nach möglichen Kollisionsfächern
-                Set<Optional<CurriculumSubjectDTO>> possibleCollisions = getPossibleCollisions(idealPlan, all, curriculumSubjectDTO);
+        Set<CollisionLevelOne> collect = csAll
+            .stream()
+            .map(c -> createLevelOne(csAll, c, idealPlanMap, curriculumInstitutes))
+            .filter(Objects::nonNull)
+            .collect(Collectors.toSet());
 
-                // Ausgabe der möglichen Kollisionsfächern
-                System.out.println("##########################################################################");
-                System.out.println(curriculumSubjectDTO.getSubjectSubjectName() + " " + curriculumSubjectDTO.getSubjectSubjectType());
-                System.out.println("##########################################################################");
-                possibleCollisions.forEach(curriculumSubjectDTO1 -> {
-                    curriculumSubjectDTO1.ifPresent(curriculumSubjectDTO2 -> System.out.println(curriculumSubjectDTO2.getSubjectSubjectName() + " " + curriculumSubjectDTO2.getSubjectSubjectType()));
-                });
-
-                // Abrufen der LVAs des Ursprungsfachs
-                Set<LvaDTO> lvas = curriculumSubjectDTO.getLvas();
-                Set<CollisionLevelTwoDTO> collect3 = lvas.stream().map(lvaDTO -> {
-                    //Prüfen einer LVA des Ursprungsfachs gegen alle möglichen Kollisionsfächer
-                    Set<CollisionLevelThreeDTO> collect1 = possibleCollisions.stream().map(targetSubject -> {
-                        if (targetSubject.isPresent()) {
-                            // Zusammenfassung auf Fach Ziel
-                            CurriculumSubjectDTO curriculumSubjectDTO1 = targetSubject.get();
-                            Set<LvaDTO> lvas1 = curriculumSubjectDTO1.getLvas();
-                            Set<CollisionLevelFourDTO> collect = lvas1.stream()
-                                .map(lvaDTO1 -> checkCollisionLva(lvaDTO, lvaDTO1, instituteIds))
-                                .filter(Objects::nonNull)
-                                .collect(Collectors.toSet());
-                            CollisionLevelThreeDTO collisionLevelThreeDTO = new CollisionLevelThreeDTO();
-
-                            if (collect.size() > 0) {
-                                collisionLevelThreeDTO.setCurriculumSubjectId(targetSubject.get().getId());
-                                collisionLevelThreeDTO.setExamCollision(collect.stream().mapToInt(CollisionLevelFourDTO::getExamCollision).sum());
-                                collisionLevelThreeDTO = collisionLevelThreeService.save(collisionLevelThreeDTO);
-                                CollisionLevelThreeDTO finalCollisionLevelThreeDTO = collisionLevelThreeDTO;
-                                collect.forEach(collisionLevelFourDTO -> {
-                                    collisionLevelFourDTO.setCollisionLevelThreeId(finalCollisionLevelThreeDTO.getId());
-                                    collisionLevelFourService.save(collisionLevelFourDTO);
+        System.out.println(collect);
+        collisionLevelOneRepository.save(collect);
+        collect.forEach(collisionLevelOne -> {
+            collisionLevelTwoRepository.save(collisionLevelOne.getCollisionLevelTwos())
+                .stream()
+                .forEach(collisionLevelTwo -> {
+                    collisionLevelThreeRepository.save(collisionLevelTwo.getCollisionLevelThrees())
+                        .stream()
+                        .forEach(collisionLevelThree -> {
+                            collisionLevelFourRepository.save(collisionLevelThree.getCollisionLevelFours())
+                                .stream()
+                                .forEach(collisionLevelFour -> {
+                                    collisionLevelFiveRepository.save(collisionLevelFour.getCollisionLevelFives());
                                 });
-                                return collisionLevelThreeDTO;
-                            }
-                            return null;
-                        }
-                        return null;
-                    }).filter(Objects::nonNull)
-                        .collect(Collectors.toSet());
-
-                    CollisionLevelTwoDTO collisionLevelTwoDTO = new CollisionLevelTwoDTO();
-
-                    if (collect1.size() > 0) {
-                        collisionLevelTwoDTO.setLvaId(lvaDTO.getId());
-                        collisionLevelTwoDTO.setExamCollision(collect1.stream().mapToInt(CollisionLevelThreeDTO::getExamCollision).sum());
-                        collisionLevelTwoDTO = collisionLevelTwoService.save(collisionLevelTwoDTO);
-                        CollisionLevelTwoDTO finalCollisionLevelTwoDTO = collisionLevelTwoDTO;
-                        collect1.forEach(collisionLevelThreeDTO -> {
-                            collisionLevelThreeDTO.setCollisionLevelTwoId(finalCollisionLevelTwoDTO.getId());
-                            collisionLevelThreeService.save(collisionLevelThreeDTO);
                         });
-                        return collisionLevelTwoDTO;
-                    }
-                    return null;
-
-                }).filter(Objects::nonNull).collect(Collectors.toSet());
-
-                CollisionLevelOneDTO collisionLevelOneDTO = new CollisionLevelOneDTO();
-                if (collect3.size() > 0) {
-                    collisionLevelOneDTO.setCurriculumSubjectId(curriculumSubjectDTO.getId());
-                    collisionLevelOneDTO.setExamCollision(collect3.stream().mapToInt(value -> value.getExamCollision()).sum());
-                    collisionLevelOneDTO = collisionLevelOneService.save(collisionLevelOneDTO);
-                    CollisionLevelOneDTO finalCollisionLevelOneDTO = collisionLevelOneDTO;
-                    collect3.forEach(collisionLevelTwoDTO -> {
-                        collisionLevelTwoDTO.setCollisionLevelOneId(finalCollisionLevelOneDTO.getId());
-                        collisionLevelTwoService.save(collisionLevelTwoDTO);
-                    });
-                }
 
             });
+
+        });
 
     }
 
-    private CollisionLevelFourDTO checkCollisionLva(LvaDTO lvaDTO, LvaDTO lvaDTO1, List<Long> instituteIds) {
-        Set<AppointmentDTO> appointmentsSource = lvaDTO.getAppointments();
-        Set<AppointmentDTO> appointmentsTarget = lvaDTO1.getAppointments();
+    private List<Long> getCurriculumInstitutes(IdealPlan idealPlan) {
+        // load Curriculum
+        Curriculum curriculumDTO = curriculumRepository.findOne(idealPlan.getCurriculum().getId());
 
-        System.out.println(lvaDTO.getSubjectSubjectName() + " --> " + lvaDTO1.getSubjectSubjectName());
-        Set<CollisionLevelFiveDTO> collect = appointmentsSource.stream().map(appointmentDTO -> {
-            return appointmentsTarget
-                .stream()
-                .filter(appointmentDTO1 -> detectCollision(appointmentDTO, appointmentDTO1))
-                .map(appointmentDTO1 -> {
-                    CollisionLevelFiveDTO collisionLevelFiveDTO = new CollisionLevelFiveDTO();
-                    collisionLevelFiveDTO.setSourceAppointmentId(appointmentDTO.getId());
-                    collisionLevelFiveDTO.setTargetAppointmentId(appointmentDTO1.getId());
-                    if (appointmentDTO.isIsExam() && appointmentDTO1.isIsExam()) {
-                        collisionLevelFiveDTO.setExamCollision(1);
-                        collisionLevelFiveDTO.setCollisionValue(BASE_VALUE_APPOINTMENT_COLLISION * MULTIPLIER_FOR_COLLISION);
-                    } else {
-                        collisionLevelFiveDTO.setExamCollision(0);
-                        collisionLevelFiveDTO.setCollisionValue(BASE_VALUE_APPOINTMENT_COLLISION);
-                    }
-                    return collisionLevelFiveDTO;
-                }).collect(Collectors.toSet());
-        }).flatMap(Collection::stream).filter(Objects::nonNull).collect(Collectors.toSet());
+        // load a list of linked Institutes for a given Curriculum
+        return curriculumDTO
+            .getInstitutes()
+            .stream()
+            .map(institute -> institute.getId())
+            .collect(Collectors.toList());
+    }
 
-        CollisionLevelFourDTO collisionLevelFourDTO = new CollisionLevelFourDTO();
+    private CollisionLevelOne createLevelOne(List<CurriculumSubject> csAll,
+                                CurriculumSubject cs,
+                                Map<Pair<String, SubjectType>, IdealPlanEntries> idealPlanMap,
+                                List<Long> curriculumInstitutes) {
+        Set<CurriculumSubject> collisionSubjects = findCollisionSubjects(cs, csAll, idealPlanMap);
 
-        if (collect.size() > 0) {
+        Set<Lva> sourceLvas = cs.getLvas();
 
-            collisionLevelFourDTO.setLvaId(lvaDTO1.getId());
-            if (lvaDTO.getInstituteId() == lvaDTO1.getInstituteId()) {
-                collisionLevelFourDTO.setInstituteCollision(1);
-            } else {
-                collisionLevelFourDTO.setInstituteCollision(0);
-            }
+        Set<CollisionLevelTwo> levelTwo = sourceLvas
+            .stream()
+            .map(sourceLva -> createLevelTwo(sourceLva, collisionSubjects, idealPlanMap, curriculumInstitutes))
+            .filter(Objects::nonNull)
+            .collect(Collectors.toSet());
 
-            if (instituteIds.contains(lvaDTO.getInstituteId()) && instituteIds.contains(lvaDTO1.getInstituteId())) {
-                collisionLevelFourDTO.setCurriculumCollision(1);
-            } else {
-                collisionLevelFourDTO.setCurriculumCollision(0);
-            }
+        if (levelTwo.size() > 0) {
+            CollisionLevelOne levelOne = new CollisionLevelOne();
+            levelOne.setExamCollision(levelTwo.stream().mapToInt(l -> l.getExamCollision()).sum());
+            levelOne.setInstituteCollision(levelTwo.stream().mapToInt(l -> l.getInstituteCollision()).sum());
+            levelOne.setCurriculumCollision(levelTwo.stream().mapToInt(l -> l.getCurriculumCollision()).sum());
+            levelOne.setCollisionValueMax(levelTwo.stream().mapToDouble(l -> l.getCollisionValueMax()).max().getAsDouble());
+            levelOne.setCollisionValueAvg(levelTwo.stream().mapToDouble(l -> l.getCollisionValueAvg()).sum() / sourceLvas.size());
+            levelOne.setColWS(levelTwo.stream().filter(l -> l.isColWS()).findFirst().isPresent());
+            levelOne.setColSS(levelTwo.stream().filter(l -> l.isColSS()).findFirst().isPresent());
+            levelTwo.forEach(l -> l.setCollisionLevelOne(levelOne));
+            levelOne.setCollisionLevelTwos(levelTwo);
+            levelOne.setCurriculumSubject(cs);
+            return levelOne;
+        }
+        return null;
+    }
 
-            collisionLevelFourDTO = collisionLevelFourService.save(collisionLevelFourDTO);
+    private CollisionLevelTwo createLevelTwo(Lva sourceLva, Set<CurriculumSubject> collisionSubjects, Map<Pair<String, SubjectType>, IdealPlanEntries> idealPlanMap, List<Long> curriculumInstitutes) {
 
-            collisionLevelFourDTO.setExamCollision(collect.stream().mapToInt(collisionLevelFiveDTO -> collisionLevelFiveDTO.getExamCollision()).sum());
+        Set<CollisionLevelThree> levelThree = collisionSubjects.stream()
+            .map(curriculumSubject -> createLevelTree(sourceLva, curriculumSubject, curriculumInstitutes, idealPlanMap))
+            .filter(Objects::nonNull)
+            .collect(Collectors.toSet());
 
-            CollisionLevelFourDTO finalCollisionLevelFourDTO = collisionLevelFourDTO;
-
-            collect.forEach(collisionLevelFiveDTO -> {
-                collisionLevelFiveDTO.setCollisionLevelFourId(finalCollisionLevelFourDTO.getId());
-                collisionLevelFiveService.save(collisionLevelFiveDTO);
-            });
-            return collisionLevelFourDTO;
+        if (levelThree.size() > 0) {
+            CollisionLevelTwo levelTwo = new CollisionLevelTwo();
+            levelTwo.setExamCollision(levelThree.stream().mapToInt(l -> l.getExamCollision()).sum());
+            levelTwo.setInstituteCollision(levelThree.stream().mapToInt(l -> l.getInstituteCollision()).sum());
+            levelTwo.setCurriculumCollision(levelThree.stream().mapToInt(l -> l.getCurriculumCollision()).sum());
+            levelTwo.setCollisionValueMax(levelThree.stream().mapToDouble(l -> l.getCollisionValueMax()).max().getAsDouble());
+            levelTwo.setCollisionValueAvg(levelThree.stream().mapToDouble(l -> l.getCollisionValueAvg()).average().getAsDouble());
+            levelTwo.setColWS(levelThree.stream().filter(l -> l.isColWS()).findFirst().isPresent());
+            levelTwo.setColSS(levelThree.stream().filter(l -> l.isColSS()).findFirst().isPresent());
+            levelTwo.setLva(sourceLva);
+            levelThree.forEach(l -> l.setCollisionLevelTwo(levelTwo));
+            levelTwo.setCollisionLevelThrees(levelThree);
+            return levelTwo;
         }
 
         return null;
-
-
-
     }
 
-    private Set<Optional<CurriculumSubjectDTO>> getPossibleCollisions(Map<Pair<String, SubjectType>, IdealPlanEntriesDTO> idealPlan, List<CurriculumSubjectDTO> all, CurriculumSubjectDTO curriculumSubjectDTO) {
+    private CollisionLevelThree createLevelTree(Lva sourceLva, CurriculumSubject collisionSubject, List<Long> institutes, Map<Pair<String, SubjectType>, IdealPlanEntries> idealPlanMap) {
+        Set<Lva> targetLvas = collisionSubject.getLvas();
+
+        Set<CollisionLevelFour> levelFours = targetLvas
+            .stream()
+            .map(l -> createLevelFour(sourceLva, l, institutes, idealPlanMap))
+            .filter(Objects::nonNull)
+            .collect(Collectors.toSet());
+
+        if (levelFours.size() > 0) {
+            CollisionLevelThree levelThree = new CollisionLevelThree();
+            levelThree.setInstituteCollision(levelFours.stream().mapToInt(l -> l.getInstituteCollision()).sum());
+            levelThree.setCurriculumCollision(levelFours.stream().mapToInt(l -> l.getCurriculumCollision()).sum());
+            levelThree.setCollisionValueMax(levelFours.stream().mapToDouble(l -> l.getCollisionValue()).max().getAsDouble());
+            levelThree.setCollisionValueAvg(levelFours.stream().mapToDouble(l -> l.getCollisionValue()).sum() / targetLvas.size());
+            levelThree.setExamCollision(levelFours.stream().mapToInt(l -> l.getExamCollision()).sum());
+            levelThree.setCurriculumSubject(collisionSubject);
+            levelFours.forEach(l -> l.setCollisionLevelThree(levelThree));
+            levelThree.setCollisionLevelFours(levelFours);
+            IdealPlanEntries s = idealPlanMap.get(new Pair<>(sourceLva.getSubject().getSubjectName(), sourceLva.getSubject().getSubjectType()));
+            IdealPlanEntries t = idealPlanMap.get(new Pair<>(collisionSubject.getSubject().getSubjectName(), collisionSubject.getSubject().getSubjectType()));
+
+            if (s.getWinterSemesterDefault() == t.getWinterSemesterDefault()) {
+                levelThree.setColWS(true);
+            } else {
+                levelThree.setColWS(false);
+            }
+            if (s.getSummerSemesterDefault() == t.getSummerSemesterDefault()) {
+                levelThree.setColSS(true);
+            } else {
+                levelThree.setColSS(false);
+            }
+
+            return levelThree;
+        }
+        return null;
+    }
+
+    private CollisionLevelFour createLevelFour(Lva source, Lva target, List<Long> institutes, Map<Pair<String, SubjectType>, IdealPlanEntries> idealPlanMap) {
+        Set<Appointment> sourceAppointments = source.getAppointments();
+        Set<Appointment> targetAppointments = target.getAppointments();
+
+        Set<CollisionLevelFive> levelFives = sourceAppointments
+            .stream()
+            .map(s -> {
+                return targetAppointments
+                    .stream()
+                    .filter(t -> detectCollision(s, t))
+                    .map(t -> createLevelFive(s, t, institutes))
+                    .collect(Collectors.toSet());
+            })
+            .flatMap(Collection::stream)
+            .filter(Objects::nonNull)
+            .collect(Collectors.toSet());
+
+        if (levelFives.size() > 0) {
+            double maxValue = source.getCountAppointments() * 100.0;
+            maxValue += source.getAppointments().stream().filter(appointment -> appointment.isIsExam()).count() * 200.0;
+            maxValue *= 2;
+
+            CollisionType collisionType = getCollisionType(source, target, idealPlanMap, institutes);
+
+            double value = levelFives.size() * 100.0
+                + levelFives.stream().mapToInt(l -> l.getExamCollision()).sum() * 200.0;
+
+            value *= ( 1.0 + collisionType.getVal()/100 );
+            CollisionLevelFour levelFour = new CollisionLevelFour();
+            levelFour.setLva(target);
+            levelFour.setCollisionValue(value / maxValue * 100.0);
+
+
+            if (collisionType.equals(CollisionType.INST_INST)) {
+                levelFour.setInstituteCollision(1);
+            } else {
+                levelFour.setInstituteCollision(0);
+            }
+            if (collisionType.equals(CollisionType.WIN_WIN)) {
+                levelFour.setCurriculumCollision(1);
+            } else {
+                levelFour.setCurriculumCollision(0);
+            }
+            levelFour.setCollisionType(collisionType);
+            levelFour.setExamCollision(levelFives.stream().mapToInt(l -> l.getExamCollision()).sum());
+            levelFives.forEach(l -> l.setCollisionLevelFour(levelFour));
+            levelFour.setCollisionLevelFives(levelFives);
+            return levelFour;
+        }
+        return null;
+    }
+
+    private CollisionType getCollisionType(Lva source, Lva target, Map<Pair<String, SubjectType>, IdealPlanEntries> idealPlanMap, List<Long> institutes) {
+        IdealPlanEntries soureEntry = idealPlanMap.get(new Pair<>(source.getSubject().getSubjectName(), source.getSubject().getSubjectType()));
+        IdealPlanEntries targetEntry = idealPlanMap.get(new Pair<>(target.getSubject().getSubjectName(), target.getSubject().getSubjectType()));
+
+        Long sourceInstituteId = source.getInstitute().getId();
+        Long targetInstituteId = target.getInstitute().getId();
+        if (institutes.contains(sourceInstituteId) && institutes.contains(targetInstituteId)) {
+            return (sourceInstituteId == targetInstituteId) ? CollisionType.INST_INST : CollisionType.WIN_WIN;
+        } else if (institutes.contains(sourceInstituteId) || institutes.contains(targetInstituteId)){
+            return (soureEntry.isExclusive() || targetEntry.isExclusive()) ? CollisionType.WIN_EZK : CollisionType.WIN_ZK;
+        } else if (soureEntry.isExclusive() && targetEntry.isExclusive()) {
+            return CollisionType.EZK_EZK;
+        } else if (soureEntry.isExclusive() || targetEntry.isExclusive()) {
+            return CollisionType.EZK_ZK;
+        } else {
+            return CollisionType.ZK_ZK;
+        }
+    }
+
+    private CollisionLevelFive createLevelFive(Appointment source, Appointment target, List<Long> institutes) {
+        if (detectCollision(source, target)) {
+            CollisionLevelFive levelFive = new CollisionLevelFive();
+
+            levelFive.setSourceAppointment(source);
+            levelFive.setTargetAppointment(target);
+
+            if (source.isIsExam() && target.isIsExam()){
+                levelFive.setExamCollision(1);
+                levelFive.setCollisionValue(300.0);
+            } else {
+                levelFive.setExamCollision(0);
+                levelFive.setCollisionValue(100.0);
+            }
+
+            return levelFive;
+        }
+        return null;
+    }
+
+    private Set<CurriculumSubject> findCollisionSubjects(CurriculumSubject cs, List<CurriculumSubject> csAll, Map<Pair<String, SubjectType>, IdealPlanEntries> idealPlanMap) {
         //search for all possible subjects which can have a relevant collision
-        IdealPlanEntriesDTO idealPlanEntriesDTO = idealPlan.get(new Pair<>(curriculumSubjectDTO.getSubjectSubjectName(), curriculumSubjectDTO.getSubjectSubjectType()));
+        IdealPlanEntries idealPlanEntriesDTO = idealPlanMap.get(new Pair<>(cs.getSubject().getSubjectName(), cs.getSubject().getSubjectType()));
         int winter = idealPlanEntriesDTO.getWinterSemesterDefault();
         int summer = idealPlanEntriesDTO.getSummerSemesterDefault();
 
-        return idealPlan.entrySet().stream().filter(pairIdealPlanEntriesDTOEntry -> pairIdealPlanEntriesDTOEntry.getValue().getWinterSemesterDefault() == winter
-            || pairIdealPlanEntriesDTOEntry.getValue().getSummerSemesterDefault() == summer)
-            .filter(pairIdealPlanEntriesDTOEntry -> !pairIdealPlanEntriesDTOEntry.getKey().equals(curriculumSubjectDTO.getSubjectSubjectName())
-                && !pairIdealPlanEntriesDTOEntry.getValue().getSubjectSubjectType().equals(curriculumSubjectDTO.getSubjectSubjectType()))
+        Set<Map.Entry<Pair<String, SubjectType>, IdealPlanEntries>> collect = idealPlanMap.entrySet().stream().filter(pairIdealPlanEntriesDTOEntry -> pairIdealPlanEntriesDTOEntry.getValue().getWinterSemesterDefault() == winter
+            || pairIdealPlanEntriesDTOEntry.getValue().getSummerSemesterDefault() == summer).collect(Collectors.toSet());
+        return collect.stream()
+            .filter(pairIdealPlanEntriesDTOEntry -> !pairIdealPlanEntriesDTOEntry.getKey().equals(cs.getSubject().getSubjectName())
+                && !pairIdealPlanEntriesDTOEntry.getValue().getSubject().getSubjectType().equals(cs.getSubject().getSubjectType()))
             .map(pairIdealPlanEntriesDTOEntry -> {
-                return all.stream()
+                return csAll.stream()
                     .filter(curriculumSubjectDTO1 -> {
-                        return curriculumSubjectDTO1.getSubjectId() == pairIdealPlanEntriesDTOEntry.getValue().getSubjectId();
+                        return curriculumSubjectDTO1.getSubject().getId() == pairIdealPlanEntriesDTOEntry.getValue().getSubject().getId();
                     }).findFirst();
-            }).collect(Collectors.toSet());
-    }
+            }).filter(curriculumSubject -> curriculumSubject.isPresent()).map(curriculumSubject -> curriculumSubject.get()).collect(Collectors.toSet());
 
-    private Map<Pair<String, SubjectType>, IdealPlanEntriesDTO> getIdealPlanMap(Integer curId, Integer year, Semester semester) {
-        IdealPlanDTO byCurriculum_curIdAndYearAndSemester = idealPlanService.findByCurriculum_CurIdAndYearAndSemester(curId, year, semester);
 
-        log.debug("Request for Ideal Plan : {}", byCurriculum_curIdAndYearAndSemester);
-
-        List<IdealPlanEntriesDTO> byIdealplan_id = idealPlanEntriesService.findByIdealplan_Id(byCurriculum_curIdAndYearAndSemester.getId());
-
-        return byIdealplan_id.stream()
-            .collect(Collectors.toMap(c -> {
-                return new Pair<>(c.getSubjectSubjectName(), c.getSubjectSubjectType());
-
-            }, c -> c));
     }
 
 
-    private boolean detectCollision(AppointmentDTO a1, AppointmentDTO a2) {
+    /**
+     * Diese Methode liest einen spezifischen idealtypischen Studienverlauf aus und liefert eine Map der
+     * enthaltenen Fächer zurück.
+     * @param curId
+     * @param year
+     * @param semester
+     * @return
+     */
+    private Map<Pair<String, SubjectType>, IdealPlanEntries> getIdealPlanMap(IdealPlan idealPlan) {
+
+        // abrufen der mit dem idealtypischen Studienverlauf verknüpften Einträge
+        List<IdealPlanEntries> entries = idealPlanEntriesRepository.findByIdealplan_Id(idealPlan.getId());
+
+        // Map für Fäecher und zugeordneten
+        return entries.stream()
+            .collect(Collectors.toMap(
+                entry -> {return new Pair<>(entry.getSubject().getSubjectName(), entry.getSubject().getSubjectType());},
+                entry -> entry)
+            );
+    }
+
+    private boolean detectCollision(Appointment a1, Appointment a2) {
         if (a1.getStartDateTime().equals(a2.getStartDateTime()) && a1.getEndDateTime().equals(a2.getEndDateTime())) return true;
         return ((a1.getStartDateTime().isAfter(a2.getStartDateTime()) && a1.getStartDateTime().isBefore(a2.getEndDateTime())) ||
             (a1.getEndDateTime().isAfter(a2.getStartDateTime()) && a1.getEndDateTime().isBefore(a2.getEndDateTime()))) ||

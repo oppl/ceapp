@@ -24,6 +24,30 @@
         {
             "fieldName": "examCollision",
             "fieldType": "Integer"
+        },
+        {
+            "fieldName": "instituteCollision",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "curriculumCollision",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "collisionValueAvg",
+            "fieldType": "Double"
+        },
+        {
+            "fieldName": "collisionValueMax",
+            "fieldType": "Double"
+        },
+        {
+            "fieldName": "colWS",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "colSS",
+            "fieldType": "Boolean"
         }
     ],
     "changelogDate": "20170716102200",

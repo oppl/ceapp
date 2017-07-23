@@ -68,7 +68,7 @@ class CollisionLevelFourGatlingTest extends Simulation {
             .exec(http("Create new collisionLevelFour")
             .post("/api/collision-level-fours")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "examCollision":"0", "instituteCollision":"0", "curriculumCollision":"0"}""")).asJSON
+            .body(StringBody("""{"id":null, "examCollision":"0", "instituteCollision":"0", "curriculumCollision":"0", "collisionType":null, "collisionValue":null}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_collisionLevelFour_url"))).exitHereIfFailed
             .pause(10)

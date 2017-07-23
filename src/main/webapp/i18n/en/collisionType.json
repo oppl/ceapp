@@ -1,0 +1,14 @@
+{
+    "ceappApp": {
+        "CollisionType" : {
+            "null": "",
+            "INST_INST": "INST_INST",
+            "WIN_WIN": "WIN_WIN",
+            "WIN_EZK": "WIN_EZK",
+            "EZK_EZK": "EZK_EZK",
+            "WIN_ZK": "WIN_ZK",
+            "EZK_ZK": "EZK_ZK",
+            "ZK_ZK": "ZK_ZK"
+        }
+    }
+}

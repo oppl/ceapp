@@ -32,6 +32,15 @@
         {
             "fieldName": "curriculumCollision",
             "fieldType": "Integer"
+        },
+        {
+            "fieldName": "collisionType",
+            "fieldType": "CollisionType",
+            "fieldValues": "INST_INST,WIN_WIN,WIN_EZK,EZK_EZK,WIN_ZK,EZK_ZK,ZK_ZK"
+        },
+        {
+            "fieldName": "collisionValue",
+            "fieldType": "Double"
         }
     ],
     "changelogDate": "20170716102818",

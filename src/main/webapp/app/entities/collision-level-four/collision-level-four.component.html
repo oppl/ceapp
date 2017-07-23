@@ -33,6 +33,8 @@
             <th><span jhiTranslate="ceappApp.collisionLevelFour.examCollision">Exam Collision</span></th>
             <th><span jhiTranslate="ceappApp.collisionLevelFour.instituteCollision">Institute Collision</span></th>
             <th><span jhiTranslate="ceappApp.collisionLevelFour.curriculumCollision">Curriculum Collision</span></th>
+            <th><span jhiTranslate="ceappApp.collisionLevelFour.collisionType">Collision Type</span></th>
+            <th><span jhiTranslate="ceappApp.collisionLevelFour.collisionValue">Collision Value</span></th>
             <th><span jhiTranslate="ceappApp.collisionLevelFour.collisionLevelThree">Collision Level Three</span></th>
             <th><span jhiTranslate="ceappApp.collisionLevelFour.lva">Lva</span></th>
             <th></th>
@@ -44,6 +46,8 @@
                 <td>{{collisionLevelFour.examCollision}}</td>
                 <td>{{collisionLevelFour.instituteCollision}}</td>
                 <td>{{collisionLevelFour.curriculumCollision}}</td>
+                <td jhiTranslate="{{'ceappApp.CollisionType.' + collisionLevelFour.collisionType}}">{{collisionLevelFour.collisionType}}</td>
+                <td>{{collisionLevelFour.collisionValue}}</td>
                 <td>
                     <div *ngIf="collisionLevelFour.collisionLevelThreeId">
                         <a [routerLink]="['../collision-level-three', collisionLevelFour.collisionLevelThreeId  ]" >{{collisionLevelFour.collisionLevelThreeId}}</a>

@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
+import at.meroff.itproject.domain.enumeration.CollisionType;
 
 /**
  * A DTO for the CollisionLevelFour entity.
@@ -18,6 +19,10 @@ public class CollisionLevelFourDTO implements Serializable {
     private Integer instituteCollision;
 
     private Integer curriculumCollision;
+
+    private CollisionType collisionType;
+
+    private Double collisionValue;
 
     private Long collisionLevelThreeId;
 
@@ -55,6 +60,22 @@ public class CollisionLevelFourDTO implements Serializable {
 
     public void setCurriculumCollision(Integer curriculumCollision) {
         this.curriculumCollision = curriculumCollision;
+    }
+
+    public CollisionType getCollisionType() {
+        return collisionType;
+    }
+
+    public void setCollisionType(CollisionType collisionType) {
+        this.collisionType = collisionType;
+    }
+
+    public Double getCollisionValue() {
+        return collisionValue;
+    }
+
+    public void setCollisionValue(Double collisionValue) {
+        this.collisionValue = collisionValue;
     }
 
     public Long getCollisionLevelThreeId() {
@@ -109,6 +130,8 @@ public class CollisionLevelFourDTO implements Serializable {
             ", examCollision='" + getExamCollision() + "'" +
             ", instituteCollision='" + getInstituteCollision() + "'" +
             ", curriculumCollision='" + getCurriculumCollision() + "'" +
+            ", collisionType='" + getCollisionType() + "'" +
+            ", collisionValue='" + getCollisionValue() + "'" +
             "}";
     }
 }

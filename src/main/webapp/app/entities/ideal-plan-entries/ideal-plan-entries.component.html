@@ -33,6 +33,7 @@
             <th><span jhiTranslate="ceappApp.idealPlanEntries.winterSemesterDefault">Winter Semester Default</span></th>
             <th><span jhiTranslate="ceappApp.idealPlanEntries.summerSemesterDefault">Summer Semester Default</span></th>
             <th><span jhiTranslate="ceappApp.idealPlanEntries.optionalSubject">Optional Subject</span></th>
+            <th><span jhiTranslate="ceappApp.idealPlanEntries.exclusive">Exclusive</span></th>
             <th><span jhiTranslate="ceappApp.idealPlanEntries.subject">Subject</span></th>
             <th><span jhiTranslate="ceappApp.idealPlanEntries.idealplan">Idealplan</span></th>
             <th></th>
@@ -44,6 +45,7 @@
                 <td>{{idealPlanEntries.winterSemesterDefault}}</td>
                 <td>{{idealPlanEntries.summerSemesterDefault}}</td>
                 <td>{{idealPlanEntries.optionalSubject}}</td>
+                <td>{{idealPlanEntries.exclusive}}</td>
                 <td>
                     <div *ngIf="idealPlanEntries.subjectId">
                         <a [routerLink]="['../subject', idealPlanEntries.subjectId  ]" >{{idealPlanEntries.subjectSubjectName}}</a>

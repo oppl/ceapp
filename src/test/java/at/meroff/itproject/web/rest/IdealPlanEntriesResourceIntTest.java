@@ -50,6 +50,9 @@ public class IdealPlanEntriesResourceIntTest {
     private static final Boolean DEFAULT_OPTIONAL_SUBJECT = false;
     private static final Boolean UPDATED_OPTIONAL_SUBJECT = true;
 
+    private static final Boolean DEFAULT_EXCLUSIVE = false;
+    private static final Boolean UPDATED_EXCLUSIVE = true;
+
     @Autowired
     private IdealPlanEntriesRepository idealPlanEntriesRepository;
 
@@ -98,7 +101,8 @@ public class IdealPlanEntriesResourceIntTest {
         IdealPlanEntries idealPlanEntries = new IdealPlanEntries()
             .winterSemesterDefault(DEFAULT_WINTER_SEMESTER_DEFAULT)
             .summerSemesterDefault(DEFAULT_SUMMER_SEMESTER_DEFAULT)
-            .optionalSubject(DEFAULT_OPTIONAL_SUBJECT);
+            .optionalSubject(DEFAULT_OPTIONAL_SUBJECT)
+            .exclusive(DEFAULT_EXCLUSIVE);
         return idealPlanEntries;
     }
 
@@ -127,6 +131,7 @@ public class IdealPlanEntriesResourceIntTest {
         assertThat(testIdealPlanEntries.getWinterSemesterDefault()).isEqualTo(DEFAULT_WINTER_SEMESTER_DEFAULT);
         assertThat(testIdealPlanEntries.getSummerSemesterDefault()).isEqualTo(DEFAULT_SUMMER_SEMESTER_DEFAULT);
         assertThat(testIdealPlanEntries.isOptionalSubject()).isEqualTo(DEFAULT_OPTIONAL_SUBJECT);
+        assertThat(testIdealPlanEntries.isExclusive()).isEqualTo(DEFAULT_EXCLUSIVE);
 
         // Validate the IdealPlanEntries in Elasticsearch
         IdealPlanEntries idealPlanEntriesEs = idealPlanEntriesSearchRepository.findOne(testIdealPlanEntries.getId());
@@ -204,7 +209,8 @@ public class IdealPlanEntriesResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(idealPlanEntries.getId().intValue())))
             .andExpect(jsonPath("$.[*].winterSemesterDefault").value(hasItem(DEFAULT_WINTER_SEMESTER_DEFAULT)))
             .andExpect(jsonPath("$.[*].summerSemesterDefault").value(hasItem(DEFAULT_SUMMER_SEMESTER_DEFAULT)))
-            .andExpect(jsonPath("$.[*].optionalSubject").value(hasItem(DEFAULT_OPTIONAL_SUBJECT.booleanValue())));
+            .andExpect(jsonPath("$.[*].optionalSubject").value(hasItem(DEFAULT_OPTIONAL_SUBJECT.booleanValue())))
+            .andExpect(jsonPath("$.[*].exclusive").value(hasItem(DEFAULT_EXCLUSIVE.booleanValue())));
     }
 
     @Test
@@ -220,7 +226,8 @@ public class IdealPlanEntriesResourceIntTest {
             .andExpect(jsonPath("$.id").value(idealPlanEntries.getId().intValue()))
             .andExpect(jsonPath("$.winterSemesterDefault").value(DEFAULT_WINTER_SEMESTER_DEFAULT))
             .andExpect(jsonPath("$.summerSemesterDefault").value(DEFAULT_SUMMER_SEMESTER_DEFAULT))
-            .andExpect(jsonPath("$.optionalSubject").value(DEFAULT_OPTIONAL_SUBJECT.booleanValue()));
+            .andExpect(jsonPath("$.optionalSubject").value(DEFAULT_OPTIONAL_SUBJECT.booleanValue()))
+            .andExpect(jsonPath("$.exclusive").value(DEFAULT_EXCLUSIVE.booleanValue()));
     }
 
     @Test
@@ -244,7 +251,8 @@ public class IdealPlanEntriesResourceIntTest {
         updatedIdealPlanEntries
             .winterSemesterDefault(UPDATED_WINTER_SEMESTER_DEFAULT)
             .summerSemesterDefault(UPDATED_SUMMER_SEMESTER_DEFAULT)
-            .optionalSubject(UPDATED_OPTIONAL_SUBJECT);
+            .optionalSubject(UPDATED_OPTIONAL_SUBJECT)
+            .exclusive(UPDATED_EXCLUSIVE);
         IdealPlanEntriesDTO idealPlanEntriesDTO = idealPlanEntriesMapper.toDto(updatedIdealPlanEntries);
 
         restIdealPlanEntriesMockMvc.perform(put("/api/ideal-plan-entries")
@@ -259,6 +267,7 @@ public class IdealPlanEntriesResourceIntTest {
         assertThat(testIdealPlanEntries.getWinterSemesterDefault()).isEqualTo(UPDATED_WINTER_SEMESTER_DEFAULT);
         assertThat(testIdealPlanEntries.getSummerSemesterDefault()).isEqualTo(UPDATED_SUMMER_SEMESTER_DEFAULT);
         assertThat(testIdealPlanEntries.isOptionalSubject()).isEqualTo(UPDATED_OPTIONAL_SUBJECT);
+        assertThat(testIdealPlanEntries.isExclusive()).isEqualTo(UPDATED_EXCLUSIVE);
 
         // Validate the IdealPlanEntries in Elasticsearch
         IdealPlanEntries idealPlanEntriesEs = idealPlanEntriesSearchRepository.findOne(testIdealPlanEntries.getId());
@@ -320,7 +329,8 @@ public class IdealPlanEntriesResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(idealPlanEntries.getId().intValue())))
             .andExpect(jsonPath("$.[*].winterSemesterDefault").value(hasItem(DEFAULT_WINTER_SEMESTER_DEFAULT)))
             .andExpect(jsonPath("$.[*].summerSemesterDefault").value(hasItem(DEFAULT_SUMMER_SEMESTER_DEFAULT)))
-            .andExpect(jsonPath("$.[*].optionalSubject").value(hasItem(DEFAULT_OPTIONAL_SUBJECT.booleanValue())));
+            .andExpect(jsonPath("$.[*].optionalSubject").value(hasItem(DEFAULT_OPTIONAL_SUBJECT.booleanValue())))
+            .andExpect(jsonPath("$.[*].exclusive").value(hasItem(DEFAULT_EXCLUSIVE.booleanValue())));
     }
 
     @Test

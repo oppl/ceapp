@@ -15,6 +15,18 @@ public class CollisionLevelTwoDTO implements Serializable {
 
     private Integer examCollision;
 
+    private Integer instituteCollision;
+
+    private Integer curriculumCollision;
+
+    private Double collisionValueAvg;
+
+    private Double collisionValueMax;
+
+    private Boolean colWS;
+
+    private Boolean colSS;
+
     private Long collisionLevelOneId;
 
     private Long lvaId;
@@ -35,6 +47,54 @@ public class CollisionLevelTwoDTO implements Serializable {
 
     public void setExamCollision(Integer examCollision) {
         this.examCollision = examCollision;
+    }
+
+    public Integer getInstituteCollision() {
+        return instituteCollision;
+    }
+
+    public void setInstituteCollision(Integer instituteCollision) {
+        this.instituteCollision = instituteCollision;
+    }
+
+    public Integer getCurriculumCollision() {
+        return curriculumCollision;
+    }
+
+    public void setCurriculumCollision(Integer curriculumCollision) {
+        this.curriculumCollision = curriculumCollision;
+    }
+
+    public Double getCollisionValueAvg() {
+        return collisionValueAvg;
+    }
+
+    public void setCollisionValueAvg(Double collisionValueAvg) {
+        this.collisionValueAvg = collisionValueAvg;
+    }
+
+    public Double getCollisionValueMax() {
+        return collisionValueMax;
+    }
+
+    public void setCollisionValueMax(Double collisionValueMax) {
+        this.collisionValueMax = collisionValueMax;
+    }
+
+    public Boolean isColWS() {
+        return colWS;
+    }
+
+    public void setColWS(Boolean colWS) {
+        this.colWS = colWS;
+    }
+
+    public Boolean isColSS() {
+        return colSS;
+    }
+
+    public void setColSS(Boolean colSS) {
+        this.colSS = colSS;
     }
 
     public Long getCollisionLevelOneId() {
@@ -87,6 +147,12 @@ public class CollisionLevelTwoDTO implements Serializable {
         return "CollisionLevelTwoDTO{" +
             "id=" + getId() +
             ", examCollision='" + getExamCollision() + "'" +
+            ", instituteCollision='" + getInstituteCollision() + "'" +
+            ", curriculumCollision='" + getCurriculumCollision() + "'" +
+            ", collisionValueAvg='" + getCollisionValueAvg() + "'" +
+            ", collisionValueMax='" + getCollisionValueMax() + "'" +
+            ", colWS='" + isColWS() + "'" +
+            ", colSS='" + isColSS() + "'" +
             "}";
     }
 }

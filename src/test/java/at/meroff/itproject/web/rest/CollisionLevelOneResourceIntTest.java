@@ -44,6 +44,24 @@ public class CollisionLevelOneResourceIntTest {
     private static final Integer DEFAULT_EXAM_COLLISION = 1;
     private static final Integer UPDATED_EXAM_COLLISION = 2;
 
+    private static final Integer DEFAULT_INSTITUTE_COLLISION = 1;
+    private static final Integer UPDATED_INSTITUTE_COLLISION = 2;
+
+    private static final Integer DEFAULT_CURRICULUM_COLLISION = 1;
+    private static final Integer UPDATED_CURRICULUM_COLLISION = 2;
+
+    private static final Double DEFAULT_COLLISION_VALUE_AVG = 1D;
+    private static final Double UPDATED_COLLISION_VALUE_AVG = 2D;
+
+    private static final Double DEFAULT_COLLISION_VALUE_MAX = 1D;
+    private static final Double UPDATED_COLLISION_VALUE_MAX = 2D;
+
+    private static final Boolean DEFAULT_COL_WS = false;
+    private static final Boolean UPDATED_COL_WS = true;
+
+    private static final Boolean DEFAULT_COL_SS = false;
+    private static final Boolean UPDATED_COL_SS = true;
+
     @Autowired
     private CollisionLevelOneRepository collisionLevelOneRepository;
 
@@ -90,7 +108,13 @@ public class CollisionLevelOneResourceIntTest {
      */
     public static CollisionLevelOne createEntity(EntityManager em) {
         CollisionLevelOne collisionLevelOne = new CollisionLevelOne()
-            .examCollision(DEFAULT_EXAM_COLLISION);
+            .examCollision(DEFAULT_EXAM_COLLISION)
+            .instituteCollision(DEFAULT_INSTITUTE_COLLISION)
+            .curriculumCollision(DEFAULT_CURRICULUM_COLLISION)
+            .collisionValueAvg(DEFAULT_COLLISION_VALUE_AVG)
+            .collisionValueMax(DEFAULT_COLLISION_VALUE_MAX)
+            .colWS(DEFAULT_COL_WS)
+            .colSS(DEFAULT_COL_SS);
         return collisionLevelOne;
     }
 
@@ -117,6 +141,12 @@ public class CollisionLevelOneResourceIntTest {
         assertThat(collisionLevelOneList).hasSize(databaseSizeBeforeCreate + 1);
         CollisionLevelOne testCollisionLevelOne = collisionLevelOneList.get(collisionLevelOneList.size() - 1);
         assertThat(testCollisionLevelOne.getExamCollision()).isEqualTo(DEFAULT_EXAM_COLLISION);
+        assertThat(testCollisionLevelOne.getInstituteCollision()).isEqualTo(DEFAULT_INSTITUTE_COLLISION);
+        assertThat(testCollisionLevelOne.getCurriculumCollision()).isEqualTo(DEFAULT_CURRICULUM_COLLISION);
+        assertThat(testCollisionLevelOne.getCollisionValueAvg()).isEqualTo(DEFAULT_COLLISION_VALUE_AVG);
+        assertThat(testCollisionLevelOne.getCollisionValueMax()).isEqualTo(DEFAULT_COLLISION_VALUE_MAX);
+        assertThat(testCollisionLevelOne.isColWS()).isEqualTo(DEFAULT_COL_WS);
+        assertThat(testCollisionLevelOne.isColSS()).isEqualTo(DEFAULT_COL_SS);
 
         // Validate the CollisionLevelOne in Elasticsearch
         CollisionLevelOne collisionLevelOneEs = collisionLevelOneSearchRepository.findOne(testCollisionLevelOne.getId());
@@ -154,7 +184,13 @@ public class CollisionLevelOneResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(collisionLevelOne.getId().intValue())))
-            .andExpect(jsonPath("$.[*].examCollision").value(hasItem(DEFAULT_EXAM_COLLISION)));
+            .andExpect(jsonPath("$.[*].examCollision").value(hasItem(DEFAULT_EXAM_COLLISION)))
+            .andExpect(jsonPath("$.[*].instituteCollision").value(hasItem(DEFAULT_INSTITUTE_COLLISION)))
+            .andExpect(jsonPath("$.[*].curriculumCollision").value(hasItem(DEFAULT_CURRICULUM_COLLISION)))
+            .andExpect(jsonPath("$.[*].collisionValueAvg").value(hasItem(DEFAULT_COLLISION_VALUE_AVG.doubleValue())))
+            .andExpect(jsonPath("$.[*].collisionValueMax").value(hasItem(DEFAULT_COLLISION_VALUE_MAX.doubleValue())))
+            .andExpect(jsonPath("$.[*].colWS").value(hasItem(DEFAULT_COL_WS.booleanValue())))
+            .andExpect(jsonPath("$.[*].colSS").value(hasItem(DEFAULT_COL_SS.booleanValue())));
     }
 
     @Test
@@ -168,7 +204,13 @@ public class CollisionLevelOneResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(collisionLevelOne.getId().intValue()))
-            .andExpect(jsonPath("$.examCollision").value(DEFAULT_EXAM_COLLISION));
+            .andExpect(jsonPath("$.examCollision").value(DEFAULT_EXAM_COLLISION))
+            .andExpect(jsonPath("$.instituteCollision").value(DEFAULT_INSTITUTE_COLLISION))
+            .andExpect(jsonPath("$.curriculumCollision").value(DEFAULT_CURRICULUM_COLLISION))
+            .andExpect(jsonPath("$.collisionValueAvg").value(DEFAULT_COLLISION_VALUE_AVG.doubleValue()))
+            .andExpect(jsonPath("$.collisionValueMax").value(DEFAULT_COLLISION_VALUE_MAX.doubleValue()))
+            .andExpect(jsonPath("$.colWS").value(DEFAULT_COL_WS.booleanValue()))
+            .andExpect(jsonPath("$.colSS").value(DEFAULT_COL_SS.booleanValue()));
     }
 
     @Test
@@ -190,7 +232,13 @@ public class CollisionLevelOneResourceIntTest {
         // Update the collisionLevelOne
         CollisionLevelOne updatedCollisionLevelOne = collisionLevelOneRepository.findOne(collisionLevelOne.getId());
         updatedCollisionLevelOne
-            .examCollision(UPDATED_EXAM_COLLISION);
+            .examCollision(UPDATED_EXAM_COLLISION)
+            .instituteCollision(UPDATED_INSTITUTE_COLLISION)
+            .curriculumCollision(UPDATED_CURRICULUM_COLLISION)
+            .collisionValueAvg(UPDATED_COLLISION_VALUE_AVG)
+            .collisionValueMax(UPDATED_COLLISION_VALUE_MAX)
+            .colWS(UPDATED_COL_WS)
+            .colSS(UPDATED_COL_SS);
         CollisionLevelOneDTO collisionLevelOneDTO = collisionLevelOneMapper.toDto(updatedCollisionLevelOne);
 
         restCollisionLevelOneMockMvc.perform(put("/api/collision-level-ones")
@@ -203,6 +251,12 @@ public class CollisionLevelOneResourceIntTest {
         assertThat(collisionLevelOneList).hasSize(databaseSizeBeforeUpdate);
         CollisionLevelOne testCollisionLevelOne = collisionLevelOneList.get(collisionLevelOneList.size() - 1);
         assertThat(testCollisionLevelOne.getExamCollision()).isEqualTo(UPDATED_EXAM_COLLISION);
+        assertThat(testCollisionLevelOne.getInstituteCollision()).isEqualTo(UPDATED_INSTITUTE_COLLISION);
+        assertThat(testCollisionLevelOne.getCurriculumCollision()).isEqualTo(UPDATED_CURRICULUM_COLLISION);
+        assertThat(testCollisionLevelOne.getCollisionValueAvg()).isEqualTo(UPDATED_COLLISION_VALUE_AVG);
+        assertThat(testCollisionLevelOne.getCollisionValueMax()).isEqualTo(UPDATED_COLLISION_VALUE_MAX);
+        assertThat(testCollisionLevelOne.isColWS()).isEqualTo(UPDATED_COL_WS);
+        assertThat(testCollisionLevelOne.isColSS()).isEqualTo(UPDATED_COL_SS);
 
         // Validate the CollisionLevelOne in Elasticsearch
         CollisionLevelOne collisionLevelOneEs = collisionLevelOneSearchRepository.findOne(testCollisionLevelOne.getId());
@@ -262,7 +316,13 @@ public class CollisionLevelOneResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(collisionLevelOne.getId().intValue())))
-            .andExpect(jsonPath("$.[*].examCollision").value(hasItem(DEFAULT_EXAM_COLLISION)));
+            .andExpect(jsonPath("$.[*].examCollision").value(hasItem(DEFAULT_EXAM_COLLISION)))
+            .andExpect(jsonPath("$.[*].instituteCollision").value(hasItem(DEFAULT_INSTITUTE_COLLISION)))
+            .andExpect(jsonPath("$.[*].curriculumCollision").value(hasItem(DEFAULT_CURRICULUM_COLLISION)))
+            .andExpect(jsonPath("$.[*].collisionValueAvg").value(hasItem(DEFAULT_COLLISION_VALUE_AVG.doubleValue())))
+            .andExpect(jsonPath("$.[*].collisionValueMax").value(hasItem(DEFAULT_COLLISION_VALUE_MAX.doubleValue())))
+            .andExpect(jsonPath("$.[*].colWS").value(hasItem(DEFAULT_COL_WS.booleanValue())))
+            .andExpect(jsonPath("$.[*].colSS").value(hasItem(DEFAULT_COL_SS.booleanValue())));
     }
 
     @Test

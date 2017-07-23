@@ -32,6 +32,10 @@
         {
             "fieldName": "optionalSubject",
             "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "exclusive",
+            "fieldType": "Boolean"
         }
     ],
     "changelogDate": "20170709150640",
