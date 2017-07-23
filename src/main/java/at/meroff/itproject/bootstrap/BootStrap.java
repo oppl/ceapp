@@ -324,6 +324,7 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
         idealPlanEntries.setIdealplanId(idealPlanDTO.getId());
         idealPlanEntries.setSubjectId(subjectDTO.getId());
         idealPlanEntries.setOptionalSubject(false);
+        idealPlanEntries.setExclusive(false);
         idealPlanEntries.setWinterSemesterDefault(winterSemesterDefault);
         idealPlanEntries.setSummerSemesterDefault(summerSemesterDefault);
 
