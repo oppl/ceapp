@@ -17,6 +17,12 @@
                 "title": "Collision Level Two"
             },
             "examCollision": "Exam Collision",
+            "instituteCollision": "Institute Collision",
+            "curriculumCollision": "Curriculum Collision",
+            "collisionValueAvg": "Collision Value Avg",
+            "collisionValueMax": "Collision Value Max",
+            "colWS": "Col WS",
+            "colSS": "Col SS",
             "collisionLevelOne": "Collision Level One",
             "collisionLevelThree": "Collision Level Three",
             "lva": "Lva"

@@ -25,6 +25,30 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="institute_collision" type="integer">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="curriculum_collision" type="integer">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="collision_value_avg" type="double">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="collision_value_max" type="double">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="col_ws" type="boolean">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="col_ss" type="boolean">
+                <constraints nullable="true" />
+            </column>
+
             <column name="collision_level_one_id" type="bigint">
                 <constraints nullable="true" />
             </column>
