@@ -31,6 +31,12 @@
             <tr>
             <th><span jhiTranslate="global.field.id">ID</span></th>
             <th><span jhiTranslate="ceappApp.collisionLevelOne.examCollision">Exam Collision</span></th>
+            <th><span jhiTranslate="ceappApp.collisionLevelOne.instituteCollision">Institute Collision</span></th>
+            <th><span jhiTranslate="ceappApp.collisionLevelOne.curriculumCollision">Curriculum Collision</span></th>
+            <th><span jhiTranslate="ceappApp.collisionLevelOne.collisionValueAvg">Collision Value Avg</span></th>
+            <th><span jhiTranslate="ceappApp.collisionLevelOne.collisionValueMax">Collision Value Max</span></th>
+            <th><span jhiTranslate="ceappApp.collisionLevelOne.colWS">Col WS</span></th>
+            <th><span jhiTranslate="ceappApp.collisionLevelOne.colSS">Col SS</span></th>
             <th><span jhiTranslate="ceappApp.collisionLevelOne.curriculumSubject">Curriculum Subject</span></th>
             <th></th>
             </tr>
@@ -39,6 +45,12 @@
             <tr *ngFor="let collisionLevelOne of collisionLevelOnes ;trackBy: trackId">
                 <td><a [routerLink]="['../collision-level-one', collisionLevelOne.id ]">{{collisionLevelOne.id}}</a></td>
                 <td>{{collisionLevelOne.examCollision}}</td>
+                <td>{{collisionLevelOne.instituteCollision}}</td>
+                <td>{{collisionLevelOne.curriculumCollision}}</td>
+                <td>{{collisionLevelOne.collisionValueAvg}}</td>
+                <td>{{collisionLevelOne.collisionValueMax}}</td>
+                <td>{{collisionLevelOne.colWS}}</td>
+                <td>{{collisionLevelOne.colSS}}</td>
                 <td>
                     <div *ngIf="collisionLevelOne.curriculumSubjectId">
                         <a [routerLink]="['../curriculum-subject', collisionLevelOne.curriculumSubjectId  ]" >{{collisionLevelOne.curriculumSubjectId}}</a>
