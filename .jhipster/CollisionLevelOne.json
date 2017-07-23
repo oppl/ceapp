@@ -12,6 +12,12 @@
             "otherEntityName": "collisionLevelTwo",
             "relationshipType": "one-to-many",
             "otherEntityRelationshipName": "collisionLevelOne"
+        },
+        {
+            "relationshipName": "idealPlan",
+            "otherEntityName": "idealPlan",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
         }
     ],
     "fields": [

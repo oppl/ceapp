@@ -14,5 +14,11 @@
                                  referencedColumnNames="id"
                                  referencedTableName="curriculum_subject"/>
 
+        <addForeignKeyConstraint baseColumnNames="ideal_plan_id"
+                                 baseTableName="collision_level_one"
+                                 constraintName="fk_collision_level_one_ideal_plan_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="ideal_plan"/>
+
     </changeSet>
 </databaseChangeLog>
