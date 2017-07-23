@@ -17,6 +17,12 @@
                 "title": "Collision Level Three"
             },
             "examCollision": "Exam Collision",
+            "instituteCollision": "Institute Collision",
+            "curriculumCollision": "Curriculum Collision",
+            "collisionValueAvg": "Collision Value Avg",
+            "collisionValueMax": "Collision Value Max",
+            "colWS": "Col WS",
+            "colSS": "Col SS",
             "collisionLevelTwo": "Collision Level Two",
             "collisionLevelFour": "Collision Level Four",
             "curriculumSubject": "Curriculum Subject"

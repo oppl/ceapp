@@ -30,6 +30,24 @@ public class CollisionLevelThree implements Serializable {
     @Column(name = "exam_collision")
     private Integer examCollision;
 
+    @Column(name = "institute_collision")
+    private Integer instituteCollision;
+
+    @Column(name = "curriculum_collision")
+    private Integer curriculumCollision;
+
+    @Column(name = "collision_value_avg")
+    private Double collisionValueAvg;
+
+    @Column(name = "collision_value_max")
+    private Double collisionValueMax;
+
+    @Column(name = "col_ws")
+    private Boolean colWS;
+
+    @Column(name = "col_ss")
+    private Boolean colSS;
+
     @ManyToOne
     private CollisionLevelTwo collisionLevelTwo;
 
@@ -60,6 +78,84 @@ public class CollisionLevelThree implements Serializable {
 
     public void setExamCollision(Integer examCollision) {
         this.examCollision = examCollision;
+    }
+
+    public Integer getInstituteCollision() {
+        return instituteCollision;
+    }
+
+    public CollisionLevelThree instituteCollision(Integer instituteCollision) {
+        this.instituteCollision = instituteCollision;
+        return this;
+    }
+
+    public void setInstituteCollision(Integer instituteCollision) {
+        this.instituteCollision = instituteCollision;
+    }
+
+    public Integer getCurriculumCollision() {
+        return curriculumCollision;
+    }
+
+    public CollisionLevelThree curriculumCollision(Integer curriculumCollision) {
+        this.curriculumCollision = curriculumCollision;
+        return this;
+    }
+
+    public void setCurriculumCollision(Integer curriculumCollision) {
+        this.curriculumCollision = curriculumCollision;
+    }
+
+    public Double getCollisionValueAvg() {
+        return collisionValueAvg;
+    }
+
+    public CollisionLevelThree collisionValueAvg(Double collisionValueAvg) {
+        this.collisionValueAvg = collisionValueAvg;
+        return this;
+    }
+
+    public void setCollisionValueAvg(Double collisionValueAvg) {
+        this.collisionValueAvg = collisionValueAvg;
+    }
+
+    public Double getCollisionValueMax() {
+        return collisionValueMax;
+    }
+
+    public CollisionLevelThree collisionValueMax(Double collisionValueMax) {
+        this.collisionValueMax = collisionValueMax;
+        return this;
+    }
+
+    public void setCollisionValueMax(Double collisionValueMax) {
+        this.collisionValueMax = collisionValueMax;
+    }
+
+    public Boolean isColWS() {
+        return colWS;
+    }
+
+    public CollisionLevelThree colWS(Boolean colWS) {
+        this.colWS = colWS;
+        return this;
+    }
+
+    public void setColWS(Boolean colWS) {
+        this.colWS = colWS;
+    }
+
+    public Boolean isColSS() {
+        return colSS;
+    }
+
+    public CollisionLevelThree colSS(Boolean colSS) {
+        this.colSS = colSS;
+        return this;
+    }
+
+    public void setColSS(Boolean colSS) {
+        this.colSS = colSS;
     }
 
     public CollisionLevelTwo getCollisionLevelTwo() {
@@ -138,6 +234,12 @@ public class CollisionLevelThree implements Serializable {
         return "CollisionLevelThree{" +
             "id=" + getId() +
             ", examCollision='" + getExamCollision() + "'" +
+            ", instituteCollision='" + getInstituteCollision() + "'" +
+            ", curriculumCollision='" + getCurriculumCollision() + "'" +
+            ", collisionValueAvg='" + getCollisionValueAvg() + "'" +
+            ", collisionValueMax='" + getCollisionValueMax() + "'" +
+            ", colWS='" + isColWS() + "'" +
+            ", colSS='" + isColSS() + "'" +
             "}";
     }
 }

@@ -44,6 +44,24 @@ public class CollisionLevelThreeResourceIntTest {
     private static final Integer DEFAULT_EXAM_COLLISION = 1;
     private static final Integer UPDATED_EXAM_COLLISION = 2;
 
+    private static final Integer DEFAULT_INSTITUTE_COLLISION = 1;
+    private static final Integer UPDATED_INSTITUTE_COLLISION = 2;
+
+    private static final Integer DEFAULT_CURRICULUM_COLLISION = 1;
+    private static final Integer UPDATED_CURRICULUM_COLLISION = 2;
+
+    private static final Double DEFAULT_COLLISION_VALUE_AVG = 1D;
+    private static final Double UPDATED_COLLISION_VALUE_AVG = 2D;
+
+    private static final Double DEFAULT_COLLISION_VALUE_MAX = 1D;
+    private static final Double UPDATED_COLLISION_VALUE_MAX = 2D;
+
+    private static final Boolean DEFAULT_COL_WS = false;
+    private static final Boolean UPDATED_COL_WS = true;
+
+    private static final Boolean DEFAULT_COL_SS = false;
+    private static final Boolean UPDATED_COL_SS = true;
+
     @Autowired
     private CollisionLevelThreeRepository collisionLevelThreeRepository;
 
@@ -90,7 +108,13 @@ public class CollisionLevelThreeResourceIntTest {
      */
     public static CollisionLevelThree createEntity(EntityManager em) {
         CollisionLevelThree collisionLevelThree = new CollisionLevelThree()
-            .examCollision(DEFAULT_EXAM_COLLISION);
+            .examCollision(DEFAULT_EXAM_COLLISION)
+            .instituteCollision(DEFAULT_INSTITUTE_COLLISION)
+            .curriculumCollision(DEFAULT_CURRICULUM_COLLISION)
+            .collisionValueAvg(DEFAULT_COLLISION_VALUE_AVG)
+            .collisionValueMax(DEFAULT_COLLISION_VALUE_MAX)
+            .colWS(DEFAULT_COL_WS)
+            .colSS(DEFAULT_COL_SS);
         return collisionLevelThree;
     }
 
@@ -117,6 +141,12 @@ public class CollisionLevelThreeResourceIntTest {
         assertThat(collisionLevelThreeList).hasSize(databaseSizeBeforeCreate + 1);
         CollisionLevelThree testCollisionLevelThree = collisionLevelThreeList.get(collisionLevelThreeList.size() - 1);
         assertThat(testCollisionLevelThree.getExamCollision()).isEqualTo(DEFAULT_EXAM_COLLISION);
+        assertThat(testCollisionLevelThree.getInstituteCollision()).isEqualTo(DEFAULT_INSTITUTE_COLLISION);
+        assertThat(testCollisionLevelThree.getCurriculumCollision()).isEqualTo(DEFAULT_CURRICULUM_COLLISION);
+        assertThat(testCollisionLevelThree.getCollisionValueAvg()).isEqualTo(DEFAULT_COLLISION_VALUE_AVG);
+        assertThat(testCollisionLevelThree.getCollisionValueMax()).isEqualTo(DEFAULT_COLLISION_VALUE_MAX);
+        assertThat(testCollisionLevelThree.isColWS()).isEqualTo(DEFAULT_COL_WS);
+        assertThat(testCollisionLevelThree.isColSS()).isEqualTo(DEFAULT_COL_SS);
 
         // Validate the CollisionLevelThree in Elasticsearch
         CollisionLevelThree collisionLevelThreeEs = collisionLevelThreeSearchRepository.findOne(testCollisionLevelThree.getId());
@@ -154,7 +184,13 @@ public class CollisionLevelThreeResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(collisionLevelThree.getId().intValue())))
-            .andExpect(jsonPath("$.[*].examCollision").value(hasItem(DEFAULT_EXAM_COLLISION)));
+            .andExpect(jsonPath("$.[*].examCollision").value(hasItem(DEFAULT_EXAM_COLLISION)))
+            .andExpect(jsonPath("$.[*].instituteCollision").value(hasItem(DEFAULT_INSTITUTE_COLLISION)))
+            .andExpect(jsonPath("$.[*].curriculumCollision").value(hasItem(DEFAULT_CURRICULUM_COLLISION)))
+            .andExpect(jsonPath("$.[*].collisionValueAvg").value(hasItem(DEFAULT_COLLISION_VALUE_AVG.doubleValue())))
+            .andExpect(jsonPath("$.[*].collisionValueMax").value(hasItem(DEFAULT_COLLISION_VALUE_MAX.doubleValue())))
+            .andExpect(jsonPath("$.[*].colWS").value(hasItem(DEFAULT_COL_WS.booleanValue())))
+            .andExpect(jsonPath("$.[*].colSS").value(hasItem(DEFAULT_COL_SS.booleanValue())));
     }
 
     @Test
@@ -168,7 +204,13 @@ public class CollisionLevelThreeResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(collisionLevelThree.getId().intValue()))
-            .andExpect(jsonPath("$.examCollision").value(DEFAULT_EXAM_COLLISION));
+            .andExpect(jsonPath("$.examCollision").value(DEFAULT_EXAM_COLLISION))
+            .andExpect(jsonPath("$.instituteCollision").value(DEFAULT_INSTITUTE_COLLISION))
+            .andExpect(jsonPath("$.curriculumCollision").value(DEFAULT_CURRICULUM_COLLISION))
+            .andExpect(jsonPath("$.collisionValueAvg").value(DEFAULT_COLLISION_VALUE_AVG.doubleValue()))
+            .andExpect(jsonPath("$.collisionValueMax").value(DEFAULT_COLLISION_VALUE_MAX.doubleValue()))
+            .andExpect(jsonPath("$.colWS").value(DEFAULT_COL_WS.booleanValue()))
+            .andExpect(jsonPath("$.colSS").value(DEFAULT_COL_SS.booleanValue()));
     }
 
     @Test
@@ -190,7 +232,13 @@ public class CollisionLevelThreeResourceIntTest {
         // Update the collisionLevelThree
         CollisionLevelThree updatedCollisionLevelThree = collisionLevelThreeRepository.findOne(collisionLevelThree.getId());
         updatedCollisionLevelThree
-            .examCollision(UPDATED_EXAM_COLLISION);
+            .examCollision(UPDATED_EXAM_COLLISION)
+            .instituteCollision(UPDATED_INSTITUTE_COLLISION)
+            .curriculumCollision(UPDATED_CURRICULUM_COLLISION)
+            .collisionValueAvg(UPDATED_COLLISION_VALUE_AVG)
+            .collisionValueMax(UPDATED_COLLISION_VALUE_MAX)
+            .colWS(UPDATED_COL_WS)
+            .colSS(UPDATED_COL_SS);
         CollisionLevelThreeDTO collisionLevelThreeDTO = collisionLevelThreeMapper.toDto(updatedCollisionLevelThree);
 
         restCollisionLevelThreeMockMvc.perform(put("/api/collision-level-threes")
@@ -203,6 +251,12 @@ public class CollisionLevelThreeResourceIntTest {
         assertThat(collisionLevelThreeList).hasSize(databaseSizeBeforeUpdate);
         CollisionLevelThree testCollisionLevelThree = collisionLevelThreeList.get(collisionLevelThreeList.size() - 1);
         assertThat(testCollisionLevelThree.getExamCollision()).isEqualTo(UPDATED_EXAM_COLLISION);
+        assertThat(testCollisionLevelThree.getInstituteCollision()).isEqualTo(UPDATED_INSTITUTE_COLLISION);
+        assertThat(testCollisionLevelThree.getCurriculumCollision()).isEqualTo(UPDATED_CURRICULUM_COLLISION);
+        assertThat(testCollisionLevelThree.getCollisionValueAvg()).isEqualTo(UPDATED_COLLISION_VALUE_AVG);
+        assertThat(testCollisionLevelThree.getCollisionValueMax()).isEqualTo(UPDATED_COLLISION_VALUE_MAX);
+        assertThat(testCollisionLevelThree.isColWS()).isEqualTo(UPDATED_COL_WS);
+        assertThat(testCollisionLevelThree.isColSS()).isEqualTo(UPDATED_COL_SS);
 
         // Validate the CollisionLevelThree in Elasticsearch
         CollisionLevelThree collisionLevelThreeEs = collisionLevelThreeSearchRepository.findOne(testCollisionLevelThree.getId());
@@ -262,7 +316,13 @@ public class CollisionLevelThreeResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(collisionLevelThree.getId().intValue())))
-            .andExpect(jsonPath("$.[*].examCollision").value(hasItem(DEFAULT_EXAM_COLLISION)));
+            .andExpect(jsonPath("$.[*].examCollision").value(hasItem(DEFAULT_EXAM_COLLISION)))
+            .andExpect(jsonPath("$.[*].instituteCollision").value(hasItem(DEFAULT_INSTITUTE_COLLISION)))
+            .andExpect(jsonPath("$.[*].curriculumCollision").value(hasItem(DEFAULT_CURRICULUM_COLLISION)))
+            .andExpect(jsonPath("$.[*].collisionValueAvg").value(hasItem(DEFAULT_COLLISION_VALUE_AVG.doubleValue())))
+            .andExpect(jsonPath("$.[*].collisionValueMax").value(hasItem(DEFAULT_COLLISION_VALUE_MAX.doubleValue())))
+            .andExpect(jsonPath("$.[*].colWS").value(hasItem(DEFAULT_COL_WS.booleanValue())))
+            .andExpect(jsonPath("$.[*].colSS").value(hasItem(DEFAULT_COL_SS.booleanValue())));
     }
 
     @Test

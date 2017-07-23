@@ -31,6 +31,12 @@
             <tr>
             <th><span jhiTranslate="global.field.id">ID</span></th>
             <th><span jhiTranslate="ceappApp.collisionLevelThree.examCollision">Exam Collision</span></th>
+            <th><span jhiTranslate="ceappApp.collisionLevelThree.instituteCollision">Institute Collision</span></th>
+            <th><span jhiTranslate="ceappApp.collisionLevelThree.curriculumCollision">Curriculum Collision</span></th>
+            <th><span jhiTranslate="ceappApp.collisionLevelThree.collisionValueAvg">Collision Value Avg</span></th>
+            <th><span jhiTranslate="ceappApp.collisionLevelThree.collisionValueMax">Collision Value Max</span></th>
+            <th><span jhiTranslate="ceappApp.collisionLevelThree.colWS">Col WS</span></th>
+            <th><span jhiTranslate="ceappApp.collisionLevelThree.colSS">Col SS</span></th>
             <th><span jhiTranslate="ceappApp.collisionLevelThree.collisionLevelTwo">Collision Level Two</span></th>
             <th><span jhiTranslate="ceappApp.collisionLevelThree.curriculumSubject">Curriculum Subject</span></th>
             <th></th>
@@ -40,6 +46,12 @@
             <tr *ngFor="let collisionLevelThree of collisionLevelThrees ;trackBy: trackId">
                 <td><a [routerLink]="['../collision-level-three', collisionLevelThree.id ]">{{collisionLevelThree.id}}</a></td>
                 <td>{{collisionLevelThree.examCollision}}</td>
+                <td>{{collisionLevelThree.instituteCollision}}</td>
+                <td>{{collisionLevelThree.curriculumCollision}}</td>
+                <td>{{collisionLevelThree.collisionValueAvg}}</td>
+                <td>{{collisionLevelThree.collisionValueMax}}</td>
+                <td>{{collisionLevelThree.colWS}}</td>
+                <td>{{collisionLevelThree.colSS}}</td>
                 <td>
                     <div *ngIf="collisionLevelThree.collisionLevelTwoId">
                         <a [routerLink]="['../collision-level-two', collisionLevelThree.collisionLevelTwoId  ]" >{{collisionLevelThree.collisionLevelTwoId}}</a>

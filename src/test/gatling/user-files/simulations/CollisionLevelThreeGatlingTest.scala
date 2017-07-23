@@ -68,7 +68,7 @@ class CollisionLevelThreeGatlingTest extends Simulation {
             .exec(http("Create new collisionLevelThree")
             .post("/api/collision-level-threes")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "examCollision":"0"}""")).asJSON
+            .body(StringBody("""{"id":null, "examCollision":"0", "instituteCollision":"0", "curriculumCollision":"0", "collisionValueAvg":null, "collisionValueMax":null, "colWS":null, "colSS":null}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_collisionLevelThree_url"))).exitHereIfFailed
             .pause(10)
