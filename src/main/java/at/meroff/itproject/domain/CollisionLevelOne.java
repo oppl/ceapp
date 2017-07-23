@@ -56,6 +56,9 @@ public class CollisionLevelOne implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<CollisionLevelTwo> collisionLevelTwos = new HashSet<>();
 
+    @ManyToOne
+    private IdealPlan idealPlan;
+
     public Long getId() {
         return id;
     }
@@ -191,6 +194,19 @@ public class CollisionLevelOne implements Serializable {
 
     public void setCollisionLevelTwos(Set<CollisionLevelTwo> collisionLevelTwos) {
         this.collisionLevelTwos = collisionLevelTwos;
+    }
+
+    public IdealPlan getIdealPlan() {
+        return idealPlan;
+    }
+
+    public CollisionLevelOne idealPlan(IdealPlan idealPlan) {
+        this.idealPlan = idealPlan;
+        return this;
+    }
+
+    public void setIdealPlan(IdealPlan idealPlan) {
+        this.idealPlan = idealPlan;
     }
 
     @Override

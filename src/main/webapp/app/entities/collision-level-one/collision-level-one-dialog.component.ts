@@ -10,6 +10,7 @@ import { CollisionLevelOne } from './collision-level-one.model';
 import { CollisionLevelOnePopupService } from './collision-level-one-popup.service';
 import { CollisionLevelOneService } from './collision-level-one.service';
 import { CurriculumSubject, CurriculumSubjectService } from '../curriculum-subject';
+import { IdealPlan, IdealPlanService } from '../ideal-plan';
 import { ResponseWrapper } from '../../shared';
 
 @Component({
@@ -24,11 +25,14 @@ export class CollisionLevelOneDialogComponent implements OnInit {
 
     curriculumsubjects: CurriculumSubject[];
 
+    idealplans: IdealPlan[];
+
     constructor(
         public activeModal: NgbActiveModal,
         private alertService: JhiAlertService,
         private collisionLevelOneService: CollisionLevelOneService,
         private curriculumSubjectService: CurriculumSubjectService,
+        private idealPlanService: IdealPlanService,
         private eventManager: JhiEventManager
     ) {
     }
@@ -38,6 +42,8 @@ export class CollisionLevelOneDialogComponent implements OnInit {
         this.authorities = ['ROLE_USER', 'ROLE_ADMIN'];
         this.curriculumSubjectService.query()
             .subscribe((res: ResponseWrapper) => { this.curriculumsubjects = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
+        this.idealPlanService.query()
+            .subscribe((res: ResponseWrapper) => { this.idealplans = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
     }
 
     clear() {
@@ -81,6 +87,10 @@ export class CollisionLevelOneDialogComponent implements OnInit {
     }
 
     trackCurriculumSubjectById(index: number, item: CurriculumSubject) {
+        return item.id;
+    }
+
+    trackIdealPlanById(index: number, item: IdealPlan) {
         return item.id;
     }
 }

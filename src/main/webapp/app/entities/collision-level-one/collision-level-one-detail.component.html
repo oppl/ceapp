@@ -38,6 +38,12 @@
                 <a [routerLink]="['/curriculum-subject', collisionLevelOne.curriculumSubjectId]">{{collisionLevelOne.curriculumSubjectId}}</a>
             </div>
         </dd>
+        <dt><span jhiTranslate="ceappApp.collisionLevelOne.idealPlan">Ideal Plan</span></dt>
+        <dd>
+            <div *ngIf="collisionLevelOne.idealPlanId">
+                <a [routerLink]="['/ideal-plan', collisionLevelOne.idealPlanId]">{{collisionLevelOne.idealPlanId}}</a>
+            </div>
+        </dd>
     </dl>
 
     <button type="submit"

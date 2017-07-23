@@ -29,6 +29,8 @@ public class CollisionLevelOneDTO implements Serializable {
 
     private Long curriculumSubjectId;
 
+    private Long idealPlanId;
+
     public Long getId() {
         return id;
     }
@@ -99,6 +101,14 @@ public class CollisionLevelOneDTO implements Serializable {
 
     public void setCurriculumSubjectId(Long curriculumSubjectId) {
         this.curriculumSubjectId = curriculumSubjectId;
+    }
+
+    public Long getIdealPlanId() {
+        return idealPlanId;
+    }
+
+    public void setIdealPlanId(Long idealPlanId) {
+        this.idealPlanId = idealPlanId;
     }
 
     @Override

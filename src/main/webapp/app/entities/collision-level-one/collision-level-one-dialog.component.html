@@ -55,6 +55,13 @@
                 <option [ngValue]="curriculumSubjectOption.id" *ngFor="let curriculumSubjectOption of curriculumsubjects; trackBy: trackCurriculumSubjectById">{{curriculumSubjectOption.id}}</option>
             </select>
         </div>
+        <div class="form-group">
+            <label jhiTranslate="ceappApp.collisionLevelOne.idealPlan" for="field_idealPlan">Ideal Plan</label>
+            <select class="form-control" id="field_idealPlan" name="idealPlan" [(ngModel)]="collisionLevelOne.idealPlanId" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="idealPlanOption.id" *ngFor="let idealPlanOption of idealplans; trackBy: trackIdealPlanById">{{idealPlanOption.id}}</option>
+            </select>
+        </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">

@@ -38,6 +38,7 @@
             <th><span jhiTranslate="ceappApp.collisionLevelOne.colWS">Col WS</span></th>
             <th><span jhiTranslate="ceappApp.collisionLevelOne.colSS">Col SS</span></th>
             <th><span jhiTranslate="ceappApp.collisionLevelOne.curriculumSubject">Curriculum Subject</span></th>
+            <th><span jhiTranslate="ceappApp.collisionLevelOne.idealPlan">Ideal Plan</span></th>
             <th></th>
             </tr>
             </thead>
@@ -54,6 +55,11 @@
                 <td>
                     <div *ngIf="collisionLevelOne.curriculumSubjectId">
                         <a [routerLink]="['../curriculum-subject', collisionLevelOne.curriculumSubjectId  ]" >{{collisionLevelOne.curriculumSubjectId}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="collisionLevelOne.idealPlanId">
+                        <a [routerLink]="['../ideal-plan', collisionLevelOne.idealPlanId  ]" >{{collisionLevelOne.idealPlanId}}</a>
                     </div>
                 </td>
                 <td class="text-right">

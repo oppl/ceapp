@@ -107,6 +107,7 @@ public class CollisionService {
             .stream()
             .map(c -> createLevelOne(csAll, c, idealPlanMap, curriculumInstitutes))
             .filter(Objects::nonNull)
+            .peek(collisionLevelOne -> collisionLevelOne.setIdealPlan(idealPlan))
             .collect(Collectors.toSet());
 
         System.out.println(collect);
