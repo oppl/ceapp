@@ -8,6 +8,7 @@ import at.meroff.itproject.service.*;
 import at.meroff.itproject.service.dto.*;
 import at.meroff.itproject.service.mapper.CurriculumMapper;
 import at.meroff.itproject.service.mapper.CurriculumSemesterMapper;
+import at.meroff.itproject.service.mapper.IdealPlanMapper;
 import at.meroff.itproject.service.mapper.InstituteMapper;
 import at.meroff.itproject.xml.XMLQueryTemplate;
 import at.meroff.itproject.xml.models.Subjects;
@@ -49,6 +50,7 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
     private IdealPlanService idealPlanService;
     private IdealPlanEntriesService idealPlanEntriesService;
     private CollisionService collisionService;
+    private IdealPlanMapper idealPlanMapper;
 
     public BootStrap(CurriculumService curriculumService,
                      CurriculumMapper curriculumMapper,
@@ -67,7 +69,8 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
                      ElasticsearchIndexService elasticsearchIndexService,
                      ImportService importService,
                      IdealPlanEntriesService idealPlanEntriesService,
-                     CollisionService collisionService) {
+                     CollisionService collisionService,
+                     IdealPlanMapper idealPlanMapper) {
         this.curriculumService = curriculumService;
         this.curriculumMapper = curriculumMapper;
         this.instituteService = instituteService;
@@ -86,6 +89,7 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
         this.idealPlanService = idealPlanService;
         this.idealPlanEntriesService = idealPlanEntriesService;
         this.collisionService = collisionService;
+        this.idealPlanMapper = idealPlanMapper;
     }
 
     @Override
@@ -128,139 +132,21 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
 
         idealPlanDTO = idealPlanService.save(idealPlanDTO);
 
-        Map<Map<String, SubjectType>, Map<Semester, Integer>> idealPath = getIdealPath();
+        createIdealPlan(idealPlanMapper.toEntity(idealPlanDTO));
+
+        /*Map<Map<String, SubjectType>, Map<Semester, Integer>> idealPath = getIdealPath();
         IdealPlanDTO finalIdealPlanDTO = idealPlanDTO;
         subjectDTOS.forEach(subject -> {
             Map<String, SubjectType> key = new HashMap<>();
             key.put(subject.getSubjectName(), subject.getSubjectType());
             Map<Semester, Integer> semesterIntegerMap = idealPath.get(key);
             createIdealPlanEntity(finalIdealPlanDTO, subject, semesterIntegerMap.get(Semester.WS),semesterIntegerMap.get(Semester.SS));
-        });
+        });*/
 
         collisionService.calculateCollisions(204, 2016, Semester.WS, 2017, Semester.SS);
 
         elasticsearchIndexService.reindexAll();
 
-        /*
-        wirtschaftsinformatik.addInstitute(instituteMapper.toEntity(instituteService.findByInstituteId(256)));
-        wirtschaftsinformatik.addInstitute(instituteMapper.toEntity(instituteService.findByInstituteId(257)));
-        wirtschaftsinformatik.addInstitute(instituteMapper.toEntity(instituteService.findByInstituteId(258)));
-        wirtschaftsinformatik.addInstitute(instituteMapper.toEntity(instituteService.findByInstituteId(259)));
-
-        CurriculumDTO curriculum = curriculumService.save(curriculumMapper.toDto(wirtschaftsinformatik));
-
-        IdealPlan idealPlan = new IdealPlan();
-        idealPlan.setYear(2016);
-        idealPlan.setSemester(Semester.WS);
-        idealPlan.setCurriculum(curriculumMapper.toEntity(curriculum));
-
-        IdealPlan save = idealPlanRepository.save(idealPlan);
-
-        List<Subject> subjects = createSubjects(204);
-
-        Map<Map<String, SubjectType>, Map<Semester, Integer>> idealPath = getIdealPath();
-        subjects.forEach(subject -> {
-            Map<String, SubjectType> key = new HashMap<>();
-            key.put(subject.getSubjectName(), subject.getSubjectType());
-            Map<Semester, Integer> semesterIntegerMap = idealPath.get(key);
-            createIdealPlanEntity(save, subject, semesterIntegerMap.get(Semester.WS),semesterIntegerMap.get(Semester.SS));
-        });
-
-
-        CurriculumSemesterDTO curriculumSemesterDTO = new CurriculumSemesterDTO();
-        curriculumSemesterDTO.setCurriculumId(wirtschaftsinformatik.getId());
-        curriculumSemesterDTO.setYear(2017);
-        curriculumSemesterDTO.setSemester(Semester.SS);
-
-        curriculumSemesterDTO = curriculumSemesterService.save(curriculumSemesterDTO);
-
-        // Verbindung Curriculum - Subjects
-        Set<CurriculumSubject> curriculumSubjects = new HashSet<>();
-        for (Subject subject : subjects) {
-            CurriculumSubject curriculumSubjectEntity = createCurriculumSubjectEntity(curriculumSemesterDTO, subject);
-            curriculumSubjects.add(curriculumSubjectEntity);
-        }
-
-        // Termine einlesen
-        //ClassLoader classLoader = getClass().getClassLoader();
-        //File file2 = new File(classLoader.getResource("xquery/lvas.xq").getFile());
-        Resource resource = resourceLoader.getResource("classpath:xquery/lvas.xq");
-        //File file = resource.getFile();
-        BufferedReader br = null;
-        try {
-            br = new BufferedReader(new InputStreamReader(resource.getInputStream()));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        String response = "";
-        try {
-            for (String line; (line = br.readLine()) != null; response += (line + "\n"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        XMLQueryTemplate<XmlLvas> xmlQueryTemplate2 = new XMLQueryTemplate<>(response, XmlLvas.class);
-        XmlLvas result = xmlQueryTemplate2.getResult();
-
-
-
-        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm");
-
-        curriculumSubjects.stream().forEach(curriculumSubject -> {
-            Set<Lva> collect = result.getLvas().stream().filter(xmlLva -> {
-                return xmlLva.getName().equals(curriculumSubject.getSubject().getSubjectName()) &&
-                    xmlLva.getSubjectType().equals(curriculumSubject.getSubject().getSubjectType().name());
-            }).map(xmlLva -> {
-                Lva lva = new Lva();
-                lva.setLvaNr(xmlLva.getId());
-                lva.setSubject(curriculumSubject.getSubject());
-                lva.setLvaType(LvaType.WEEKLY);
-                lva.setYear(xmlLva.getTermYear());
-                lva.setSemester(xmlLva.getTermSemester());
-                lva.setInstitute(instituteMapper.toEntity(instituteService.findByInstituteId(Integer.parseInt(xmlLva.getId().substring(0,3)))));
-                Lva save1 = lvaRepository.save(lva);
-                // TODO Institut fehlt!!!
-                Set<Appointment> collect1 = xmlLva.getCourseDates().stream().map(courseDate -> {
-                    Appointment appointment = new Appointment();
-                    appointment.setStartDateTime(
-                        ZonedDateTime.of(LocalDateTime.of(
-                            LocalDate.parse(courseDate.getDate(), dateFormat), LocalTime.parse(courseDate.getTimebegin(), timeFormat)
-                        ), ZoneId.of("GMT+2"))
-                    );
-                    appointment.setEndDateTime(
-                        ZonedDateTime.of(LocalDateTime.of(
-                            LocalDate.parse(courseDate.getDate(), dateFormat), LocalTime.parse(courseDate.getTimeend(), timeFormat)
-                        ), ZoneId.of("GMT+2"))
-                    );
-                    appointment.setRoom(courseDate.getLocation());
-                    appointment.setTheme(courseDate.getTheme());
-                    if (courseDate.getTheme().toLowerCase().matches(".*klausur.*|.*test.*")) {
-                        if (courseDate.getTheme().toLowerCase().matches(".*einsicht.*|.*vorbereitung.*|.*frage.*")) {
-                            appointment.isExam(false);
-                        } else {
-                            appointment.isExam(true);
-                        }
-                    } else {
-                        appointment.isExam(false);
-                    }
-
-                    appointment.setLva(save1);
-                    return appointmentRepository.save(appointment);
-                }).collect(Collectors.toSet());
-
-                save1.setAppointments(collect1);
-
-                return lvaRepository.save(save1);
-            }).collect(Collectors.toSet());
-
-            curriculumSubject.setLvas(collect);
-        });
-
-        List<CurriculumSubject> saveCS = curriculumSubjectRepository.save(curriculumSubjects);
-
-        elasticsearchIndexService.reindexAll();
-*/
     }
 
     private List<Subject> createSubjects(int curId) {
@@ -283,6 +169,48 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
         return null;
     }
 
+
+    private void createIdealPlan(IdealPlan idealPlan) {
+        try {
+            //ClassLoader classLoader = getClass().getClassLoader();
+            //File file = new File(classLoader.getResource("imports/institute.csv").getFile());
+
+            Resource resource = resourceLoader.getResource("classpath:imports/idealplan.csv");
+            InputStream inputStream = resource.getInputStream();
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+
+            List<IdealPlanEntries> institutes = br.lines()
+                .map(s -> s.split(";"))
+                .map(strings -> {
+                    IdealPlanEntries entry = new IdealPlanEntries();
+                    Subject bySubjectNameAndSubjectType = subjectRepository.findBySubjectNameAndSubjectType(strings[0], SubjectType.valueOf(strings[1]));
+                    if (bySubjectNameAndSubjectType == null) {
+                        System.out.println(strings[0] + " " + strings[1]);
+                        Subject temp = new Subject();
+                        temp.setSubjectName(strings[0]);
+                        temp.setSubjectType(SubjectType.valueOf(strings[1]));
+                        bySubjectNameAndSubjectType = subjectRepository.save(temp);
+                    }
+
+                    entry.setSubject(bySubjectNameAndSubjectType);
+                    entry.setWinterSemesterDefault(Integer.parseInt(strings[2]));
+                    entry.setSummerSemesterDefault(Integer.parseInt(strings[3]));
+                    entry.setExclusive(false);
+                    entry.setIdealplan(idealPlan);
+                    if (strings[4].equals("true")) {
+                        entry.setOptionalSubject(true);
+                    } else {
+                        entry.setOptionalSubject(false);
+                    }
+                    return entry;
+                }).collect(Collectors.toList());
+            idealPlanEntriesRepository.save(institutes);
+            br.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     private void createInstitutes() {
         try {
