@@ -1,8 +1,6 @@
 package at.meroff.itproject.service.dto;
 
 
-import at.meroff.itproject.domain.CurriculumSubject;
-
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -32,6 +30,10 @@ public class CollisionLevelOneDTO implements Serializable {
     private Long curriculumSubjectId;
 
     private Long idealPlanId;
+
+    private Long instituteId;
+
+    private String instituteInstituteName;
 
     private CurriculumSubjectDTO curriculumSubject;
 
@@ -113,6 +115,22 @@ public class CollisionLevelOneDTO implements Serializable {
 
     public void setIdealPlanId(Long idealPlanId) {
         this.idealPlanId = idealPlanId;
+    }
+
+    public Long getInstituteId() {
+        return instituteId;
+    }
+
+    public void setInstituteId(Long instituteId) {
+        this.instituteId = instituteId;
+    }
+
+    public String getInstituteInstituteName() {
+        return instituteInstituteName;
+    }
+
+    public void setInstituteInstituteName(String instituteInstituteName) {
+        this.instituteInstituteName = instituteInstituteName;
     }
 
     public CurriculumSubjectDTO getCurriculumSubject() {

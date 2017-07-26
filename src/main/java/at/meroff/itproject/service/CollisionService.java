@@ -167,6 +167,7 @@ public class CollisionService {
             levelOne.setCollisionValueAvg(levelTwo.stream().mapToDouble(l -> l.getCollisionValueAvg()).sum() / sourceLvas.size());
             levelOne.setColWS(levelTwo.stream().filter(l -> l.isColWS()).findFirst().isPresent());
             levelOne.setColSS(levelTwo.stream().filter(l -> l.isColSS()).findFirst().isPresent());
+            levelOne.setInstitute(levelTwo.stream().findAny().get().getLva().getInstitute());
             levelTwo.forEach(l -> l.setCollisionLevelOne(levelOne));
             levelOne.setCollisionLevelTwos(levelTwo);
             levelOne.setCurriculumSubject(cs);

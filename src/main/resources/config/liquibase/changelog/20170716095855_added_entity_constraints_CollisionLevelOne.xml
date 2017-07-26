@@ -20,5 +20,11 @@
                                  referencedColumnNames="id"
                                  referencedTableName="ideal_plan"/>
 
+        <addForeignKeyConstraint baseColumnNames="institute_id"
+                                 baseTableName="collision_level_one"
+                                 constraintName="fk_collision_level_one_institute_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="institute"/>
+
     </changeSet>
 </databaseChangeLog>

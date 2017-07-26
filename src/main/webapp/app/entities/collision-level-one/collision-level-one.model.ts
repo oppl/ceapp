@@ -13,6 +13,7 @@ export class CollisionLevelOne implements BaseEntity {
         public curriculumSubjectId?: number,
         public collisionLevelTwos?: BaseEntity[],
         public idealPlanId?: number,
+        public instituteId?: number,
     ) {
         this.colWS = false;
         this.colSS = false;

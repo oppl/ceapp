@@ -11,6 +11,7 @@ import { CollisionLevelOnePopupService } from './collision-level-one-popup.servi
 import { CollisionLevelOneService } from './collision-level-one.service';
 import { CurriculumSubject, CurriculumSubjectService } from '../curriculum-subject';
 import { IdealPlan, IdealPlanService } from '../ideal-plan';
+import { Institute, InstituteService } from '../institute';
 import { ResponseWrapper } from '../../shared';
 
 @Component({
@@ -27,12 +28,15 @@ export class CollisionLevelOneDialogComponent implements OnInit {
 
     idealplans: IdealPlan[];
 
+    institutes: Institute[];
+
     constructor(
         public activeModal: NgbActiveModal,
         private alertService: JhiAlertService,
         private collisionLevelOneService: CollisionLevelOneService,
         private curriculumSubjectService: CurriculumSubjectService,
         private idealPlanService: IdealPlanService,
+        private instituteService: InstituteService,
         private eventManager: JhiEventManager
     ) {
     }
@@ -44,6 +48,8 @@ export class CollisionLevelOneDialogComponent implements OnInit {
             .subscribe((res: ResponseWrapper) => { this.curriculumsubjects = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
         this.idealPlanService.query()
             .subscribe((res: ResponseWrapper) => { this.idealplans = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
+        this.instituteService.query()
+            .subscribe((res: ResponseWrapper) => { this.institutes = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
     }
 
     clear() {
@@ -91,6 +97,10 @@ export class CollisionLevelOneDialogComponent implements OnInit {
     }
 
     trackIdealPlanById(index: number, item: IdealPlan) {
+        return item.id;
+    }
+
+    trackInstituteById(index: number, item: Institute) {
         return item.id;
     }
 }
