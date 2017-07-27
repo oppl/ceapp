@@ -10,6 +10,7 @@ import { ResponseWrapper, createRequestOption } from '../../shared';
 export class AppointmentService {
 
     private resourceUrl = 'api/appointments';
+    private resourceUrl2 = 'api/appointments2';
     private resourceSearchUrl = 'api/_search/appointments';
 
     constructor(private http: Http, private dateUtils: JhiDateUtils) { }
@@ -43,6 +44,13 @@ export class AppointmentService {
     query(req?: any): Observable<ResponseWrapper> {
         const options = createRequestOption(req);
         return this.http.get(this.resourceUrl, options)
+            .map((res: Response) => this.convertResponse(res));
+    }
+
+    query2(idealPath: number, semester: number, req?: any): Observable<ResponseWrapper> {
+
+        const options = createRequestOption(req);
+        return this.http.get(`${this.resourceUrl2}/${idealPath}/${semester}`, options)
             .map((res: Response) => this.convertResponse(res));
     }
 
