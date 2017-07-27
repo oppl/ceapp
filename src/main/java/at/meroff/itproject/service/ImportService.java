@@ -3,12 +3,12 @@ package at.meroff.itproject.service;
 import at.meroff.itproject.domain.Subject;
 import at.meroff.itproject.domain.enumeration.LvaType;
 import at.meroff.itproject.domain.enumeration.SubjectType;
+import at.meroff.itproject.helper.Pair;
 import at.meroff.itproject.service.dto.*;
 import at.meroff.itproject.xml.XMLQueryTemplate;
 import at.meroff.itproject.xml.models.Subjects;
 import at.meroff.itproject.xml.models.lvas.CourseDate;
 import at.meroff.itproject.xml.models.lvas.XmlLvas;
-import javafx.util.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
@@ -190,12 +190,12 @@ public class ImportService {
             appointmentDTO.setStartDateTime(
                 ZonedDateTime.of(LocalDateTime.of(
                     LocalDate.parse(courseDate.getDate(), dateFormat), LocalTime.parse(courseDate.getTimebegin(), timeFormat)
-                ), ZoneId.of("GMT+2"))
+                ), ZoneId.of("GMT+0"))
             );
             appointmentDTO.setEndDateTime(
                 ZonedDateTime.of(LocalDateTime.of(
                     LocalDate.parse(courseDate.getDate(), dateFormat), LocalTime.parse(courseDate.getTimeend(), timeFormat)
-                ), ZoneId.of("GMT+2"))
+                ), ZoneId.of("GMT+0"))
             );
             appointmentDTO.setRoom(courseDate.getLocation());
             appointmentDTO.setTheme(courseDate.getTheme());

@@ -31,6 +31,12 @@ public class CollisionLevelOneDTO implements Serializable {
 
     private Long idealPlanId;
 
+    private Long instituteId;
+
+    private String instituteInstituteName;
+
+    private CurriculumSubjectDTO curriculumSubject;
+
     public Long getId() {
         return id;
     }
@@ -109,6 +115,30 @@ public class CollisionLevelOneDTO implements Serializable {
 
     public void setIdealPlanId(Long idealPlanId) {
         this.idealPlanId = idealPlanId;
+    }
+
+    public Long getInstituteId() {
+        return instituteId;
+    }
+
+    public void setInstituteId(Long instituteId) {
+        this.instituteId = instituteId;
+    }
+
+    public String getInstituteInstituteName() {
+        return instituteInstituteName;
+    }
+
+    public void setInstituteInstituteName(String instituteInstituteName) {
+        this.instituteInstituteName = instituteInstituteName;
+    }
+
+    public CurriculumSubjectDTO getCurriculumSubject() {
+        return curriculumSubject;
+    }
+
+    public void setCurriculumSubject(CurriculumSubjectDTO curriculumSubject) {
+        this.curriculumSubject = curriculumSubject;
     }
 
     @Override

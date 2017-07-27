@@ -1,6 +1,7 @@
 package at.meroff.itproject.repository;
 
 import at.meroff.itproject.domain.CurriculumSubject;
+import at.meroff.itproject.domain.Subject;
 import org.springframework.stereotype.Repository;
 
 import org.springframework.data.jpa.repository.*;
@@ -21,5 +22,8 @@ public interface CurriculumSubjectRepository extends JpaRepository<CurriculumSub
     CurriculumSubject findOneWithEagerRelationships(@Param("id") Long id);
 
     List<CurriculumSubject> findByCurriculumSemester_Id(@Param("id") Long id);
+
+    @Query("select cs from CurriculumSubject cs left join fetch cs.lvas l left join fetch l.appointments where cs.subject = (:subject)")
+    CurriculumSubject findBySubject(@Param("subject") Subject subject);
 
 }

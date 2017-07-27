@@ -32,6 +32,10 @@ public class AppointmentDTO implements Serializable {
 
     private String lvaLvaNr;
 
+    private ZonedDateTime start;
+
+    private ZonedDateTime end;
+
     public Long getId() {
         return id;
     }
@@ -94,6 +98,22 @@ public class AppointmentDTO implements Serializable {
 
     public void setLvaLvaNr(String lvaLvaNr) {
         this.lvaLvaNr = lvaLvaNr;
+    }
+
+    public ZonedDateTime getStart() {
+        return start;
+    }
+
+    public void setStart(ZonedDateTime start) {
+        this.start = start;
+    }
+
+    public ZonedDateTime getEnd() {
+        return end;
+    }
+
+    public void setEnd(ZonedDateTime end) {
+        this.end = end;
     }
 
     @Override

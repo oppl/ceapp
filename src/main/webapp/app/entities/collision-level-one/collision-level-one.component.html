@@ -1,93 +1,106 @@
-<div>
-    <h2>
-        <span jhiTranslate="ceappApp.collisionLevelOne.home.title">Collision Level Ones</span>
-        <button class="btn btn-primary float-right create-collision-level-one" [routerLink]="['/', { outlets: { popup: ['collision-level-one-new'] } }]">
-            <span class="fa fa-plus"></span>
-            <span class="hidden-sm-down"  jhiTranslate="ceappApp.collisionLevelOne.home.createLabel">
-            Create new Collision Level One
-            </span>
-        </button>
-    </h2>
-    <jhi-alert></jhi-alert>
-    <div class="row">
-        <div class="col-sm-12">
-            <form name="searchForm" class="form-inline">
-                <div class="input-group w-100 mt-3">
-                    <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" placeholder="{{ 'ceappApp.collisionLevelOne.home.search' | translate }}">
-                    <button class="input-group-addon btn btn-info" (click)="search(currentSearch)">
-                        <span class="fa fa-search"></span>
-                    </button>
-                    <button class="input-group-addon btn btn-danger" (click)="clear()" *ngIf="currentSearch">
-                        <span class="fa fa-trash-o"></span>
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-    <br/>
-    <div class="table-responsive" *ngIf="collisionLevelOnes">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-            <th><span jhiTranslate="global.field.id">ID</span></th>
-            <th><span jhiTranslate="ceappApp.collisionLevelOne.examCollision">Exam Collision</span></th>
-            <th><span jhiTranslate="ceappApp.collisionLevelOne.instituteCollision">Institute Collision</span></th>
-            <th><span jhiTranslate="ceappApp.collisionLevelOne.curriculumCollision">Curriculum Collision</span></th>
-            <th><span jhiTranslate="ceappApp.collisionLevelOne.collisionValueAvg">Collision Value Avg</span></th>
-            <th><span jhiTranslate="ceappApp.collisionLevelOne.collisionValueMax">Collision Value Max</span></th>
-            <th><span jhiTranslate="ceappApp.collisionLevelOne.colWS">Col WS</span></th>
-            <th><span jhiTranslate="ceappApp.collisionLevelOne.colSS">Col SS</span></th>
-            <th><span jhiTranslate="ceappApp.collisionLevelOne.curriculumSubject">Curriculum Subject</span></th>
-            <th><span jhiTranslate="ceappApp.collisionLevelOne.idealPlan">Ideal Plan</span></th>
-            <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let collisionLevelOne of collisionLevelOnes ;trackBy: trackId">
-                <td><a [routerLink]="['../collision-level-one', collisionLevelOne.id ]">{{collisionLevelOne.id}}</a></td>
-                <td>{{collisionLevelOne.examCollision}}</td>
-                <td>{{collisionLevelOne.instituteCollision}}</td>
-                <td>{{collisionLevelOne.curriculumCollision}}</td>
-                <td>{{collisionLevelOne.collisionValueAvg}}</td>
-                <td>{{collisionLevelOne.collisionValueMax}}</td>
-                <td>{{collisionLevelOne.colWS}}</td>
-                <td>{{collisionLevelOne.colSS}}</td>
-                <td>
-                    <div *ngIf="collisionLevelOne.curriculumSubjectId">
-                        <a [routerLink]="['../curriculum-subject', collisionLevelOne.curriculumSubjectId  ]" >{{collisionLevelOne.curriculumSubjectId}}</a>
-                    </div>
-                </td>
-                <td>
-                    <div *ngIf="collisionLevelOne.idealPlanId">
-                        <a [routerLink]="['../ideal-plan', collisionLevelOne.idealPlanId  ]" >{{collisionLevelOne.idealPlanId}}</a>
-                    </div>
-                </td>
-                <td class="text-right">
-                    <div class="btn-group flex-btn-group-container">
-                        <button type="submit"
-                                [routerLink]="['../collision-level-one', collisionLevelOne.id ]"
-                                class="btn btn-info btn-sm">
-                            <span class="fa fa-eye"></span>
-                            <span class="hidden-md-down" jhiTranslate="entity.action.view">View</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'collision-level-one/'+ collisionLevelOne.id + '/edit'} }]"
-                                replaceUrl="true"
-                                class="btn btn-primary btn-sm">
-                            <span class="fa fa-pencil"></span>
-                            <span class="hidden-md-down" jhiTranslate="entity.action.edit">Edit</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'collision-level-one/'+ collisionLevelOne.id + '/delete'} }]"
-                                replaceUrl="true"
-                                class="btn btn-danger btn-sm">
-                            <span class="fa fa-remove"></span>
-                            <span class="hidden-md-down" jhiTranslate="entity.action.delete">Delete</span>
-                        </button>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+<div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
+    <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+    <input #gb type="text" pInputText size="50" placeholder="Global Filter">
 </div>
+<p-dataTable [value]="collisionLevelOnes" sortMode="multiple" expandableRows="true" rowExpandMode="single" selectionMode="none" (onRowExpand)="onRowExpand($event)" dataKey="id" [globalFilter]="gb">
+    <p-column expander="true" styleClass="col-icon" [style]="{'width':'49px'}"></p-column>
+    <p-column field="curriculumSubject.subjectSubjectName" header="Subject" [sortable]="true" [filter]="true"></p-column>
+    <p-column field="curriculumSubject.subjectSubjectType" [style]="{'width':'49px'}" header="Typ" [sortable]="true"></p-column>
+    <p-column field="curriculumSubject.countLvas" [style]="{'width':'49px'}" header="LVAs" [sortable]="true"></p-column>
+    <p-column field="instituteInstituteName" header="Institut" [sortable]="true" [filter]="true" filterMatchMode="contains"></p-column>
+    <p-column field="examCollision" header="Exam" [sortable]="true" [style]="{'width':'100px'}" styleClass="text-right"></p-column>
+    <p-column field="instituteCollision" header="Inst" [sortable]="true" [style]="{'width':'100px'}" styleClass="text-right"></p-column>
+    <p-column field="curriculumCollision" header="Curr" [sortable]="true" [style]="{'width':'100px'}" styleClass="text-right"></p-column>
+    <p-column field="colWS" header="WS" [sortable]="true" [style]="{'width':'100px'}" styleClass="text-right"></p-column>
+    <p-column field="colSS" header="SS" [sortable]="true" [style]="{'width':'100px'}" styleClass="text-right"></p-column>
+    <p-column field="collisionValueAvg" header="Avg" [sortable]="true" [sortable]="true" [style]="{'width':'100px'}" styleClass="text-right">
+        <ng-template let-cso="rowData" pTemplate type="body">
+            {{cso.collisionValueAvg | number : '1.2-2'}}
+        </ng-template>
+    </p-column>
+    <p-column field="collisionValueMax" header="Max" [sortable]="true" [sortable]="true" [style]="{'width':'100px'}" styleClass="text-right">
+        <ng-template let-cso="rowData" pTemplate type="body">
+            {{cso.collisionValueMax | number : '1.2-2'}}
+        </ng-template>
+    </p-column>
+    <ng-template pTemplate="rowexpansion">
+        <div style="background-color: lightblue; padding-top: 10px; padding-bottom: 10px; padding-left: 2px; padding-right: 2px; margin: -12px;">
+        <p-dataTable [value]="levelTwo" sortMode="multiple" expandableRows="true" rowExpandMode="single" selectionMode="none" (onRowExpand)="onRowExpand2($event)" dataKey="id">
+            <p-column expander="true" styleClass="col-icon" [style]="{'width':'49px'}"></p-column>
+            <p-column field="lva.lvaNr" header="LVA-Nr" [sortable]="true" [filter]="true"></p-column>
+            <p-column field="examCollision" header="Exam" [sortable]="true" [style]="{'width':'100px'}" styleClass="text-right"></p-column>
+            <p-column field="instituteCollision" header="Inst" [sortable]="true" [style]="{'width':'100px'}" styleClass="text-right"></p-column>
+            <p-column field="curriculumCollision" header="Curr" [sortable]="true" [style]="{'width':'100px'}" styleClass="text-right"></p-column>
+            <p-column field="colWS" header="WS" [sortable]="true" [style]="{'width':'100px'}" styleClass="text-right"></p-column>
+            <p-column field="colSS" header="SS" [sortable]="true" [style]="{'width':'100px'}" styleClass="text-right"></p-column>
+            <p-column field="collisionValueAvg" header="Avg" [sortable]="true" [sortable]="true" [style]="{'width':'100px'}" styleClass="text-right">
+                <ng-template let-cso="rowData" pTemplate type="body">
+                    {{cso.collisionValueAvg | number : '1.2-2'}}
+                </ng-template>
+            </p-column>
+            <p-column field="collisionValueMax" header="Max" [sortable]="true" [sortable]="true" [style]="{'width':'100px'}" styleClass="text-right">
+                <ng-template let-cso="rowData" pTemplate type="body">
+                    {{cso.collisionValueMax | number : '1.2-2'}}
+                </ng-template>
+            </p-column>
+            <ng-template pTemplate="rowexpansion">
+                <div style="background-color: lightgoldenrodyellow; padding-top: 10px; padding-bottom: 10px; padding-left: 2px; padding-right: 2px; margin: -12px;">
+                <p-dataTable [value]="levelThree" sortMode="multiple" expandableRows="true" rowExpandMode="single" selectionMode="none" (onRowExpand)="onRowExpand3($event)" dataKey="id">
+                    <p-column expander="true" styleClass="col-icon" [style]="{'width':'49px'}"></p-column>
+                    <p-column field="curriculumSubject.subjectSubjectName" header="Subject" [sortable]="true" [filter]="true"></p-column>
+                    <p-column field="curriculumSubject.subjectSubjectType" [style]="{'width':'49px'}" header="Typ" [sortable]="true"></p-column>
+                    <p-column field="curriculumSubject.countLvas" [style]="{'width':'49px'}" header="LVAs
+" [sortable]="true"></p-column>
+                    <p-column field="examCollision" header="Exam" [sortable]="true" [style]="{'width':'100px'}" styleClass="text-right"></p-column>
+                    <p-column field="instituteCollision" header="Inst" [sortable]="true" [style]="{'width':'100px'}" styleClass="text-right"></p-column>
+                    <p-column field="curriculumCollision" header="Curr" [sortable]="true" [style]="{'width':'100px'}" styleClass="text-right"></p-column>
+                    <p-column field="colWS" header="WS" [sortable]="true" [style]="{'width':'100px'}" styleClass="text-right"></p-column>
+                    <p-column field="colSS" header="SS" [sortable]="true" [style]="{'width':'100px'}" styleClass="text-right"></p-column>
+                    <p-column field="collisionValueAvg" header="Avg" [sortable]="true" [sortable]="true" [style]="{'width':'100px'}" styleClass="text-right">
+                        <ng-template let-cso="rowData" pTemplate type="body">
+                            {{cso.collisionValueAvg | number : '1.2-2'}}
+                        </ng-template>
+                    </p-column>
+                    <p-column field="collisionValueMax" header="Max" [sortable]="true" [sortable]="true" [style]="{'width':'100px'}" styleClass="text-right">
+                        <ng-template let-cso="rowData" pTemplate type="body">
+                            {{cso.collisionValueMax | number : '1.2-2'}}
+                        </ng-template>
+                    </p-column>
+                    <ng-template pTemplate="rowexpansion">
+                        <div style="background-color: lightsalmon; padding-top: 10px; padding-bottom: 10px; padding-left: 2px; padding-right: 2px; margin: -12px;">
+                        <p-dataTable [value]="levelFour" sortMode="multiple" expandableRows="true" rowExpandMode="single" selectionMode="none" (onRowExpand)="onRowExpand4($event)" dataKey="id">
+                            <p-column expander="true" styleClass="col-icon" [style]="{'width':'49px'}"></p-column>
+                            <p-column field="lva.lvaNr" header="LVA-Nr" [sortable]="true" [filter]="true"></p-column>
+                            <p-column field="examCollision" header="Exam" [sortable]="true" [style]="{'width':'100px'}" styleClass="text-right"></p-column>
+                            <p-column field="instituteCollision" header="Inst" [sortable]="true" [style]="{'width':'100px'}" styleClass="text-right"></p-column>
+                            <p-column field="curriculumCollision" header="Curr" [sortable]="true" [style]="{'width':'100px'}" styleClass="text-right"></p-column>
+                                <ng-template let-cso="rowData" pTemplate type="body">
+                                    {{cso.collisionValueAvg | number : '1.2-2'}}
+                                </ng-template>
+                            </p-column>
+                            <p-column field="collisionValue" header="ColValue" [sortable]="true" [style]="{'width':'100px'}" styleClass="text-right">
+                            <ng-template let-cso="rowData" pTemplate type="body">
+                                {{cso.collisionValue | number : '1.2-2'}}
+                            </ng-template>
+                            </p-column>
+                            <ng-template pTemplate="rowexpansion">
+                                <div style="background-color: lightgray; padding-top: 10px; padding-bottom: 10px; padding-left: 2px; padding-right: 2px; margin: -12px;">
+                                <p-dataTable [value]="levelFive" sortMode="multiple">
+                                    <p-column field="sourceAppointment.startDateTime" header="Start" [sortable]="true" [filter]="true"></p-column>
+                                    <p-column field="sourceAppointment.endDateTime" header="Ende" [sortable]="true" [filter]="true"></p-column>
+                                    <p-column field="sourceAppointment.theme" header="Thema" [sortable]="true" [filter]="true"></p-column>
+                                    <p-column field="sourceAppointment.room" header="Raum" [sortable]="true" [filter]="true"></p-column>
+                                    <p-column field="examCollision" header="Exam" [sortable]="true" [style]="{'width':'100px'}" styleClass="text-right"></p-column>
+                                </p-dataTable>
+                                </div>
+                            </ng-template>
+                        </p-dataTable>
+                        </div>
+                    </ng-template>
+                </p-dataTable>
+                </div>
+            </ng-template>
+        </p-dataTable>
+        </div>
+    </ng-template>
+</p-dataTable>

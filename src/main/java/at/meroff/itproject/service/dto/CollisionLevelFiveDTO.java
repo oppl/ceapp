@@ -23,6 +23,10 @@ public class CollisionLevelFiveDTO implements Serializable {
 
     private Long targetAppointmentId;
 
+    private AppointmentDTO sourceAppointment;
+
+    private AppointmentDTO targetAppointment;
+
     public Long getId() {
         return id;
     }
@@ -69,6 +73,22 @@ public class CollisionLevelFiveDTO implements Serializable {
 
     public void setTargetAppointmentId(Long appointmentId) {
         this.targetAppointmentId = appointmentId;
+    }
+
+    public AppointmentDTO getSourceAppointment() {
+        return sourceAppointment;
+    }
+
+    public void setSourceAppointment(AppointmentDTO sourceAppointment) {
+        this.sourceAppointment = sourceAppointment;
+    }
+
+    public AppointmentDTO getTargetAppointment() {
+        return targetAppointment;
+    }
+
+    public void setTargetAppointment(AppointmentDTO targetAppointment) {
+        this.targetAppointment = targetAppointment;
     }
 
     @Override

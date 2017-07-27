@@ -33,6 +33,8 @@ public class CollisionLevelTwoDTO implements Serializable {
 
     private String lvaLvaNr;
 
+    private LvaDTO lva;
+
     public Long getId() {
         return id;
     }
@@ -119,6 +121,14 @@ public class CollisionLevelTwoDTO implements Serializable {
 
     public void setLvaLvaNr(String lvaLvaNr) {
         this.lvaLvaNr = lvaLvaNr;
+    }
+
+    public LvaDTO getLva() {
+        return lva;
+    }
+
+    public void setLva(LvaDTO lva) {
+        this.lva = lva;
     }
 
     @Override

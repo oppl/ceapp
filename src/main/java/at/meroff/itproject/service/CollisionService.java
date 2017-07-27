@@ -4,8 +4,8 @@ import at.meroff.itproject.domain.*;
 import at.meroff.itproject.domain.enumeration.CollisionType;
 import at.meroff.itproject.domain.enumeration.Semester;
 import at.meroff.itproject.domain.enumeration.SubjectType;
+import at.meroff.itproject.helper.Pair;
 import at.meroff.itproject.repository.*;
-import javafx.util.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -167,6 +167,7 @@ public class CollisionService {
             levelOne.setCollisionValueAvg(levelTwo.stream().mapToDouble(l -> l.getCollisionValueAvg()).sum() / sourceLvas.size());
             levelOne.setColWS(levelTwo.stream().filter(l -> l.isColWS()).findFirst().isPresent());
             levelOne.setColSS(levelTwo.stream().filter(l -> l.isColSS()).findFirst().isPresent());
+            levelOne.setInstitute(levelTwo.stream().findAny().get().getLva().getInstitute());
             levelTwo.forEach(l -> l.setCollisionLevelOne(levelOne));
             levelOne.setCollisionLevelTwos(levelTwo);
             levelOne.setCurriculumSubject(cs);
@@ -332,6 +333,7 @@ public class CollisionService {
     private Set<CurriculumSubject> findCollisionSubjects(CurriculumSubject cs, List<CurriculumSubject> csAll, Map<Pair<String, SubjectType>, IdealPlanEntries> idealPlanMap) {
         //search for all possible subjects which can have a relevant collision
         IdealPlanEntries idealPlanEntriesDTO = idealPlanMap.get(new Pair<>(cs.getSubject().getSubjectName(), cs.getSubject().getSubjectType()));
+
         int winter = idealPlanEntriesDTO.getWinterSemesterDefault();
         int summer = idealPlanEntriesDTO.getSummerSemesterDefault();
 

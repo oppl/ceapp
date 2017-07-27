@@ -59,6 +59,9 @@ public class CollisionLevelOne implements Serializable {
     @ManyToOne
     private IdealPlan idealPlan;
 
+    @ManyToOne
+    private Institute institute;
+
     public Long getId() {
         return id;
     }
@@ -207,6 +210,19 @@ public class CollisionLevelOne implements Serializable {
 
     public void setIdealPlan(IdealPlan idealPlan) {
         this.idealPlan = idealPlan;
+    }
+
+    public Institute getInstitute() {
+        return institute;
+    }
+
+    public CollisionLevelOne institute(Institute institute) {
+        this.institute = institute;
+        return this;
+    }
+
+    public void setInstitute(Institute institute) {
+        this.institute = institute;
     }
 
     @Override

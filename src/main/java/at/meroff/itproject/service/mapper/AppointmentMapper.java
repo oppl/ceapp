@@ -13,10 +13,12 @@ public interface AppointmentMapper extends EntityMapper <AppointmentDTO, Appoint
 
     @Mapping(source = "lva.id", target = "lvaId")
     @Mapping(source = "lva.lvaNr", target = "lvaLvaNr")
-    AppointmentDTO toDto(Appointment appointment); 
+    @Mapping(source = "startDateTime", target = "start")
+    @Mapping(source = "endDateTime", target = "end")
+    AppointmentDTO toDto(Appointment appointment);
 
     @Mapping(source = "lvaId", target = "lva")
-    Appointment toEntity(AppointmentDTO appointmentDTO); 
+    Appointment toEntity(AppointmentDTO appointmentDTO);
     default Appointment fromId(Long id) {
         if (id == null) {
             return null;

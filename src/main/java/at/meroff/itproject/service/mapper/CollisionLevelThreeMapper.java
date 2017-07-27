@@ -14,13 +14,14 @@ public interface CollisionLevelThreeMapper extends EntityMapper <CollisionLevelT
     @Mapping(source = "collisionLevelTwo.id", target = "collisionLevelTwoId")
 
     @Mapping(source = "curriculumSubject.id", target = "curriculumSubjectId")
-    CollisionLevelThreeDTO toDto(CollisionLevelThree collisionLevelThree); 
+    @Mapping(source = "curriculumSubject", target = "curriculumSubject")
+    CollisionLevelThreeDTO toDto(CollisionLevelThree collisionLevelThree);
 
     @Mapping(source = "collisionLevelTwoId", target = "collisionLevelTwo")
     @Mapping(target = "collisionLevelFours", ignore = true)
 
     @Mapping(source = "curriculumSubjectId", target = "curriculumSubject")
-    CollisionLevelThree toEntity(CollisionLevelThreeDTO collisionLevelThreeDTO); 
+    CollisionLevelThree toEntity(CollisionLevelThreeDTO collisionLevelThreeDTO);
     default CollisionLevelThree fromId(Long id) {
         if (id == null) {
             return null;

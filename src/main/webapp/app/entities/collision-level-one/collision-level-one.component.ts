@@ -7,6 +7,14 @@ import { CollisionLevelOne } from './collision-level-one.model';
 import { CollisionLevelOneService } from './collision-level-one.service';
 import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
 import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
+import {CollisionLevelTwoService} from '../collision-level-two/collision-level-two.service';
+import {CollisionLevelTwo} from '../collision-level-two/collision-level-two.model';
+import {CollisionLevelThreeService} from '../collision-level-three/collision-level-three.service';
+import {CollisionLevelThree} from '../collision-level-three/collision-level-three.model';
+import {CollisionLevelFour} from '../collision-level-four/collision-level-four.model';
+import {CollisionLevelFive} from '../collision-level-five/collision-level-five.model';
+import {CollisionLevelFourService} from '../collision-level-four/collision-level-four.service';
+import {CollisionLevelFiveService} from '../collision-level-five/collision-level-five.service';
 
 @Component({
     selector: 'jhi-collision-level-one',
@@ -17,9 +25,17 @@ collisionLevelOnes: CollisionLevelOne[];
     currentAccount: any;
     eventSubscriber: Subscription;
     currentSearch: string;
+    levelTwo: CollisionLevelTwo[];
+    levelThree: CollisionLevelThree[];
+    levelFour: CollisionLevelFour[];
+    levelFive: CollisionLevelFive[];
 
     constructor(
         private collisionLevelOneService: CollisionLevelOneService,
+        private collisionLevelTwoService: CollisionLevelTwoService,
+        private collisionLevelThreeService: CollisionLevelThreeService,
+        private collisionLevelFourService: CollisionLevelFourService,
+        private collisionLevelFiveService: CollisionLevelFiveService,
         private alertService: JhiAlertService,
         private eventManager: JhiEventManager,
         private activatedRoute: ActivatedRoute,
@@ -81,4 +97,53 @@ collisionLevelOnes: CollisionLevelOne[];
     private onError(error) {
         this.alertService.error(error.message, null, null);
     }
+
+    onRowExpand(cc) {
+        console.log(cc);
+        console.log(cc.data.id)
+        this.collisionLevelTwoService.search({
+            query: cc.data.id,
+        }).subscribe(
+            (res: ResponseWrapper) => this.levelTwo = res.json,
+            (res: ResponseWrapper) => this.onError(res.json)
+        );
+
+    }
+
+    onRowExpand2(cc) {
+        console.log(cc);
+        console.log(cc.data.id)
+        this.collisionLevelThreeService.search({
+            query: cc.data.id,
+        }).subscribe(
+            (res: ResponseWrapper) => this.levelThree = res.json,
+            (res: ResponseWrapper) => this.onError(res.json)
+        );
+
+    }
+
+    onRowExpand3(cc) {
+        console.log(cc);
+        console.log(cc.data.id)
+        this.collisionLevelFourService.search({
+            query: cc.data.id,
+        }).subscribe(
+            (res: ResponseWrapper) => this.levelFour = res.json,
+            (res: ResponseWrapper) => this.onError(res.json)
+        );
+
+    }
+
+    onRowExpand4(cc) {
+        console.log(cc);
+        console.log(cc.data.id)
+        this.collisionLevelFiveService.search({
+            query: cc.data.id,
+        }).subscribe(
+            (res: ResponseWrapper) => this.levelFive = res.json,
+            (res: ResponseWrapper) => this.onError(res.json)
+        );
+
+    }
+
 }

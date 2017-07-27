@@ -21,6 +21,9 @@ const ENTITY_STATES = [
 ];
 
 @NgModule({
+    exports: [
+        CollisionLevelTwoComponent
+    ],
     imports: [
         CeappSharedModule,
         RouterModule.forRoot(ENTITY_STATES, { useHash: true })

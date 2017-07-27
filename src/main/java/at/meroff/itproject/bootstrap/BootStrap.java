@@ -145,7 +145,21 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
 
         collisionService.calculateCollisions(204, 2016, Semester.WS, 2017, Semester.SS);
 
-        elasticsearchIndexService.reindexAll();
+        List<Appointment> collect = idealPlanEntriesRepository.findByIdealplan_Id(idealPlanDTO.getId())
+            .stream()
+            .filter(idealPlanEntries -> idealPlanEntries.getWinterSemesterDefault() == 2)
+            .map(idealPlanEntries -> idealPlanEntries.getSubject())
+            .map(subject -> {
+                return curriculumSubjectRepository.findBySubject(subject);
+            })
+            .flatMap(curriculumSubject -> curriculumSubject.getLvas().stream())
+            .flatMap(lva -> lva.getAppointments().stream())
+            .collect(Collectors.toList());
+
+        System.out.println(collect);
+
+
+        //elasticsearchIndexService.reindexAll();
 
     }
 

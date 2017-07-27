@@ -18,6 +18,12 @@
             "otherEntityName": "idealPlan",
             "relationshipType": "many-to-one",
             "otherEntityField": "id"
+        },
+        {
+            "relationshipName": "institute",
+            "otherEntityName": "institute",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "instituteName"
         }
     ],
     "fields": [

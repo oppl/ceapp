@@ -1,7 +1,10 @@
 package at.meroff.itproject.service;
 
 import at.meroff.itproject.domain.Appointment;
+import at.meroff.itproject.domain.IdealPlanEntries;
 import at.meroff.itproject.repository.AppointmentRepository;
+import at.meroff.itproject.repository.CurriculumSubjectRepository;
+import at.meroff.itproject.repository.IdealPlanEntriesRepository;
 import at.meroff.itproject.repository.search.AppointmentSearchRepository;
 import at.meroff.itproject.service.dto.AppointmentDTO;
 import at.meroff.itproject.service.mapper.AppointmentMapper;
@@ -32,10 +35,21 @@ public class AppointmentService {
 
     private final AppointmentSearchRepository appointmentSearchRepository;
 
-    public AppointmentService(AppointmentRepository appointmentRepository, AppointmentMapper appointmentMapper, AppointmentSearchRepository appointmentSearchRepository) {
+    private final IdealPlanEntriesRepository idealPlanEntriesRepository;
+
+    private final CurriculumSubjectRepository curriculumSubjectRepository;
+
+
+    public AppointmentService(AppointmentRepository appointmentRepository,
+                              AppointmentMapper appointmentMapper,
+                              AppointmentSearchRepository appointmentSearchRepository,
+                              IdealPlanEntriesRepository idealPlanEntriesRepository,
+                              CurriculumSubjectRepository curriculumSubjectRepository) {
         this.appointmentRepository = appointmentRepository;
         this.appointmentMapper = appointmentMapper;
         this.appointmentSearchRepository = appointmentSearchRepository;
+        this.idealPlanEntriesRepository = idealPlanEntriesRepository;
+        this.curriculumSubjectRepository = curriculumSubjectRepository;
     }
 
     /**
@@ -62,6 +76,27 @@ public class AppointmentService {
     public List<AppointmentDTO> findAll() {
         log.debug("Request to get all Appointments");
         return appointmentRepository.findAll().stream()
+            .map(appointmentMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    /**
+     *  Get all the appointments.
+     *
+     *  @return the list of entities
+     * @param id
+     * @param semester
+     */
+    @Transactional(readOnly = true)
+    public List<AppointmentDTO> findBySomething(Long id, Integer semester) {
+        log.debug("Request to get all Appointments");
+        return idealPlanEntriesRepository.findByIdealplan_Id(id)
+            .stream()
+            .filter(idealPlanEntries -> idealPlanEntries.getWinterSemesterDefault() == semester)
+            .map(IdealPlanEntries::getSubject)
+            .map(curriculumSubjectRepository::findBySubject)
+            .flatMap(curriculumSubject -> curriculumSubject.getLvas().stream())
+            .flatMap(lva -> lva.getAppointments().stream())
             .map(appointmentMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
     }
