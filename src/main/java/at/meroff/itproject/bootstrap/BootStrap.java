@@ -159,7 +159,7 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
         System.out.println(collect);
 
 
-        //elasticsearchIndexService.reindexAll();
+        elasticsearchIndexService.reindexAll();
 
     }
 
