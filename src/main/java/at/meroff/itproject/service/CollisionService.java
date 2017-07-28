@@ -105,6 +105,7 @@ public class CollisionService {
 
         Set<CollisionLevelOne> collect = csAll
             .stream()
+            //.filter(c -> c.getSubject().getSubjectName().equals("Kaufverhalten"))
             .map(c -> createLevelOne(csAll, c, idealPlanMap, curriculumInstitutes))
             .filter(Objects::nonNull)
             .peek(collisionLevelOne -> collisionLevelOne.setIdealPlan(idealPlan))
@@ -266,7 +267,7 @@ public class CollisionService {
             double value = levelFives.size() * 100.0
                 + levelFives.stream().mapToInt(l -> l.getExamCollision()).sum() * 200.0;
 
-            value *= ( 1.0 + collisionType.getVal()/100 );
+            value += maxValue / 2 * collisionType.getVal() / 100.0;
             CollisionLevelFour levelFour = new CollisionLevelFour();
             levelFour.setLva(target);
             levelFour.setCollisionValue(value / maxValue * 100.0);
