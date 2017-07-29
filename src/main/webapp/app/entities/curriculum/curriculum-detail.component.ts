@@ -49,5 +49,9 @@ export class CurriculumDetailComponent implements OnInit, OnDestroy {
             'curriculumListModification',
             (response) => this.load(this.curriculum.id)
         );
+        this.eventSubscriber = this.eventManager.subscribe(
+            'curriculumSemesterListModification',
+            (response) => this.load(this.curriculum.id)
+        );
     }
 }

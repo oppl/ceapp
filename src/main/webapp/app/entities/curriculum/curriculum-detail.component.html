@@ -1,6 +1,6 @@
 
 <div *ngIf="curriculum">
-    <h2><span jhiTranslate="ceappApp.curriculum.detail.title">Curriculum</span> {{curriculum.id}}</h2>
+    <h2><span jhiTranslate="ceappApp.curriculum.detail.title">Curriculum</span> {{curriculum.curName}}</h2>
     <hr>
     <jhi-alert-error></jhi-alert-error>
     <dl class="row-md jh-entity-details">
@@ -18,6 +18,30 @@
                 <a [routerLink]="['/institute', institute?.id ]">{{institute.instituteName}}</a>{{last ? '' : ', '}}
             </span>
         </dd>
+        <hr>
+        <h3>
+            <span jhiTranslate="ceappApp.curriculumSemester.home.title">Curriculum Semesters</span>
+            <button class="btn btn-primary float-right create-curriculum-semester" [routerLink]="['/', { outlets: { popup: ['curriculum-semester-new'] } }]">
+                <span class="fa fa-plus"></span>
+                <span class="hidden-sm-down"  jhiTranslate="ceappApp.curriculumSemester.home.createLabel">
+            Create new Curriculum Semester
+            </span>
+            </button>
+        </h3>
+        <hr>
+        <p-dataTable [value]="curriculum.curriculumSemesters">
+            <p-column field="id" header="ID"></p-column>
+            <p-column field="year" header="Jahr"></p-column>
+            <p-column field="semester" header="Semester"></p-column>
+        </p-dataTable>
+        <hr>
+        <h3>Idealtypische Studienverläufe</h3>
+        <p-dataTable [value]="curriculum.idealPlans">
+            <p-column field="id" header="ID"></p-column>
+            <p-column field="year" header="Jahr"></p-column>
+            <p-column field="semester" header="Semester"></p-column>
+            <p-column field="active" header="Aktiv"></p-column>
+        </p-dataTable>
     </dl>
 
     <button type="submit"

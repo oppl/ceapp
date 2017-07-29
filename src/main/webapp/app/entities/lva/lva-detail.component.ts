@@ -6,8 +6,8 @@ import { JhiEventManager, JhiAlertService  } from 'ng-jhipster';
 import { Lva } from './lva.model';
 import { LvaService } from './lva.service';
 import {Appointment} from '../appointment/appointment.model';
-import {AppointmentService} from "../appointment/appointment.service";
-import {ResponseWrapper} from "../../shared/model/response-wrapper.model";
+import {AppointmentService} from '../appointment/appointment.service';
+import {ResponseWrapper} from '../../shared/model/response-wrapper.model';
 
 @Component({
     selector: 'jhi-lva-detail',
@@ -54,8 +54,6 @@ export class LvaDetailComponent implements OnInit, OnDestroy {
             },
             (res: ResponseWrapper) => this.onError(res.json)
         );
-
-
     }
 
     load(id) {
@@ -64,6 +62,7 @@ export class LvaDetailComponent implements OnInit, OnDestroy {
             this.appointments = lva.appointments;
         });
     }
+
     previousState() {
         window.history.back();
     }

@@ -22,6 +22,10 @@ public class CurriculumDTO implements Serializable {
 
     private Set<InstituteDTO> institutes = new HashSet<>();
 
+    private Set<IdealPlanDTO> idealPlans = new HashSet<>();
+
+    private Set<CurriculumSemesterBaseDTO> curriculumSemesters = new HashSet<>();
+
     public Long getId() {
         return id;
     }
@@ -52,6 +56,22 @@ public class CurriculumDTO implements Serializable {
 
     public void setInstitutes(Set<InstituteDTO> institutes) {
         this.institutes = institutes;
+    }
+
+    public Set<IdealPlanDTO> getIdealPlans() {
+        return idealPlans;
+    }
+
+    public void setIdealPlans(Set<IdealPlanDTO> idealPlans) {
+        this.idealPlans = idealPlans;
+    }
+
+    public Set<CurriculumSemesterBaseDTO> getCurriculumSemesters() {
+        return curriculumSemesters;
+    }
+
+    public void setCurriculumSemesters(Set<CurriculumSemesterBaseDTO> curriculumSemesters) {
+        this.curriculumSemesters = curriculumSemesters;
     }
 
     @Override
