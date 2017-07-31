@@ -108,13 +108,13 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
         CurriculumSemesterDTO curriculumSemester = new CurriculumSemesterDTO();
         curriculumSemester.setCurriculumId(wirtschaftsinformatik.getId());
         curriculumSemester.setYear(2017);
-        curriculumSemester.setSemester(Semester.SS);
+        curriculumSemester.setSemester(Semester.WS);
 
         curriculumSemester = curriculumSemesterService.save(curriculumSemester);
 
         // Idealtypischen Plan für Wirtschaftsinformatik Bachelor
         IdealPlanDTO idealPlanDTO = new IdealPlanDTO();
-        idealPlanDTO.setYear(2016);
+        idealPlanDTO.setYear(2017);
         idealPlanDTO.setSemester(Semester.WS);
         idealPlanDTO.setActive(true);
         idealPlanDTO.setCurriculumId(wirtschaftsinformatik.getId());
@@ -127,7 +127,7 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
 
         importService.verifyLvas(curriculumSemester);
 
-        collisionService.calculateCollisions(204, 2016, Semester.WS, 2017, Semester.SS);
+        collisionService.calculateCollisions(204, 2017, Semester.WS, 2017, Semester.WS);
 
 
         // Update Elastic Search Index
