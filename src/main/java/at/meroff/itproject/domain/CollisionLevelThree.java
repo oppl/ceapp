@@ -51,7 +51,7 @@ public class CollisionLevelThree implements Serializable {
     @ManyToOne
     private CollisionLevelTwo collisionLevelTwo;
 
-    @OneToMany(mappedBy = "collisionLevelThree")
+    @OneToMany(mappedBy = "collisionLevelThree", cascade = CascadeType.ALL)
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<CollisionLevelFour> collisionLevelFours = new HashSet<>();
