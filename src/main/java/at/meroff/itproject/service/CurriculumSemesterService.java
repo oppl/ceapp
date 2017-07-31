@@ -1,7 +1,9 @@
 package at.meroff.itproject.service;
 
+import at.meroff.itproject.domain.Curriculum;
 import at.meroff.itproject.domain.CurriculumSemester;
 import at.meroff.itproject.domain.enumeration.Semester;
+import at.meroff.itproject.repository.CurriculumRepository;
 import at.meroff.itproject.repository.CurriculumSemesterRepository;
 import at.meroff.itproject.repository.search.CurriculumSemesterSearchRepository;
 import at.meroff.itproject.service.dto.CurriculumSemesterDTO;
@@ -33,10 +35,13 @@ public class CurriculumSemesterService {
 
     private final CurriculumSemesterSearchRepository curriculumSemesterSearchRepository;
 
-    public CurriculumSemesterService(CurriculumSemesterRepository curriculumSemesterRepository, CurriculumSemesterMapper curriculumSemesterMapper, CurriculumSemesterSearchRepository curriculumSemesterSearchRepository) {
+    private final CurriculumRepository curriculumRepository;
+
+    public CurriculumSemesterService(CurriculumRepository curriculumRepository, CurriculumSemesterRepository curriculumSemesterRepository, CurriculumSemesterMapper curriculumSemesterMapper, CurriculumSemesterSearchRepository curriculumSemesterSearchRepository) {
         this.curriculumSemesterRepository = curriculumSemesterRepository;
         this.curriculumSemesterMapper = curriculumSemesterMapper;
         this.curriculumSemesterSearchRepository = curriculumSemesterSearchRepository;
+        this.curriculumRepository = curriculumRepository;
     }
 
     /**
@@ -83,7 +88,7 @@ public class CurriculumSemesterService {
     /**
      *  Get one curriculumSemester by id.
      *
-     *  @param id the id of the entity
+     *  @param curId the id of the entity
      *  @return the entity
      */
     @Transactional(readOnly = true)
@@ -100,6 +105,15 @@ public class CurriculumSemesterService {
      */
     public void delete(Long id) {
         log.debug("Request to delete CurriculumSemester : {}", id);
+
+        CurriculumSemester one = curriculumSemesterRepository.findOne(id);
+
+        Curriculum curriculum = one.getCurriculum();
+
+        one.setCurriculum(null);
+
+        curriculumSemesterRepository.save(one);
+
         curriculumSemesterRepository.delete(id);
         curriculumSemesterSearchRepository.delete(id);
     }
