@@ -48,7 +48,7 @@ public class Curriculum implements Serializable {
                inverseJoinColumns = @JoinColumn(name="institutes_id", referencedColumnName="id"))
     private Set<Institute> institutes = new HashSet<>();
 
-    @OneToMany(mappedBy = "curriculum")
+    @OneToMany(mappedBy = "curriculum", cascade = CascadeType.ALL)
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<CurriculumSemester> curriculumSemesters = new HashSet<>();

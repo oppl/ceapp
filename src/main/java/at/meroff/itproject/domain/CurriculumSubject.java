@@ -43,7 +43,7 @@ public class CurriculumSubject implements Serializable {
     @ManyToOne
     private CurriculumSemester curriculumSemester;
 
-    @OneToMany(mappedBy = "curriculumSubject")
+    @OneToMany(mappedBy = "curriculumSubject", cascade = CascadeType.ALL)
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<CollisionLevelOne> collisionLevelOnes = new HashSet<>();

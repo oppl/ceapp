@@ -2,6 +2,7 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { CeappSharedModule } from '../../shared';
+import {DataTableModule, ScheduleModule, SharedModule} from 'primeng/primeng';
 import {
     CurriculumService,
     CurriculumPopupService,
@@ -23,7 +24,9 @@ const ENTITY_STATES = [
 @NgModule({
     imports: [
         CeappSharedModule,
-        RouterModule.forRoot(ENTITY_STATES, { useHash: true })
+        RouterModule.forRoot(ENTITY_STATES, { useHash: true }),
+        DataTableModule,
+        SharedModule,
     ],
     declarations: [
         CurriculumComponent,

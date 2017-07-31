@@ -37,11 +37,8 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
     private CurriculumMapper curriculumMapper;
     private InstituteMapper instituteMapper;
     private SubjectRepository subjectRepository;
-    private IdealPlanRepository idealPlanRepository;
     private IdealPlanEntriesRepository idealPlanEntriesRepository;
     private CurriculumSubjectRepository curriculumSubjectRepository;
-    private LvaRepository lvaRepository;
-    private AppointmentRepository appointmentRepository;
     private ResourceLoader resourceLoader;
     private CurriculumSemesterService curriculumSemesterService;
     private CurriculumSemesterMapper curriculumSemesterMapper;
@@ -58,11 +55,8 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
                      InstituteMapper instituteMapper,
                      SubjectRepository subjectRepository,
                      IdealPlanService idealPlanService,
-                     IdealPlanRepository idealPlanRepository,
                      IdealPlanEntriesRepository idealPlanEntriesRepository,
                      CurriculumSubjectRepository curriculumSubjectRepository,
-                     LvaRepository lvaRepository,
-                     AppointmentRepository appointmentRepository,
                      ResourceLoader resourceLoader,
                      CurriculumSemesterService curriculumSemesterService,
                      CurriculumSemesterMapper curriculumSemesterMapper,
@@ -76,11 +70,8 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
         this.instituteService = instituteService;
         this.instituteMapper = instituteMapper;
         this.subjectRepository = subjectRepository;
-        this.idealPlanRepository = idealPlanRepository;
         this.idealPlanEntriesRepository = idealPlanEntriesRepository;
         this.curriculumSubjectRepository = curriculumSubjectRepository;
-        this.lvaRepository = lvaRepository;
-        this.appointmentRepository = appointmentRepository;
         this.resourceLoader = resourceLoader;
         this.curriculumSemesterService = curriculumSemesterService;
         this.curriculumSemesterMapper = curriculumSemesterMapper;
@@ -95,37 +86,35 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
 
-        // Create institutes
+        // Institute erzeugen
         createInstitutes();
 
-        List<Curriculum> curricula = new ArrayList<>();
-
+        // System mit Demodaten befüllen (Wirtschaftsinformatik Bachelor-Studium)
         Curriculum wirtschaftsinformatik = createCurriculum(204, "Wirtschaftsinformatik");
 
+        // Verknüpfung des Curriculums mit Kerninstituten
+        Set<Institute> institutes = new HashSet<>();
 
-        Set<Institute> institute = new HashSet<>();
-        institute.add(instituteMapper.toEntity(instituteService.findByInstituteId(256)));
-        institute.add(instituteMapper.toEntity(instituteService.findByInstituteId(257)));
-        institute.add(instituteMapper.toEntity(instituteService.findByInstituteId(258)));
-        institute.add(instituteMapper.toEntity(instituteService.findByInstituteId(259)));
+        institutes.add(instituteMapper.toEntity(instituteService.findByInstituteId(256)));
+        institutes.add(instituteMapper.toEntity(instituteService.findByInstituteId(257)));
+        institutes.add(instituteMapper.toEntity(instituteService.findByInstituteId(258)));
+        institutes.add(instituteMapper.toEntity(instituteService.findByInstituteId(259)));
 
-        wirtschaftsinformatik.setInstitutes(institute);
+        wirtschaftsinformatik = wirtschaftsinformatik.institutes(institutes);
 
         curriculumService.save(curriculumMapper.toDto(wirtschaftsinformatik));
 
-        CurriculumSemesterDTO curriculumSemesterDTO = new CurriculumSemesterDTO();
-        curriculumSemesterDTO.setCurriculumId(wirtschaftsinformatik.getId());
-        curriculumSemesterDTO.setYear(2017);
-        curriculumSemesterDTO.setSemester(Semester.SS);
+        // Ein Semester für das Curriculum Wirtschaftsinformatik anlegen
+        CurriculumSemesterDTO curriculumSemester = new CurriculumSemesterDTO();
+        curriculumSemester.setCurriculumId(wirtschaftsinformatik.getId());
+        curriculumSemester.setYear(2017);
+        curriculumSemester.setSemester(Semester.WS);
 
-        curriculumSemesterDTO = curriculumSemesterService.save(curriculumSemesterDTO);
+        curriculumSemester = curriculumSemesterService.save(curriculumSemester);
 
-        Set<SubjectDTO> subjectDTOS = importService.verifySubjects(curriculumSemesterDTO);
-
-        importService.verifyLvas(curriculumSemesterDTO);
-
+        // Idealtypischen Plan für Wirtschaftsinformatik Bachelor
         IdealPlanDTO idealPlanDTO = new IdealPlanDTO();
-        idealPlanDTO.setYear(2016);
+        idealPlanDTO.setYear(2017);
         idealPlanDTO.setSemester(Semester.WS);
         idealPlanDTO.setActive(true);
         idealPlanDTO.setCurriculumId(wirtschaftsinformatik.getId());
@@ -134,14 +123,24 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
 
         createIdealPlan(idealPlanMapper.toEntity(idealPlanDTO));
 
-        /*Map<Map<String, SubjectType>, Map<Semester, Integer>> idealPath = getIdealPath();
-        IdealPlanDTO finalIdealPlanDTO = idealPlanDTO;
-        subjectDTOS.forEach(subject -> {
-            Map<String, SubjectType> key = new HashMap<>();
-            key.put(subject.getSubjectName(), subject.getSubjectType());
-            Map<Semester, Integer> semesterIntegerMap = idealPath.get(key);
-            createIdealPlanEntity(finalIdealPlanDTO, subject, semesterIntegerMap.get(Semester.WS),semesterIntegerMap.get(Semester.SS));
-        });*/
+        Set<SubjectDTO> subjectDTOS = importService.verifySubjects(curriculumSemester);
+
+        importService.verifyLvas(curriculumSemester);
+
+        collisionService.calculateCollisions(204, 2017, Semester.WS, 2017, Semester.WS);
+
+
+        // Update Elastic Search Index
+        elasticsearchIndexService.reindexAll();
+
+        // Keine erneute Befüllung der Datenbank wenn schon Einträge vorhanden sind
+        if (instituteService.findAll().size() > -1) return;
+
+
+
+
+
+        importService.verifyLvas(curriculumSemester);
 
         collisionService.calculateCollisions(204, 2016, Semester.WS, 2017, Semester.SS);
 
@@ -226,11 +225,13 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
         }
     }
 
+    /**
+     * Initiale Befüllung der Datenbank mit Instituten aus einer CSV Datei.
+     * Diese Informationen können nicht direkt aus KUSSS ausgelesen werden,
+     * daher ist dieser Schritt beim ersten Start der Applikation notwendig.
+     */
     private void createInstitutes() {
         try {
-            //ClassLoader classLoader = getClass().getClassLoader();
-            //File file = new File(classLoader.getResource("imports/institute.csv").getFile());
-
             Resource resource = resourceLoader.getResource("classpath:imports/institute.csv");
             InputStream inputStream = resource.getInputStream();
 

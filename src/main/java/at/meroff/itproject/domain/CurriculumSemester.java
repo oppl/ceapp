@@ -36,7 +36,7 @@ public class CurriculumSemester implements Serializable {
     @Column(name = "semester")
     private Semester semester;
 
-    @OneToMany(mappedBy = "curriculumSemester")
+    @OneToMany(mappedBy = "curriculumSemester", cascade = CascadeType.ALL)
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<CurriculumSubject> curriculumSubjects = new HashSet<>();
