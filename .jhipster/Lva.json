@@ -8,18 +8,6 @@
             "otherEntityRelationshipName": "lva"
         },
         {
-            "relationshipType": "one-to-many",
-            "relationshipName": "csl1",
-            "otherEntityName": "collisionSummaryLva",
-            "otherEntityRelationshipName": "l1"
-        },
-        {
-            "relationshipType": "one-to-many",
-            "relationshipName": "csl2",
-            "otherEntityName": "collisionSummaryLva",
-            "otherEntityRelationshipName": "l2"
-        },
-        {
             "relationshipType": "many-to-one",
             "relationshipName": "subject",
             "otherEntityName": "subject",

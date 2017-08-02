@@ -8,12 +8,6 @@
             "otherEntityRelationshipName": "idealplan"
         },
         {
-            "relationshipType": "one-to-many",
-            "relationshipName": "collisionSummaryCS",
-            "otherEntityName": "collisionSummaryCS",
-            "otherEntityRelationshipName": "idealPlan"
-        },
-        {
             "relationshipType": "many-to-one",
             "relationshipName": "curriculum",
             "otherEntityName": "curriculum",
