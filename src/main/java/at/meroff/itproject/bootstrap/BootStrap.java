@@ -86,6 +86,8 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
 
+        if (instituteService.findAll().size() > 0) return;
+
         // Institute erzeugen
         createInstitutes();
 
