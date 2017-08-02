@@ -1,0 +1,140 @@
+== Problemlösungsweg ==
+
+
+=== Datenexport aus dem KUSSS ===
+
+Fach - LVA - LVA-Termine
+
+=== Berechnungsgrundlage ===
+Vor der Implementierung der Applikation musste in erster Linie eine Berechnungsgrundlage bzw. Berechnungslogik entwicket werden, nach welcher die künftige Applikation Terminkollisionen bewerten soll.
+Grundidee war es die Kollisionsberechnung in fünf ebenen aufzuteilen.
+Die Berechnung startet in unterster Ebene (Ebene 5 - Kollisionen) und wird buttom-up bis zur Ebene 1 (Fach?) erweitert.
+Die einzelnen Berechnungsdetails werden nun pro Ebene näher betrachtet.
+
+==== Ebene 5 (Kollisionen) ====
+Auf Ebene 5 werden die Terminkollisionen an sich verglichen.
+Jeder einzelne Termin einer bestimmten Lehrveranstaltung wird mit den Terminen einer anderen Lehrveranstaltung verglichen.
+Sofern sich Termine überschneiden und beide Termine im KUSSS als Klausur oder ähnliches gekenntzeichnet sind, wird die Kollsion als Klausurkollision gekenntzeichnet.
+
+==== Ebene 4 (Fach 2 - LVA) ====
+Ebene 4 betrachtet Fach 2 auf LVA-Ebene. Es wird ermittelt ob es sich um eine Blockveranstaltung handelt, wieviele Kollsionen zwischen LVAs des gleichen Institus auftreten und wieviele Kollisionen zwischen exklusiven WIN-LVAs auftreten.
+Zusätzlich wird werden die Anzahlen der jeweiligen LVA-Termine und Klausurtermine von Fach 1 ermittelt.
+Anhand dieser Daten kann dann die Anzahl einerseits von LVA-Kollisionen zwischen Fach 1 und Fach 2 und von Klausur-Kollisionen zwischen Fach 1 und Fach 2 ermittelt werden.
+Um die Wichtigkeit einer Kollision zu bewerten werden LVAs in folgende Kategorien unterteilt:
+
+* INS-INS = LVA wird vom gleichen Institut durchgeführt
+
+*  WIN = LVA wird von einem WIN-Institut (CE, SE, DKE, IE)
+
+*  EZK = LVA wird für WIN exklusive zugekauft
+
+*  ZK = LVA wird zugekauft, wird aber mit anderen Studienrichtungen gemeinsam besucht
+
+Folgende LVA-Kollisions-Kombinationen können daher eintreten:
+
+*  INST_INST
+
+*  WIN_WIN
+
+*  WIN_EZK
+
+*  EZK_EZK
+
+*  WIN_ZK
+
+*  EZK_ZK
+
+*  ZK_ZK
+
+Diese Kollisions-Kombinationen werden anhand von Faktorwerten gewertet um in weiterer Folge einen Kollisionswert ermitteln zu können.
+
+* INST_INST = 100
+
+* WIN_WIN = 80
+
+* WIN_EZK = 70
+
+* EZK_EZK = 60
+
+* WIN_ZK = 30
+
+* EZK_ZK = 20
+
+* ZK_ZK = 10
+
+Schlussendlich werden 3 Werte für die weitere Berechnung ermittelt:
+
+Maximalwert::
+Der Maximalwert bestimmt den maximalen Kollisionswert der Source-LVA (F1Lva) und dient als Basis für die prozentuelle Berechnung.
+::
+Jeder Termin der LVA könnte theoretisch mit der zweiten LVA kollidieren. Für jeden Termin wird eine potentielle Kollision mit dem Wert 100 berechnet.
+Z.B. die LVA besitzt 13 Termine = 13 * 100 = 1300
+::
+Jeder Klausurtermin der LVA könnte mit einer Klausur der zweiten LVA kollidieren. Für jede potentielle Klausurkollision wird zusätzlich ein Wert von 200 addiert.
+Z.B. die LVA besitzt 2 Klausurtermine = 2 * 200 = 400
+1300 + 400 = 1700
+::
+Der Maximalwert wird schlussendlich noch mit 2 multipliziert, um in weiterer Folge zu 50 % die Kollisionen und zu 50 % die Kollisions-Art zu gewichten.
+1700 * 2 = 3400
+
+Kollisionswert::
+Der Kollisionswert bestimmt den absoluten Wert der kollidierenden Termine und Klausurtermine inklusive einer Gewichtung je nach Kollisions-Typ.
+::
+Jede Terminkollision wird mit Wert 100 angesetzt.
+Z.B. die LVA besitzt 4 Terminkollisionen  = 4 * 100 = 400
+::
+Jede Klausurkollision wird mit Wert 200 angesetzt.
+Z.B. die LVA besitzt 1 Klausurkollision  = 1 * 200 = 200
+400 + 200 = 600
+::
+Mit Hilfe des CollisionTypeValues fließen die restlichen 50 % des Kollisionswertes ein.
+z.B. WIN_WIN --> CollisionTypeValue = 80
+3400 / 2 * 80 / 100 = 1360
+::
+Kollisionswert = 600 + 1360 = 1960
+
+Prozentwert::
+Der PROZENT-Wert gibt einen normierten Prozentwert des Kollisionwertes auf Basis des Maximalwertes an.
+::
+Z.B. 1960 / 3400 * 100 = 57,65 %
+
+
+==== Ebene 3 (Fach 2) ====
+In Ebene 3 werden mit Hilfe der in Ebene 4 ermittelten Werte zwei weitere Werte ermittelt bzw. gespeichert.
+
+Prozent_AVG::
+Berechnung des durchschnittlichen Kollisionswertes in Prozent.
+Aus allen darunterliegenden LVAs auf Ebene Fach2_LVA wird der durschnittliche Prozentsatz errechnet.
+Summe aller Prozentwerte von Ebene Fach2LVA dividiert durch die Anzahl der betroffenen LVAs.
+
+Prozent_Max::
+Der größte Werte von Ebene Fach2_LVA wird gespeichert.
+
+==== Ebene 2 (Fach 1 - LVA) ====
+Ähnlich wie bei Ebene 4 wird zuerst ermittelt ob es sich um eine Blockveranstaltung handelt, wieviele Kollsionen zwischen LVAs des gleichen Institus auftreten und wieviele Kollisionen zwischen exklusiven WIN-LVAs auftreten.
+Anschließend wird die Anzahl der Institiutskollisionen auf Ebene von Fach 2 und die Anzahl der WIN-Kollisionen auf Ebene von Fach 2 ermittelt.
+
+Die beiden Werte Prozent_AVG und Prozent_Max werden in Ebene 2 wie folgt definiert:
+
+Prozent_AVG::
+Berechnung des durchschnittlichen Kollisionswertes in Prozent.
+Aus allen darunterliegenden Fächern auf Ebene Fach2 wird der durschnittliche Prozentsatz errechnet.
+Summe aller Prozentwerte von Ebene Fach2 dividiert durch die Anzahl der betroffenen Fächer.
+
+Prozent_Max::
+Der größte Werte von Ebene Fach2 wird gespeichert.
+
+==== Ebene 1 (Fach 1) ====
+Auf Ebene 1 wird ermittelt, ob das jeweilige Fach einem Institut angehört und wenn ja, welchem. Wieviele LVA-Kollisionen
+, wieviele Klausur-Kollisionen für Fach 1 existieren und natürlich wieviele Kollsionen dabei das eigene Institut betreffen
+bzw. wieviele Kollisionen innerhalb der vier WIN-Institute auftreten.
+
+Anschließend werden die beiden finalen Werte Prozent_AVG und Prozent_Max berechnet bzw. dargestellt.
+
+Prozent_AVG::
+Berechnung des durchschnittlichen Kollisionswertes in Prozent.
+Aus allen darunterliegenden LVAs auf Ebene Fach1_LVA wird der durschnittliche Prozentsatz errechnet.
+Summe aller Prozentwerte von Ebene Fach2LVA dividiert durch die Anzahl der betroffenen LVAs.
+
+Prozent_Max::
+Der größte Werte von Ebene Fach1_LVA wird gespeichert.
