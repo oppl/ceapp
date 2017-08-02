@@ -35,6 +35,7 @@ public class AppointmentDTO implements Serializable {
     private ZonedDateTime start;
 
     private ZonedDateTime end;
+    private String title;
 
     public Long getId() {
         return id;
@@ -114,6 +115,14 @@ public class AppointmentDTO implements Serializable {
 
     public void setEnd(ZonedDateTime end) {
         this.end = end;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     @Override
