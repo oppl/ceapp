@@ -138,3 +138,4 @@ Summe aller Prozentwerte von Ebene Fach2LVA dividiert durch die Anzahl der betro
 
 Prozent_Max::
 Der größte Werte von Ebene Fach1_LVA wird gespeichert.
+
