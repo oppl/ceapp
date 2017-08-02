@@ -190,12 +190,12 @@ public class ImportService {
             appointmentDTO.setStartDateTime(
                 ZonedDateTime.of(LocalDateTime.of(
                     LocalDate.parse(courseDate.getDate(), dateFormat), LocalTime.parse(courseDate.getTimebegin(), timeFormat)
-                ), ZoneId.of("GMT+0"))
+                ), ZoneId.systemDefault())
             );
             appointmentDTO.setEndDateTime(
                 ZonedDateTime.of(LocalDateTime.of(
                     LocalDate.parse(courseDate.getDate(), dateFormat), LocalTime.parse(courseDate.getTimeend(), timeFormat)
-                ), ZoneId.of("GMT+0"))
+                ), ZoneId.systemDefault())
             );
             appointmentDTO.setRoom(courseDate.getLocation());
             appointmentDTO.setTheme(courseDate.getTheme());
