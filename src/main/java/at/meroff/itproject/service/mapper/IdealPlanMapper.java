@@ -13,12 +13,11 @@ public interface IdealPlanMapper extends EntityMapper <IdealPlanDTO, IdealPlan> 
 
     @Mapping(source = "curriculum.id", target = "curriculumId")
     @Mapping(source = "curriculum.curName", target = "curriculumCurName")
-    IdealPlanDTO toDto(IdealPlan idealPlan); 
+    IdealPlanDTO toDto(IdealPlan idealPlan);
     @Mapping(target = "idealplanentries", ignore = true)
-    @Mapping(target = "collisionSummaryCS", ignore = true)
 
     @Mapping(source = "curriculumId", target = "curriculum")
-    IdealPlan toEntity(IdealPlanDTO idealPlanDTO); 
+    IdealPlan toEntity(IdealPlanDTO idealPlanDTO);
     default IdealPlan fromId(Long id) {
         if (id == null) {
             return null;

@@ -47,11 +47,6 @@ public class IdealPlan implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<IdealPlanEntries> idealplanentries = new HashSet<>();
 
-    @OneToMany(mappedBy = "idealPlan")
-    @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<CollisionSummaryCS> collisionSummaryCS = new HashSet<>();
-
     @ManyToOne
     private Curriculum curriculum;
 
@@ -125,31 +120,6 @@ public class IdealPlan implements Serializable {
 
     public void setIdealplanentries(Set<IdealPlanEntries> idealPlanEntries) {
         this.idealplanentries = idealPlanEntries;
-    }
-
-    public Set<CollisionSummaryCS> getCollisionSummaryCS() {
-        return collisionSummaryCS;
-    }
-
-    public IdealPlan collisionSummaryCS(Set<CollisionSummaryCS> collisionSummaryCS) {
-        this.collisionSummaryCS = collisionSummaryCS;
-        return this;
-    }
-
-    public IdealPlan addCollisionSummaryCS(CollisionSummaryCS collisionSummaryCS) {
-        this.collisionSummaryCS.add(collisionSummaryCS);
-        collisionSummaryCS.setIdealPlan(this);
-        return this;
-    }
-
-    public IdealPlan removeCollisionSummaryCS(CollisionSummaryCS collisionSummaryCS) {
-        this.collisionSummaryCS.remove(collisionSummaryCS);
-        collisionSummaryCS.setIdealPlan(null);
-        return this;
-    }
-
-    public void setCollisionSummaryCS(Set<CollisionSummaryCS> collisionSummaryCS) {
-        this.collisionSummaryCS = collisionSummaryCS;
     }
 
     public Curriculum getCurriculum() {

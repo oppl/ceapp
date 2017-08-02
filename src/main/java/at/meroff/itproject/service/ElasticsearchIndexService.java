@@ -47,14 +47,6 @@ public class ElasticsearchIndexService {
 
     private final CollisionLevelTwoSearchRepository collisionLevelTwoSearchRepository;
 
-    private final CollisionSummaryCSRepository collisionSummaryCSRepository;
-
-    private final CollisionSummaryCSSearchRepository collisionSummaryCSSearchRepository;
-
-    private final CollisionSummaryLvaRepository collisionSummaryLvaRepository;
-
-    private final CollisionSummaryLvaSearchRepository collisionSummaryLvaSearchRepository;
-
     private final CurriculumRepository curriculumRepository;
 
     private final CurriculumSearchRepository curriculumSearchRepository;
@@ -108,10 +100,6 @@ public class ElasticsearchIndexService {
         CollisionLevelThreeSearchRepository collisionLevelThreeSearchRepository,
         CollisionLevelTwoRepository collisionLevelTwoRepository,
         CollisionLevelTwoSearchRepository collisionLevelTwoSearchRepository,
-        CollisionSummaryCSRepository collisionSummaryCSRepository,
-        CollisionSummaryCSSearchRepository collisionSummaryCSSearchRepository,
-        CollisionSummaryLvaRepository collisionSummaryLvaRepository,
-        CollisionSummaryLvaSearchRepository collisionSummaryLvaSearchRepository,
         CurriculumRepository curriculumRepository,
         CurriculumSearchRepository curriculumSearchRepository,
         CurriculumSemesterRepository curriculumSemesterRepository,
@@ -143,10 +131,6 @@ public class ElasticsearchIndexService {
         this.collisionLevelThreeSearchRepository = collisionLevelThreeSearchRepository;
         this.collisionLevelTwoRepository = collisionLevelTwoRepository;
         this.collisionLevelTwoSearchRepository = collisionLevelTwoSearchRepository;
-        this.collisionSummaryCSRepository = collisionSummaryCSRepository;
-        this.collisionSummaryCSSearchRepository = collisionSummaryCSSearchRepository;
-        this.collisionSummaryLvaRepository = collisionSummaryLvaRepository;
-        this.collisionSummaryLvaSearchRepository = collisionSummaryLvaSearchRepository;
         this.curriculumRepository = curriculumRepository;
         this.curriculumSearchRepository = curriculumSearchRepository;
         this.curriculumSemesterRepository = curriculumSemesterRepository;
@@ -175,8 +159,6 @@ public class ElasticsearchIndexService {
         reindexForClass(CollisionLevelOne.class, collisionLevelOneRepository, collisionLevelOneSearchRepository);
         reindexForClass(CollisionLevelThree.class, collisionLevelThreeRepository, collisionLevelThreeSearchRepository);
         reindexForClass(CollisionLevelTwo.class, collisionLevelTwoRepository, collisionLevelTwoSearchRepository);
-        reindexForClass(CollisionSummaryCS.class, collisionSummaryCSRepository, collisionSummaryCSSearchRepository);
-        reindexForClass(CollisionSummaryLva.class, collisionSummaryLvaRepository, collisionSummaryLvaSearchRepository);
         reindexForClass(Curriculum.class, curriculumRepository, curriculumSearchRepository);
         reindexForClass(CurriculumSemester.class, curriculumSemesterRepository, curriculumSemesterSearchRepository);
         reindexForClass(CurriculumSubject.class, curriculumSubjectRepository, curriculumSubjectSearchRepository);

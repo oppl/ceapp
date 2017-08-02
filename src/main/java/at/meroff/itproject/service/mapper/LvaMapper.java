@@ -18,8 +18,6 @@ public interface LvaMapper extends EntityMapper <LvaDTO, Lva> {
     @Mapping(target = "appointments")
     LvaDTO toDto(Lva lva);
     @Mapping(target = "appointments", ignore = true)
-    @Mapping(target = "csl1S", ignore = true)
-    @Mapping(target = "csl2S", ignore = true)
 
     @Mapping(source = "subjectId", target = "subject")
     @Mapping(target = "curriculumsubjects", ignore = true)
