@@ -32,7 +32,7 @@ Das Projekt wurde in 4 Phasen untergliedert, wobei am Ende einer jeden Phase ein
 Spezi
 
 ==== Phase 2 ====
-Doku Backend
+Doku Schnittstellen
 
 ==== Phase 3 ====
 Basisversion Frontend (Institutsplanung)
@@ -43,3 +43,5 @@ Projektende & Finalversion Frontend (Institutsplanung & Studentenplanung)
 ==== Erwartetes Ergebnis ====
 
 Blibla Blubb
+
+

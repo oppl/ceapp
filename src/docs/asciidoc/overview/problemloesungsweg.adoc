@@ -1,5 +1,5 @@
 == Problemlösungsweg ==
-
+sdfsdf
 
 === Berechnungsgrundlage ===
 Vor der Implementierung der Applikation musste in erster Linie eine Berechnungsgrundlage bzw. Berechnungslogik entwicket werden, nach welcher die künftige Applikation Terminkollisionen bewerten soll.
@@ -134,4 +134,17 @@ Summe aller Prozentwerte von Ebene Fach2LVA dividiert durch die Anzahl der betro
 
 Prozent_Max::
 Der größte Werte von Ebene Fach1_LVA wird gespeichert.
+
+=== Auswahl geeigneter Frameworks ===
+
+=== Dokumentation ===
+Die Dokumentation des Projektes wird zum Teil parallel zur Umsetzung betrieben und untergliedert sich in 3 Teilbereiche:
+
+* Allgemeine Projektdokumentation
+
+* javdoc - Sourcecode-Dokumentation
+
+* Dokumentation der REST-Attribute
+
+
 
