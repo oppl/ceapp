@@ -1,10 +1,6 @@
 == Problemlösungsweg ==
 
 
-=== Datenexport aus dem KUSSS ===
-
-Fach - LVA - LVA-Termine
-
 === Berechnungsgrundlage ===
 Vor der Implementierung der Applikation musste in erster Linie eine Berechnungsgrundlage bzw. Berechnungslogik entwicket werden, nach welcher die künftige Applikation Terminkollisionen bewerten soll.
 Grundidee war es die Kollisionsberechnung in fünf ebenen aufzuteilen.

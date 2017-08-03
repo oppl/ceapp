@@ -1,4 +1,27 @@
-=== backend ===
+=== Schnittstellen ===
 
-tüdelü
+Die Schnittstellen, welche die im Zuge des IT-Projektes entwickelte Applikation verwendet werden im weiteren Verlauf näher betrachtet.
+Einen Überblick über die vorhandenen Schnittstellen soll folgendes Diagramm bieten.
+
+image::network.png[]
+
+==== Datenexport aus dem KUSSS ====
+
+Bevor die eigentliche Berechnung erfolgen kann, müssen sämtliche LVA-Daten aus dem KUSSS exportiert werden.
+Die beiden folgenden XQuerys sind dafür verantwortlich. Nähere Informationen zum KUSSS-Export können der Dokumentation von KUSSS entnommen werden.
+
+//include::src/main/resources/xquery/lvas.xq[]
+.lvas.xq
+****
+image::lvas.png[]
+****
+
+.subjects.xq
+****
+image::subjects.png[]
+****
+
+==== Datenbank ====
+
+==== REST ====
 
