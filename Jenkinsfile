@@ -56,7 +56,7 @@ node {
     }
 
     stage('publish docker') {
-        docker.withRegistry('https://registry.hub.docker.com', 'docker-login') {
+        docker.withRegistry('https://registry.hub.docker.com', 'meroff') {
             dockerImage.push 'latest'
         }
     }
