@@ -58,16 +58,6 @@ public class Lva implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Appointment> appointments = new HashSet<>();
 
-    @OneToMany(mappedBy = "l1")
-    @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<CollisionSummaryLva> csl1S = new HashSet<>();
-
-    @OneToMany(mappedBy = "l2")
-    @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<CollisionSummaryLva> csl2S = new HashSet<>();
-
     @ManyToOne
     private Subject subject;
 
@@ -175,56 +165,6 @@ public class Lva implements Serializable {
 
     public void setAppointments(Set<Appointment> appointments) {
         this.appointments = appointments;
-    }
-
-    public Set<CollisionSummaryLva> getCsl1S() {
-        return csl1S;
-    }
-
-    public Lva csl1S(Set<CollisionSummaryLva> collisionSummaryLvas) {
-        this.csl1S = collisionSummaryLvas;
-        return this;
-    }
-
-    public Lva addCsl1(CollisionSummaryLva collisionSummaryLva) {
-        this.csl1S.add(collisionSummaryLva);
-        collisionSummaryLva.setL1(this);
-        return this;
-    }
-
-    public Lva removeCsl1(CollisionSummaryLva collisionSummaryLva) {
-        this.csl1S.remove(collisionSummaryLva);
-        collisionSummaryLva.setL1(null);
-        return this;
-    }
-
-    public void setCsl1S(Set<CollisionSummaryLva> collisionSummaryLvas) {
-        this.csl1S = collisionSummaryLvas;
-    }
-
-    public Set<CollisionSummaryLva> getCsl2S() {
-        return csl2S;
-    }
-
-    public Lva csl2S(Set<CollisionSummaryLva> collisionSummaryLvas) {
-        this.csl2S = collisionSummaryLvas;
-        return this;
-    }
-
-    public Lva addCsl2(CollisionSummaryLva collisionSummaryLva) {
-        this.csl2S.add(collisionSummaryLva);
-        collisionSummaryLva.setL2(this);
-        return this;
-    }
-
-    public Lva removeCsl2(CollisionSummaryLva collisionSummaryLva) {
-        this.csl2S.remove(collisionSummaryLva);
-        collisionSummaryLva.setL2(null);
-        return this;
-    }
-
-    public void setCsl2S(Set<CollisionSummaryLva> collisionSummaryLvas) {
-        this.csl2S = collisionSummaryLvas;
     }
 
     public Subject getSubject() {

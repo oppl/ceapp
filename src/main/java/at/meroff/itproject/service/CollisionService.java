@@ -338,8 +338,21 @@ public class CollisionService {
         int winter = idealPlanEntriesDTO.getWinterSemesterDefault();
         int summer = idealPlanEntriesDTO.getSummerSemesterDefault();
 
-        Set<Map.Entry<Pair<String, SubjectType>, IdealPlanEntries>> collect = idealPlanMap.entrySet().stream().filter(pairIdealPlanEntriesDTOEntry -> pairIdealPlanEntriesDTOEntry.getValue().getWinterSemesterDefault() == winter
-            || pairIdealPlanEntriesDTOEntry.getValue().getSummerSemesterDefault() == summer).collect(Collectors.toSet());
+        Set<Map.Entry<Pair<String, SubjectType>, IdealPlanEntries>> collect = idealPlanMap
+            .entrySet()
+            .stream()
+            .filter(pairIdealPlanEntriesDTOEntry -> pairIdealPlanEntriesDTOEntry.getValue().getWinterSemesterDefault() == winter
+            || pairIdealPlanEntriesDTOEntry.getValue().getSummerSemesterDefault() == summer)
+            .filter(pairIdealPlanEntriesEntry -> {
+                if (idealPlanEntriesDTO.isOptionalSubject() == true) {
+                    return true;
+                } else if (pairIdealPlanEntriesEntry.getValue().isOptionalSubject() == false) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }) // TODO hoffentlich der richtige filter, damit wahlfächer nicht berücksichtigt werden
+            .collect(Collectors.toSet());
         return collect.stream()
             .filter(pairIdealPlanEntriesDTOEntry -> !pairIdealPlanEntriesDTOEntry.getKey().equals(cs.getSubject().getSubjectName())
                 && !pairIdealPlanEntriesDTOEntry.getValue().getSubject().getSubjectType().equals(cs.getSubject().getSubjectType()))

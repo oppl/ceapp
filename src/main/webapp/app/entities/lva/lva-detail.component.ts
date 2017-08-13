@@ -48,7 +48,7 @@ export class LvaDetailComponent implements OnInit, OnDestroy {
         this.scrollTime = '08:00:00';
         this.height = 800;
 
-        this.appointmentService.query2(3151, 2).subscribe(
+        this.appointmentService.query2(1201, 3).subscribe(
             (res: ResponseWrapper) => {
                 this.events = res.json;
             },

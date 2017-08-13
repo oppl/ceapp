@@ -53,7 +53,6 @@ public class CacheConfiguration {
             cm.createCache(at.meroff.itproject.domain.Subject.class.getName() + ".lvas", jcacheConfiguration);
             cm.createCache(at.meroff.itproject.domain.IdealPlan.class.getName(), jcacheConfiguration);
             cm.createCache(at.meroff.itproject.domain.IdealPlan.class.getName() + ".idealplanentries", jcacheConfiguration);
-            cm.createCache(at.meroff.itproject.domain.IdealPlan.class.getName() + ".collisionSummaryCS", jcacheConfiguration);
             cm.createCache(at.meroff.itproject.domain.IdealPlanEntries.class.getName(), jcacheConfiguration);
             cm.createCache(at.meroff.itproject.domain.CurriculumSubject.class.getName(), jcacheConfiguration);
             cm.createCache(at.meroff.itproject.domain.CurriculumSubject.class.getName() + ".collCSSources", jcacheConfiguration);
@@ -65,9 +64,6 @@ public class CacheConfiguration {
             cm.createCache(at.meroff.itproject.domain.Lva.class.getName() + ".csl2S", jcacheConfiguration);
             cm.createCache(at.meroff.itproject.domain.Lva.class.getName() + ".curriculumsubjects", jcacheConfiguration);
             cm.createCache(at.meroff.itproject.domain.Appointment.class.getName(), jcacheConfiguration);
-            cm.createCache(at.meroff.itproject.domain.CollisionSummaryCS.class.getName(), jcacheConfiguration);
-            cm.createCache(at.meroff.itproject.domain.CollisionSummaryCS.class.getName() + ".collisionsummarylvas", jcacheConfiguration);
-            cm.createCache(at.meroff.itproject.domain.CollisionSummaryLva.class.getName(), jcacheConfiguration);
             cm.createCache(at.meroff.itproject.domain.CurriculumSemester.class.getName(), jcacheConfiguration);
             cm.createCache(at.meroff.itproject.domain.CurriculumSemester.class.getName() + ".curriculumSubjects", jcacheConfiguration);
             cm.createCache(at.meroff.itproject.domain.CollisionLevelOne.class.getName(), jcacheConfiguration);

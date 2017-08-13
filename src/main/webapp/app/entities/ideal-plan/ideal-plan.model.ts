@@ -12,7 +12,6 @@ export class IdealPlan implements BaseEntity {
         public semester?: Semester,
         public active?: boolean,
         public idealplanentries?: BaseEntity[],
-        public collisionSummaryCS?: BaseEntity[],
         public curriculumId?: number,
     ) {
         this.active = false;
