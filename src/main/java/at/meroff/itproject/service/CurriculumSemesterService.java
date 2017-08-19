@@ -7,6 +7,7 @@ import at.meroff.itproject.repository.CurriculumRepository;
 import at.meroff.itproject.repository.CurriculumSemesterRepository;
 import at.meroff.itproject.repository.search.CurriculumSemesterSearchRepository;
 import at.meroff.itproject.service.dto.CurriculumSemesterDTO;
+import at.meroff.itproject.service.dto.SubjectDTO;
 import at.meroff.itproject.service.mapper.CurriculumSemesterMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -37,11 +39,17 @@ public class CurriculumSemesterService {
 
     private final CurriculumRepository curriculumRepository;
 
-    public CurriculumSemesterService(CurriculumRepository curriculumRepository, CurriculumSemesterRepository curriculumSemesterRepository, CurriculumSemesterMapper curriculumSemesterMapper, CurriculumSemesterSearchRepository curriculumSemesterSearchRepository) {
+    private final ImportService importService;
+
+    private final CollisionService collisionService;
+
+    public CurriculumSemesterService(CurriculumRepository curriculumRepository, CurriculumSemesterRepository curriculumSemesterRepository, CurriculumSemesterMapper curriculumSemesterMapper, CurriculumSemesterSearchRepository curriculumSemesterSearchRepository, ImportService importService, CollisionService collisionService) {
         this.curriculumSemesterRepository = curriculumSemesterRepository;
         this.curriculumSemesterMapper = curriculumSemesterMapper;
         this.curriculumSemesterSearchRepository = curriculumSemesterSearchRepository;
         this.curriculumRepository = curriculumRepository;
+        this.importService = importService;
+        this.collisionService = collisionService;
     }
 
     /**
@@ -52,9 +60,32 @@ public class CurriculumSemesterService {
      */
     public CurriculumSemesterDTO save(CurriculumSemesterDTO curriculumSemesterDTO) {
         log.debug("Request to save CurriculumSemester : {}", curriculumSemesterDTO);
-        CurriculumSemester curriculumSemester = curriculumSemesterMapper.toEntity(curriculumSemesterDTO);
-        curriculumSemester = curriculumSemesterRepository.save(curriculumSemester);
-        CurriculumSemesterDTO result = curriculumSemesterMapper.toDto(curriculumSemester);
+
+        CurriculumSemester curriculumSemester;
+        CurriculumSemesterDTO result;
+
+        // search for if semester allready exists
+        if (curriculumSemesterDTO.getId() == null) {
+            curriculumSemester = curriculumSemesterMapper.toEntity(curriculumSemesterDTO);
+            curriculumSemester = curriculumSemesterRepository.save(curriculumSemester);
+            curriculumSemester = curriculumSemesterRepository.findOne(curriculumSemester.getId());
+            result = curriculumSemesterMapper.toDto(curriculumSemester);
+            Curriculum cur = curriculumRepository.findOne(curriculumSemester.getCurriculum().getId());
+            result.setCurriculumCurId(cur.getCurId());
+            result.setCurriculumCurName(cur.getCurName());
+            CurriculumSemesterDTO curriculumSemesterDTO1 = importService.verifySubjects(result);
+            curriculumSemesterDTO1.setCurriculumCurId(cur.getCurId());
+            curriculumSemesterDTO1.setCurriculumCurName(cur.getCurName());
+            importService.verifyLvas(curriculumSemesterDTO1);
+            collisionService.calculateCollisions(204, 2017, Semester.WS, 2017, Semester.WS);
+
+        } else {
+            curriculumSemester = curriculumSemesterMapper.toEntity(curriculumSemesterDTO);
+            curriculumSemester = curriculumSemesterRepository.save(curriculumSemester);
+            result = curriculumSemesterMapper.toDto(curriculumSemester);
+        }
+
+        // if not read all subjects and all lvas
         curriculumSemesterSearchRepository.save(curriculumSemester);
         return result;
     }
@@ -109,9 +140,10 @@ public class CurriculumSemesterService {
         CurriculumSemester one = curriculumSemesterRepository.findOne(id);
 
         Curriculum curriculum = one.getCurriculum();
+        curriculum.removeCurriculumSemester(one);
 
         one.setCurriculum(null);
-
+        curriculumRepository.save(curriculum);
         curriculumSemesterRepository.save(one);
 
         curriculumSemesterRepository.delete(id);
