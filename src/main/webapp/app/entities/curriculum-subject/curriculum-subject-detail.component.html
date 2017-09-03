@@ -1,12 +1,10 @@
 
 <div *ngIf="curriculumSubject">
-    <h2>{{curriculumSubject.subjectSubjectName}} {{curriculumSubject.semester}}{{curriculumSubject.year}}</h2>
-    <h4>{{curriculumSubject.curriculumCurName}}</h4>
-    <h6><span jhiTranslate="ceappApp.curriculumSubject.detail.title">Curriculum Subject</span> {{curriculumSubject.id}}</h6>
+    <h2><span jhiTranslate="ceappApp.curriculumSubject.detail.title">Curriculum Subject</span> {{curriculumSubject.id}}</h2>
     <hr>
     <jhi-alert-error></jhi-alert-error>
     <dl class="row-md jh-entity-details">
-        <!--<dt><span jhiTranslate="ceappApp.curriculumSubject.year">Year</span></dt>
+        <dt><span jhiTranslate="ceappApp.curriculumSubject.year">Year</span></dt>
         <dd>
             <span>{{curriculumSubject.year}}</span>
         </dd>
@@ -14,35 +12,24 @@
         <dd>
             <span jhiTranslate="{{'ceappApp.Semester.' + curriculumSubject.semester}}">{{curriculumSubject.semester}}</span>
         </dd>
-        !-->
         <dt><span jhiTranslate="ceappApp.curriculumSubject.lva">Lva</span></dt>
         <dd>
             <span *ngFor="let lva of curriculumSubject.lvas; let last = last">
-                <a [routerLink]="['/lva', lva?.id ]">{{lva.lvaNr}}</a>
-                <b>instituteId</b> {{lva.instituteId}}
-                <b>lvaType</b> {{lva.lvaType}}
-                <b>year</b> {{lva.year}}
-                <b>semester</b> {{lva.semester}}
-                </a>{{last ? '' : ', '}} </br>
+                <a [routerLink]="['/lva', lva?.id ]">{{lva.lvaNr}}</a>{{last ? '' : ', '}}
             </span>
         </dd>
-
-
-
-
-        <!-- <dt><span jhiTranslate="ceappApp.curriculumSubject.curriculum">Curriculum</span></dt>
-         <dd>
-             <div *ngIf="curriculumSubject.curriculumId">
-                 <a [routerLink]="['/curriculum', curriculumSubject.curriculumId]">{{curriculumSubject.curriculumCurName}}</a>
-             </div>
-         </dd>
-         <dt><span jhiTranslate="ceappApp.curriculumSubject.subject">Subject</span></dt>
-         <dd>
-             <div *ngIf="curriculumSubject.subjectId">
-                 <a [routerLink]="['/subject', curriculumSubject.subjectId]">{{curriculumSubject.subjectSubjectName}}</a>
-             </div>
-         </dd>
-         !-->
+        <dt><span jhiTranslate="ceappApp.curriculumSubject.curriculum">Curriculum</span></dt>
+        <dd>
+            <div *ngIf="curriculumSubject.curriculumId">
+                <a [routerLink]="['/curriculum', curriculumSubject.curriculumId]">{{curriculumSubject.curriculumCurName}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="ceappApp.curriculumSubject.subject">Subject</span></dt>
+        <dd>
+            <div *ngIf="curriculumSubject.subjectId">
+                <a [routerLink]="['/subject', curriculumSubject.subjectId]">{{curriculumSubject.subjectSubjectName}}</a>
+            </div>
+        </dd>
     </dl>
 
     <button type="submit"

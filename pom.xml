@@ -106,7 +106,6 @@
     </repositories>
 
     <dependencies>
-
         <!-- BaseX START -->
         <dependency>
             <groupId>org.basex</groupId>
