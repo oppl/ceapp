@@ -27,7 +27,7 @@
         <div style="background-color: lightblue; padding-top: 10px; padding-bottom: 10px; padding-left: 2px; padding-right: 2px; margin: -12px;">
         <p-dataTable [value]="levelTwo" sortMode="multiple" expandableRows="true" rowExpandMode="single" selectionMode="none" (onRowExpand)="onRowExpand2($event)" dataKey="id">
             <p-column expander="true" styleClass="col-icon" [style]="{'width':'49px'}"></p-column>
-            <p-column field="lva.lvaNr" header="LVA-Nr" [sortable]="true" [filter]="true"></p-column>
+            <p-column field="lva.lvaNr" header="LVA-Nr" [sortable]="true"></p-column>
             <p-column field="examCollision" header="Exam" [sortable]="true" [style]="{'width':'100px'}" styleClass="text-right"></p-column>
             <p-column field="instituteCollision" header="Inst" [sortable]="true" [style]="{'width':'100px'}" styleClass="text-right"></p-column>
             <p-column field="curriculumCollision" header="Curr" [sortable]="true" [style]="{'width':'100px'}" styleClass="text-right"></p-column>
@@ -47,9 +47,9 @@
                 <div style="background-color: lightgoldenrodyellow; padding-top: 10px; padding-bottom: 10px; padding-left: 2px; padding-right: 2px; margin: -12px;">
                 <p-dataTable [value]="levelThree" sortMode="multiple" expandableRows="true" rowExpandMode="single" selectionMode="none" (onRowExpand)="onRowExpand3($event)" dataKey="id">
                     <p-column expander="true" styleClass="col-icon" [style]="{'width':'49px'}"></p-column>
-                    <p-column field="curriculumSubject.subjectSubjectName" header="Subject" [sortable]="true" [filter]="true"></p-column>
-                    <p-column field="curriculumSubject.subjectSubjectType" [style]="{'width':'49px'}" header="Typ" [sortable]="true"></p-column>
-                    <p-column field="curriculumSubject.countLvas" [style]="{'width':'49px'}" header="LVAs
+                    <p-column field="curriculumSubject.subjectSubjectName" header="Subject" [sortable]="true"></p-column>
+                    <p-column field="curriculumSubject.subjectSubjectType" [style]="{'width':'100px'}" header="Typ" [sortable]="true"></p-column>
+                    <p-column field="curriculumSubject.countLvas" [style]="{'width':'100px'}" header="LVAs
 " [sortable]="true"></p-column>
                     <p-column field="examCollision" header="Exam" [sortable]="true" [style]="{'width':'100px'}" styleClass="text-right"></p-column>
                     <p-column field="instituteCollision" header="Inst" [sortable]="true" [style]="{'width':'100px'}" styleClass="text-right"></p-column>
@@ -70,7 +70,7 @@
                         <div style="background-color: lightsalmon; padding-top: 10px; padding-bottom: 10px; padding-left: 2px; padding-right: 2px; margin: -12px;">
                         <p-dataTable [value]="levelFour" sortMode="multiple" expandableRows="true" rowExpandMode="single" selectionMode="none" (onRowExpand)="onRowExpand4($event)" dataKey="id">
                             <p-column expander="true" styleClass="col-icon" [style]="{'width':'49px'}"></p-column>
-                            <p-column field="lva.lvaNr" header="LVA-Nr" [sortable]="true" [filter]="true"></p-column>
+                            <p-column field="lva.lvaNr" header="LVA-Nr" [sortable]="true"></p-column>
                             <p-column field="examCollision" header="Exam" [sortable]="true" [style]="{'width':'100px'}" styleClass="text-right"></p-column>
                             <p-column field="instituteCollision" header="Inst" [sortable]="true" [style]="{'width':'100px'}" styleClass="text-right"></p-column>
                             <p-column field="curriculumCollision" header="Curr" [sortable]="true" [style]="{'width':'100px'}" styleClass="text-right"></p-column>
@@ -78,7 +78,7 @@
                                     {{cso.collisionValueAvg | number : '1.2-2'}}
                                 </ng-template>
                             </p-column>
-                            <p-column field="collisionValue" header="ColValue" [sortable]="true" [style]="{'width':'100px'}" styleClass="text-right">
+                            <p-column field="collisionValue" header="ColValue" [sortable]="true" [style]="{'width':'130px'}" styleClass="text-right">
                             <ng-template let-cso="rowData" pTemplate type="body">
                                 {{cso.collisionValue | number : '1.2-2'}}
                             </ng-template>
@@ -86,10 +86,10 @@
                             <ng-template pTemplate="rowexpansion">
                                 <div style="background-color: lightgray; padding-top: 10px; padding-bottom: 10px; padding-left: 2px; padding-right: 2px; margin: -12px;">
                                 <p-dataTable [value]="levelFive" sortMode="multiple">
-                                    <p-column field="sourceAppointment.startDateTime" header="Start" [sortable]="true" [filter]="true"></p-column>
-                                    <p-column field="sourceAppointment.endDateTime" header="Ende" [sortable]="true" [filter]="true"></p-column>
-                                    <p-column field="sourceAppointment.theme" header="Thema" [sortable]="true" [filter]="true"></p-column>
-                                    <p-column field="sourceAppointment.room" header="Raum" [sortable]="true" [filter]="true"></p-column>
+                                    <p-column field="sourceAppointment.startDateTime" header="Start" [sortable]="true"></p-column>
+                                    <p-column field="sourceAppointment.endDateTime" header="Ende" [sortable]="true"></p-column>
+                                    <p-column field="sourceAppointment.theme" header="Thema" [sortable]="true"></p-column>
+                                    <p-column field="sourceAppointment.room" header="Raum" [sortable]="true"></p-column>
                                     <p-column field="examCollision" header="Exam" [sortable]="true" [style]="{'width':'100px'}" styleClass="text-right"></p-column>
                                 </p-dataTable>
                                 </div>
