@@ -1,9 +1,10 @@
 
 <div *ngIf="curriculum">
     <h2><span jhiTranslate="ceappApp.curriculum.detail.title">Curriculum</span> {{curriculum.curName}}</h2>
-    <hr>
     <jhi-alert-error></jhi-alert-error>
     <dl class="row-md jh-entity-details">
+        <div class="row">
+        <div class="col-md-5">
         <dt><span jhiTranslate="ceappApp.curriculum.curId">Cur Id</span></dt>
         <dd>
             <span>{{curriculum.curId}}</span>
@@ -12,12 +13,27 @@
         <dd>
             <span>{{curriculum.curName}}</span>
         </dd>
+        </div>
+        <div class="col-md-7">
         <dt><span jhiTranslate="ceappApp.curriculum.institute">Institute</span></dt>
         <dd>
             <span *ngFor="let institute of curriculum.institutes; let last = last">
-                <a [routerLink]="['/institute', institute?.id ]">{{institute.instituteName}}</a>{{last ? '' : ', '}}
+                <a [routerLink]="['/institute', institute?.id ]">{{institute.instituteName}}</a>{{last ? '' : ', '}}<br>
             </span>
         </dd>
+        </div>
+        </div>
+        <button type="submit"
+                (click)="previousState()"
+                class="btn btn-info">
+            <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+        </button>
+        <button type="button"
+                [routerLink]="['/', { outlets: { popup: 'curriculum/'+ curriculum.id + '/edit'} }]"
+                replaceUrl="true"
+                class="btn btn-primary">
+            <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+        </button>
         <hr>
         <h3>
             <span jhiTranslate="ceappApp.curriculumSemester.home.title">Curriculum Semesters</span>
@@ -28,32 +44,73 @@
             </span>
             </button>
         </h3>
-        <hr>
         <p-dataTable [value]="curriculum.curriculumSemesters">
             <p-column field="id" header="ID"></p-column>
             <p-column field="year" header="Jahr"></p-column>
             <p-column field="semester" header="Semester"></p-column>
+            <p-column field="id" header="" styleClass="text-right">
+                <ng-template let-cso="rowData" pTemplate type="body">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['/curriculum-semester', cso.id ]"
+                                class="btn btn-success btn-sm">
+                            <span class="fa fa-refresh"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.update">Update</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/collision-level-one']"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.check">Prüfen</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'curriculum-semester/'+ cso.id + '/edit'} }]"
+                                replaceUrl="true"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                    </div>
+                </ng-template>
+            </p-column>
         </p-dataTable>
         <hr>
-        <h3>Idealtypische Studienverläufe</h3>
+        <h3>
+            <span jhiTranslate="ceappApp.idealPlan.home.title">Ideal Plans</span>
+            <button class="btn btn-primary float-right create-ideal-plan" [routerLink]="['/', { outlets: { popup: ['ideal-plan-new'] } }]">
+                <span class="fa fa-plus"></span>
+                <span class="hidden-sm-down"  jhiTranslate="ceappApp.idealPlan.home.createLabel">
+            Create new Ideal Plan
+            </span>
+            </button>
+        </h3>
+        <h3></h3>
         <p-dataTable [value]="curriculum.idealPlans">
             <p-column field="id" header="ID"></p-column>
             <p-column field="year" header="Jahr"></p-column>
             <p-column field="semester" header="Semester"></p-column>
             <p-column field="active" header="Aktiv"></p-column>
+            <p-column field="id" header="" styleClass="text-right">
+                <ng-template let-cso="rowData" pTemplate type="body">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['/ideal-plan', cso.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'ideal-plan/'+ cso.id + '/edit'} }]"
+                                replaceUrl="true"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                    </div>
+                </ng-template>
+            </p-column>
         </p-dataTable>
     </dl>
 
-    <button type="submit"
-            (click)="previousState()"
-            class="btn btn-info">
-        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
-    </button>
 
-    <button type="button"
-            [routerLink]="['/', { outlets: { popup: 'curriculum/'+ curriculum.id + '/edit'} }]"
-            replaceUrl="true"
-            class="btn btn-primary">
-        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
-    </button>
 </div>

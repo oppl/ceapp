@@ -4,7 +4,9 @@ import at.meroff.itproject.domain.Subject;
 import at.meroff.itproject.domain.enumeration.LvaType;
 import at.meroff.itproject.domain.enumeration.SubjectType;
 import at.meroff.itproject.helper.Pair;
+import at.meroff.itproject.repository.CurriculumSemesterRepository;
 import at.meroff.itproject.service.dto.*;
+import at.meroff.itproject.service.mapper.CurriculumSemesterMapper;
 import at.meroff.itproject.xml.XMLQueryTemplate;
 import at.meroff.itproject.xml.models.Subjects;
 import at.meroff.itproject.xml.models.lvas.CourseDate;
@@ -14,7 +16,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -27,40 +28,46 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional
+//@Transactional
 public class ImportService {
 
     private final Logger log = LoggerFactory.getLogger(ImportService.class);
 
-    private final CurriculumSemesterService curriculumSemesterService;
+    // private final CurriculumSemesterService curriculumSemesterService;
+    private final CurriculumSemesterRepository curriculumSemesterRepository;
     private final SubjectService subjectService;
     private final CurriculumSubjectService curriculumSubjectService;
     private final LvaService lvaService;
     private final AppointmentService appointmentService;
     private final InstituteService instituteService;
     private final ResourceLoader resourceLoader;
+    private final CurriculumSemesterMapper curriculumSemesterMapper;
 
-    public ImportService(CurriculumSemesterService curriculumSemesterService,
+    public ImportService(// CurriculumSemesterService curriculumSemesterService,
+                         CurriculumSemesterRepository curriculumSemesterRepository,
+                         CurriculumSemesterMapper curriculumSemesterMapper,
                          SubjectService subjectService,
                          ResourceLoader resourceLoader,
                          CurriculumSubjectService curriculumSubjectService,
                          LvaService lvaService,
                          AppointmentService appointmentService,
                          InstituteService instituteService) {
-        this.curriculumSemesterService = curriculumSemesterService;
+        // this.curriculumSemesterService = curriculumSemesterService;
         this.subjectService = subjectService;
         this.curriculumSubjectService = curriculumSubjectService;
         this.lvaService = lvaService;
         this.resourceLoader = resourceLoader;
         this.appointmentService = appointmentService;
         this.instituteService = instituteService;
+        this.curriculumSemesterRepository = curriculumSemesterRepository;
+        this.curriculumSemesterMapper = curriculumSemesterMapper;
     }
 
-    public Set<SubjectDTO> verifySubjects(CurriculumSemesterDTO curriculumSemesterDTO) {
+    public CurriculumSemesterDTO verifySubjects(CurriculumSemesterDTO curriculumSemesterDTO) {
 
-        if (curriculumSemesterDTO.getCurriculumCurId() == null) {
-            curriculumSemesterDTO = curriculumSemesterService.findOne(curriculumSemesterDTO.getId());
-        }
+        //if (curriculumSemesterDTO.getCurriculumCurId() == null) {
+        //    curriculumSemesterDTO = curriculumSemesterService.findOne(curriculumSemesterDTO.getId());
+        //}
 
         Resource resource = resourceLoader.getResource("classpath:xquery/subjects.xq");
         BufferedReader reader = null;
@@ -82,9 +89,12 @@ public class ImportService {
             CurriculumSemesterDTO finalCurriculumSemesterDTO = curriculumSemesterDTO;
             ret = subjects.getSubjects().stream()
                 .map(this::getSubjectDTO)
-                .peek(subjectDTO -> createCurriculumSubject(finalCurriculumSemesterDTO, subjectDTO))
+                .peek(subjectDTO -> {
+                    finalCurriculumSemesterDTO.getCurriculumSubjects().add(createCurriculumSubject(finalCurriculumSemesterDTO, subjectDTO));
+                    ;
+                })
                 .collect(Collectors.toSet());
-
+            return finalCurriculumSemesterDTO;
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -96,7 +106,7 @@ public class ImportService {
                 }
             }
         }
-        return ret;
+        return null;
     }
 
     private SubjectDTO getSubjectDTO(Subject subject) {
@@ -111,19 +121,21 @@ public class ImportService {
         }
     }
 
-    private void createCurriculumSubject(CurriculumSemesterDTO finalCurriculumSemesterDTO, SubjectDTO subjectDTO) {
+    private CurriculumSubjectDTO createCurriculumSubject(CurriculumSemesterDTO finalCurriculumSemesterDTO, SubjectDTO subjectDTO) {
         CurriculumSubjectDTO cs = new CurriculumSubjectDTO();
         cs.setCurriculumSemesterId(finalCurriculumSemesterDTO.getId());
         cs.setCountLvas(0);
         cs.setSubjectId(subjectDTO.getId());
-        curriculumSubjectService.save(cs);
+        cs.setSubjectSubjectName(subjectDTO.getSubjectName());
+        cs.setSubjectSubjectType(subjectDTO.getSubjectType());
+        return curriculumSubjectService.findOne(curriculumSubjectService.save(cs).getId());
     }
 
     public Set<LvaDTO> verifyLvas(CurriculumSemesterDTO curriculumSemesterDTO) {
 
-        if (curriculumSemesterDTO.getCurriculumCurId() == null) {
-            curriculumSemesterDTO = curriculumSemesterService.findOne(curriculumSemesterDTO.getId());
-        }
+        //if (curriculumSemesterDTO.getCurriculumCurId() == null) {
+        //    curriculumSemesterDTO = curriculumSemesterService.findOne(curriculumSemesterDTO.getId());
+        //}
 
         Resource resource = resourceLoader.getResource("classpath:xquery/lvas.xq");
         BufferedReader reader = null;
@@ -144,7 +156,8 @@ public class ImportService {
 
             Map<Pair<String, SubjectType>, CurriculumSubjectDTO> collect = curriculumSemesterDTO.getCurriculumSubjects().stream()
                 .collect(Collectors.toMap(c -> {
-                   return new Pair<>(c.getSubjectSubjectName(), c.getSubjectSubjectType());
+                    SubjectDTO a = subjectService.findOne(c.getSubjectId());
+                    return new Pair<>(a.getSubjectName(), a.getSubjectType());
 
                 }, c -> c));
 

@@ -16,7 +16,7 @@ import org.springframework.data.jpa.repository.*;
 @Repository
 public interface CurriculumSemesterRepository extends JpaRepository<CurriculumSemester,Long> {
 
-    @Query("select cs from CurriculumSemester cs left join fetch cs.curriculumSubjects where cs.id = :id")
+    @Query("select cs from CurriculumSemester cs left join fetch cs.curriculumSubjects left join fetch cs.curriculum where cs.id = :id")
     CurriculumSemester findOne(@Param("id") Long id);
 
     CurriculumSemester findByCurriculum_CurIdAndYearAndSemester(@Param("curId") Integer curId, @Param("year") Integer year, @Param("semester") Semester semester);

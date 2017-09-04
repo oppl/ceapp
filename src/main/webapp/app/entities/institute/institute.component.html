@@ -29,7 +29,6 @@
         <table class="table table-striped">
             <thead>
             <tr>
-            <th><span jhiTranslate="global.field.id">ID</span></th>
             <th><span jhiTranslate="ceappApp.institute.instituteId">Institute Id</span></th>
             <th><span jhiTranslate="ceappApp.institute.instituteName">Institute Name</span></th>
             <th></th>
@@ -37,7 +36,6 @@
             </thead>
             <tbody>
             <tr *ngFor="let institute of institutes ;trackBy: trackId">
-                <td><a [routerLink]="['../institute', institute.id ]">{{institute.id}}</a></td>
                 <td>{{institute.instituteId}}</td>
                 <td>{{institute.instituteName}}</td>
                 <td class="text-right">

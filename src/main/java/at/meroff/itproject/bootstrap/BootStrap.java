@@ -104,13 +104,6 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
 
         curriculumService.save(curriculumMapper.toDto(wirtschaftsinformatik));
 
-        // Ein Semester für das Curriculum Wirtschaftsinformatik anlegen
-        CurriculumSemesterDTO curriculumSemester = new CurriculumSemesterDTO();
-        curriculumSemester.setCurriculumId(wirtschaftsinformatik.getId());
-        curriculumSemester.setYear(2017);
-        curriculumSemester.setSemester(Semester.WS);
-
-        curriculumSemester = curriculumSemesterService.save(curriculumSemester);
 
         // Idealtypischen Plan für Wirtschaftsinformatik Bachelor
         IdealPlanDTO idealPlanDTO = new IdealPlanDTO();
@@ -123,9 +116,18 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
 
         createIdealPlan(idealPlanMapper.toEntity(idealPlanDTO));
 
-        Set<SubjectDTO> subjectDTOS = importService.verifySubjects(curriculumSemester);
 
-        importService.verifyLvas(curriculumSemester);
+        // Ein Semester für das Curriculum Wirtschaftsinformatik anlegen
+        CurriculumSemesterDTO curriculumSemester = new CurriculumSemesterDTO();
+        curriculumSemester.setCurriculumId(wirtschaftsinformatik.getId());
+        curriculumSemester.setYear(2017);
+        curriculumSemester.setSemester(Semester.WS);
+
+        curriculumSemester = curriculumSemesterService.save(curriculumSemester);
+
+        //Set<SubjectDTO> subjectDTOS = importService.verifySubjects(curriculumSemester);
+
+        //importService.verifyLvas(curriculumSemester);
 
         collisionService.calculateCollisions(204, 2017, Semester.WS, 2017, Semester.WS);
 
@@ -140,7 +142,7 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
 
 
 
-        importService.verifyLvas(curriculumSemester);
+        /*importService.verifyLvas(curriculumSemester);
 
         collisionService.calculateCollisions(204, 2016, Semester.WS, 2017, Semester.SS);
 
@@ -158,7 +160,7 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
         System.out.println(collect);
 
 
-        elasticsearchIndexService.reindexAll();
+        elasticsearchIndexService.reindexAll();*/
 
     }
 
