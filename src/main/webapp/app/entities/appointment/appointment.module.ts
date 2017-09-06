@@ -21,9 +21,6 @@ const ENTITY_STATES = [
 ];
 
 @NgModule({
-    exports: [
-        AppointmentComponent
-    ],
     imports: [
         CeappSharedModule,
         RouterModule.forRoot(ENTITY_STATES, { useHash: true })

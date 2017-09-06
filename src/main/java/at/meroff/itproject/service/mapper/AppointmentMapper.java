@@ -15,7 +15,7 @@ public interface AppointmentMapper extends EntityMapper <AppointmentDTO, Appoint
     @Mapping(source = "lva.lvaNr", target = "lvaLvaNr")
     @Mapping(source = "startDateTime", target = "start")
     @Mapping(source = "endDateTime", target = "end")
-    @Mapping(source = "lva.lvaNr", target = "title")
+    @Mapping(source = "title", target = "title")
     AppointmentDTO toDto(Appointment appointment);
 
     @Mapping(source = "lvaId", target = "lva")
