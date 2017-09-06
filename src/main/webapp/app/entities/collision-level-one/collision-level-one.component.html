@@ -24,10 +24,11 @@
         </ng-template>
     </p-column>
     <ng-template pTemplate="rowexpansion">
-        <div style="background-color: lightblue; padding-top: 10px; padding-bottom: 10px; padding-left: 2px; padding-right: 2px; margin: -12px;">
+        <div style="background-color: blue; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; margin: -12px;">
         <p-dataTable [value]="levelTwo" sortMode="multiple" expandableRows="true" rowExpandMode="single" selectionMode="none" (onRowExpand)="onRowExpand2($event)" dataKey="id">
             <p-column expander="true" styleClass="col-icon" [style]="{'width':'49px'}"></p-column>
             <p-column field="lva.lvaNr" header="LVA-Nr" [sortable]="true"></p-column>
+            <p-column field="lva.subjectSubjectName" header="Fach" [sortable]="true"></p-column>
             <p-column field="examCollision" header="Exam" [sortable]="true" [style]="{'width':'100px'}" styleClass="text-right"></p-column>
             <p-column field="instituteCollision" header="Inst" [sortable]="true" [style]="{'width':'100px'}" styleClass="text-right"></p-column>
             <p-column field="curriculumCollision" header="Curr" [sortable]="true" [style]="{'width':'100px'}" styleClass="text-right"></p-column>
@@ -44,13 +45,12 @@
                 </ng-template>
             </p-column>
             <ng-template pTemplate="rowexpansion">
-                <div style="background-color: lightgoldenrodyellow; padding-top: 10px; padding-bottom: 10px; padding-left: 2px; padding-right: 2px; margin: -12px;">
+                <div style="background-color: dodgerblue; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; margin: -12px;">
                 <p-dataTable [value]="levelThree" sortMode="multiple" expandableRows="true" rowExpandMode="single" selectionMode="none" (onRowExpand)="onRowExpand3($event)" dataKey="id">
                     <p-column expander="true" styleClass="col-icon" [style]="{'width':'49px'}"></p-column>
                     <p-column field="curriculumSubject.subjectSubjectName" header="Subject" [sortable]="true"></p-column>
                     <p-column field="curriculumSubject.subjectSubjectType" [style]="{'width':'100px'}" header="Typ" [sortable]="true"></p-column>
-                    <p-column field="curriculumSubject.countLvas" [style]="{'width':'100px'}" header="LVAs
-" [sortable]="true"></p-column>
+                    <p-column field="curriculumSubject.countLvas" [style]="{'width':'100px'}" header="LVAs" [sortable]="true"></p-column>
                     <p-column field="examCollision" header="Exam" [sortable]="true" [style]="{'width':'100px'}" styleClass="text-right"></p-column>
                     <p-column field="instituteCollision" header="Inst" [sortable]="true" [style]="{'width':'100px'}" styleClass="text-right"></p-column>
                     <p-column field="curriculumCollision" header="Curr" [sortable]="true" [style]="{'width':'100px'}" styleClass="text-right"></p-column>
@@ -67,10 +67,11 @@
                         </ng-template>
                     </p-column>
                     <ng-template pTemplate="rowexpansion">
-                        <div style="background-color: lightsalmon; padding-top: 10px; padding-bottom: 10px; padding-left: 2px; padding-right: 2px; margin: -12px;">
+                        <div style="background-color: lightskyblue; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; margin: -12px;">
                         <p-dataTable [value]="levelFour" sortMode="multiple" expandableRows="true" rowExpandMode="single" selectionMode="none" (onRowExpand)="onRowExpand4($event)" dataKey="id">
                             <p-column expander="true" styleClass="col-icon" [style]="{'width':'49px'}"></p-column>
                             <p-column field="lva.lvaNr" header="LVA-Nr" [sortable]="true"></p-column>
+                            <p-column field="lva.subjectSubjectName" header="Fach" [sortable]="true"></p-column>
                             <p-column field="examCollision" header="Exam" [sortable]="true" [style]="{'width':'100px'}" styleClass="text-right"></p-column>
                             <p-column field="instituteCollision" header="Inst" [sortable]="true" [style]="{'width':'100px'}" styleClass="text-right"></p-column>
                             <p-column field="curriculumCollision" header="Curr" [sortable]="true" [style]="{'width':'100px'}" styleClass="text-right"></p-column>
@@ -84,10 +85,18 @@
                             </ng-template>
                             </p-column>
                             <ng-template pTemplate="rowexpansion">
-                                <div style="background-color: lightgray; padding-top: 10px; padding-bottom: 10px; padding-left: 2px; padding-right: 2px; margin: -12px;">
+                                <div style="background-color: lightblue; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; margin: -12px;">
                                 <p-dataTable [value]="levelFive" sortMode="multiple">
-                                    <p-column field="sourceAppointment.startDateTime" header="Start" [sortable]="true"></p-column>
-                                    <p-column field="sourceAppointment.endDateTime" header="Ende" [sortable]="true"></p-column>
+                                    <p-column field="sourceAppointment.startDateTime" header="Start" [sortable]="true">
+                                        <ng-template let-cso="rowData" pTemplate type="body">
+                                            {{cso.sourceAppointment.startDateTime | 'dd.MM.yyyy HH:mm'}}
+                                        </ng-template>
+                                    </p-column>
+                                    <p-column field="sourceAppointment.endDateTime" header="Ende" [sortable]="true">
+                                        <ng-template let-cso="rowData" pTemplate type="body">
+                                            {{cso.sourceAppointment.endDateTime | 'dd.MM.yyyy HH:mm'}}
+                                        </ng-template>
+                                    </p-column>
                                     <p-column field="sourceAppointment.theme" header="Thema" [sortable]="true"></p-column>
                                     <p-column field="sourceAppointment.room" header="Raum" [sortable]="true"></p-column>
                                     <p-column field="examCollision" header="Exam" [sortable]="true" [style]="{'width':'100px'}" styleClass="text-right"></p-column>
@@ -104,3 +113,4 @@
         </div>
     </ng-template>
 </p-dataTable>
+
