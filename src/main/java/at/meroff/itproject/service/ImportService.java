@@ -171,7 +171,7 @@ public class ImportService {
                 lvaDTO.setSubjectId(curriculumSubjectDTO.getSubjectId());
                 lvaDTO.setInstituteId(instituteService.findByInstituteId(Integer.parseInt(xmlLva.getId().substring(0,3))).getId());
                 lvaDTO = lvaService.save(lvaDTO);
-                int countAppointments = createAppointments(xmlLva.getCourseDates(), lvaDTO);
+                int countAppointments = createAppointments(xmlLva.getCourseDates(), lvaDTO, xmlLva.getName(), SubjectType.valueOf(xmlLva.getSubjectType()));
                 lvaDTO.setCountAppointments(countAppointments);
                 lvaDTO = lvaService.save(lvaDTO);
                 ret.add(lvaDTO);
@@ -195,7 +195,7 @@ public class ImportService {
         return ret;
     }
 
-    private int createAppointments(Set<CourseDate> courseDates, LvaDTO lvaDTO) {
+    private int createAppointments(Set<CourseDate> courseDates, LvaDTO lvaDTO, String subjectSubjectName, SubjectType subjectSubjectType) {
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm");
         Set<AppointmentDTO> collect = courseDates.stream().map(courseDate -> {
@@ -223,6 +223,13 @@ public class ImportService {
             }
 
             appointmentDTO.setLvaId(lvaDTO.getId());
+            String subs = "";
+            if (subjectSubjectName.length() <= 10) {
+                subs = subjectSubjectName;
+            } else {
+                subs = subjectSubjectName.substring(0,9);
+            }
+            appointmentDTO.setTitle(lvaDTO.getLvaNr() + " " + subs + " " + subjectSubjectType);
             return appointmentService.save(appointmentDTO);
         }).collect(Collectors.toSet());
 

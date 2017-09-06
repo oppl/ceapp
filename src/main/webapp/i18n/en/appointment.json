@@ -21,6 +21,7 @@
             "isExam": "Is Exam",
             "room": "Room",
             "theme": "Theme",
+            "title": "Title",
             "lva": "Lva"
         }
     }

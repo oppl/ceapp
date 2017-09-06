@@ -61,6 +61,9 @@ public class AppointmentResourceIntTest {
     private static final String DEFAULT_THEME = "AAAAAAAAAA";
     private static final String UPDATED_THEME = "BBBBBBBBBB";
 
+    private static final String DEFAULT_TITLE = "AAAAAAAAAA";
+    private static final String UPDATED_TITLE = "BBBBBBBBBB";
+
     @Autowired
     private AppointmentRepository appointmentRepository;
 
@@ -111,7 +114,8 @@ public class AppointmentResourceIntTest {
             .endDateTime(DEFAULT_END_DATE_TIME)
             .isExam(DEFAULT_IS_EXAM)
             .room(DEFAULT_ROOM)
-            .theme(DEFAULT_THEME);
+            .theme(DEFAULT_THEME)
+            .title(DEFAULT_TITLE);
         return appointment;
     }
 
@@ -142,6 +146,7 @@ public class AppointmentResourceIntTest {
         assertThat(testAppointment.isIsExam()).isEqualTo(DEFAULT_IS_EXAM);
         assertThat(testAppointment.getRoom()).isEqualTo(DEFAULT_ROOM);
         assertThat(testAppointment.getTheme()).isEqualTo(DEFAULT_THEME);
+        assertThat(testAppointment.getTitle()).isEqualTo(DEFAULT_TITLE);
 
         // Validate the Appointment in Elasticsearch
         Appointment appointmentEs = appointmentSearchRepository.findOne(testAppointment.getId());
@@ -240,7 +245,8 @@ public class AppointmentResourceIntTest {
             .andExpect(jsonPath("$.[*].endDateTime").value(hasItem(sameInstant(DEFAULT_END_DATE_TIME))))
             .andExpect(jsonPath("$.[*].isExam").value(hasItem(DEFAULT_IS_EXAM.booleanValue())))
             .andExpect(jsonPath("$.[*].room").value(hasItem(DEFAULT_ROOM.toString())))
-            .andExpect(jsonPath("$.[*].theme").value(hasItem(DEFAULT_THEME.toString())));
+            .andExpect(jsonPath("$.[*].theme").value(hasItem(DEFAULT_THEME.toString())))
+            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE.toString())));
     }
 
     @Test
@@ -258,7 +264,8 @@ public class AppointmentResourceIntTest {
             .andExpect(jsonPath("$.endDateTime").value(sameInstant(DEFAULT_END_DATE_TIME)))
             .andExpect(jsonPath("$.isExam").value(DEFAULT_IS_EXAM.booleanValue()))
             .andExpect(jsonPath("$.room").value(DEFAULT_ROOM.toString()))
-            .andExpect(jsonPath("$.theme").value(DEFAULT_THEME.toString()));
+            .andExpect(jsonPath("$.theme").value(DEFAULT_THEME.toString()))
+            .andExpect(jsonPath("$.title").value(DEFAULT_TITLE.toString()));
     }
 
     @Test
@@ -284,7 +291,8 @@ public class AppointmentResourceIntTest {
             .endDateTime(UPDATED_END_DATE_TIME)
             .isExam(UPDATED_IS_EXAM)
             .room(UPDATED_ROOM)
-            .theme(UPDATED_THEME);
+            .theme(UPDATED_THEME)
+            .title(UPDATED_TITLE);
         AppointmentDTO appointmentDTO = appointmentMapper.toDto(updatedAppointment);
 
         restAppointmentMockMvc.perform(put("/api/appointments")
@@ -301,6 +309,7 @@ public class AppointmentResourceIntTest {
         assertThat(testAppointment.isIsExam()).isEqualTo(UPDATED_IS_EXAM);
         assertThat(testAppointment.getRoom()).isEqualTo(UPDATED_ROOM);
         assertThat(testAppointment.getTheme()).isEqualTo(UPDATED_THEME);
+        assertThat(testAppointment.getTitle()).isEqualTo(UPDATED_TITLE);
 
         // Validate the Appointment in Elasticsearch
         Appointment appointmentEs = appointmentSearchRepository.findOne(testAppointment.getId());
@@ -364,7 +373,8 @@ public class AppointmentResourceIntTest {
             .andExpect(jsonPath("$.[*].endDateTime").value(hasItem(sameInstant(DEFAULT_END_DATE_TIME))))
             .andExpect(jsonPath("$.[*].isExam").value(hasItem(DEFAULT_IS_EXAM.booleanValue())))
             .andExpect(jsonPath("$.[*].room").value(hasItem(DEFAULT_ROOM.toString())))
-            .andExpect(jsonPath("$.[*].theme").value(hasItem(DEFAULT_THEME.toString())));
+            .andExpect(jsonPath("$.[*].theme").value(hasItem(DEFAULT_THEME.toString())))
+            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE.toString())));
     }
 
     @Test

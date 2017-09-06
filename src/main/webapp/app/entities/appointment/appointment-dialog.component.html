@@ -67,6 +67,11 @@
             <input type="text" class="form-control" name="theme" id="field_theme"
                 [(ngModel)]="appointment.theme"  />
         </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="ceappApp.appointment.title" for="field_title">Title</label>
+            <input type="text" class="form-control" name="title" id="field_title"
+                [(ngModel)]="appointment.title"  />
+        </div>
 
         <div class="form-group">
             <label jhiTranslate="ceappApp.appointment.lva" for="field_lva">Lva</label>

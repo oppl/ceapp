@@ -8,6 +8,7 @@ export class Appointment implements BaseEntity {
         public isExam?: boolean,
         public room?: string,
         public theme?: string,
+        public title?: string,
         public lvaId?: number,
     ) {
         this.isExam = false;
