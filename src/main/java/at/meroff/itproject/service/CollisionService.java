@@ -169,6 +169,7 @@ public class CollisionService {
             levelOne.setColWS(levelTwo.stream().filter(l -> l.isColWS()).findFirst().isPresent());
             levelOne.setColSS(levelTwo.stream().filter(l -> l.isColSS()).findFirst().isPresent());
             levelOne.setInstitute(levelTwo.stream().findAny().get().getLva().getInstitute());
+            levelOne.setCountCollisionLvas(levelTwo.size());
             levelTwo.forEach(l -> l.setCollisionLevelOne(levelOne));
             levelOne.setCollisionLevelTwos(levelTwo);
             levelOne.setCurriculumSubject(cs);
@@ -370,9 +371,6 @@ public class CollisionService {
     /**
      * Diese Methode liest einen spezifischen idealtypischen Studienverlauf aus und liefert eine Map der
      * enthaltenen Fächer zurück.
-     * @param curId
-     * @param year
-     * @param semester
      * @return
      */
     private Map<Pair<String, SubjectType>, IdealPlanEntries> getIdealPlanMap(IdealPlan idealPlan) {

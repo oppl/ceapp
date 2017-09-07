@@ -62,6 +62,9 @@ public class CollisionLevelOneResourceIntTest {
     private static final Boolean DEFAULT_COL_SS = false;
     private static final Boolean UPDATED_COL_SS = true;
 
+    private static final Integer DEFAULT_COUNT_COLLISION_LVAS = 1;
+    private static final Integer UPDATED_COUNT_COLLISION_LVAS = 2;
+
     @Autowired
     private CollisionLevelOneRepository collisionLevelOneRepository;
 
@@ -114,7 +117,8 @@ public class CollisionLevelOneResourceIntTest {
             .collisionValueAvg(DEFAULT_COLLISION_VALUE_AVG)
             .collisionValueMax(DEFAULT_COLLISION_VALUE_MAX)
             .colWS(DEFAULT_COL_WS)
-            .colSS(DEFAULT_COL_SS);
+            .colSS(DEFAULT_COL_SS)
+            .countCollisionLvas(DEFAULT_COUNT_COLLISION_LVAS);
         return collisionLevelOne;
     }
 
@@ -147,6 +151,7 @@ public class CollisionLevelOneResourceIntTest {
         assertThat(testCollisionLevelOne.getCollisionValueMax()).isEqualTo(DEFAULT_COLLISION_VALUE_MAX);
         assertThat(testCollisionLevelOne.isColWS()).isEqualTo(DEFAULT_COL_WS);
         assertThat(testCollisionLevelOne.isColSS()).isEqualTo(DEFAULT_COL_SS);
+        assertThat(testCollisionLevelOne.getCountCollisionLvas()).isEqualTo(DEFAULT_COUNT_COLLISION_LVAS);
 
         // Validate the CollisionLevelOne in Elasticsearch
         CollisionLevelOne collisionLevelOneEs = collisionLevelOneSearchRepository.findOne(testCollisionLevelOne.getId());
@@ -190,7 +195,8 @@ public class CollisionLevelOneResourceIntTest {
             .andExpect(jsonPath("$.[*].collisionValueAvg").value(hasItem(DEFAULT_COLLISION_VALUE_AVG.doubleValue())))
             .andExpect(jsonPath("$.[*].collisionValueMax").value(hasItem(DEFAULT_COLLISION_VALUE_MAX.doubleValue())))
             .andExpect(jsonPath("$.[*].colWS").value(hasItem(DEFAULT_COL_WS.booleanValue())))
-            .andExpect(jsonPath("$.[*].colSS").value(hasItem(DEFAULT_COL_SS.booleanValue())));
+            .andExpect(jsonPath("$.[*].colSS").value(hasItem(DEFAULT_COL_SS.booleanValue())))
+            .andExpect(jsonPath("$.[*].countCollisionLvas").value(hasItem(DEFAULT_COUNT_COLLISION_LVAS)));
     }
 
     @Test
@@ -210,7 +216,8 @@ public class CollisionLevelOneResourceIntTest {
             .andExpect(jsonPath("$.collisionValueAvg").value(DEFAULT_COLLISION_VALUE_AVG.doubleValue()))
             .andExpect(jsonPath("$.collisionValueMax").value(DEFAULT_COLLISION_VALUE_MAX.doubleValue()))
             .andExpect(jsonPath("$.colWS").value(DEFAULT_COL_WS.booleanValue()))
-            .andExpect(jsonPath("$.colSS").value(DEFAULT_COL_SS.booleanValue()));
+            .andExpect(jsonPath("$.colSS").value(DEFAULT_COL_SS.booleanValue()))
+            .andExpect(jsonPath("$.countCollisionLvas").value(DEFAULT_COUNT_COLLISION_LVAS));
     }
 
     @Test
@@ -238,7 +245,8 @@ public class CollisionLevelOneResourceIntTest {
             .collisionValueAvg(UPDATED_COLLISION_VALUE_AVG)
             .collisionValueMax(UPDATED_COLLISION_VALUE_MAX)
             .colWS(UPDATED_COL_WS)
-            .colSS(UPDATED_COL_SS);
+            .colSS(UPDATED_COL_SS)
+            .countCollisionLvas(UPDATED_COUNT_COLLISION_LVAS);
         CollisionLevelOneDTO collisionLevelOneDTO = collisionLevelOneMapper.toDto(updatedCollisionLevelOne);
 
         restCollisionLevelOneMockMvc.perform(put("/api/collision-level-ones")
@@ -257,6 +265,7 @@ public class CollisionLevelOneResourceIntTest {
         assertThat(testCollisionLevelOne.getCollisionValueMax()).isEqualTo(UPDATED_COLLISION_VALUE_MAX);
         assertThat(testCollisionLevelOne.isColWS()).isEqualTo(UPDATED_COL_WS);
         assertThat(testCollisionLevelOne.isColSS()).isEqualTo(UPDATED_COL_SS);
+        assertThat(testCollisionLevelOne.getCountCollisionLvas()).isEqualTo(UPDATED_COUNT_COLLISION_LVAS);
 
         // Validate the CollisionLevelOne in Elasticsearch
         CollisionLevelOne collisionLevelOneEs = collisionLevelOneSearchRepository.findOne(testCollisionLevelOne.getId());
@@ -322,7 +331,8 @@ public class CollisionLevelOneResourceIntTest {
             .andExpect(jsonPath("$.[*].collisionValueAvg").value(hasItem(DEFAULT_COLLISION_VALUE_AVG.doubleValue())))
             .andExpect(jsonPath("$.[*].collisionValueMax").value(hasItem(DEFAULT_COLLISION_VALUE_MAX.doubleValue())))
             .andExpect(jsonPath("$.[*].colWS").value(hasItem(DEFAULT_COL_WS.booleanValue())))
-            .andExpect(jsonPath("$.[*].colSS").value(hasItem(DEFAULT_COL_SS.booleanValue())));
+            .andExpect(jsonPath("$.[*].colSS").value(hasItem(DEFAULT_COL_SS.booleanValue())))
+            .andExpect(jsonPath("$.[*].countCollisionLvas").value(hasItem(DEFAULT_COUNT_COLLISION_LVAS)));
     }
 
     @Test

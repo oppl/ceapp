@@ -48,6 +48,9 @@ public class CollisionLevelOne implements Serializable {
     @Column(name = "col_ss")
     private Boolean colSS;
 
+    @Column(name = "count_collision_lvas")
+    private Integer countCollisionLvas;
+
     @ManyToOne
     private CurriculumSubject curriculumSubject;
 
@@ -161,6 +164,19 @@ public class CollisionLevelOne implements Serializable {
         this.colSS = colSS;
     }
 
+    public Integer getCountCollisionLvas() {
+        return countCollisionLvas;
+    }
+
+    public CollisionLevelOne countCollisionLvas(Integer countCollisionLvas) {
+        this.countCollisionLvas = countCollisionLvas;
+        return this;
+    }
+
+    public void setCountCollisionLvas(Integer countCollisionLvas) {
+        this.countCollisionLvas = countCollisionLvas;
+    }
+
     public CurriculumSubject getCurriculumSubject() {
         return curriculumSubject;
     }
@@ -256,6 +272,7 @@ public class CollisionLevelOne implements Serializable {
             ", collisionValueMax='" + getCollisionValueMax() + "'" +
             ", colWS='" + isColWS() + "'" +
             ", colSS='" + isColSS() + "'" +
+            ", countCollisionLvas='" + getCountCollisionLvas() + "'" +
             "}";
     }
 }
