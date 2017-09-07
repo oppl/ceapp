@@ -37,6 +37,7 @@
             <th><span jhiTranslate="ceappApp.collisionLevelThree.collisionValueMax">Collision Value Max</span></th>
             <th><span jhiTranslate="ceappApp.collisionLevelThree.colWS">Col WS</span></th>
             <th><span jhiTranslate="ceappApp.collisionLevelThree.colSS">Col SS</span></th>
+            <th><span jhiTranslate="ceappApp.collisionLevelThree.countCollisionLvas">Count Collision Lvas</span></th>
             <th><span jhiTranslate="ceappApp.collisionLevelThree.collisionLevelTwo">Collision Level Two</span></th>
             <th><span jhiTranslate="ceappApp.collisionLevelThree.curriculumSubject">Curriculum Subject</span></th>
             <th></th>
@@ -52,6 +53,7 @@
                 <td>{{collisionLevelThree.collisionValueMax}}</td>
                 <td>{{collisionLevelThree.colWS}}</td>
                 <td>{{collisionLevelThree.colSS}}</td>
+                <td>{{collisionLevelThree.countCollisionLvas}}</td>
                 <td>
                     <div *ngIf="collisionLevelThree.collisionLevelTwoId">
                         <a [routerLink]="['../collision-level-two', collisionLevelThree.collisionLevelTwoId  ]" >{{collisionLevelThree.collisionLevelTwoId}}</a>

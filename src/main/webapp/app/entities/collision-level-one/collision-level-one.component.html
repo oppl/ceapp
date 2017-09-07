@@ -6,7 +6,11 @@
     <p-column expander="true" styleClass="col-icon" [style]="{'width':'49px'}"></p-column>
     <p-column field="curriculumSubject.subjectSubjectName" header="Subject" [sortable]="true" [filter]="true"></p-column>
     <p-column field="curriculumSubject.subjectSubjectType" [style]="{'width':'49px'}" header="Typ" [sortable]="true"></p-column>
-    <p-column field="curriculumSubject.countLvas" [style]="{'width':'49px'}" header="LVAs" [sortable]="true"></p-column>
+    <p-column field="curriculumSubject.countLvas" [style]="{'width':'100px'}" header="LVAs" [sortable]="true">
+        <ng-template let-cso="rowData" pTemplate type="body">
+            {{cso.countCollisionLvas}} / {{cso.curriculumSubject.countLvas}}
+        </ng-template>
+    </p-column>
     <p-column field="instituteInstituteName" header="Institut" [sortable]="true" [filter]="true" filterMatchMode="contains"></p-column>
     <p-column field="examCollision" header="Exam" [sortable]="true" [style]="{'width':'100px'}" styleClass="text-right"></p-column>
     <p-column field="instituteCollision" header="Inst" [sortable]="true" [style]="{'width':'100px'}" styleClass="text-right"></p-column>
@@ -50,8 +54,11 @@
                     <p-column expander="true" styleClass="col-icon" [style]="{'width':'49px'}"></p-column>
                     <p-column field="curriculumSubject.subjectSubjectName" header="Subject" [sortable]="true"></p-column>
                     <p-column field="curriculumSubject.subjectSubjectType" [style]="{'width':'100px'}" header="Typ" [sortable]="true"></p-column>
-                    <p-column field="curriculumSubject.countLvas" [style]="{'width':'100px'}" header="LVAs
-" [sortable]="true"></p-column>
+                    <p-column field="curriculumSubject.countLvas" [style]="{'width':'100px'}" header="LVAs" [sortable]="true">
+                        <ng-template let-cso="rowData" pTemplate type="body">
+                            {{cso.countCollisionLvas}} / {{cso.curriculumSubject.countLvas}}
+                        </ng-template>
+                    </p-column>
                     <p-column field="examCollision" header="Exam" [sortable]="true" [style]="{'width':'100px'}" styleClass="text-right"></p-column>
                     <p-column field="instituteCollision" header="Inst" [sortable]="true" [style]="{'width':'100px'}" styleClass="text-right"></p-column>
                     <p-column field="curriculumCollision" header="Curr" [sortable]="true" [style]="{'width':'100px'}" styleClass="text-right"></p-column>

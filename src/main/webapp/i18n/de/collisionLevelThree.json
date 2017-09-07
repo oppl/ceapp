@@ -23,6 +23,7 @@
             "collisionValueMax": "Collision Value Max",
             "colWS": "Col WS",
             "colSS": "Col SS",
+            "countCollisionLvas": "Count Collision Lvas",
             "collisionLevelTwo": "Collision Level Two",
             "collisionLevelFour": "Collision Level Four",
             "curriculumSubject": "Curriculum Subject"
