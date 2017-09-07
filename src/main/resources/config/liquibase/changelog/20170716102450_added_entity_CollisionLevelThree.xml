@@ -49,6 +49,10 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="count_collision_lvas" type="integer">
+                <constraints nullable="true" />
+            </column>
+
             <column name="collision_level_two_id" type="bigint">
                 <constraints nullable="true" />
             </column>

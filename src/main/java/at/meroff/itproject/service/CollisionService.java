@@ -220,6 +220,7 @@ public class CollisionService {
             levelThree.setCollisionValueAvg(levelFours.stream().mapToDouble(l -> l.getCollisionValue()).sum() / targetLvas.size());
             levelThree.setExamCollision(levelFours.stream().mapToInt(l -> l.getExamCollision()).sum());
             levelThree.setCurriculumSubject(collisionSubject);
+            levelThree.setCountCollisionLvas(levelFours.size());
             levelFours.forEach(l -> l.setCollisionLevelThree(levelThree));
             levelThree.setCollisionLevelFours(levelFours);
             IdealPlanEntries s = idealPlanMap.get(new Pair<>(sourceLva.getSubject().getSubjectName(), sourceLva.getSubject().getSubjectType()));
