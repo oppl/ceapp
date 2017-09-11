@@ -54,6 +54,10 @@
         {
             "fieldName": "colSS",
             "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "countCollisionLvas",
+            "fieldType": "Integer"
         }
     ],
     "changelogDate": "20170716095855",

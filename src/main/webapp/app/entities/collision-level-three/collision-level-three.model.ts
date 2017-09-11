@@ -10,6 +10,7 @@ export class CollisionLevelThree implements BaseEntity {
         public collisionValueMax?: number,
         public colWS?: boolean,
         public colSS?: boolean,
+        public countCollisionLvas?: number,
         public collisionLevelTwoId?: number,
         public collisionLevelFours?: BaseEntity[],
         public curriculumSubjectId?: number,

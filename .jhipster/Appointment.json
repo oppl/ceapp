@@ -37,6 +37,10 @@
         {
             "fieldName": "theme",
             "fieldType": "String"
+        },
+        {
+            "fieldName": "title",
+            "fieldType": "String"
         }
     ],
     "changelogDate": "20170709150643",

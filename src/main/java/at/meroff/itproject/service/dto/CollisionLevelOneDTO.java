@@ -27,6 +27,8 @@ public class CollisionLevelOneDTO implements Serializable {
 
     private Boolean colSS;
 
+    private Integer countCollisionLvas;
+
     private Long curriculumSubjectId;
 
     private Long idealPlanId;
@@ -101,6 +103,14 @@ public class CollisionLevelOneDTO implements Serializable {
         this.colSS = colSS;
     }
 
+    public Integer getCountCollisionLvas() {
+        return countCollisionLvas;
+    }
+
+    public void setCountCollisionLvas(Integer countCollisionLvas) {
+        this.countCollisionLvas = countCollisionLvas;
+    }
+
     public Long getCurriculumSubjectId() {
         return curriculumSubjectId;
     }
@@ -173,6 +183,7 @@ public class CollisionLevelOneDTO implements Serializable {
             ", collisionValueMax='" + getCollisionValueMax() + "'" +
             ", colWS='" + isColWS() + "'" +
             ", colSS='" + isColSS() + "'" +
+            ", countCollisionLvas='" + getCountCollisionLvas() + "'" +
             "}";
     }
 }

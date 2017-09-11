@@ -155,6 +155,7 @@ public class AppointmentDTO implements Serializable {
             ", isExam='" + isIsExam() + "'" +
             ", room='" + getRoom() + "'" +
             ", theme='" + getTheme() + "'" +
+            ", title='" + getTitle() + "'" +
             "}";
     }
 }

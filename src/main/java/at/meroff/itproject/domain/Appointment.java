@@ -44,6 +44,9 @@ public class Appointment implements Serializable {
     @Column(name = "theme")
     private String theme;
 
+    @Column(name = "title")
+    private String title;
+
     @ManyToOne
     private Lva lva;
 
@@ -120,6 +123,19 @@ public class Appointment implements Serializable {
         this.theme = theme;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public Appointment title(String title) {
+        this.title = title;
+        return this;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public Lva getLva() {
         return lva;
     }
@@ -162,6 +178,7 @@ public class Appointment implements Serializable {
             ", isExam='" + isIsExam() + "'" +
             ", room='" + getRoom() + "'" +
             ", theme='" + getTheme() + "'" +
+            ", title='" + getTitle() + "'" +
             "}";
     }
 }
