@@ -1,6 +1,11 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
+import 'jquery';
+import 'moment';
+import 'fullcalendar';
+import { DataTableModule, ScheduleModule, SharedModule} from 'primeng/primeng';
+
 import { CeappSharedModule } from '../../shared';
 import {
     AppointmentService,
@@ -23,7 +28,10 @@ const ENTITY_STATES = [
 @NgModule({
     imports: [
         CeappSharedModule,
-        RouterModule.forRoot(ENTITY_STATES, { useHash: true })
+        RouterModule.forRoot(ENTITY_STATES, { useHash: true }),
+        DataTableModule,
+        SharedModule,
+        ScheduleModule
     ],
     declarations: [
         AppointmentComponent,
