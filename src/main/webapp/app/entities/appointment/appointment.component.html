@@ -1,4 +1,24 @@
 <div>
+    <p-schedule [events]="events"
+                [header]="headerConfig"
+                [hiddenDays]="hiddenDays"
+                [locale]="locale"
+                [columnFormat]="columnFormat"
+                [defaultView]="defaultView"
+                [defaultDate]="defaultDate"
+                [scrollTime]="scrollTime"
+                [minTime]="minTime"
+                [maxTime]="maxTime"
+                [slotLabelInterval]="slotLabelInterval"
+                [slotLabelFormat]="slotLabelFormat"
+                [weekNumbersWithinDays]="weekNumbersWithinDays"
+                [contentHeight] = "contentHeight"
+                [timeFormat]="timeFormat"
+                [titleFormat]="titleFormat"
+                [eventColor]="eventColor"
+    ></p-schedule>
+
+<!--
     <h2>
         <span jhiTranslate="ceappApp.appointment.home.title">Appointments</span>
         <button class="btn btn-primary float-right create-appointment" [routerLink]="['/', { outlets: { popup: ['appointment-new'] } }]">
@@ -82,4 +102,6 @@
             </tbody>
         </table>
     </div>
+!-->
+
 </div>
