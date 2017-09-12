@@ -5,8 +5,7 @@ import { JhiEventManager, JhiParseLinks, JhiPaginationUtil, JhiLanguageService, 
 
 import { Appointment } from './appointment.model';
 import { AppointmentService } from './appointment.service';
-import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
-import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
+import { Principal, ResponseWrapper } from '../../shared';
 
 @Component({
     selector: 'jhi-appointment',
@@ -17,6 +16,25 @@ appointments: Appointment[];
     currentAccount: any;
     eventSubscriber: Subscription;
     currentSearch: string;
+    event: any[];
+    events: any[];
+    headerConfig: any;
+    hiddenDays: any[];
+    locale: string;
+    columnFormat: string;
+    defaultView: string;
+    defaultDate: string;
+    scrollTime: string;
+    minTime: string;
+    maxTime: string;
+    slotLabelInterval: string;
+    slotLabelFormat: string;
+    timeFormat: string;
+    weekNumbersWithinDays: boolean;
+    contentHeight: any;
+    views: any;
+    titleFormat: any;
+    eventColor: any;
 
     constructor(
         private appointmentService: AppointmentService,
@@ -26,6 +44,31 @@ appointments: Appointment[];
         private principal: Principal
     ) {
         this.currentSearch = activatedRoute.snapshot.params['search'] ? activatedRoute.snapshot.params['search'] : '';
+
+        this.headerConfig = {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay'
+                };
+        this.hiddenDays =  [ 0 ];
+        this.locale = 'de';
+        this.columnFormat = 'D ddd';
+        this.defaultView = 'agendaWeek';
+        this.defaultDate = (new Date).getFullYear() + '-10-03';
+        this.scrollTime = '08:00:00';
+        this.minTime = '08:00:00';
+        this.maxTime = '22:00:00';
+        this.slotLabelInterval = '00:15:00';
+        this.weekNumbersWithinDays = true;
+        this.contentHeight = 800;
+        this.timeFormat = 'hh:mm';
+        this.titleFormat = 'D MM YYYY';
+        this.appointmentService.query2(1151, 3).subscribe(
+            (res: ResponseWrapper) => {
+                this.events = res.json;
+            },
+            (res: ResponseWrapper) => this.onError(res.json)
+        );
     }
 
     loadAll() {
