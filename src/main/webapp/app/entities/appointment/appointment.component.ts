@@ -4,15 +4,18 @@ import { Subscription } from 'rxjs/Rx';
 import { JhiEventManager, JhiParseLinks, JhiPaginationUtil, JhiLanguageService, JhiAlertService } from 'ng-jhipster';
 
 import { Appointment } from './appointment.model';
+import { IdealPlan} from '../ideal-plan/ideal-plan.model';
 import { AppointmentService } from './appointment.service';
 import { Principal, ResponseWrapper } from '../../shared';
+import {IdealPlanService} from '../ideal-plan/ideal-plan.service';
 
 @Component({
     selector: 'jhi-appointment',
     templateUrl: './appointment.component.html'
 })
 export class AppointmentComponent implements OnInit, OnDestroy {
-appointments: Appointment[];
+    appointments: Appointment[];
+    idealPlans: IdealPlan[];
     currentAccount: any;
     eventSubscriber: Subscription;
     currentSearch: string;
@@ -32,24 +35,23 @@ appointments: Appointment[];
     timeFormat: string;
     weekNumbersWithinDays: boolean;
     contentHeight: any;
-    views: any;
     titleFormat: any;
     eventColor: any;
-
+    semesters: any[];
     constructor(
         private appointmentService: AppointmentService,
+        private idealPlanService: IdealPlanService,
         private alertService: JhiAlertService,
         private eventManager: JhiEventManager,
         private activatedRoute: ActivatedRoute,
         private principal: Principal
     ) {
         this.currentSearch = activatedRoute.snapshot.params['search'] ? activatedRoute.snapshot.params['search'] : '';
-
         this.headerConfig = {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'month,agendaWeek,agendaDay'
-                };
+            left: 'prev,next today',
+            center: 'title',
+            right: 'month,agendaWeek,agendaDay'
+        };
         this.hiddenDays =  [ 0 ];
         this.locale = 'de';
         this.columnFormat = 'D ddd';
@@ -63,9 +65,23 @@ appointments: Appointment[];
         this.contentHeight = 800;
         this.timeFormat = 'hh:mm';
         this.titleFormat = 'D MM YYYY';
+        this.semesters = [
+            { semester: '1 Semester', TotalCount: 1 },
+            { semester: '2 Semester', TotalCount: 2 },
+            { semester: '3 Semester', TotalCount: 3 },
+            { semester: '4 Semester', TotalCount: 4 },
+            { semester: '5 Semester', TotalCount: 5 },
+            { semester: '6 Semester', TotalCount: 6 }];
         this.appointmentService.query2(1151, 3).subscribe(
             (res: ResponseWrapper) => {
                 this.events = res.json;
+            },
+            (res: ResponseWrapper) => this.onError(res.json)
+        );
+        this.idealPlanService.query().subscribe(
+            (res: ResponseWrapper) => {
+                this.idealPlans = res.json;
+                this.currentSearch = '';
             },
             (res: ResponseWrapper) => this.onError(res.json)
         );
@@ -75,12 +91,12 @@ appointments: Appointment[];
         if (this.currentSearch) {
             this.appointmentService.search({
                 query: this.currentSearch,
-                }).subscribe(
-                    (res: ResponseWrapper) => this.appointments = res.json,
-                    (res: ResponseWrapper) => this.onError(res.json)
-                );
+            }).subscribe(
+                (res: ResponseWrapper) => this.appointments = res.json,
+                (res: ResponseWrapper) => this.onError(res.json)
+            );
             return;
-       }
+        }
         this.appointmentService.query().subscribe(
             (res: ResponseWrapper) => {
                 this.appointments = res.json;

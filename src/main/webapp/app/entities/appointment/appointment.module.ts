@@ -20,9 +20,13 @@ import {
     appointmentPopupRoute,
 } from './';
 
+import {idealPlanPopupRoute, idealPlanRoute} from '../ideal-plan/ideal-plan.route';
+
 const ENTITY_STATES = [
     ...appointmentRoute,
     ...appointmentPopupRoute,
+    ...idealPlanRoute,
+    ...idealPlanPopupRoute,
 ];
 
 @NgModule({
