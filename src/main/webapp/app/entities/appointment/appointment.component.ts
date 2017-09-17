@@ -38,6 +38,8 @@ export class AppointmentComponent implements OnInit, OnDestroy {
     titleFormat: any;
     eventColor: any;
     semesters: any[];
+    semester: any;
+    selectedSemester: any;
     constructor(
         private appointmentService: AppointmentService,
         private idealPlanService: IdealPlanService,
@@ -65,19 +67,14 @@ export class AppointmentComponent implements OnInit, OnDestroy {
         this.contentHeight = 800;
         this.timeFormat = 'hh:mm';
         this.titleFormat = 'D MM YYYY';
+        this.selectedSemester = 1;
         this.semesters = [
-            { semester: '1 Semester', TotalCount: 1 },
-            { semester: '2 Semester', TotalCount: 2 },
-            { semester: '3 Semester', TotalCount: 3 },
-            { semester: '4 Semester', TotalCount: 4 },
-            { semester: '5 Semester', TotalCount: 5 },
-            { semester: '6 Semester', TotalCount: 6 }];
-        this.appointmentService.query2(1151, 3).subscribe(
-            (res: ResponseWrapper) => {
-                this.events = res.json;
-            },
-            (res: ResponseWrapper) => this.onError(res.json)
-        );
+            { semester: '1 Semester', value: 1 },
+            { semester: '2 Semester', value: 2 },
+            { semester: '3 Semester', value: 3 },
+            { semester: '4 Semester', value: 4 },
+            { semester: '5 Semester', value: 5 },
+            { semester: '6 Semester', value: 6 }];
         this.idealPlanService.query().subscribe(
             (res: ResponseWrapper) => {
                 this.idealPlans = res.json;
@@ -106,10 +103,16 @@ export class AppointmentComponent implements OnInit, OnDestroy {
         );
     }
 
-    search(query) {
+    search(query, semester) {
         if (!query) {
             return this.clear();
         }
+        this.appointmentService.query2(query, semester).subscribe(
+            (res: ResponseWrapper) => {
+                this.events = res.json;
+            },
+            (res: ResponseWrapper) => this.onError(res.json)
+        );
         this.currentSearch = query;
         this.loadAll();
     }

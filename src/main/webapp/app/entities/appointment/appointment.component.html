@@ -2,16 +2,20 @@
     <div class="form-group">
         <h2>Ideal Plan</h2>
         <!--<label for="sel1">Select list:</label>!-->
-        <select class="form-control" id="sel1">
-            <option *ngFor="let idealPlan of idealPlans ;trackBy: trackId">{{idealPlan.id}} {{idealPlan.semester}} {{idealPlan.year}} {{idealPlan.curriculumCurName}}</option>
+        <select class="form-control" [(ngModel)]="currentSearch" id="currentSearch">
+            <option *ngFor="let idealPlan of idealPlans ;trackBy: trackId" value="{{idealPlan.id}}">{{idealPlan.id}} {{idealPlan.semester}} {{idealPlan.year}} {{idealPlan.curriculumCurName}}</option>
         </select>
     </div>
-    <div class="form-group">
+    <div class="semester-group" ng-app ng-controller="search">
         <h2>Semester</h2>
-        <select *ngIf="semesters" class="form-control" id="sel2">
-            <option *ngFor="let semester of semesters" value="{{semester.semester}}">{{semester.TotalCount}}</option>
+        <select *ngIf="semesters" [(ngModel)]="semester" id="semester" class="form-control">
+            <option *ngFor="let semester of semesters" value="{{semester.value}}" [(ngModel)]="selectedSemester">{{semester.value}}</option>
         </select>
+        <hr>
     </div>
+    <button class="input-group-addon btn btn-info" (click)="search(currentSearch, semester)">
+        <span class="fa fa-search"></span>
+    </button>
     <p-schedule [events]="events"
                 [header]="headerConfig"
                 [hiddenDays]="hiddenDays"
