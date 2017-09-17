@@ -4,15 +4,18 @@ import { Subscription } from 'rxjs/Rx';
 import { JhiEventManager, JhiParseLinks, JhiPaginationUtil, JhiLanguageService, JhiAlertService } from 'ng-jhipster';
 
 import { Appointment } from './appointment.model';
+import { IdealPlan} from '../ideal-plan/ideal-plan.model';
 import { AppointmentService } from './appointment.service';
 import { Principal, ResponseWrapper } from '../../shared';
+import {IdealPlanService} from '../ideal-plan/ideal-plan.service';
 
 @Component({
     selector: 'jhi-appointment',
     templateUrl: './appointment.component.html'
 })
 export class AppointmentComponent implements OnInit, OnDestroy {
-appointments: Appointment[];
+    appointments: Appointment[];
+    idealPlans: IdealPlan[];
     currentAccount: any;
     eventSubscriber: Subscription;
     currentSearch: string;
@@ -32,24 +35,25 @@ appointments: Appointment[];
     timeFormat: string;
     weekNumbersWithinDays: boolean;
     contentHeight: any;
-    views: any;
     titleFormat: any;
     eventColor: any;
-
+    semesters: any[];
+    semester: any;
+    selectedSemester: any;
     constructor(
         private appointmentService: AppointmentService,
+        private idealPlanService: IdealPlanService,
         private alertService: JhiAlertService,
         private eventManager: JhiEventManager,
         private activatedRoute: ActivatedRoute,
         private principal: Principal
     ) {
         this.currentSearch = activatedRoute.snapshot.params['search'] ? activatedRoute.snapshot.params['search'] : '';
-
         this.headerConfig = {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'month,agendaWeek,agendaDay'
-                };
+            left: 'prev,next today',
+            center: 'title',
+            right: 'month,agendaWeek,agendaDay'
+        };
         this.hiddenDays =  [ 0 ];
         this.locale = 'de';
         this.columnFormat = 'D ddd';
@@ -63,9 +67,18 @@ appointments: Appointment[];
         this.contentHeight = 800;
         this.timeFormat = 'hh:mm';
         this.titleFormat = 'D MM YYYY';
-        this.appointmentService.query2(1151, 3).subscribe(
+        this.selectedSemester = 1;
+        this.semesters = [
+            { semester: '1 Semester', value: 1 },
+            { semester: '2 Semester', value: 2 },
+            { semester: '3 Semester', value: 3 },
+            { semester: '4 Semester', value: 4 },
+            { semester: '5 Semester', value: 5 },
+            { semester: '6 Semester', value: 6 }];
+        this.idealPlanService.query().subscribe(
             (res: ResponseWrapper) => {
-                this.events = res.json;
+                this.idealPlans = res.json;
+                this.currentSearch = '';
             },
             (res: ResponseWrapper) => this.onError(res.json)
         );
@@ -75,12 +88,12 @@ appointments: Appointment[];
         if (this.currentSearch) {
             this.appointmentService.search({
                 query: this.currentSearch,
-                }).subscribe(
-                    (res: ResponseWrapper) => this.appointments = res.json,
-                    (res: ResponseWrapper) => this.onError(res.json)
-                );
+            }).subscribe(
+                (res: ResponseWrapper) => this.appointments = res.json,
+                (res: ResponseWrapper) => this.onError(res.json)
+            );
             return;
-       }
+        }
         this.appointmentService.query().subscribe(
             (res: ResponseWrapper) => {
                 this.appointments = res.json;
@@ -90,10 +103,16 @@ appointments: Appointment[];
         );
     }
 
-    search(query) {
+    search(query, semester) {
         if (!query) {
             return this.clear();
         }
+        this.appointmentService.query2(query, semester).subscribe(
+            (res: ResponseWrapper) => {
+                this.events = res.json;
+            },
+            (res: ResponseWrapper) => this.onError(res.json)
+        );
         this.currentSearch = query;
         this.loadAll();
     }
