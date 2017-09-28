@@ -199,7 +199,7 @@ public class ImportService {
             );
             appointmentDTO.setRoom(courseDate.getLocation());
             appointmentDTO.setTheme(courseDate.getTheme());
-            if (courseDate.getTheme().toLowerCase().matches(".*klausur.*|.*test.*")) {
+            if (courseDate.getTheme().toLowerCase().matches(".*klausur.*|.*test.*|.*prüfung.*|.*exam.*|.*assessment.*")) {
                 if (courseDate.getTheme().toLowerCase().matches(".*einsicht.*|.*vorbereitung.*|.*frage.*")) {
                     appointmentDTO.setIsExam(false);
                 } else {
