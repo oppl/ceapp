@@ -1,0 +1,47 @@
+== Problemstellungen ==
+
+=== Einleitung ===
+Eine überschneidungsfreie Lehrveranstaltungsplanung liegt sowohl im Interesse der Studierenden als auch im Interesse der Lehrenden bzw. der Institute.
+Diese Projektarbeit beschreibt die Entstehung, dessen Probleme und evtl. zukünftige Möglichkeiten einer Applikation, welche es ermöglicht Terminkollisionen von Lehrveranstaltungen aufzuzeigen und auf Grund dessen die Möglichkeit bietet gegebenen Falls einzelne Lehrveranstalungen noch vor Abschluss der Einschreibepflicht zu verlegen.
+Als weiteres Feature soll diese Applikation das Planen der künftigen Semester eines Studenten erleichtern.
+In beiden Fällen orientiert sich die Applikation an idealtypischen Studienplänen.
+
+=== Problembeschreibungen ===
+
+Es werden folgende zwei Themenblöcke behandelt und ausgearbeitet:
+
+Aus Institutssicht::
+Zur Zeit kommt es bei der Planung von Lehrveranstaltungen teilweise
+zu Überschneidungen von LVA-Terminen. Diese Überschneidungen werden in der Regel erst während des Lehrveranstaltungsbetriebs bekannt, was eine nachträgliche Änderung erschwert.
+
+Aus Studentensicht::
+Die Planung für Kurse eines Semesters gestaltet sich im KUSSS als undurchsichtig und aufwendig.
+Sollte man aus div. Gründen einen möglichst Lückenfreien, bzw. komprimierten Stundenplan anstreben, erfordert dies derzeit im KUSSS einiges an Recherche und manuelle, nicht IT-gestützte Planungsarbeit.
+
+
+=== Projektziele ===
+Es sollen in erster Linie Terminkollisionen von bereits geplanten Lehrveranstaltungen und Klausuren, nach dem idealtypischen Studienplan des Bachelorstudiums Wirtschaftsinformatik, aufgezeigt werden um den für die LVA-Planung verantwortlichen Personen die Möglichkeit zu geben LVA-Kollisionen vor Beginn des Hauptanmeldezeitraums zu beheben.
+Weiteres Ziel ist die Unterstützung der Studierenden bei
+der Semesterplanung in Form eines Tools, welches die LVA eines Semesters gemäß idealtypischen Studienplans in kalendarischer Form darstellt. Weiter sollen auf Basis einer vom Studierenden vorgegebenen Zeiteinschränkung die möglichen Lehrveranstaltungen dargestellt werden.
+
+=== Vorgehensweise ===
+
+Das Projekt wurde in 4 Phasen untergliedert, wobei am Ende einer jeden Phase ein bestimmter Meilenstein erreicht werden sollte.
+
+==== Phase 1 ====
+Spezi
+
+==== Phase 2 ====
+Doku Schnittstellen
+
+==== Phase 3 ====
+Basisversion Frontend (Institutsplanung)
+
+==== Phase 4 ====
+Projektende & Finalversion Frontend (Institutsplanung & Studentenplanung)
+
+==== Erwartetes Ergebnis ====
+
+Blibla Blubb
+
+
