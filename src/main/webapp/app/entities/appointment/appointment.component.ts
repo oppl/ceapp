@@ -4,8 +4,10 @@ import { Subscription } from 'rxjs/Rx';
 import { JhiEventManager, JhiParseLinks, JhiPaginationUtil, JhiLanguageService, JhiAlertService } from 'ng-jhipster';
 
 import { Appointment } from './appointment.model';
-import { IdealPlan} from '../ideal-plan/ideal-plan.model';
 import { AppointmentService } from './appointment.service';
+import { CurriculumSemester } from '../curriculum-semester/curriculum-semester.model';
+import { CurriculumSemesterService } from '../curriculum-semester/curriculum-semester.service';
+import { IdealPlan} from '../ideal-plan/ideal-plan.model';
 import { Principal, ResponseWrapper } from '../../shared';
 import {IdealPlanService} from '../ideal-plan/ideal-plan.service';
 
@@ -16,6 +18,7 @@ import {IdealPlanService} from '../ideal-plan/ideal-plan.service';
 export class AppointmentComponent implements OnInit, OnDestroy {
     appointments: Appointment[];
     idealPlans: IdealPlan[];
+    curriculumSemesters: CurriculumSemester[];
     currentAccount: any;
     eventSubscriber: Subscription;
     currentSearch: string;
@@ -39,10 +42,14 @@ export class AppointmentComponent implements OnInit, OnDestroy {
     eventColor: any;
     semesters: any[];
     semester: any;
+    semester2: any;
     selectedSemester: any;
+    curriculumSemester: any;
+    curriculum: any;
     constructor(
         private appointmentService: AppointmentService,
         private idealPlanService: IdealPlanService,
+        private curriculumSemesterService: CurriculumSemesterService,
         private alertService: JhiAlertService,
         private eventManager: JhiEventManager,
         private activatedRoute: ActivatedRoute,
@@ -78,6 +85,13 @@ export class AppointmentComponent implements OnInit, OnDestroy {
         this.idealPlanService.query().subscribe(
             (res: ResponseWrapper) => {
                 this.idealPlans = res.json;
+                this.currentSearch = '';
+            },
+            (res: ResponseWrapper) => this.onError(res.json)
+        );
+        this.curriculumSemesterService.query().subscribe(
+            (res: ResponseWrapper) => {
+                this.curriculumSemesters = res.json;
                 this.currentSearch = '';
             },
             (res: ResponseWrapper) => this.onError(res.json)
