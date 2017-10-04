@@ -5,39 +5,109 @@ import { JhiEventManager, JhiParseLinks, JhiPaginationUtil, JhiLanguageService, 
 
 import { Appointment } from './appointment.model';
 import { AppointmentService } from './appointment.service';
-import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
-import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
+import { CurriculumSemester } from '../curriculum-semester/curriculum-semester.model';
+import { CurriculumSemesterService } from '../curriculum-semester/curriculum-semester.service';
+import { IdealPlan} from '../ideal-plan/ideal-plan.model';
+import { Principal, ResponseWrapper } from '../../shared';
+import {IdealPlanService} from '../ideal-plan/ideal-plan.service';
 
 @Component({
     selector: 'jhi-appointment',
     templateUrl: './appointment.component.html'
 })
 export class AppointmentComponent implements OnInit, OnDestroy {
-appointments: Appointment[];
+    appointments: Appointment[];
+    idealPlans: IdealPlan[];
+    curriculumSemesters: CurriculumSemester[];
     currentAccount: any;
     eventSubscriber: Subscription;
     currentSearch: string;
-
+    event: any[];
+    events: any[];
+    headerConfig: any;
+    hiddenDays: any[];
+    locale: string;
+    columnFormat: string;
+    defaultView: string;
+    defaultDate: string;
+    scrollTime: string;
+    minTime: string;
+    maxTime: string;
+    slotLabelInterval: string;
+    slotLabelFormat: string;
+    timeFormat: string;
+    weekNumbersWithinDays: boolean;
+    contentHeight: any;
+    titleFormat: any;
+    eventColor: any;
+    semesters: any[];
+    semester: any;
+    semester2: any;
+    selectedSemester: any;
+    curriculumSemester: any;
+    curriculum: any;
     constructor(
         private appointmentService: AppointmentService,
+        private idealPlanService: IdealPlanService,
+        private curriculumSemesterService: CurriculumSemesterService,
         private alertService: JhiAlertService,
         private eventManager: JhiEventManager,
         private activatedRoute: ActivatedRoute,
         private principal: Principal
     ) {
         this.currentSearch = activatedRoute.snapshot.params['search'] ? activatedRoute.snapshot.params['search'] : '';
+        this.headerConfig = {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'month,agendaWeek,agendaDay'
+        };
+        this.hiddenDays =  [ 0 ];
+        this.locale = 'de';
+        this.columnFormat = 'D ddd';
+        this.defaultView = 'agendaWeek';
+        this.defaultDate = (new Date).getFullYear() + '-10-03';
+        this.scrollTime = '08:00:00';
+        this.minTime = '08:00:00';
+        this.maxTime = '22:00:00';
+        this.slotLabelInterval = '00:15:00';
+        this.weekNumbersWithinDays = true;
+        this.contentHeight = 800;
+        this.timeFormat = 'hh:mm';
+        this.titleFormat = 'D MM YYYY';
+        this.selectedSemester = 1;
+        this.semesters = [
+            { semester: '1 Semester', value: 1 },
+            { semester: '2 Semester', value: 2 },
+            { semester: '3 Semester', value: 3 },
+            { semester: '4 Semester', value: 4 },
+            { semester: '5 Semester', value: 5 },
+            { semester: '6 Semester', value: 6 }];
+        this.idealPlanService.query().subscribe(
+            (res: ResponseWrapper) => {
+                this.idealPlans = res.json;
+                this.currentSearch = '';
+            },
+            (res: ResponseWrapper) => this.onError(res.json)
+        );
+        this.curriculumSemesterService.query().subscribe(
+            (res: ResponseWrapper) => {
+                this.curriculumSemesters = res.json;
+                this.currentSearch = '';
+            },
+            (res: ResponseWrapper) => this.onError(res.json)
+        );
     }
 
     loadAll() {
         if (this.currentSearch) {
             this.appointmentService.search({
                 query: this.currentSearch,
-                }).subscribe(
-                    (res: ResponseWrapper) => this.appointments = res.json,
-                    (res: ResponseWrapper) => this.onError(res.json)
-                );
+            }).subscribe(
+                (res: ResponseWrapper) => this.appointments = res.json,
+                (res: ResponseWrapper) => this.onError(res.json)
+            );
             return;
-       }
+        }
         this.appointmentService.query().subscribe(
             (res: ResponseWrapper) => {
                 this.appointments = res.json;
@@ -47,10 +117,16 @@ appointments: Appointment[];
         );
     }
 
-    search(query) {
+    search(query, semester) {
         if (!query) {
             return this.clear();
         }
+        this.appointmentService.query2(query, semester).subscribe(
+            (res: ResponseWrapper) => {
+                this.events = res.json;
+            },
+            (res: ResponseWrapper) => this.onError(res.json)
+        );
         this.currentSearch = query;
         this.loadAll();
     }
