@@ -86,81 +86,57 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
 
-        // Institute erzeugen
-        createInstitutes();
+        Curriculum wirtschaftsinformatik = null;
+        IdealPlanDTO idealPlanDTO = null;
 
-        // System mit Demodaten befüllen (Wirtschaftsinformatik Bachelor-Studium)
-        Curriculum wirtschaftsinformatik = createCurriculum(204, "Wirtschaftsinformatik");
+        // check if the database contains data.
+        if (instituteService.findAll().size() == 0) {
+            log.warn("empty database - initialize database");
 
-        // Verknüpfung des Curriculums mit Kerninstituten
-        Set<Institute> institutes = new HashSet<>();
+            // read institutes from CSV
+            createInstitutes();
 
-        institutes.add(instituteMapper.toEntity(instituteService.findByInstituteId(256)));
-        institutes.add(instituteMapper.toEntity(instituteService.findByInstituteId(257)));
-        institutes.add(instituteMapper.toEntity(instituteService.findByInstituteId(258)));
-        institutes.add(instituteMapper.toEntity(instituteService.findByInstituteId(259)));
+            // database entries for Wirtschaftsinformatik Bachelor
+            wirtschaftsinformatik = createCurriculum(204, "Wirtschaftsinformatik");
 
-        wirtschaftsinformatik = wirtschaftsinformatik.institutes(institutes);
+            // define core insitutes for Wirtschaftsinformatik
+            Set<Institute> institutes = new HashSet<>();
 
-        curriculumService.save(curriculumMapper.toDto(wirtschaftsinformatik));
+            institutes.add(instituteMapper.toEntity(instituteService.findByInstituteId(256)));
+            institutes.add(instituteMapper.toEntity(instituteService.findByInstituteId(257)));
+            institutes.add(instituteMapper.toEntity(instituteService.findByInstituteId(258)));
+            institutes.add(instituteMapper.toEntity(instituteService.findByInstituteId(259)));
 
+            wirtschaftsinformatik = wirtschaftsinformatik.institutes(institutes);
 
-        // Idealtypischen Plan für Wirtschaftsinformatik Bachelor
-        IdealPlanDTO idealPlanDTO = new IdealPlanDTO();
-        idealPlanDTO.setYear(2017);
-        idealPlanDTO.setSemester(Semester.WS);
-        idealPlanDTO.setActive(true);
-        idealPlanDTO.setCurriculumId(wirtschaftsinformatik.getId());
+            curriculumService.save(curriculumMapper.toDto(wirtschaftsinformatik));
 
-        idealPlanDTO = idealPlanService.save(idealPlanDTO);
+            // create new ideal study plan
+            idealPlanDTO = new IdealPlanDTO();
+            idealPlanDTO.setYear(2017);
+            idealPlanDTO.setSemester(Semester.WS);
+            idealPlanDTO.setActive(true);
+            idealPlanDTO.setCurriculumId(wirtschaftsinformatik.getId());
 
-        createIdealPlan(idealPlanMapper.toEntity(idealPlanDTO));
+            idealPlanDTO = idealPlanService.save(idealPlanDTO);
 
+            createIdealPlan(idealPlanMapper.toEntity(idealPlanDTO));
 
-        // Ein Semester für das Curriculum Wirtschaftsinformatik anlegen
-        CurriculumSemesterDTO curriculumSemester = new CurriculumSemesterDTO();
-        curriculumSemester.setCurriculumId(wirtschaftsinformatik.getId());
-        curriculumSemester.setYear(2017);
-        curriculumSemester.setSemester(Semester.WS);
+            // create one semester for Wirtschaftsinformatik
+            CurriculumSemesterDTO curriculumSemester = new CurriculumSemesterDTO();
+            curriculumSemester.setCurriculumId(wirtschaftsinformatik.getId());
+            curriculumSemester.setYear(2017);
+            curriculumSemester.setSemester(Semester.WS);
 
-        curriculumSemester = curriculumSemesterService.save(curriculumSemester);
+            curriculumSemester = curriculumSemesterService.save(curriculumSemester);
 
-        //Set<SubjectDTO> subjectDTOS = importService.verifySubjects(curriculumSemester);
+            // calculate collisions
+            collisionService.calculateCollisions(204, 2017, Semester.WS, 2017, Semester.WS);
 
-        //importService.verifyLvas(curriculumSemester);
-
-        collisionService.calculateCollisions(204, 2017, Semester.WS, 2017, Semester.WS);
-
+        }
 
         // Update Elastic Search Index
         elasticsearchIndexService.reindexAll();
-
-        // Keine erneute Befüllung der Datenbank wenn schon Einträge vorhanden sind
-        if (instituteService.findAll().size() > -1) return;
-
-
-
-
-
-        /*importService.verifyLvas(curriculumSemester);
-
-        collisionService.calculateCollisions(204, 2016, Semester.WS, 2017, Semester.SS);
-
-        List<Appointment> collect = idealPlanEntriesRepository.findByIdealplan_Id(idealPlanDTO.getId())
-            .stream()
-            .filter(idealPlanEntries -> idealPlanEntries.getWinterSemesterDefault() == 2)
-            .map(idealPlanEntries -> idealPlanEntries.getSubject())
-            .map(subject -> {
-                return curriculumSubjectRepository.findBySubject(subject);
-            })
-            .flatMap(curriculumSubject -> curriculumSubject.getLvas().stream())
-            .flatMap(lva -> lva.getAppointments().stream())
-            .collect(Collectors.toList());
-
-        System.out.println(collect);
-
-
-        elasticsearchIndexService.reindexAll();*/
 
     }
 
