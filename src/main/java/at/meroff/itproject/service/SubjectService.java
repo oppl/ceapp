@@ -80,6 +80,20 @@ public class SubjectService {
         return subjectMapper.toDto(subject);
     }
 
+    /**
+     *  Get one subject by name and type.
+     *
+     *  @param name the name of the entity
+     *  @param subjectType the subject type of the entity
+     *  @return the entity
+     */
+    @Transactional(readOnly = true)
+    public SubjectDTO findOne(String name, SubjectType subjectType) {
+        log.debug("Request to get Subject : {}", name, subjectType);
+        Subject subject = subjectRepository.findBySubjectNameAndSubjectType(name, subjectType);
+        return subjectMapper.toDto(subject);
+    }
+
     @Transactional(readOnly = true)
     public SubjectDTO findBySubjectNameAndSubjectType(String subjectName, SubjectType subjectType) {
         log.debug("Request to get Subject ; {}", subjectName + " " + subjectType.name());
