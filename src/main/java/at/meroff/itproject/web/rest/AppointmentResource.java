@@ -104,6 +104,19 @@ public class AppointmentResource {
     }
 
     /**
+     * GET  /appointments : get all the appointments.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of appointments in body
+     */
+    @GetMapping("/appointments2/{idealPlanId}/{semester}/{semesterType}/{curSemId}")
+    @Timed
+    public List<AppointmentDTO> getAllAppointmentsSomething2(@PathVariable(name = "idealPlanId") Long idealPlanId, @PathVariable(name = "semester") Integer semester, @PathVariable(name = "semesterType") String curriculumSemsterType, @PathVariable(name = "curSemId") Long curSemId) {
+        log.debug("REST request to get all Appointments");
+        return appointmentService.findIdealPlanIdSemesterCurriculumSemsterId(idealPlanId, semester, curriculumSemsterType, curSemId);
+    }
+
+
+    /**
      * GET  /appointments/:id : get the "id" appointment.
      *
      * @param id the id of the appointmentDTO to retrieve
