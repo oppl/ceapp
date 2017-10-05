@@ -12,11 +12,11 @@ import org.mapstruct.*;
 public interface CurriculumMapper extends EntityMapper <CurriculumDTO, Curriculum> {
 
     @Mapping(source = "curriculumSemesters", target = "curriculumSemesters")
-    @Mapping(source = "idealplanentries", target = "idealPlans")
+    @Mapping(source = "idealPlans", target = "idealPlans")
     CurriculumDTO toDto(Curriculum curriculum);
 
-    @Mapping(target = "idealplanentries", ignore = true)
     @Mapping(target = "curriculumSemesters", ignore = true)
+    @Mapping(target = "idealPlans", ignore = true)
     Curriculum toEntity(CurriculumDTO curriculumDTO);
     default Curriculum fromId(Long id) {
         if (id == null) {
