@@ -27,12 +27,12 @@ public class CurriculumService {
     private final Logger log = LoggerFactory.getLogger(CurriculumService.class);
 
     private final CurriculumRepository curriculumRepository;
-
     private final CurriculumMapper curriculumMapper;
-
     private final CurriculumSearchRepository curriculumSearchRepository;
 
-    public CurriculumService(CurriculumRepository curriculumRepository, CurriculumMapper curriculumMapper, CurriculumSearchRepository curriculumSearchRepository) {
+    public CurriculumService(CurriculumRepository curriculumRepository,
+                             CurriculumMapper curriculumMapper,
+                             CurriculumSearchRepository curriculumSearchRepository) {
         this.curriculumRepository = curriculumRepository;
         this.curriculumMapper = curriculumMapper;
         this.curriculumSearchRepository = curriculumSearchRepository;
