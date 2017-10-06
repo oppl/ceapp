@@ -2,11 +2,13 @@ package at.meroff.itproject.service;
 
 import at.meroff.itproject.domain.Appointment;
 import at.meroff.itproject.domain.IdealPlanEntries;
+import at.meroff.itproject.domain.enumeration.Semester;
 import at.meroff.itproject.repository.AppointmentRepository;
 import at.meroff.itproject.repository.CurriculumSubjectRepository;
 import at.meroff.itproject.repository.IdealPlanEntriesRepository;
 import at.meroff.itproject.repository.search.AppointmentSearchRepository;
 import at.meroff.itproject.service.dto.AppointmentDTO;
+import at.meroff.itproject.service.dto.CurriculumSemesterDTO;
 import at.meroff.itproject.service.mapper.AppointmentMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -38,7 +41,6 @@ public class AppointmentService {
     private final IdealPlanEntriesRepository idealPlanEntriesRepository;
 
     private final CurriculumSubjectRepository curriculumSubjectRepository;
-
 
     public AppointmentService(AppointmentRepository appointmentRepository,
                               AppointmentMapper appointmentMapper,
@@ -90,11 +92,58 @@ public class AppointmentService {
     @Transactional(readOnly = true)
     public List<AppointmentDTO> findBySomething(Long id, Integer semester) {
         log.debug("Request to get all Appointments");
+
+        // bei ungerader Semesternummer und Wintersemester --> Start Wintersemester
+        // bei gerader Semesternummer und Wintersemester --> Start Sommersemester
         return idealPlanEntriesRepository.findByIdealplan_Id(id)
             .stream()
             .filter(idealPlanEntries -> idealPlanEntries.getWinterSemesterDefault() == semester)
             .map(IdealPlanEntries::getSubject)
             .map(curriculumSubjectRepository::findBySubject)
+            .flatMap(curriculumSubject -> curriculumSubject.getLvas().stream())
+            .flatMap(lva -> lva.getAppointments().stream())
+            .map(appointmentMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+
+
+    /**
+     *  Get all the appointments.
+     *
+     *  @return the list of entities
+     * @param id
+     * @param semester
+     */
+    @Transactional(readOnly = true)
+    public List<AppointmentDTO> findIdealPlanIdSemesterCurriculumSemsterId(Long id, Integer semester, String curriculumSemesterType,  Long curriculumSemesterId) {
+        log.debug("Request to get all Appointments");
+
+        boolean searchWinter;
+
+        if (curriculumSemesterType.equals("WS") && semester % 2 != 0) {
+            searchWinter = true;
+        } else {
+            searchWinter = false;
+        }
+
+        // bei ungerader Semesternummer und Wintersemester --> Start Wintersemester
+        // bei gerader Semesternummer und Wintersemester --> Start Sommersemester
+        return idealPlanEntriesRepository.findByIdealplan_Id(id)
+            .stream()
+            //.filter(idealPlanEntries -> idealPlanEntries.getWinterSemesterDefault() == semester)
+            .filter(idealPlanEntries -> {
+                if (searchWinter) {
+                    return idealPlanEntries.getWinterSemesterDefault() == semester;
+                } else {
+                    return idealPlanEntries.getSummerSemesterDefault() == semester;
+                }
+            })
+            .map(IdealPlanEntries::getSubject)
+            .peek(subject -> log.warn(subject.getSubjectName() + " " + subject.getSubjectType()))
+            .map(subject -> curriculumSubjectRepository.findBySubjectAndCurriculumSemester_Id(subject, curriculumSemesterId))
+            .filter(Objects::nonNull)
+            .peek(curriculumSubject -> log.error(curriculumSubject.toString()))
             .flatMap(curriculumSubject -> curriculumSubject.getLvas().stream())
             .flatMap(lva -> lva.getAppointments().stream())
             .map(appointmentMapper::toDto)

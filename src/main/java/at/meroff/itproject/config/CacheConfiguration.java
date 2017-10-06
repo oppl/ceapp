@@ -44,7 +44,7 @@ public class CacheConfiguration {
             cm.createCache(at.meroff.itproject.domain.Institute.class.getName() + ".curricula", jcacheConfiguration);
             cm.createCache(at.meroff.itproject.domain.Institute.class.getName() + ".lvas", jcacheConfiguration);
             cm.createCache(at.meroff.itproject.domain.Curriculum.class.getName(), jcacheConfiguration);
-            cm.createCache(at.meroff.itproject.domain.Curriculum.class.getName() + ".idealplanentries", jcacheConfiguration);
+            cm.createCache(at.meroff.itproject.domain.Curriculum.class.getName() + ".idealPlans", jcacheConfiguration);
             cm.createCache(at.meroff.itproject.domain.Curriculum.class.getName() + ".institutes", jcacheConfiguration);
             cm.createCache(at.meroff.itproject.domain.Curriculum.class.getName() + ".curriculumSemesters", jcacheConfiguration);
             cm.createCache(at.meroff.itproject.domain.Subject.class.getName(), jcacheConfiguration);
