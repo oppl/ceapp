@@ -91,6 +91,19 @@ public class CollisionLevelOneResource {
     }
 
     /**
+     * GET  /collision-level-ones : get all the collisionLevelOnes.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of collisionLevelOnes in body
+     */
+    @GetMapping("/collision-level-ones/{cs}/{ip}")
+    @Timed
+    public List<CollisionLevelOneDTO> getAllCollisionLevelOnes2(@PathVariable Long cs, @PathVariable Long ip) {
+        log.debug("REST request to get all CollisionLevelOnes");
+        return collisionLevelOneService.findByCsIp(cs, ip);
+    }
+
+
+    /**
      * GET  /collision-level-ones/:id : get the "id" collisionLevelOne.
      *
      * @param id the id of the collisionLevelOneDTO to retrieve

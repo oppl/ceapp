@@ -5,6 +5,7 @@ import { JhiEventManager  } from 'ng-jhipster';
 
 import { Curriculum } from './curriculum.model';
 import { CurriculumService } from './curriculum.service';
+import {IdealPlan} from "../ideal-plan/ideal-plan.model";
 
 @Component({
     selector: 'jhi-curriculum-detail',
@@ -13,6 +14,7 @@ import { CurriculumService } from './curriculum.service';
 export class CurriculumDetailComponent implements OnInit, OnDestroy {
 
     curriculum: Curriculum;
+    idealplans: IdealPlan[];
     private subscription: Subscription;
     private eventSubscriber: Subscription;
 
@@ -33,6 +35,7 @@ export class CurriculumDetailComponent implements OnInit, OnDestroy {
     load(id) {
         this.curriculumService.find(id).subscribe((curriculum) => {
             this.curriculum = curriculum;
+            this.idealplans = this.curriculum.idealPlans;
         });
     }
     previousState() {

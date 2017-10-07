@@ -96,6 +96,28 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
 
             // create new ideal study plan
             idealPlanDTO = new IdealPlanDTO();
+            idealPlanDTO.setYear(2015);
+            idealPlanDTO.setSemester(Semester.WS);
+            idealPlanDTO.setActive(true);
+            idealPlanDTO.setCurriculumId(wirtschaftsinformatik.getId());
+
+            idealPlanDTO = idealPlanService.save(idealPlanDTO);
+
+            createIdealPlan(idealPlanDTO);
+
+            // create new ideal study plan
+            /*idealPlanDTO = new IdealPlanDTO();
+            idealPlanDTO.setYear(2016);
+            idealPlanDTO.setSemester(Semester.WS);
+            idealPlanDTO.setActive(true);
+            idealPlanDTO.setCurriculumId(wirtschaftsinformatik.getId());
+
+            idealPlanDTO = idealPlanService.save(idealPlanDTO);
+
+            createIdealPlan(idealPlanDTO);*/
+
+            // create new ideal study plan
+            idealPlanDTO = new IdealPlanDTO();
             idealPlanDTO.setYear(2017);
             idealPlanDTO.setSemester(Semester.WS);
             idealPlanDTO.setActive(true);
@@ -114,7 +136,10 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
             curriculumSemester = curriculumSemesterService.save(curriculumSemester);
 
             // calculate collisions
+            collisionService.calculateCollisions(204, 2015, Semester.WS, 2017, Semester.WS);
+            //collisionService.calculateCollisions(204, 2016, Semester.WS, 2017, Semester.WS);
             collisionService.calculateCollisions(204, 2017, Semester.WS, 2017, Semester.WS);
+
 
         }
 

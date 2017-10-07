@@ -104,4 +104,14 @@ public class CollisionLevelOneService {
             .map(collisionLevelOneMapper::toDto)
             .collect(Collectors.toList());
     }
+
+    @Transactional(readOnly = true)
+    public List<CollisionLevelOneDTO> findByCsIp(Long cs, Long ip) {
+        log.debug("Request to get all CollisionLevelOnes");
+        LinkedList<CollisionLevelOneDTO> collect = collisionLevelOneRepository.findByCsIp(cs, ip).stream()
+            .map(collisionLevelOneMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+
+        return collect;
+    }
 }
