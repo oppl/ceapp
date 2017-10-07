@@ -33,6 +33,10 @@ export class CollisionLevelOneService {
         });
     }
 
+    find2(cs: number, ip: number): Observable<CollisionLevelOne> {
+        return this.http.get(`${this.resourceUrl}/${cs}/${ip}`).map((res: Response) => this.convertResponse(res));
+    }
+
     query(req?: any): Observable<ResponseWrapper> {
         const options = createRequestOption(req);
         return this.http.get(this.resourceUrl, options)

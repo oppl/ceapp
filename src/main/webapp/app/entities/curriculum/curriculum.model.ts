@@ -5,7 +5,7 @@ export class Curriculum implements BaseEntity {
         public id?: number,
         public curId?: number,
         public curName?: string,
-        public idealplanentries?: BaseEntity[],
+        public idealPlans?: BaseEntity[],
         public institutes?: BaseEntity[],
         public curriculumSemesters?: BaseEntity[],
     ) {
