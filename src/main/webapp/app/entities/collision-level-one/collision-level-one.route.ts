@@ -21,8 +21,8 @@ export const collisionLevelOneRoute: Routes = [
         },
         canActivate: [UserRouteAccessService]
     }, {
-        path: 'collision-level-one/:id',
-        component: CollisionLevelOneDetailComponent,
+        path: 'collision-level-one/specific/:cs/:ip',
+        component: CollisionLevelOneComponent,
         data: {
             authorities: ['ROLE_USER'],
             pageTitle: 'ceappApp.collisionLevelOne.home.title'
