@@ -1,14 +1,22 @@
 == Problemlösungsweg ==
 
 === Berechnungsgrundlage ===
-Vor der Implementierung der Applikation musste in erster Linie eine Berechnungsgrundlage bzw. Berechnungslogik entwickelt werden, nach welcher die Anwendung Terminkollisionen bewerten soll.
+Vor der Implementierung der Applikation musste in erster Linie eine Berechnungsgrundlage bzw. Berechnungslogik
+entwickelt werden, nach welcher die Anwendung Terminkollisionen bewerten soll.
 Grundidee war es die Kollisionsberechnung in fünf Ebenen (Levels) aufzuteilen.
-Die Berechnung beginnt auf der untersten Ebene (Ebene 5 - Kollisionen) und wird Bottom-up bis zur Ebene 1 (Fach X) hochaggregiert. Zur Bearbeitung der Kollisionen beziehungsweise die gesamte Anzeige wurde mittels Top-down Prinzip dargestellt, um auf Fach-Ebene (Fach X) auf einen Blick die Fächer zu erkennen, die die höchsten Kollisionswerte aufweisen.
+Die Berechnung beginnt auf der untersten Ebene (Ebene 5 - Kollisionen) und wird Bottom-up bis zur Ebene 1 (Fach X)
+hochaggregiert. Zur Bearbeitung der Kollisionen beziehungsweise die gesamte Anzeige wurde mittels Top-down Prinzip
+dargestellt, um auf Fach-Ebene (Fach X) auf einen Blick die Fächer zu erkennen, die die höchsten Kollisionswerte
+aufweisen.
 
 image::level_overview.png[]
 
 === LEVEL 5 (Kollisionen) ===
-Jedes Fach (Level 1) besitzt eine oder mehrere Lehrveranstaltungen (Level 2). Jede Lehrveranstaltung (Level 2), die sich mit einer anderen Lehrveranstaltung (Level 4) überschneidet und im gleichen Semester des idealtypischen Studienverlaufes befindet wird auf Kollisionen untersucht. Um auch eine aggregierte Sicht aller betroffenen Lehrveranstaltungen (Level 4) darstellen zu können wurde eine weiter Ebene (Level 3) eingeführt, die auf Fach-Ebene sämtliche kollidierenden Lehrveranstaltungen zusammenfasst.
+Jedes Fach (Level 1) besitzt eine oder mehrere Lehrveranstaltungen (Level 2). Jede Lehrveranstaltung (Level 2),
+die sich mit einer anderen Lehrveranstaltung (Level 4) überschneidet und im gleichen Semester des idealtypischen
+Studienverlaufes befindet wird auf Kollisionen untersucht. Um auch eine aggregierte Sicht aller betroffenen
+Lehrveranstaltungen (Level 4) darstellen zu können wurde eine weiter Ebene (Level 3) eingeführt, die auf Fach-Ebene
+ kollidierenden Lehrveranstaltungen zusammenfasst.
 
 Auf Level 5 werden die einzelnen kollidierenden Termine zweier Lehrveranstaltungen angezeigt.
 
@@ -41,7 +49,8 @@ Beschreibung des Inhaltes des LVA-Termins
 Hörsaal oder Raum in dem der LVA-Termin abgehalten wird
 
 ==== LEVEL 5 - Exam ====
-Falls es sich um eine Terminkollision handelt und beide Termine, die miteinander verglichen werden, ein Klausurtermin sind, so wird diese Kollision als Klausurkollision gekennzeichnet.
+Falls es sich um eine Terminkollision handelt und beide Termine, die miteinander verglichen werden, ein Klausurtermin
+sind, so wird diese Kollision als Klausurkollision gekennzeichnet.
 
 Wenn beide Einzeltermine ein Klausurtermin sind, dann wird der Wert auf 1 gestellt, sonst auf 0.
 
@@ -76,7 +85,9 @@ außer das Thema des Termins beinhaltet auch einen der folgenden Begriffe
 dann wird dieser Termin als Klausurkollision gekennzeichnet.
 
 ==== LEVEL 4 (LVA U des Faches V) ====
-Level 4 betrachtet LVA U des Faches V. Ziel von Level 4 ist es basierend auf den Werten von Level 5 eine aggregierte Sicht auf LVA-Sicht zu generieren. Alle Termin-Kollisionen werden mittels Gruppierungsmerkmal (LVA-Nr) summiert und mit nachfolgender Kollisionswertermittlung (ColValue) bewertet.
+Level 4 betrachtet LVA U des Faches V. Ziel von Level 4 ist es basierend auf den Werten von Level 5 eine aggregierte
+Sicht auf LVA-Sicht zu generieren. Alle Termin-Kollisionen werden mittels Gruppierungsmerkmal (LVA-Nr) summiert und
+mit nachfolgender Kollisionswertermittlung (ColValue) bewertet.
 
 image::level4_overview.png[]
 
@@ -91,13 +102,16 @@ Die Spalte Exam summiert alle Klausurkollisionen der darunterliegenden Ebene (Le
 
 image::level4_exam.png[]
 
-__Zum Beispiel die LVA 249615 weist in der Spalte Exam einen Wert von 1 auf. Auf der darunterliegenden Ebene (Level 5 – Kollisionen) wird eine LVA mit 1 Klausurkollision ausgegeben.__
+__Zum Beispiel die LVA 249615 weist in der Spalte Exam einen Wert von 1 auf. Auf der darunterliegenden Ebene
+(Level 5 – Kollisionen) wird eine LVA mit 1 Klausurkollision ausgegeben.__
 
 ==== LEVEL 4 - Inst ====
-Falls LVA X und LVA U vom gleichen Institut abgehalten werden, so wird in dieser Spalte die Anzahl der betroffenen Termine angezeigt.
+Falls LVA X und LVA U vom gleichen Institut abgehalten werden, so wird in dieser Spalte die Anzahl der betroffenen
+Termine angezeigt.
 
 ==== LEVEL 4 - Curr ====
-Falls LVA X und LVA U vom gleichen Curriculum abgehalten werden, so wird in dieser Spalte die Anzahl der betroffenen Termine angezeigt.
+Falls LVA X und LVA U vom gleichen Curriculum abgehalten werden, so wird in dieser Spalte die Anzahl der betroffenen
+Termine angezeigt.
 
 Im Studiengang Wirtschaftsinformatik werden alle Kollisionen zwischen folgenden Instituten berücksichtigt:
 
@@ -132,7 +146,8 @@ Somit können folgende LVA-Kollisions-Kombinationen eintreten:
 
 * **ZK_ZK** = ZK-LVA kollidiert mit ZK-LVA
 
-Die LVA-Kollisions-Kombinationen werden mit Faktorwerten belegt, die in weiterer Folge in die Kollisionswert-Berechnung einfließen:
+Die LVA-Kollisions-Kombinationen werden mit Faktorwerten belegt, die in weiterer Folge in die Kollisionswert-Berechnung
+einfließen:
 
 INST_INST = 100, WIN_WIN = 80, WIN_EZK = 70, EZK_EZK = 60, WIN_ZK = 30, EZK_ZK = 20, ZK_ZK = 10
 
@@ -140,13 +155,16 @@ image::level4_collisiontype.png[]
 
 **2) Maximalwert**
 
-Der Maximalwert bestimmt den maximalen Kollisionswert den die LVA X (Level 2) erreichen kann und dient als Basis für die normierte Berechnung (Skala 0 bis 100).
+Der Maximalwert bestimmt den maximalen Kollisionswert den die LVA X (Level 2) erreichen kann und dient als Basis für
+die normierte Berechnung (Skala 0 bis 100).
 
-Jeder Termin der LVA könnte theoretisch mit der zweiten LVA kollidieren. Für jeden Termin wird eine potentielle Kollision mit dem Wert 100 berechnet.
+Jeder Termin der LVA könnte theoretisch mit der zweiten LVA kollidieren. Für jeden Termin wird eine potentielle
+Kollision mit dem Wert 100 berechnet.
 
 __Z.B. die LVA besitzt 13 Termine = 13 * 100 = 1300 = Terminkollisionswert__
 
-Jeder Klausurtermin der LVA (Level 2) könnte mit einer Klausur der kollidierenden LVA (Level 4) kollidieren. Für jede potentielle Klausurkollision wird zusätzlich ein Wert von 200 addiert.
+Jeder Klausurtermin der LVA (Level 2) könnte mit einer Klausur der kollidierenden LVA (Level 4) kollidieren. Für jede
+potentielle Klausurkollision wird zusätzlich ein Wert von 200 addiert.
 
 __Z.B. die LVA besitzt 2 Klausurtermine = 2 * 200 = 400 = Klausurkollisionswert__
 
@@ -156,9 +174,11 @@ Der Terminkollisionswert und der Klausurkollisionswert werden addiert.
 
 __1300 + 400 = 1700__
 
-Um den Kollisionswert schlussendlich auch nach seiner Priorität gewichten zu können wird dieser zu 50 Prozent aus den Kollisionen errechnet (Maximalwert1) und zu 50 Prozent auf Basis des Kollisionstyps (CollisionType bzw. Faktorwert).
+Um den Kollisionswert schlussendlich auch nach seiner Priorität gewichten zu können wird dieser zu 50 Prozent aus den
+Kollisionen errechnet (Maximalwert1) und zu 50 Prozent auf Basis des Kollisionstyps (CollisionType bzw. Faktorwert).
 
-Der Maximalwert1 wird mit 2 multipliziert, um in weiterer Folge zu 50 % die Kollisionen und zu 50 % die Kollisions-Art zu gewichten.
+Der Maximalwert1 wird mit 2 multipliziert, um in weiterer Folge zu 50 % die Kollisionen und zu 50 % die Kollisions-Art
+zu gewichten.
 
 **Maximalwert1 * 2 = Maximalwert**
 
@@ -171,7 +191,8 @@ __1700 * 2 = 3400__
 __(13 * 100 + 2 * 200) * 2 = 3400__
 
 **3) Kollisionswert**
-Der Kollisionswert bestimmt den absoluten Wert der kollidierenden Termine und Klausurtermine inklusive einer Gewichtung je nach Kollisions-Typ.
+Der Kollisionswert bestimmt den absoluten Wert der kollidierenden Termine und Klausurtermine inklusive einer Gewichtung
+je nach Kollisions-Typ.
 
 Jede Terminkollision wird mit Wert 100 angesetzt. __Z.B. die LVA besitzt 4 Terminkollisionen = 4 * 100 = 400__
 
@@ -179,7 +200,8 @@ Jede Klausurkollision wird mit Wert 200 angesetzt. __Z.B. die LVA besitzt 1 Klau
 
 __400 + 200 = 600 = Kollisionswert1__
 
-Mit Hilfe des CollisionTypeValues werden die restlichen 50 % des Kollisionswertes berechnet. Z.B. WIN_WIN --> CollisionTypeValue = 80
+Mit Hilfe des CollisionTypeValues werden die restlichen 50 % des Kollisionswertes berechnet. Z.B. WIN_WIN -->
+CollisionTypeValue = 80
 
 __Maximalwert / 2 * CollisionTypeValue / 100 = Kollisionswert2__
 
@@ -203,19 +225,23 @@ __Z.B. 1960 / 3400 * 100 = 57,65__
 
 
 ==== LEVEL 3(Fach V) ====
-Ziel von Level 3 ist es basierend auf den Werten von Level 4 eine aggregierte Sicht auf Fach-Sicht zu generieren. Alle LVAs (Level 4) werden mittels Gruppierungsmerkmal (Subject) aggregiert dargestellt.
+Ziel von Level 3 ist es basierend auf den Werten von Level 4 eine aggregierte Sicht auf Fach-Sicht zu generieren. Alle
+LVAs (Level 4) werden mittels Gruppierungsmerkmal (Subject) aggregiert dargestellt.
 
 image::level3_overview.png[]
 
 
 ==== LEVEL 3 - Subject ====
-Das Subject beziehungsweise Fach ist die Bezeichnung des Fachs und beinhaltet alle LVAs mit dieser Bezeichnung und Kurstyp.
+Das Subject beziehungsweise Fach ist die Bezeichnung des Fachs und beinhaltet alle LVAs mit dieser Bezeichnung und
+Kurstyp.
 
 ==== LEVEL 3 - Typ ====
-Der Typ beziehungsweise Kurstyp zeigt um welchen Typ von Lehrveranstaltung es sich handelt wie z.B. UE für Übung, VL für Vorlesung, etc.
+Der Typ beziehungsweise Kurstyp zeigt um welchen Typ von Lehrveranstaltung es sich handelt wie z.B. UE für Übung, VL
+für Vorlesung, etc.
 
 ==== LEVEL 3 - LVAs ====
-Die Spalte LVAs gibt an wie viele Lehrveranstaltungen dieses Faches von einer Terminkollision betroffen sind. Zusätzlich wird angezeigt wie viele Lehrveranstaltungen von diesem Fach angeboten werden.
+Die Spalte LVAs gibt an wie viele Lehrveranstaltungen dieses Faches von einer Terminkollision betroffen sind.
+Zusätzlich wird angezeigt wie viele Lehrveranstaltungen von diesem Fach angeboten werden.
 
 #1 = Anzahl LVAs von Kollision betroffen
 
@@ -230,7 +256,8 @@ Die Spalte Exam summiert alle Klausurkollisionen der darunterliegenden Ebene.
 image::level3_exam.png[]
 
 
-__Zum Beispiel das Fach Finanzmanagement mit Kurstyp KS weist in der Spalte Exam einen Wert von 7 aus. Auf der darunterliegenden Ebene (Level 4) werden 7 LVAs mit jeweils 1 Klausurkollision ausgegeben.__
+__Zum Beispiel das Fach Finanzmanagement mit Kurstyp KS weist in der Spalte Exam einen Wert von 7 aus. Auf der
+darunterliegenden Ebene (Level 4) werden 7 LVAs mit jeweils 1 Klausurkollision ausgegeben.__
 
 __1 + 1 + 1 + 1 + 1 + 1 + 1 = 7__
 
@@ -241,10 +268,12 @@ Summe der Instituts-Kollisionen aus Level 4
 Summe der Curriculum-Kollisionen aus Level 4
 
 ==== LEVEL 3 - WS ====
-Die Spalte WS gibt an, ob es sich um Kollisionen handelt, die den idealtypischen Studienplan beginnend mit Wintersemester betreffen.
+Die Spalte WS gibt an, ob es sich um Kollisionen handelt, die den idealtypischen Studienplan beginnend mit
+Wintersemester betreffen.
 
 ==== LEVEL 3 - SS ====
-Die Spalte SS gibt an, ob es sich um Kollisionen handelt, die den idealtypischen Studienplan beginnend mit Sommersemester betreffen.
+Die Spalte SS gibt an, ob es sich um Kollisionen handelt, die den idealtypischen Studienplan beginnend mit
+Sommersemester betreffen.
 
 ==== LEVEL 3 - Avg ====
 Basierend auf Level 4 wird ein durchschnittlicher ColValue aus den darunterliegenden LVAs berechnet.
@@ -253,19 +282,22 @@ Basierend auf Level 4 wird ein durchschnittlicher ColValue aus den darunterliege
 
 **Summe aller ColValues / Anzahl aller betroffener LVAs = Avg**
 
-__Zum Beispiel existieren auf Level 4 drei kollidierende LVAs. Davon weisen die LVAs folgende ColValues auf: LVA1 20.00, LVA2 50.00 und LVA3 60.00__
+__Zum Beispiel existieren auf Level 4 drei kollidierende LVAs. Davon weisen die LVAs folgende ColValues auf: LVA1 20.00,
+LVA2 50.00 und LVA3 60.00__
 
 __Avg = (20.00 + 50.00 + 60.00) / 3 = 43.33__
 
 ==== LEVEL 3 - Max ====
 Basierend auf Level 4 wird der größte ColValue aus den darunterliegenden LVAs gespeichert.
 
-__Zum Beispiel existieren auf Level 4 drei kollidierende LVAs. Davon weisen die LVAs folgende ColValues auf: LVA1 20.00, LVA2 50.00 und LVA3 60.00__
+__Zum Beispiel existieren auf Level 4 drei kollidierende LVAs. Davon weisen die LVAs folgende ColValues auf: LVA1 20.00,
+LVA2 50.00 und LVA3 60.00__
 
 __Max = 60.00__
 
 ==== LEVEL 2 (Fach 1 - LVA) ====
-Level 2 betrachtet LVA X des Faches V. Ziel von Level 2 ist es basierend auf den Werten von Level 3 eine aggregierte Sicht auf LVA-Ebene zu generieren.
+Level 2 betrachtet LVA X des Faches V. Ziel von Level 2 ist es basierend auf den Werten von Level 3 eine aggregierte
+Sicht auf LVA-Ebene zu generieren.
 
 image::level2_overview.png[]
 
@@ -282,7 +314,8 @@ Die Spalte Exam summiert alle Klausurkollisionen der darunterliegenden Ebene (Le
 image::level2_exam.png[]
 
 
-__Zum Beispiel die LVA 366533 weist in der Spalte Exam einen Wert von 7 auf (Summe aus den 3 LVAs Finanzmanagement, Bilanzierung und Mathematik und Logik). Auf der darunterliegenden Ebene (Level 3) werden eine LVA mit 7 Klausurkollision und 2 LVAs mit 0 Klausurkollisionen ausgegeben.__
+__Zum Beispiel die LVA 366533 weist in der Spalte Exam einen Wert von 7 auf (Summe aus den 3 LVAs Finanzmanagement,
+Bilanzierung und Mathematik und Logik). Auf der darunterliegenden Ebene (Level 3) werden eine LVA mit 7 Klausurkollision und 2 LVAs mit 0 Klausurkollisionen ausgegeben.__
 
 __7 + 0 + 0 = 7__
 
@@ -390,3 +423,5 @@ Die Dokumentation des Projektes wird zum Teil parallel zur Umsetzung betrieben u
 * javdoc - Sourcecode-Dokumentation
 
 * Dokumentation der REST-Attribute
+
+Zusätzlich wird ein Betriebshandbuch erstellt um die Bedienung der Applikation zu erleichern.
