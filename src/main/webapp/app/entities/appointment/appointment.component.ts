@@ -18,7 +18,9 @@ import {IdealPlanService} from '../ideal-plan/ideal-plan.service';
 export class AppointmentComponent implements OnInit, OnDestroy {
     appointments: Appointment[];
     idealPlans: IdealPlan[];
+    idealPlanSelected: any;
     curriculumSemesters: CurriculumSemester[];
+    curriculumSelected: any;
     currentAccount: any;
     eventSubscriber: Subscription;
     currentSearch: string;
@@ -42,7 +44,6 @@ export class AppointmentComponent implements OnInit, OnDestroy {
     eventColor: any;
     semesters: any[];
     semester: any;
-    semester2: any;
     selectedSemester: any;
     curriculumSemester: any;
     curriculum: any;
@@ -74,7 +75,6 @@ export class AppointmentComponent implements OnInit, OnDestroy {
         this.contentHeight = 800;
         this.timeFormat = 'hh:mm';
         this.titleFormat = 'D MM YYYY';
-        this.selectedSemester = 1;
         this.semesters = [
             { semester: '1 Semester', value: 1 },
             { semester: '2 Semester', value: 2 },
@@ -82,20 +82,23 @@ export class AppointmentComponent implements OnInit, OnDestroy {
             { semester: '4 Semester', value: 4 },
             { semester: '5 Semester', value: 5 },
             { semester: '6 Semester', value: 6 }];
+
         this.idealPlanService.query().subscribe(
             (res: ResponseWrapper) => {
                 this.idealPlans = res.json;
-                this.currentSearch = '';
+                this.idealPlanSelected = ' ';
             },
             (res: ResponseWrapper) => this.onError(res.json)
         );
+
         this.curriculumSemesterService.query().subscribe(
             (res: ResponseWrapper) => {
                 this.curriculumSemesters = res.json;
-                this.currentSearch = '';
+                this.curriculumSelected = ' ';
             },
             (res: ResponseWrapper) => this.onError(res.json)
         );
+        this.selectedSemester = ' ';
     }
 
     loadAll() {
@@ -111,17 +114,22 @@ export class AppointmentComponent implements OnInit, OnDestroy {
         this.appointmentService.query().subscribe(
             (res: ResponseWrapper) => {
                 this.appointments = res.json;
-                this.currentSearch = '';
+            },
+            (res: ResponseWrapper) => this.onError(res.json)
+        );
+        this.curriculumSemesterService.query().subscribe(
+            (res: ResponseWrapper) => {
+                this.curriculumSemesters = res.json;
             },
             (res: ResponseWrapper) => this.onError(res.json)
         );
     }
 
-    search(query, semester) {
+    search(query, semester, curriculum) {
         if (!query) {
             return this.clear();
         }
-        this.appointmentService.query2(query, semester).subscribe(
+        this.appointmentService.query2(query, semester, curriculum).subscribe(
             (res: ResponseWrapper) => {
                 this.events = res.json;
             },

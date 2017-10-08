@@ -3,7 +3,7 @@
         <div class="col-5">
             <div class="form-group">
                 <h2>Ideal Plan</h2>
-                <select class="form-control" [(ngModel)]="currentSearch" id="currentSearch">
+                <select class="form-control" [(ngModel)]="idealPlanSelected" id="currentSearch">
                     <option *ngFor="let idealPlan of idealPlans ;trackBy: trackId" value="{{idealPlan.id}}">{{idealPlan.id}} {{idealPlan.semester}} {{idealPlan.year}} {{idealPlan.curriculumCurName}}</option>
                 </select>
             </div>
@@ -11,23 +11,23 @@
         <div class="col">
             <div class="semester-group" ng-app ng-controller="search">
                 <h2>Semester</h2>
-                <select *ngIf="semesters" [(ngModel)]="semester" id="semester" class="form-control">
-                    <option *ngFor="let semester of semesters" value="{{semester.value}}" [(ngModel)]="selectedSemester">{{semester.value}}</option>
+                <select class="form-control" [(ngModel)]="semesterSelected" id="semester">
+                    <option *ngFor="let semester of semesters" value="{{semester.value}}" >{{semester.value}}</option>
                 </select>
             </div>
         </div>
         <div class="col">
             <div class="curriculum-group" ng-app ng-controller="search">
                 <h2>Curriculum</h2>
-                <select class="form-control" [(ngModel)]="curriculum" id="curriculum">
-                    <option *ngFor="let curriculum of curriculumSemesters ;trackBy: trackId"value="{{curriculum.id}}">{{curriculum.id}} {{curriculum.semester}} {{curriculum.year}} {{curriculum.curriculumCurName}}</option>
+                <select class="form-control" [(ngModel)]="curriculumSelected" id="curriculum">
+                    <option *ngFor="let curriculumSemester of curriculumSemesters ;trackBy: trackId" value="{{curriculumSemester.id}}">{{curriculumSemester.id}} {{curriculumSemester.semester}} {{curriculumSemester.curriculumCurName}}</option>
                 </select>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col">
-            <button type="button" class="btn btn-primary btn-md btn-block" (click)="search(currentSearch, semester)">Update</button>
+            <button type="button" class="btn btn-primary btn-md btn-block" (click)="search(idealPlanSelected, semesterSelected, curriculumSelected)">Update</button>
         </div>
     </div>
     <hr>
