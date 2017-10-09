@@ -21,11 +21,14 @@ public interface CurriculumSubjectRepository extends JpaRepository<CurriculumSub
     @Query("select curriculum_subject from CurriculumSubject curriculum_subject left join fetch curriculum_subject.lvas where curriculum_subject.id =:id")
     CurriculumSubject findOneWithEagerRelationships(@Param("id") Long id);
 
+    // TODO Doku fehlt
     List<CurriculumSubject> findByCurriculumSemester_Id(@Param("id") Long id);
 
+    // TODO Doku fehlt
     @Query("select cs from CurriculumSubject cs left join fetch cs.lvas l left join fetch l.appointments where cs.subject = (:subject)")
     CurriculumSubject findBySubject(@Param("subject") Subject subject);
 
+    // TODO Doku fehlt
     @Query("select cs from CurriculumSubject cs left join fetch cs.lvas l left join fetch l.appointments where cs.subject = (:subject) and cs.curriculumSemester.id = (:cursemid)")
     CurriculumSubject findBySubjectAndCurriculumSemester_Id(@Param("subject") Subject subject, @Param("cursemid") Long cursemid);
 

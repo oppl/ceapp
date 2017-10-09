@@ -43,6 +43,7 @@ public class CurriculumSubject implements Serializable {
     @ManyToOne
     private CurriculumSemester curriculumSemester;
 
+    // added mapping
     @OneToMany(mappedBy = "curriculumSubject", cascade = CascadeType.ALL)
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)

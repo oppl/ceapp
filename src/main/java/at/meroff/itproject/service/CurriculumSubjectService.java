@@ -66,6 +66,7 @@ public class CurriculumSubjectService {
             .collect(Collectors.toCollection(LinkedList::new));
     }
 
+    // TODO methode umbenennen
     /**
      *  Get all the curriculumSubjects.
      *
