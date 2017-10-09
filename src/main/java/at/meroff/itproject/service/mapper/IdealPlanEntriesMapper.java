@@ -13,6 +13,7 @@ public interface IdealPlanEntriesMapper extends EntityMapper <IdealPlanEntriesDT
 
     @Mapping(source = "subject.id", target = "subjectId")
     @Mapping(source = "subject.subjectName", target = "subjectSubjectName")
+    // added mapping
     @Mapping(source = "subject.subjectType", target = "subjectSubjectType")
 
     @Mapping(source = "idealplan.id", target = "idealplanId")
