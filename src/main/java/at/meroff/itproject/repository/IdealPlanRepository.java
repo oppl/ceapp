@@ -15,6 +15,7 @@ import org.springframework.data.jpa.repository.*;
 @Repository
 public interface IdealPlanRepository extends JpaRepository<IdealPlan,Long> {
 
+    // TODO Doku fehlt
     IdealPlan findByCurriculum_CurIdAndYearAndSemester(@Param("curId") Integer curId, @Param("year") Integer year, @Param("semester") Semester semester);
 
 }
