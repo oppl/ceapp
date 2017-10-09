@@ -1,6 +1,7 @@
 package at.meroff.itproject.service;
 
 import at.meroff.itproject.domain.IdealPlan;
+import at.meroff.itproject.domain.enumeration.Semester;
 import at.meroff.itproject.repository.IdealPlanRepository;
 import at.meroff.itproject.repository.search.IdealPlanSearchRepository;
 import at.meroff.itproject.service.dto.IdealPlanDTO;
