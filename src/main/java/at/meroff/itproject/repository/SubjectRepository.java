@@ -15,6 +15,7 @@ import org.springframework.data.jpa.repository.*;
 @Repository
 public interface SubjectRepository extends JpaRepository<Subject,Long> {
 
+    // TODO Doku fehlt
     Subject findBySubjectNameAndSubjectType(@Param("subjectName") String subjectName, @Param("subjectType") SubjectType subjectType);
 
 }

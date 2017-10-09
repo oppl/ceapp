@@ -165,7 +165,7 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
                 .map(strings -> {
 
                     // find the corresponding subject in the database
-                    SubjectDTO subject = subjectService.findOne(strings[0], SubjectType.valueOf(strings[1]));
+                    SubjectDTO subject = subjectService.findBySubjectNameAndSubjectType(strings[0], SubjectType.valueOf(strings[1]));
                     if (subject == null) {
                         // create a new subject if it does not exist.
                         System.out.println(strings[0] + " " + strings[1]);
