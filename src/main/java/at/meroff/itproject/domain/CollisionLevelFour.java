@@ -48,6 +48,7 @@ public class CollisionLevelFour implements Serializable {
     @ManyToOne
     private CollisionLevelThree collisionLevelThree;
 
+    // changed the CascadeType
     @OneToMany(mappedBy = "collisionLevelFour", cascade = CascadeType.ALL)
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
