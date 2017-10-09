@@ -54,6 +54,13 @@ export class AppointmentService {
             .map((res: Response) => this.convertResponse(res));
     }
 
+    query3(idealPath: number, semester: number, semestertype: string, curriculum: number, req?: any): Observable<ResponseWrapper> {
+
+        const options = createRequestOption(req);
+        return this.http.get(`${this.resourceUrl2}/${idealPath}/${semester}/${semestertype}/${curriculum}`, options)
+            .map((res: Response) => this.convertResponse(res));
+    }
+
     delete(id: number): Observable<Response> {
         return this.http.delete(`${this.resourceUrl}/${id}`);
     }

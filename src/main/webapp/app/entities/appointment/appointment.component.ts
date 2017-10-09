@@ -45,6 +45,7 @@ export class AppointmentComponent implements OnInit, OnDestroy {
     semesters: any[];
     semester: any;
     selectedSemester: any;
+    semesterSelected: any;
     curriculumSemester: any;
     curriculum: any;
     constructor(
@@ -98,7 +99,7 @@ export class AppointmentComponent implements OnInit, OnDestroy {
             },
             (res: ResponseWrapper) => this.onError(res.json)
         );
-        this.selectedSemester = ' ';
+        this.semesterSelected = ' ';
     }
 
     loadAll() {
@@ -125,11 +126,11 @@ export class AppointmentComponent implements OnInit, OnDestroy {
         );
     }
 
-    search(query, semester, curriculum) {
+    search(query, semester, semestertype, curriculum) {
         if (!query) {
             return this.clear();
         }
-        this.appointmentService.query2(query, semester, curriculum).subscribe(
+        this.appointmentService.query3(query, semester, semestertype, curriculum).subscribe(
             (res: ResponseWrapper) => {
                 this.events = res.json;
             },
