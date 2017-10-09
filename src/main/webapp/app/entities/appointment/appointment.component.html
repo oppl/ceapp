@@ -4,7 +4,7 @@
             <div class="form-group">
                 <h2>Ideal Plan</h2>
                 <select class="form-control" [(ngModel)]="idealPlanSelected" id="currentSearch">
-                    <option *ngFor="let idealPlan of idealPlans ;trackBy: trackId" value="{{idealPlan.id}}">{{idealPlan.id}} {{idealPlan.semester}} {{idealPlan.year}} {{idealPlan.curriculumCurName}}</option>
+                    <option *ngFor="let idealPlan of idealPlans ;trackBy: trackId" value="{{idealPlan.id + idealPlan.semester}}">{{idealPlan.id}} {{idealPlan.semester}} {{idealPlan.year}} {{idealPlan.curriculumCurName}}                    </option>
                 </select>
             </div>
         </div>
@@ -27,10 +27,11 @@
     </div>
     <div class="row">
         <div class="col">
-            <button type="button" class="btn btn-primary btn-md btn-block" (click)="search(idealPlanSelected, semesterSelected, curriculumSelected)">Update</button>
+            <button type="button" class="btn btn-primary btn-md btn-block" (click)="search(idealPlanSelected.slice(0,4), semesterSelected, idealPlanSelected.slice(4,6), curriculumSelected)">Update</button>
         </div>
     </div>
     <hr>
+    <h1>{{idealPlanSelected.slice(0,4)}},{{semesterSelected}},{{idealPlanSelected.slice(4,6)}},{{curriculumSelected}}</h1>
     <p-schedule [events]="events"
                 [header]="headerConfig"
                 [hiddenDays]="hiddenDays"
