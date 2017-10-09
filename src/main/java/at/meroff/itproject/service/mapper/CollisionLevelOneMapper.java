@@ -14,6 +14,7 @@ public interface CollisionLevelOneMapper extends EntityMapper <CollisionLevelOne
     @Mapping(source = "curriculumSubject.id", target = "curriculumSubjectId")
 
     @Mapping(source = "idealPlan.id", target = "idealPlanId")
+    // added mapping
     @Mapping(source = "curriculumSubject", target = "curriculumSubject")
     @Mapping(source = "institute.id", target = "instituteId")
     @Mapping(source = "institute.instituteName", target = "instituteInstituteName")

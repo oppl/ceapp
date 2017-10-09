@@ -105,6 +105,12 @@ public class CollisionLevelOneService {
             .collect(Collectors.toList());
     }
 
+    /**
+     * Returns a list of CollisionLevelOne objects filtered by CurriculumSemester and IdealPlan
+     * @param cs curriculum semester id
+     * @param ip ideal plan id
+     * @return list of collision level one objects (DTO)
+     */
     @Transactional(readOnly = true)
     public List<CollisionLevelOneDTO> findByCsIp(Long cs, Long ip) {
         log.debug("Request to get all CollisionLevelOnes");

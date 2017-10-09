@@ -15,9 +15,6 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.StreamSupport;
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * REST controller for managing CollisionLevelOne.
@@ -90,6 +87,7 @@ public class CollisionLevelOneResource {
         return collisionLevelOneService.findAll();
     }
 
+    // TODO Doku fehlt
     /**
      * GET  /collision-level-ones : get all the collisionLevelOnes.
      *

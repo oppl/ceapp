@@ -54,6 +54,7 @@ public class CollisionLevelOne implements Serializable {
     @ManyToOne
     private CurriculumSubject curriculumSubject;
 
+    // changed the CascadeType
     @OneToMany(mappedBy = "collisionLevelOne", cascade = CascadeType.ALL)
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
