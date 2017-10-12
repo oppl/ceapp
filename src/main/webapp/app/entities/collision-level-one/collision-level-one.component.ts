@@ -43,23 +43,21 @@ collisionLevelOnes: CollisionLevelOne[];
         private activatedRoute: ActivatedRoute,
         private principal: Principal
     ) {
-        this.currentSearch = activatedRoute.snapshot.params['search'] ? activatedRoute.snapshot.params['search'] : '';
-
-
+        this.currentSearch = activatedRoute.snapshot.params['search'] ? activatedRoute.snapshot.params['search'] : ''
     }
 
     loadAll() {
         console.log('testtest');
         console.log(this.csId);
         console.log(this.ipId);
-        //if (this.csId && this.ipId) {
+        // if (this.csId && this.ipId) {
 
             this.collisionLevelOneService.find2(this.csId, this.ipId).subscribe(
                     (res: ResponseWrapper) => this.collisionLevelOnes = res.json,
                     (res: ResponseWrapper) => this.onError(res.json)
                 );
             return;
-       //}
+       // }
 
     }
 
@@ -76,10 +74,10 @@ collisionLevelOnes: CollisionLevelOne[];
         this.loadAll();
     }
     ngOnInit() {
-        this.activatedRoute.params.subscribe(params => {
-            this.csId = +params['cs'];});
-        this.activatedRoute.params.subscribe(params => {
-            this.ipId = +params['ip'];});
+        this.activatedRoute.params.subscribe((params) => {
+            this.csId = +params['cs']; });
+        this.activatedRoute.params.subscribe((params) => {
+            this.ipId = +params['ip']; });
         this.loadAll();
         this.principal.identity().then((account) => {
             this.currentAccount = account;

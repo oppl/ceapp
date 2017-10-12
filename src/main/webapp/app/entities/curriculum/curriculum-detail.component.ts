@@ -5,7 +5,7 @@ import { JhiEventManager  } from 'ng-jhipster';
 
 import { Curriculum } from './curriculum.model';
 import { CurriculumService } from './curriculum.service';
-import {IdealPlan} from "../ideal-plan/ideal-plan.model";
+import {IdealPlan} from '../ideal-plan/ideal-plan.model';
 
 @Component({
     selector: 'jhi-curriculum-detail',
