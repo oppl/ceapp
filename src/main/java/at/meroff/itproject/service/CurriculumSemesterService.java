@@ -64,26 +64,21 @@ public class CurriculumSemesterService {
         CurriculumSemester curriculumSemester;
         CurriculumSemesterDTO result;
 
-        // search for if semester allready exists
+        curriculumSemester = curriculumSemesterMapper.toEntity(curriculumSemesterDTO);
+        curriculumSemester = curriculumSemesterRepository.saveAndFlush(curriculumSemester);
+        result = curriculumSemesterMapper.toDto(curriculumSemester);
+
+        // read the cur id if it is a new semester
+        // TODO irgendwie müsste das aich ohne dem gehen!!!
         if (curriculumSemesterDTO.getId() == null) {
-            curriculumSemester = curriculumSemesterMapper.toEntity(curriculumSemesterDTO);
-            curriculumSemester = curriculumSemesterRepository.save(curriculumSemester);
-            curriculumSemester = curriculumSemesterRepository.findOne(curriculumSemester.getId());
-            result = curriculumSemesterMapper.toDto(curriculumSemester);
             Curriculum cur = curriculumRepository.findOne(curriculumSemester.getCurriculum().getId());
             result.setCurriculumCurId(cur.getCurId());
-            result.setCurriculumCurName(cur.getCurName());
-            CurriculumSemesterDTO curriculumSemesterDTO1 = importService.verifySubjects(result);
-            curriculumSemesterDTO1.setCurriculumCurId(cur.getCurId());
-            curriculumSemesterDTO1.setCurriculumCurName(cur.getCurName());
-            importService.verifyLvas(curriculumSemesterDTO1);
-            collisionService.calculateCollisions(204, 2017, Semester.WS, 2017, Semester.WS);
-
-        } else {
-            curriculumSemester = curriculumSemesterMapper.toEntity(curriculumSemesterDTO);
-            curriculumSemester = curriculumSemesterRepository.save(curriculumSemester);
-            result = curriculumSemesterMapper.toDto(curriculumSemester);
         }
+
+        result = importService.verifySubjects(result);
+
+        importService.verifyLvas(result);
+        collisionService.calculateCollisions(204, 2017, Semester.WS, 2017, Semester.WS);
 
         // if not read all subjects and all lvas
         curriculumSemesterSearchRepository.save(curriculumSemester);

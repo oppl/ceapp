@@ -21,4 +21,5 @@ public interface CurriculumSemesterRepository extends JpaRepository<CurriculumSe
 
     CurriculumSemester findByCurriculum_CurIdAndYearAndSemester(@Param("curId") Integer curId, @Param("year") Integer year, @Param("semester") Semester semester);
 
+
 }

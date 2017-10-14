@@ -141,9 +141,13 @@ public class AppointmentDTO implements Serializable {
         return Objects.equals(getId(), appointmentDTO.getId());
     }
 
+    //@Override
+    //public int hashCode() {
+    //    return Objects.hashCode(getId());
+    //}
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return startDateTime.hashCode() + endDateTime.hashCode() + room.hashCode() + theme.hashCode();
     }
 
     @Override

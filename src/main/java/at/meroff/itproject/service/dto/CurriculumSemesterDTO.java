@@ -5,6 +5,8 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
+
+import at.meroff.itproject.domain.Curriculum;
 import at.meroff.itproject.domain.enumeration.Semester;
 
 /**
@@ -17,6 +19,8 @@ public class CurriculumSemesterDTO implements Serializable {
     private Integer year;
 
     private Semester semester;
+
+    private Curriculum curriculum;
 
     private Long curriculumId;
 
@@ -48,6 +52,14 @@ public class CurriculumSemesterDTO implements Serializable {
 
     public void setSemester(Semester semester) {
         this.semester = semester;
+    }
+
+    public Curriculum getCurriculum() {
+        return curriculum;
+    }
+
+    public void setCurriculum(Curriculum curriculum) {
+        this.curriculum = curriculum;
     }
 
     public Long getCurriculumId() {
