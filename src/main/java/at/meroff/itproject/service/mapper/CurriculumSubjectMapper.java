@@ -13,6 +13,7 @@ public interface CurriculumSubjectMapper extends EntityMapper <CurriculumSubject
 
     @Mapping(source = "subject.id", target = "subjectId")
     @Mapping(source = "subject.subjectName", target = "subjectSubjectName")
+    // added mapping
     @Mapping(source = "subject.subjectType", target = "subjectSubjectType")
 
     @Mapping(source = "curriculumSemester.id", target = "curriculumSemesterId")

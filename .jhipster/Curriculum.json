@@ -3,7 +3,7 @@
     "relationships": [
         {
             "relationshipType": "one-to-many",
-            "relationshipName": "idealplanentries",
+            "relationshipName": "idealPlans",
             "otherEntityName": "idealPlan",
             "otherEntityRelationshipName": "curriculum"
         },

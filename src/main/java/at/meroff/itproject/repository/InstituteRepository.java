@@ -13,5 +13,11 @@ import org.springframework.data.jpa.repository.*;
 @SuppressWarnings("unused")
 @Repository
 public interface InstituteRepository extends JpaRepository<Institute,Long> {
+
+    /**
+     * Find an institute by the KUSSS internal ID
+     * @param instituteId KUSSS internal ID
+     * @return institute
+     */
     Institute findByInstituteId(@Param("instituteId") Integer instituteId);
 }

@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 
 import org.springframework.data.jpa.repository.*;
 
+import java.util.Set;
+
 
 /**
  * Spring Data JPA repository for the IdealPlan entity.
@@ -15,6 +17,9 @@ import org.springframework.data.jpa.repository.*;
 @Repository
 public interface IdealPlanRepository extends JpaRepository<IdealPlan,Long> {
 
+    // TODO Doku fehlt
     IdealPlan findByCurriculum_CurIdAndYearAndSemester(@Param("curId") Integer curId, @Param("year") Integer year, @Param("semester") Semester semester);
+
+    Set<IdealPlan> findByCurriculum_CurId(@Param("curId") Integer curId);
 
 }

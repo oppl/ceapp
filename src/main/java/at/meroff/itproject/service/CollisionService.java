@@ -80,10 +80,14 @@ public class CollisionService {
         // load CurriculumSemester
         CurriculumSemester currSemester = curriculumSemesterRepository.findByCurriculum_CurIdAndYearAndSemester(curId, year, semester);
 
-        // load idealPlan
-        IdealPlan idealPlan = idealPlanRepository.findByCurriculum_CurIdAndYearAndSemester(curId, idealPlanYear, idealPlanSemester);
+        // suche nach idealen studienplänen
+        Set<IdealPlan> byCurriculum_curId = idealPlanRepository.findByCurriculum_CurId(curId);
 
-        calculateCollisions(currSemester, idealPlan);
+        byCurriculum_curId.stream()
+            .filter(idealPlan -> idealPlan.getYear() <= year && idealPlan.getYear() > (year - 3))
+            .forEach(idealPlan -> {
+                calculateCollisions(currSemester, idealPlan);
+            });
 
     }
 

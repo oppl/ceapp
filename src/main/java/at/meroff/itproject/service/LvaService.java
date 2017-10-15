@@ -1,6 +1,7 @@
 package at.meroff.itproject.service;
 
 import at.meroff.itproject.domain.Lva;
+import at.meroff.itproject.domain.enumeration.Semester;
 import at.meroff.itproject.repository.LvaRepository;
 import at.meroff.itproject.repository.search.LvaSearchRepository;
 import at.meroff.itproject.service.dto.LvaDTO;
@@ -78,6 +79,20 @@ public class LvaService {
         Lva lva = lvaRepository.findOne(id);
         return lvaMapper.toDto(lva);
     }
+
+    /**
+     *  Get one lva by id.
+     *
+     *  @param lvanr the id of the entity
+     *  @return the entity
+     */
+    @Transactional(readOnly = true)
+    public LvaDTO findByLvaNrAndYearAndSemester(String lvanr, Integer year, Semester semester) {
+        log.debug("Request to get Lva : {}", lvanr);
+        Lva lva = lvaRepository.findByLvaNrAndYearAndSemester(lvanr, year, semester);
+        return lvaMapper.toDto(lva);
+    }
+
 
     /**
      *  Delete the  lva by id.

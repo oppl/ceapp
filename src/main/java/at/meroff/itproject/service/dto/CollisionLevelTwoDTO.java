@@ -2,8 +2,6 @@ package at.meroff.itproject.service.dto;
 
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -33,6 +31,9 @@ public class CollisionLevelTwoDTO implements Serializable {
 
     private String lvaLvaNr;
 
+    /**
+     * source LVA linked to the collsion level
+     */
     private LvaDTO lva;
 
     public Long getId() {
@@ -123,10 +124,18 @@ public class CollisionLevelTwoDTO implements Serializable {
         this.lvaLvaNr = lvaLvaNr;
     }
 
+    /**
+     * Method returns the linked source LVA
+     * @return source lva
+     */
     public LvaDTO getLva() {
         return lva;
     }
 
+    /**
+     * Method updates the source LVA
+     * @param lva source lva
+     */
     public void setLva(LvaDTO lva) {
         this.lva = lva;
     }

@@ -15,6 +15,7 @@ public interface CollisionLevelFourMapper extends EntityMapper <CollisionLevelFo
 
     @Mapping(source = "lva.id", target = "lvaId")
     @Mapping(source = "lva.lvaNr", target = "lvaLvaNr")
+    // added mapping
     @Mapping(source = "lva", target = "lva")
     CollisionLevelFourDTO toDto(CollisionLevelFour collisionLevelFour);
 

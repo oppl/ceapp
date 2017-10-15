@@ -5,8 +5,6 @@ import at.meroff.itproject.domain.enumeration.SubjectType;
 
 import javax.validation.constraints.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -30,6 +28,9 @@ public class IdealPlanEntriesDTO implements Serializable {
 
     private String subjectSubjectName;
 
+    /**
+     * SubjectType of the linked subject
+     */
     private SubjectType subjectSubjectType;
 
     private Long idealplanId;
@@ -98,10 +99,18 @@ public class IdealPlanEntriesDTO implements Serializable {
         this.idealplanId = idealPlanId;
     }
 
+    /**
+     * Method returns the SubjectType of the linked subject
+     * @return
+     */
     public SubjectType getSubjectSubjectType() {
         return subjectSubjectType;
     }
 
+    /**
+     * Method updates the SubjectType of the linked subject
+     * @param subjectSubjectType
+     */
     public void setSubjectSubjectType(SubjectType subjectSubjectType) {
         this.subjectSubjectType = subjectSubjectType;
     }

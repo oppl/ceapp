@@ -67,9 +67,11 @@ public class IdealPlanEntriesService {
     }
 
     /**
-     *  Get all the idealPlanEntries.
      *
-     *  @return the list of entities
+     *  Get all the idealPlanEntries for a given idealplan.
+     *
+     * @param id ideal plan id
+     * @return list of ideal plan entries linked with the id
      */
     @Transactional(readOnly = true)
     public List<IdealPlanEntriesDTO> findByIdealplan_Id(Long id) {

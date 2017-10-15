@@ -106,7 +106,7 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
             createIdealPlan(idealPlanDTO);
 
             // create new ideal study plan
-            /*idealPlanDTO = new IdealPlanDTO();
+            idealPlanDTO = new IdealPlanDTO();
             idealPlanDTO.setYear(2016);
             idealPlanDTO.setSemester(Semester.WS);
             idealPlanDTO.setActive(true);
@@ -114,7 +114,7 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
 
             idealPlanDTO = idealPlanService.save(idealPlanDTO);
 
-            createIdealPlan(idealPlanDTO);*/
+            createIdealPlan(idealPlanDTO);
 
             // create new ideal study plan
             idealPlanDTO = new IdealPlanDTO();
@@ -126,20 +126,6 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
             idealPlanDTO = idealPlanService.save(idealPlanDTO);
 
             createIdealPlan(idealPlanDTO);
-
-            // create one semester for Wirtschaftsinformatik
-            CurriculumSemesterDTO curriculumSemester = new CurriculumSemesterDTO();
-            curriculumSemester.setCurriculumId(wirtschaftsinformatik.getId());
-            curriculumSemester.setYear(2017);
-            curriculumSemester.setSemester(Semester.WS);
-
-            curriculumSemester = curriculumSemesterService.save(curriculumSemester);
-
-            // calculate collisions
-            collisionService.calculateCollisions(204, 2015, Semester.WS, 2017, Semester.WS);
-            //collisionService.calculateCollisions(204, 2016, Semester.WS, 2017, Semester.WS);
-            collisionService.calculateCollisions(204, 2017, Semester.WS, 2017, Semester.WS);
-
 
         }
 
@@ -165,7 +151,7 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
                 .map(strings -> {
 
                     // find the corresponding subject in the database
-                    SubjectDTO subject = subjectService.findOne(strings[0], SubjectType.valueOf(strings[1]));
+                    SubjectDTO subject = subjectService.findBySubjectNameAndSubjectType(strings[0], SubjectType.valueOf(strings[1]));
                     if (subject == null) {
                         // create a new subject if it does not exist.
                         System.out.println(strings[0] + " " + strings[1]);

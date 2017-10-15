@@ -80,7 +80,7 @@ public class InstituteService {
     }
 
     /**
-     *  Get one institute by id.
+     *  Get one institute by KUSSS internal id.
      *
      *  @param id the id of the entity
      *  @return the entity

@@ -16,7 +16,7 @@ import java.util.Collection;
 @Repository
 public interface CollisionLevelOneRepository extends JpaRepository<CollisionLevelOne,Long> {
 
-
+    // TODO Doku fehlt
     @Query(value = "select clo from CollisionLevelOne clo where clo.idealPlan.id =(:ip) and clo.curriculumSubject.curriculumSemester.id =(:cs)")
     Collection<CollisionLevelOne> findByCsIp(@Param("cs") Long cs, @Param("ip") Long ip);
 }

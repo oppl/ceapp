@@ -23,6 +23,9 @@ public class CurriculumSubjectDTO implements Serializable {
 
     private String subjectSubjectName;
 
+    /**
+     * Subject type of the linked subject
+     */
     private SubjectType subjectSubjectType;
 
     private Long curriculumSemesterId;
@@ -75,10 +78,18 @@ public class CurriculumSubjectDTO implements Serializable {
         this.curriculumSemesterId = curriculumSemesterId;
     }
 
+    /**
+     * Method returns the SubjectType of the linked SubjectType
+     * @return SubjectType of the linked subject
+     */
     public SubjectType getSubjectSubjectType() {
         return subjectSubjectType;
     }
 
+    /**
+     * Method updates the SubjectType of the linked Subject
+     * @param subjectSubjectType
+     */
     public void setSubjectSubjectType(SubjectType subjectSubjectType) {
         this.subjectSubjectType = subjectSubjectType;
     }

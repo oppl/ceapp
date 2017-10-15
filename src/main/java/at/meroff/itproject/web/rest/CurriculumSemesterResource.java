@@ -1,5 +1,7 @@
 package at.meroff.itproject.web.rest;
 
+import at.meroff.itproject.domain.enumeration.Semester;
+import at.meroff.itproject.service.CollisionService;
 import com.codahale.metrics.annotation.Timed;
 import at.meroff.itproject.service.CurriculumSemesterService;
 import at.meroff.itproject.web.rest.util.HeaderUtil;
@@ -32,8 +34,11 @@ public class CurriculumSemesterResource {
 
     private final CurriculumSemesterService curriculumSemesterService;
 
-    public CurriculumSemesterResource(CurriculumSemesterService curriculumSemesterService) {
+    private final CollisionService collisionService;
+
+    public CurriculumSemesterResource(CurriculumSemesterService curriculumSemesterService, CollisionService collisionService) {
         this.curriculumSemesterService = curriculumSemesterService;
+        this.collisionService = collisionService;
     }
 
     /**
@@ -51,6 +56,7 @@ public class CurriculumSemesterResource {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new curriculumSemester cannot already have an ID")).body(null);
         }
         CurriculumSemesterDTO result = curriculumSemesterService.save(curriculumSemesterDTO);
+        collisionService.calculateCollisions(204, 2017, Semester.WS, 2017, Semester.WS);
         return ResponseEntity.created(new URI("/api/curriculum-semesters/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);

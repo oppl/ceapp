@@ -16,6 +16,7 @@ import java.util.List;
 @Repository
 public interface IdealPlanEntriesRepository extends JpaRepository<IdealPlanEntries,Long> {
 
+    // TODO Doku fehlt
     @Query("select ipe from IdealPlanEntries ipe left join fetch ipe.subject left join fetch ipe.idealplan ip where ip.id = :id")
     List<IdealPlanEntries> findByIdealplan_Id(@Param("id") Long id);
 

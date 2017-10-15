@@ -2,8 +2,6 @@ package at.meroff.itproject.service.dto;
 
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -33,6 +31,9 @@ public class CollisionLevelThreeDTO implements Serializable {
 
     private Long curriculumSubjectId;
 
+    /**
+     * Target CurriculumSubject linked to the collision level
+     */
     private CurriculumSubjectDTO curriculumSubject;
 
     public Long getId() {
@@ -123,10 +124,18 @@ public class CollisionLevelThreeDTO implements Serializable {
         this.curriculumSubjectId = curriculumSubjectId;
     }
 
+    /**
+     * Method returns the linked target CurriculumSubject
+     * @return target curriculum subject
+     */
     public CurriculumSubjectDTO getCurriculumSubject() {
         return curriculumSubject;
     }
 
+    /**
+     * Method updates the linked target CurriculumSubject
+     * @param curriculumSubject target curriculum subject
+     */
     public void setCurriculumSubject(CurriculumSubjectDTO curriculumSubject) {
         this.curriculumSubject = curriculumSubject;
     }
