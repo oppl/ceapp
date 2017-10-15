@@ -78,7 +78,6 @@ public class CurriculumSemesterService {
         result = importService.verifySubjects(result);
 
         importService.verifyLvas(result);
-        collisionService.calculateCollisions(204, 2017, Semester.WS, 2017, Semester.WS);
 
         // if not read all subjects and all lvas
         curriculumSemesterSearchRepository.save(curriculumSemester);

@@ -4,6 +4,7 @@ import at.meroff.itproject.CeappApp;
 
 import at.meroff.itproject.domain.CurriculumSemester;
 import at.meroff.itproject.repository.CurriculumSemesterRepository;
+import at.meroff.itproject.service.CollisionService;
 import at.meroff.itproject.service.CurriculumSemesterService;
 import at.meroff.itproject.repository.search.CurriculumSemesterSearchRepository;
 import at.meroff.itproject.service.dto.CurriculumSemesterDTO;
@@ -58,6 +59,9 @@ public class CurriculumSemesterResourceIntTest {
     private CurriculumSemesterService curriculumSemesterService;
 
     @Autowired
+    private CollisionService collisionService;
+
+    @Autowired
     private CurriculumSemesterSearchRepository curriculumSemesterSearchRepository;
 
     @Autowired
@@ -79,7 +83,7 @@ public class CurriculumSemesterResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        CurriculumSemesterResource curriculumSemesterResource = new CurriculumSemesterResource(curriculumSemesterService);
+        CurriculumSemesterResource curriculumSemesterResource = new CurriculumSemesterResource(curriculumSemesterService, collisionService);
         this.restCurriculumSemesterMockMvc = MockMvcBuilders.standaloneSetup(curriculumSemesterResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

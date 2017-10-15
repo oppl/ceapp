@@ -211,10 +211,8 @@ public class ImportService {
 
                 }
 
-                if (newLva) {
-                    curriculumSubjectDTO.setCountLvas(curriculumSubjectDTO.getCountLvas() + 1);
-                    curriculumSubjectDTO.getLvas().add(lva);
-                }
+                curriculumSubjectDTO.setCountLvas(curriculumSubjectDTO.getCountLvas() + 1);
+                curriculumSubjectDTO.getLvas().add(lva);
 
             });
 
