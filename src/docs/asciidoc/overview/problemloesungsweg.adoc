@@ -11,6 +11,19 @@ aufweisen.
 
 image::level_overview.png[]
 
+==== Wahlfächer ====
+Aufgrund der Tatsache, dass Wahlfächer für einen Studenten nur optional zu absolvieren sind und somit auch nicht für
+jeden Studenten gleichermaßen auf Kollisionen zu überprüfen sind, werden die Wahlfächer anders als Pflichtfächer
+berücksichtigt. Bei Wahlfächern werden die Kollisionen nur in Richtung Pflichtfächer dargestellt und nicht umgekehrt
+wie bei zwei Pflichtfächern.
+
+image::wahlfach.png[]
+
+==== Idealtypische Studienpläne ====
+Bei der Erstellung eines neuen idealtypischen Studienplanes kann es zu der Konstellation kommen, dass mehrere
+idealtypischen Studienpläne zeitlich parallel ihre Gültigkeit haben. Falls mehrere idealtypische Studienpläne aktiv
+sind, so werden bei der Kollisionsermittlung alle gültigen, vorhandenen Studienpläne herangezogen.
+
 === LEVEL 5 (Kollisionen) ===
 Jedes Fach (Level 1) besitzt eine oder mehrere Lehrveranstaltungen (Level 2). Jede Lehrveranstaltung (Level 2),
 die sich mit einer anderen Lehrveranstaltung (Level 4) überschneidet und im gleichen Semester des idealtypischen
