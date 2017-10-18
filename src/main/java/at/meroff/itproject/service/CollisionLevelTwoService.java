@@ -63,8 +63,24 @@ public class CollisionLevelTwoService {
         log.debug("Request to get all CollisionLevelTwos");
         return collisionLevelTwoRepository.findAll().stream()
             .map(collisionLevelTwoMapper::toDto)
-            .collect(Collectors.toCollection(LinkedList::new));
+            .collect(Collectors.toList());
     }
+
+    /**
+     *  Get all the collisionLevelTwos.
+     *
+     *  @return the list of entities
+     */
+    @Transactional(readOnly = true)
+    public List<CollisionLevelTwoDTO> findByCollisionLevelOne_Id(Long id) {
+        log.debug("Request to get all CollisionLevelTwos");
+        LinkedList<CollisionLevelTwoDTO> collect = collisionLevelTwoRepository.findByCollisionLevelOne_Id(id).stream()
+            .map(collisionLevelTwoMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+
+        return collect;
+    }
+
 
     /**
      *  Get one collisionLevelTwo by id.

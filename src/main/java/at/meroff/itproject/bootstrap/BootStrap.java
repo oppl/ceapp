@@ -95,7 +95,7 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
             curriculumService.save(wirtschaftsinformatik);
 
             // create new ideal study plan
-            idealPlanDTO = new IdealPlanDTO();
+            /*idealPlanDTO = new IdealPlanDTO();
             idealPlanDTO.setYear(2015);
             idealPlanDTO.setSemester(Semester.WS);
             idealPlanDTO.setActive(true);
@@ -104,9 +104,9 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
             idealPlanDTO = idealPlanService.save(idealPlanDTO);
 
             createIdealPlan(idealPlanDTO);
-
+*/
             // create new ideal study plan
-            idealPlanDTO = new IdealPlanDTO();
+/*            idealPlanDTO = new IdealPlanDTO();
             idealPlanDTO.setYear(2016);
             idealPlanDTO.setSemester(Semester.WS);
             idealPlanDTO.setActive(true);
@@ -115,7 +115,7 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
             idealPlanDTO = idealPlanService.save(idealPlanDTO);
 
             createIdealPlan(idealPlanDTO);
-
+*/
             // create new ideal study plan
             idealPlanDTO = new IdealPlanDTO();
             idealPlanDTO.setYear(2017);

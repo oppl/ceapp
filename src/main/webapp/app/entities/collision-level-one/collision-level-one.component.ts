@@ -103,21 +103,18 @@ collisionLevelOnes: CollisionLevelOne[];
     onRowExpand(cc) {
         console.log(cc);
         console.log(cc.data.id)
-        this.collisionLevelTwoService.search({
-            query: cc.data.id,
-        }).subscribe(
+        this.collisionLevelTwoService.find(cc.data.id).subscribe(
             (res: ResponseWrapper) => this.levelTwo = res.json,
             (res: ResponseWrapper) => this.onError(res.json)
         );
+        console.log(this.levelTwo);
 
     }
 
     onRowExpand2(cc) {
         console.log(cc);
         console.log(cc.data.id)
-        this.collisionLevelThreeService.search({
-            query: cc.data.id,
-        }).subscribe(
+        this.collisionLevelThreeService.find(cc.data.id).subscribe(
             (res: ResponseWrapper) => this.levelThree = res.json,
             (res: ResponseWrapper) => this.onError(res.json)
         );
@@ -127,9 +124,7 @@ collisionLevelOnes: CollisionLevelOne[];
     onRowExpand3(cc) {
         console.log(cc);
         console.log(cc.data.id)
-        this.collisionLevelFourService.search({
-            query: cc.data.id,
-        }).subscribe(
+        this.collisionLevelFourService.find(cc.data.id).subscribe(
             (res: ResponseWrapper) => this.levelFour = res.json,
             (res: ResponseWrapper) => this.onError(res.json)
         );
@@ -139,9 +134,7 @@ collisionLevelOnes: CollisionLevelOne[];
     onRowExpand4(cc) {
         console.log(cc);
         console.log(cc.data.id)
-        this.collisionLevelFiveService.search({
-            query: cc.data.id,
-        }).subscribe(
+        this.collisionLevelFiveService.find(cc.data.id).subscribe(
             (res: ResponseWrapper) => this.levelFive = res.json,
             (res: ResponseWrapper) => this.onError(res.json)
         );

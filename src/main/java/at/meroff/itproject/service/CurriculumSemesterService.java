@@ -43,13 +43,16 @@ public class CurriculumSemesterService {
 
     private final CollisionService collisionService;
 
-    public CurriculumSemesterService(CurriculumRepository curriculumRepository, CurriculumSemesterRepository curriculumSemesterRepository, CurriculumSemesterMapper curriculumSemesterMapper, CurriculumSemesterSearchRepository curriculumSemesterSearchRepository, ImportService importService, CollisionService collisionService) {
+    private final ElasticsearchIndexService elasticsearchIndexService;
+
+    public CurriculumSemesterService(CurriculumRepository curriculumRepository, CurriculumSemesterRepository curriculumSemesterRepository, CurriculumSemesterMapper curriculumSemesterMapper, CurriculumSemesterSearchRepository curriculumSemesterSearchRepository, ImportService importService, CollisionService collisionService, ElasticsearchIndexService elasticsearchIndexService) {
         this.curriculumSemesterRepository = curriculumSemesterRepository;
         this.curriculumSemesterMapper = curriculumSemesterMapper;
         this.curriculumSemesterSearchRepository = curriculumSemesterSearchRepository;
         this.curriculumRepository = curriculumRepository;
         this.importService = importService;
         this.collisionService = collisionService;
+        this.elasticsearchIndexService = elasticsearchIndexService;
     }
 
     /**
@@ -81,6 +84,7 @@ public class CurriculumSemesterService {
 
         // if not read all subjects and all lvas
         curriculumSemesterSearchRepository.save(curriculumSemester);
+
         return result;
     }
 
