@@ -67,6 +67,21 @@ public class CollisionLevelFiveService {
     }
 
     /**
+     *  Get all the collisionLevelFives.
+     *
+     *  @return the list of entities
+     */
+    @Transactional(readOnly = true)
+    public List<CollisionLevelFiveDTO> findByCollisionLevelFour_Id(Long id) {
+        log.debug("Request to get all CollisionLevelFours");
+        LinkedList<CollisionLevelFiveDTO> collect = collisionLevelFiveRepository.findByCollisionLevelFour_Id(id).stream()
+            .map(collisionLevelFiveMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+
+        return collect;
+    }
+
+    /**
      *  Get one collisionLevelFive by id.
      *
      *  @param id the id of the entity

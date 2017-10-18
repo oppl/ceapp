@@ -91,6 +91,19 @@ public class CollisionLevelTwoResource {
     }
 
     /**
+     * GET  /collision-level-twos : get all the collisionLevelTwos.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of collisionLevelTwos in body
+     */
+    @GetMapping("/collision-level-twos/filtered/{id}")
+    @Timed
+    public List<CollisionLevelTwoDTO> findByCollisionLevelOne_Id(@PathVariable Long id) {
+        log.debug("REST request to get all CollisionLevelTwos");
+        List<CollisionLevelTwoDTO> byCollisionLevelOne_id = collisionLevelTwoService.findByCollisionLevelOne_Id(id);
+        return byCollisionLevelOne_id;
+    }
+
+    /**
      * GET  /collision-level-twos/:id : get the "id" collisionLevelTwo.
      *
      * @param id the id of the collisionLevelTwoDTO to retrieve

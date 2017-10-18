@@ -91,6 +91,19 @@ public class CollisionLevelThreeResource {
     }
 
     /**
+     * GET  /collision-level-threes : get all the collisionLevelThrees.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of collisionLevelThrees in body
+     */
+    @GetMapping("/collision-level-threes/filtered/{id}")
+    @Timed
+    public List<CollisionLevelThreeDTO> findByCollisionLevelTwo_Id(@PathVariable Long id) {
+        log.debug("REST request to get all CollisionLevelThrees");
+        List<CollisionLevelThreeDTO> byCollisionLevelTwo_id = collisionLevelThreeService.findByCollisionLevelTwo_Id(id);
+        return byCollisionLevelTwo_id;
+    }
+
+    /**
      * GET  /collision-level-threes/:id : get the "id" collisionLevelThree.
      *
      * @param id the id of the collisionLevelThreeDTO to retrieve

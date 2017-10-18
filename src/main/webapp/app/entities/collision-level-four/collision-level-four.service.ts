@@ -28,9 +28,7 @@ export class CollisionLevelFourService {
     }
 
     find(id: number): Observable<CollisionLevelFour> {
-        return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
-            return res.json();
-        });
+        return this.http.get(`${this.resourceUrl}/filtered/${id}`).map((res: Response) => this.convertResponse(res));
     }
 
     query(req?: any): Observable<ResponseWrapper> {
