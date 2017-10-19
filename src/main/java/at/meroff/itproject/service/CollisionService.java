@@ -359,10 +359,11 @@ public class CollisionService {
                 }
             }) // TODO hoffentlich der richtige filter, damit wahlfächer nicht berücksichtigt werden
             .collect(Collectors.toSet());
-        return collect.stream()
-            .filter(pairIdealPlanEntriesDTOEntry -> !pairIdealPlanEntriesDTOEntry.getKey().equals(cs.getSubject().getSubjectName())
-                && !pairIdealPlanEntriesDTOEntry.getValue().getSubject().getSubjectType().equals(cs.getSubject().getSubjectType()))
-            .map(pairIdealPlanEntriesDTOEntry -> {
+        Set<Map.Entry<Pair<String, SubjectType>, IdealPlanEntries>> collect1 = collect.stream()
+            .filter(pairIdealPlanEntriesDTOEntry -> !(pairIdealPlanEntriesDTOEntry.getKey().getKey().equals(cs.getSubject().getSubjectName()) && pairIdealPlanEntriesDTOEntry.getKey().getValue().equals(cs.getSubject().getSubjectType())))
+            .collect(Collectors.toSet());
+
+            return collect1.stream().map(pairIdealPlanEntriesDTOEntry -> {
                 return csAll.stream()
                     .filter(curriculumSubjectDTO1 -> {
                         return curriculumSubjectDTO1.getSubject().getId() == pairIdealPlanEntriesDTOEntry.getValue().getSubject().getId();
