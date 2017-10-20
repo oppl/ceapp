@@ -16,7 +16,7 @@ export const appointmentRoute: Routes = [
         path: 'appointment',
         component: AppointmentComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: [],
             pageTitle: 'ceappApp.appointment.home.title'
         },
         canActivate: [UserRouteAccessService]
@@ -24,7 +24,7 @@ export const appointmentRoute: Routes = [
         path: 'appointment/:id',
         component: AppointmentDetailComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: [],
             pageTitle: 'ceappApp.appointment.home.title'
         },
         canActivate: [UserRouteAccessService]

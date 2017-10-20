@@ -35,7 +35,8 @@ export class AppointmentDialogComponent implements OnInit {
 
     ngOnInit() {
         this.isSaving = false;
-        this.authorities = ['ROLE_USER', 'ROLE_ADMIN'];
+        this.authorities = [];
+        // this.authorities = ['ROLE_USER', 'ROLE_ADMIN'];
         this.lvaService.query()
             .subscribe((res: ResponseWrapper) => { this.lvas = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
     }
