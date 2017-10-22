@@ -1,6 +1,44 @@
 == Reflexion ==
 
-=== was hat gut funktioniert ===
-=== was hat schlecht funktioniert ===
-=== was kann man aus diesem Projekt für künftige Projekte mitnehmen ===
-=== ??? ===
+=== Was hat gut funktioniert? ===
+
+* Kommunikation - Sowohl die Team interne Kommunikation, als auch die Kommunikation zwischen Auftraggeber und aller am
+Projekt beteiligten Personen hat im großen und Ganzen gut funktioniert. Hinsichtlich der Team internen Abstimmungen gibt
+es jedoch Verbesserungspotenzial.
+
+* Motivation - Alle Mitglieder waren, trotz div. anderer Verpflichtungen (z.B. Dienstverhältnis) stets motiviert und
+daran interessiert diese Projekt best möglich umzusetzen.
+
+=== Welche Schwierigkeiten/Probleme hat es im Verlauf des Projektes gegeben? ===
+
+* Rahmenbedingungen - Zu Projektbeginn wurde angenommen, dass zu dem Thema dieses Projektes bereits Tools gibt, welche
+lediglich adaptiert bzw. angepasst werden müssen. Leider hat sich diese Annahme als falsch erwiesen und das Projekt
+wurde quasi von Null an gestartet. Da vom Auftraggeber kein Lastenheft vorhanden war, hat sich das Zusammentragen aller
+benötigten Informationen als mühsam und langwierig gestaltet. Neben der Erstellung der Systemspezifikation hat vor allem
+die Schnittstelle zu kusss in der Anfangsphase einiges an Aufwand und Zeit gekostet.
+
+* KnowHow - Die Einarbeitung in die verschiedenen Technologien hat sich als schwierig erwiesen. Auch waren die
+Wissensstände der Teammitglieder sehr unterschiedlich, was die Aufgabeneinteilung erschwerte.
+
+* Gruppengröße - Die Aufgabenteilung gestaltete sich u.a. auch wegen der Gruppengöße als schwierig.
+
+* Zeitenbuchen - Die Zeitaufzeichnungen aller Teammitglieder wurden über ein ERP-System verwaltet. Die Zeiteinteilung
+für die übertragenen Aufgaben war bis auf kleine Deadlines völlig frei. Gearbeitet wurde meist allein, selten in
+2er Teams. Die Bereitschaft, alle aufgebrachten Zeiten im ERP-System zu buchen war leider eher gering.
+
+* Ressourcenplanung - Der geschätzte bzw. geplante Arbeitsaufwand für einzelne Arbeitsparkete hat sich teilweise als
+"falsch" bzw. anders aufgeteilt dargestellt. Aufgrund der falsch angenommenen Rahmenbedingungen wurde der Umfang etwas
+unterschätzt. Die Projektplanung an sich hat sich als schwierig erwiesen da von seiten des Projektteams keinerlei
+Erfahrungen vorhanden waren.
+
+=== Was kann aus diesem Projekt für künftige Projekte mitgenommen werden? ===
+* Frameworks - Die gesammelten Erfahrungen aus den verwendeten Frameworks bzw. die Integration dieser innerhalb eines
+Projektes können für künftige Projekte verwendet werden.
+
+* Realitätsnähe - Die Kenntniss über eventuell auftretende Schwierigkeiten innerhalb eines Teams bzw. bei der
+Bewältigung größerer Aufgaben können für künftige Projekte mitgenommen werden.
+
+* interne Abstimmungen - Da keine gemeinsamen Arbeitszeiten bzw. kein gemeinsamer Arbeitsort vorhanden war, kam es
+teilweise zu Verzögerungen bei der Umsetzung bestimmter Aufgaben, da zum Teil auch länger auf eine Rückmeldung des
+übrigen Teams gewartet werden musste. Für künftige Projekte könnte man gemeinsame "Projektzeiten" definieren um zumindest
+zeitgleich an den jeweiligen Aufgaben arbeiten zu können und Stehzeiten dadurch vermindern zu können.

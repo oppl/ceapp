@@ -1,6 +1,7 @@
 === Schnittstellen ===
 
-Die Schnittstellen, welche die im Zuge des IT-Projektes entwickelte Applikation verwendet werden im weiteren Verlauf näher betrachtet.
+Die Schnittstellen, welche die im Zuge des IT-Projektes entwickelte Applikation verwendet werden im weiteren Verlauf
+etwas näher betrachtet.
 Einen Überblick über die vorhandenen Schnittstellen soll folgendes Diagramm bieten.
 
 image::network.png[]
@@ -8,7 +9,8 @@ image::network.png[]
 ==== Datenexport aus dem KUSSS ====
 
 Bevor die eigentliche Berechnung erfolgen kann, müssen sämtliche LVA-Daten aus dem KUSSS exportiert werden.
-Die beiden folgenden XQuerys sind dafür verantwortlich. Nähere Informationen zum KUSSS-Export können der Dokumentation von KUSSS entnommen werden.
+Die beiden folgenden XQuerys sind dafür verantwortlich. Nähere Informationen zum KUSSS-Export können der Dokumentation
+von KUSSS entnommen werden.
 
 //include::src/main/resources/xquery/lvas.xq[]
 .lvas.xq
@@ -21,7 +23,20 @@ image::lvas.png[]
 image::subjects.png[]
 ****
 
-==== Datenbank ====
 
-==== REST ====
+==== Frameworks ====
+Folgende Frameworks wurden für die Umsetzung verwendet:
 
+* JHipster (http://www.jhipster.tech/) mit Angular (http://www.jhipster.tech/using-angular/) und den Erweiterungen Datatable (PrimeNG: https://www.primefaces.org/primeng/#/) und Schedule (PrimeNG: https://www.primefaces.org/primeng/#/schedule) - für die Darstellung im Frontend.
+
+* Spring Boot (https://projects.spring.io/spring-boot/) - Backend
+
+* BaseX (http://basex.org/) - für die XML Schnittstelle zu KUSSS
+
+* PostgreSQL (https://www.postgresql.org/) - als Datenbank
+
+* Elasticsearch (https://www.elastic.co/de/) - für die Indizierung der Datenbank und für Abfragen
+
+* Docker (https://www.docker.com/) - für das Applikationsdeployment
+
+* GitHub (https://www.github.com) - Als Entwicklungsplattform für Softwareversionierung

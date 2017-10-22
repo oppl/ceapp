@@ -1,10 +1,16 @@
 == Ergebnis ==
 Das Ergebnis dieses Projektes ist die funktionsfähige Applikation „Clash eliminator“ welche alle musst-haves der
 SW-Spezifikation enthält. Zusätzlich wurden auch einige nice-to-haves umgesetzt. Wie bereits zu Beginn vorgesehen, kann
-die Applikation für weitere Projekte entsprechend adaptiert bzw. erweitert werden.
-Zusätzlich wurde ein Betriebshandbuch erstellt, welches die wesentlichen Funktionen der Applikation veranschaulicht.
+die Applikation für weitere Projekte entsprechend adaptiert bzw. erweitert werden. Eine Gründliche Dokumentation war
+daher notwendig und ist neben einem zusätzlichen Betriebshandbuch Teil des Ergebnisses.
+Das Betriebshandbuch soll die wesentlichen Funktionen der Applikation darstellen.
 
-=== Backend ===
 include::backend.adoc[]
-=== Frontend ===
-include::frontend.adoc[]
+
+=== Weiterführende Ideen für die Weiterentwicklung der Applikation ===
+Aufgrund des Zeitlichen Rahmens konnten leider nicht alle nice-to-have Anforderungen umgesetzt werden und im Zuge der
+Umsetzung bzw. Implementierung sind noch weitere Ideen für eine Weiterentwicklung der Applikation entstanden. Wir haben
+uns daher entschieden diese zu sammeln und in die Dokumentation aufzunehmen, damit evtl. weiterführende Projekte ggf.
+davon provitieren können.
+
+include::Ideensammlung Kalender.adoc[]
