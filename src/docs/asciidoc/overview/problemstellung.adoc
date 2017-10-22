@@ -1,4 +1,4 @@
-== Problemstellungen ==
+== Problemstellung ==
 
 === Einleitung ===
 Eine überschneidungsfreie Lehrveranstaltungsplanung liegt sowohl im Interesse der Studierenden als auch im Interesse
@@ -9,7 +9,7 @@ gegebenen Falls einzelne Lehrveranstaltungen noch vor Abschluss der Einschreibep
 Als weiteres Feature soll diese Applikation das Planen der künftigen Semester eines Studenten erleichtern.
 In beiden Fällen orientiert sich die Applikation an idealtypischen Studienplänen.
 
-=== Problembeschreibungen ===
+=== Problembeschreibung ===
 
 Es werden folgend zwei Probleme definiert und im Zuge des Projektes ausgearbeitet:
 
@@ -68,7 +68,6 @@ Projektteam, mittels Brainstorming einige Ideen gesammelt. Im zweiten Schritt wu
 Wirtschaftsinformatik Institute befragt um notwenige Funktionalitäten zu erheben. Aufgrund der erhobenen Daten wurde
 Schluss endlich eine Anforderungsspezifikation erstellt an Hand dessen die Applikation entwickelt werden sollte. Bei der
 Erstellung der Anforderungsspezifikation wurde in must-have und nice-to-have Funktionalitäten unterschieden.
-
 
 ==== Phase 2 – Fertigstellung Backend (31.7.2017) ====
 In Phase 2 wurde der primäre Fokus auf die Entwicklung eines Berechnungsschemas gelegt um kollidierende
