@@ -426,14 +426,12 @@ __Zum Beispiel existieren auf Level 2 drei kollidierende LVAs. Davon weisen die 
 
 __Max = 60.00__
 
-=== Auswahl geeigneter Frameworks ===
-
 === Dokumentation ===
 Die Dokumentation des Projektes wird zum Teil parallel zur Umsetzung betrieben und untergliedert sich in 3 Teilbereiche:
 
 * Allgemeine Projektdokumentation
 
-* javdoc - Sourcecode-Dokumentation
+* javadoc - Sourcecode-Dokumentation
 
 * Dokumentation der REST-Attribute
 
