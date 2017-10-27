@@ -36,7 +36,7 @@ export const appointmentPopupRoute: Routes = [
         path: 'appointment-new',
         component: AppointmentPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ceappApp.appointment.home.title'
         },
         canActivate: [UserRouteAccessService],
@@ -46,7 +46,7 @@ export const appointmentPopupRoute: Routes = [
         path: 'appointment/:id/edit',
         component: AppointmentPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ceappApp.appointment.home.title'
         },
         canActivate: [UserRouteAccessService],
@@ -56,7 +56,7 @@ export const appointmentPopupRoute: Routes = [
         path: 'appointment/:id/delete',
         component: AppointmentDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ceappApp.appointment.home.title'
         },
         canActivate: [UserRouteAccessService],
