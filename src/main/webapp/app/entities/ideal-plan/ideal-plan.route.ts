@@ -36,7 +36,7 @@ export const idealPlanPopupRoute: Routes = [
         path: 'ideal-plan-new',
         component: IdealPlanPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ceappApp.idealPlan.home.title'
         },
         canActivate: [UserRouteAccessService],
@@ -46,7 +46,7 @@ export const idealPlanPopupRoute: Routes = [
         path: 'ideal-plan/:id/edit',
         component: IdealPlanPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ceappApp.idealPlan.home.title'
         },
         canActivate: [UserRouteAccessService],
@@ -56,7 +56,7 @@ export const idealPlanPopupRoute: Routes = [
         path: 'ideal-plan/:id/delete',
         component: IdealPlanDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ceappApp.idealPlan.home.title'
         },
         canActivate: [UserRouteAccessService],

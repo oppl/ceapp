@@ -36,7 +36,7 @@ export const lvaPopupRoute: Routes = [
         path: 'lva-new',
         component: LvaPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ceappApp.lva.home.title'
         },
         canActivate: [UserRouteAccessService],
@@ -46,7 +46,7 @@ export const lvaPopupRoute: Routes = [
         path: 'lva/:id/edit',
         component: LvaPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ceappApp.lva.home.title'
         },
         canActivate: [UserRouteAccessService],
@@ -56,7 +56,7 @@ export const lvaPopupRoute: Routes = [
         path: 'lva/:id/delete',
         component: LvaDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ceappApp.lva.home.title'
         },
         canActivate: [UserRouteAccessService],

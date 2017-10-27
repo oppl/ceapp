@@ -36,7 +36,7 @@ export const subjectPopupRoute: Routes = [
         path: 'subject-new',
         component: SubjectPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ceappApp.subject.home.title'
         },
         canActivate: [UserRouteAccessService],
@@ -46,7 +46,7 @@ export const subjectPopupRoute: Routes = [
         path: 'subject/:id/edit',
         component: SubjectPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ceappApp.subject.home.title'
         },
         canActivate: [UserRouteAccessService],
@@ -56,7 +56,7 @@ export const subjectPopupRoute: Routes = [
         path: 'subject/:id/delete',
         component: SubjectDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ceappApp.subject.home.title'
         },
         canActivate: [UserRouteAccessService],

@@ -144,5 +144,5 @@
         "emailexists": "Email is already in use!",
         "idexists": "A new {{ entityName }} cannot already have an ID"
     },
-    "footer": "Johannes Kepler Universität Linz<br>Altenberger Straße 69, 4040 Linz, Österreich<br>T: +43 732 2468 0<br>F: +43 732 2468 8822<br>info@jku.at"
+    "footer": "Johannes Kepler Universität Linz<br>Altenberger Straße 69, 4040 Linz, Österreich<br>T: +43 732 2468 0, F: +43 732 2468 8822<br>info@jku.at<br><a href=http://bit.ly/2xsx9d9 target=_blank> Videotutorial </a>"
 }

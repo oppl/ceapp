@@ -36,7 +36,7 @@ export const institutePopupRoute: Routes = [
         path: 'institute-new',
         component: InstitutePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ceappApp.institute.home.title'
         },
         canActivate: [UserRouteAccessService],
@@ -46,7 +46,7 @@ export const institutePopupRoute: Routes = [
         path: 'institute/:id/edit',
         component: InstitutePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ceappApp.institute.home.title'
         },
         canActivate: [UserRouteAccessService],
@@ -56,7 +56,7 @@ export const institutePopupRoute: Routes = [
         path: 'institute/:id/delete',
         component: InstituteDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ceappApp.institute.home.title'
         },
         canActivate: [UserRouteAccessService],

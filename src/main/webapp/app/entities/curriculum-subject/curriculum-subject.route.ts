@@ -36,7 +36,7 @@ export const curriculumSubjectPopupRoute: Routes = [
         path: 'curriculum-subject-new',
         component: CurriculumSubjectPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ceappApp.curriculumSubject.home.title'
         },
         canActivate: [UserRouteAccessService],
@@ -46,7 +46,7 @@ export const curriculumSubjectPopupRoute: Routes = [
         path: 'curriculum-subject/:id/edit',
         component: CurriculumSubjectPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ceappApp.curriculumSubject.home.title'
         },
         canActivate: [UserRouteAccessService],
@@ -56,7 +56,7 @@ export const curriculumSubjectPopupRoute: Routes = [
         path: 'curriculum-subject/:id/delete',
         component: CurriculumSubjectDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ceappApp.curriculumSubject.home.title'
         },
         canActivate: [UserRouteAccessService],
