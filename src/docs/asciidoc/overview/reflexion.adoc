@@ -2,20 +2,20 @@
 
 === Was hat gut funktioniert? ===
 
-* Kommunikation - Sowohl die Team interne Kommunikation, als auch die Kommunikation zwischen Auftraggeber und aller am
-Projekt beteiligten Personen hat im großen und Ganzen gut funktioniert. Hinsichtlich der Team internen Abstimmungen gibt
+* Kommunikation - Sowohl die teaminterne Kommunikation, als auch die Kommunikation zwischen Auftraggeber und aller am
+Projekt beteiligten Personen hat im Großen und Ganzen gut funktioniert. Hinsichtlich der Team internen Abstimmungen gibt
 es jedoch Verbesserungspotenzial.
 
-* Motivation - Alle Mitglieder waren, trotz div. anderer Verpflichtungen (z.B. Dienstverhältnis) stets motiviert und
-daran interessiert diese Projekt best möglich umzusetzen.
+* Motivation - Alle Mitglieder waren, trotz div. anderer Verpflichtungen (z.B. Dienstverhältnis), stets motiviert und
+daran interessiert dieses Projekt bestmöglich umzusetzen.
 
 === Welche Schwierigkeiten/Probleme hat es im Verlauf des Projektes gegeben? ===
 
-* Rahmenbedingungen - Zu Projektbeginn wurde angenommen, dass zu dem Thema dieses Projektes bereits Tools gibt, welche
+* Rahmenbedingungen - Zu Projektbeginn wurde angenommen, dass zu dem Thema dieses Projektes bereits Tools existieren, welche
 lediglich adaptiert bzw. angepasst werden müssen. Leider hat sich diese Annahme als falsch erwiesen und das Projekt
 wurde quasi von Null an gestartet. Da vom Auftraggeber kein Lastenheft vorhanden war, hat sich das Zusammentragen aller
 benötigten Informationen als mühsam und langwierig gestaltet. Neben der Erstellung der Systemspezifikation hat vor allem
-die Schnittstelle zu kusss in der Anfangsphase einiges an Aufwand und Zeit gekostet.
+die Schnittstelle zu KUSSS in der Anfangsphase einiges an Aufwand und Zeit gekostet.
 
 * KnowHow - Die Einarbeitung in die verschiedenen Technologien hat sich als schwierig erwiesen. Auch waren die
 Wissensstände der Teammitglieder sehr unterschiedlich, was die Aufgabeneinteilung erschwerte.
@@ -30,6 +30,15 @@ für die übertragenen Aufgaben war bis auf kleine Deadlines völlig frei. Gearb
 "falsch" bzw. anders aufgeteilt dargestellt. Aufgrund der falsch angenommenen Rahmenbedingungen wurde der Umfang etwas
 unterschätzt. Die Projektplanung an sich hat sich als schwierig erwiesen da von seiten des Projektteams keinerlei
 Erfahrungen vorhanden waren.
+
+*Aufgabenabgrenzung - Die ursprüngliche Annahme, dass einzelne Aufgaben isoliert voneinander betrachtet und bearbeitet
+werden können, hat sich zusammenfassend als falsch erwiesen. Resultierend aus den Aufgabenabhängigkeiten kam es immer
+wieder zu Stehzeiten und somit zu Verzögerungen, welche sich schlussendlich in der Nicht-Umsetzung von nice-to-have
+Anforderungen niedergeschlagen haben.
+
+* Deadlines - Leider existieren auch unplanbare Umstände welche das Ergebnis eines Projekts verzögern können.
+Wir waren gezwungen, den Abgabetermin um eine Woche zu verschieben. Möglicherweise wurde beim Festlegen des Termins
+der tatsächliche Restaufwand auch falsch eingeschätzt.
 
 === Was kann aus diesem Projekt für künftige Projekte mitgenommen werden? ===
 * Frameworks - Die gesammelten Erfahrungen aus den verwendeten Frameworks bzw. die Integration dieser innerhalb eines
