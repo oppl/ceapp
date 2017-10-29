@@ -24,7 +24,7 @@ Bei der Erstellung eines neuen idealtypischen Studienplanes kann es zu der Konst
 idealtypischen Studienpläne zeitlich parallel ihre Gültigkeit haben. Falls mehrere idealtypische Studienpläne aktiv
 sind, so werden bei der Kollisionsermittlung alle gültigen, vorhandenen Studienpläne herangezogen.
 
-=== LEVEL 5 (Kollisionen) ===
+==== LEVEL 5 (Kollisionen) ====
 Jedes Fach (Level 1) besitzt eine oder mehrere Lehrveranstaltungen (Level 2). Jede Lehrveranstaltung (Level 2),
 die sich mit einer anderen Lehrveranstaltung (Level 4) überschneidet und im gleichen Semester des idealtypischen
 Studienverlaufes befindet wird auf Kollisionen untersucht. Um auch eine aggregierte Sicht aller betroffenen
@@ -237,7 +237,7 @@ Der ColValue gibt einen normierten Wert des Kollisionswertes auf Basis des Maxim
 __Z.B. 1960 / 3400 * 100 = 57,65__
 
 
-==== LEVEL 3(Fach V) ====
+==== LEVEL 3 (Fach V) ====
 Ziel von Level 3 ist es basierend auf den Werten von Level 4 eine aggregierte Sicht auf Fach-Sicht zu generieren. Alle
 LVAs (Level 4) werden mittels Gruppierungsmerkmal (Subject) aggregiert dargestellt.
 
@@ -435,4 +435,8 @@ Die Dokumentation des Projektes wird zum Teil parallel zur Umsetzung betrieben u
 
 * Dokumentation der REST-Attribute
 
-Zusätzlich wird ein Betriebshandbuch erstellt um die Bedienung der Applikation zu erleichern.
+Zusätzlich wird ein Betriebshandbuch (mittels YouTube-Tutorials dargestellt) erstellt, um die Bedienung der Applikation
+zu erleichtern.
+
+
+

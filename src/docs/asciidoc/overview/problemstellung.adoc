@@ -5,9 +5,9 @@ Eine überschneidungsfreie Lehrveranstaltungsplanung liegt sowohl im Interesse d
 der Lehrenden bzw. der Institute.
 Diese Projektarbeit beschreibt die Entstehung, dessen Probleme und evtl. zukünftige Möglichkeiten einer Applikation,
 welche es ermöglicht Terminkollisionen von Lehrveranstaltungen aufzuzeigen und auf Grund dessen die Möglichkeit bietet
-gegebenen Falls einzelne Lehrveranstaltungen noch vor Abschluss der Einschreibepflicht zu verlegen.
+gegebenenfalls einzelne Lehrveranstaltungen noch vor Abschluss der Einschreibepflicht zu verlegen.
 Als weiteres Feature soll diese Applikation das Planen der künftigen Semester eines Studenten erleichtern.
-In beiden Fällen orientiert sich die Applikation an idealtypischen Studienplänen.
+In beiden Fällen orientiert sich die Applikation an den idealtypischen Studienplänen.
 
 === Problembeschreibung ===
 
@@ -26,12 +26,11 @@ derzeit im KUSSS einiges an Recherche und manuelle, nicht IT-gestützte Planungs
 
 === Projektziele ===
 Es sollen in erster Linie Terminkollisionen von bereits geplanten Lehrveranstaltungen und Klausuren, nach dem
-idealtypischen Studienplan des Bachelorstudiums Wirtschaftsinformatik, aufgezeigt werden um den für die LVA-Planung
+idealtypischen Studienplan des Bachelorstudiums Wirtschaftsinformatik, aufgezeigt werden, um den für die LVA-Planung
 verantwortlichen Personen die Möglichkeit zu geben LVA-Kollisionen vor Beginn des Hauptanmeldezeitraums zu beheben.
 Weiteres Ziel ist die Unterstützung der Studierenden bei
-der Semesterplanung in Form eines Tools, welches die LVA eines Semesters gemäß idealtypischen Studienplans in
-kalendarischer Form darstellt. Weiter sollen auf Basis einer vom Studierenden vorgegebenen Zeiteinschränkung die
-möglichen Lehrveranstaltungen dargestellt werden.
+der Semesterplanung in Form eines Tools, welches die LVAs eines Semesters gemäß idealtypischen Studienplans in
+kalendarischer Form darstellt.
 
 === Vorgehensweise ===
 
@@ -41,7 +40,7 @@ Die „Matrix-Projektorganisation“ stellt eine Kombination aus der „Einfluss
 Organisationsform nicht aus den jeweiligen Abteilungen ausgegliedert, jedoch für die Dauer der Bearbeitung bestimmter
 Aufgaben des Projektes zusätzlich dem Projektleiter unterstellt. Der Projektleiter trägt die Verantwortung über die
 Erreichung von Zielen und der Einhaltung von Fristen. Durch die Flexibilität der Mitarbeiter können Aufgaben in
-verschiedenen Projekten erledigt werden bei welchen eine vollständige Zuteilung Aufgrund der Aufgabengröße nicht nötig
+verschiedenen Projekten erledigt werden bei welchen eine vollständige Zuteilung aufgrund der Aufgabengröße nicht nötig
 ist, ohne größere Umstrukturierungen durchführen zu müssen. Ähnlich wird die Matrix-Projektorganisation von Broy und
 Kuhrmann (2013, S. 54- 55) beschrieben. Die Mitarbeiter, gehen sowohl ihren Abteilungstätigkeiten sowie dem Bearbeiten
 der Projektaufgaben nach, damit gibt es zwei Führungsorgane, die jeweils eine Weisungsbefugnis besitzen. Durch diese
@@ -57,35 +56,34 @@ Abstimmung zwischen der Projektleitung und den jeweiligen Vorgesetzen ist jedoch
 Pflichten der Mitglieder gegenüber deren Dienstgeber hat natürlich eine höhere Priorität als die dem Projekt bzw. dem
 Projektleiter gegenüber.
 
-Prinzipiell wurde das Projekt in 4 Phasen unterteilt wobei jede Phase mit der Erreichung der im Projektvertrag
-festgelegten Meilensteine abschließt. Zusätzlich wurden ein Projektplan, ein Strukturplan, ein Netzplan, ein
-Qualitätsplan und ein Ressourcenplan für das vorhandene Personal erstellt. Die genannten Dokumente können unter …
-eingesehen werden / liegen bei.
+Prinzipiell wurde das Projekt in 4 Phasen unterteilt, wobei jede Phase mit der Erreichung der im Projektvertrag
+festgelegten Meilensteine abschließt. Zusätzlich wurden im Vorfeld ein Projektplan, ein Strukturplan, ein Netzplan, ein
+Qualitätsplan und ein Ressourcenplan für das vorhandene Personal erstellt.
 
 ==== Phase 1 – Anforderungsspezifikation (26.6.2017) ====
 Die erste Phase des Projektes beschäftigt sich primär mit der Anforderungserhebung. Dazu wurden erst, intern im
-Projektteam, mittels Brainstorming einige Ideen gesammelt. Im zweiten Schritt wurden die zuständigen Damen der vier
-Wirtschaftsinformatik Institute befragt um notwenige Funktionalitäten zu erheben. Aufgrund der erhobenen Daten wurde
-Schluss endlich eine Anforderungsspezifikation erstellt an Hand dessen die Applikation entwickelt werden sollte. Bei der
+Projektteam, mittels Brainstorming einige Ideen gesammelt. Im zweiten Schritt wurden die zuständigen Sekretariate der vier
+Wirtschaftsinformatik Institute befragt, um notwendige Funktionalitäten zu erheben. Aufgrund der erhobenen Daten wurde
+schlussendlich eine Anforderungsspezifikation erstellt an Hand dessen die Applikation entwickelt werden sollte. Bei der
 Erstellung der Anforderungsspezifikation wurde in must-have und nice-to-have Funktionalitäten unterschieden.
 
 ==== Phase 2 – Fertigstellung Backend (31.7.2017) ====
 In Phase 2 wurde der primäre Fokus auf die Entwicklung eines Berechnungsschemas gelegt um kollidierende
-Lehrveranstaltungen bewerten zu können. Die Basis hierfür stammt natürlich aus den Gesprächen mit den Instituten.
-Gleichzeitig wurde eine geeignete Abfrage erstellt um alle benötigten Daten aus dem kusss exportieren zu können. Mit dem
+Lehrveranstaltungen bewerten zu können. Die Basis hierfür stammt aus den Gesprächen mit den Instituten.
+Gleichzeitig wurde eine geeignete Abfrage erstellt, um alle benötigten Daten aus dem KUSSS exportieren zu können. Am
 Ende dieser Phase sollte das Backend fertig gestellt sein.
 
 ==== Phase 3 – Basisfunktionalität der Institutsplanung lt. Anforderungsspezifikation (15.8.2017) ====
 Nach der Fertigstellung des Backends mit Meilenstein 2 wurde in Phase 3 der Fokus auf die Implementierung der Basis-
 Funktionalitäten der Institutsplanung gelegt. Diese Phase wurde mit einem Usability-Test bzw. einer kurzen Präsentation
-für alle beteiligten Mitarbeiter der Institute abgeschlossen um die Benutzbarkeit bzw. Sinnhaftigkeit der
+für alle beteiligten Mitarbeiter der Institute abgeschlossen, um die Benutzbarkeit bzw. Sinnhaftigkeit der
 implementierten Funktionen zu gewährleisten.
 
 ==== Phase 4 – Institutsplanung in erweiterter Form und Studentenplanung (20.10.2017) ====
 Aufbauend auf Phase 3 wurden die Basisfunktionalitäten der Institutsplanung verfeinert bzw. erweitert. Zusätzlich wurde
 auch die Studentenansicht lt. Spezifikation umgesetzt.
 
-==== Erwartetes Ergebnis ====
+=== Erwartetes Ergebnis ===
 Da keinerlei Erfahrungswerte in Bezug auf die Zusammenarbeit der Mitglieder, sowie des Aufwands vergleichbarer Projekte
 vorhanden waren, erwies sich die Planung bzw. die Einschätzung der benötigten Ressourcen als schwierig. Dennoch war sich
 das Projektteam einig, zumindest die in der Anforderungsspezifikation definierten must-have Funktionen bis zum
@@ -93,8 +91,8 @@ Projektende erfolgreich umsetzen zu können. Hauptaugenmerk wurde auf die Entwic
 Berechnungsgrundlage und des Backends gelegt, damit für evtl. weiterführende Projekte zu diesem Thema eine adäquate
 Basis zur Verfügung gestellt werden kann.
 
-==== Erwartete Schwierigkeiten ====
-Möglich auftretende Probleme können natürlich Fehleinschätzungen bzgl. der Ressourcen sein. Auch sind technische
+=== Erwartete Schwierigkeiten ===
+Möglich auftretende Probleme könnten Fehleinschätzungen bzgl. der Ressourcen sein. Zusätzlich sind technische
 Schwierigkeiten nicht auszuschließen. Zum Zeitpunkt des Projektstarts waren jedoch keine Schwierigkeiten zu erwarten,
-welche zu einem erfolglosen Abschluss des Projektes geführt hätten.
+welche zu einem erfolglosen Abschluss des Projektes führen könnten.
 
