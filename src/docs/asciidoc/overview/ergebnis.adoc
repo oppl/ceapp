@@ -1,3 +1,4 @@
+
 == Ergebnis ==
 Das Ergebnis dieses Projektes ist die funktionsfähige Applikation „Clash eliminator“ welche alle musst-haves der
 SW-Spezifikation enthält. Zusätzlich wurden auch einige nice-to-haves umgesetzt. Wie bereits zu Beginn vorgesehen, kann

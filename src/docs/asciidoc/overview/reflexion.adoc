@@ -31,7 +31,7 @@ für die übertragenen Aufgaben war bis auf kleine Deadlines völlig frei. Gearb
 unterschätzt. Die Projektplanung an sich hat sich als schwierig erwiesen da von seiten des Projektteams keinerlei
 Erfahrungen vorhanden waren.
 
-*Aufgabenabgrenzung - Die ursprüngliche Annahme, dass einzelne Aufgaben isoliert voneinander betrachtet und bearbeitet
+* Aufgabenabgrenzung - Die ursprüngliche Annahme, dass einzelne Aufgaben isoliert voneinander betrachtet und bearbeitet
 werden können, hat sich zusammenfassend als falsch erwiesen. Resultierend aus den Aufgabenabhängigkeiten kam es immer
 wieder zu Stehzeiten und somit zu Verzögerungen, welche sich schlussendlich in der Nicht-Umsetzung von nice-to-have
 Anforderungen niedergeschlagen haben.

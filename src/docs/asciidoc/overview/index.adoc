@@ -6,9 +6,6 @@ include::ergebnis.adoc[]
 include::reflexion.adoc[]
 
 
-== Literatur & Abblidungsverzeichnis ?? ==
-
-
 
 
 //include::limitation.adoc[]

@@ -1,6 +1,6 @@
 === Schnittstellen ===
 
-Die Schnittstellen, welche die im Zuge des IT-Projektes entwickelte Applikation verwendet werden im weiteren Verlauf
+Die Schnittstellen, welche die im Zuge des IT-Projektes entwickelte Applikation verwendet werden, werden im weiteren Verlauf
 etwas näher betrachtet.
 Einen Überblick über die vorhandenen Schnittstellen soll folgendes Diagramm bieten.
 
