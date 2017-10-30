@@ -33,6 +33,12 @@ export class CurriculumSemesterService {
         });
     }
 
+    updateSemester(id: number): Observable<CurriculumSemester> {
+        return this.http.get(`${this.resourceUrl}/update/${id}`).map((res: Response) => {
+            return res.json();
+        });
+    }
+
     query(req?: any): Observable<ResponseWrapper> {
         const options = createRequestOption(req);
         return this.http.get(this.resourceUrl, options)

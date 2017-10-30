@@ -10,6 +10,7 @@ import { CurriculumSemesterPopupComponent } from './curriculum-semester-dialog.c
 import { CurriculumSemesterDeletePopupComponent } from './curriculum-semester-delete-dialog.component';
 
 import { Principal } from '../../shared';
+import {CurriculumSemesterUpdateComponent} from "./curriculum-semester-update.component";
 
 export const curriculumSemesterRoute: Routes = [
     {
@@ -23,6 +24,14 @@ export const curriculumSemesterRoute: Routes = [
     }, {
         path: 'curriculum-semester/:id',
         component: CurriculumSemesterDetailComponent,
+        data: {
+            authorities: ['ROLE_USER'],
+            pageTitle: 'ceappApp.curriculumSemester.home.title'
+        },
+        canActivate: [UserRouteAccessService]
+    }, {
+        path: 'curriculum-semester/update/:id',
+        component: CurriculumSemesterUpdateComponent,
         data: {
             authorities: ['ROLE_USER'],
             pageTitle: 'ceappApp.curriculumSemester.home.title'

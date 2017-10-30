@@ -56,7 +56,7 @@ public class CurriculumSemesterResource {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new curriculumSemester cannot already have an ID")).body(null);
         }
         CurriculumSemesterDTO result = curriculumSemesterService.save(curriculumSemesterDTO);
-        collisionService.calculateCollisions(204, 2017, Semester.WS, 2017, Semester.WS);
+        collisionService.calculateCollisions(result.getCurriculumCurId(), result.getYear(), result.getSemester());
         return ResponseEntity.created(new URI("/api/curriculum-semesters/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -108,6 +108,23 @@ public class CurriculumSemesterResource {
         log.debug("REST request to get CurriculumSemester : {}", id);
         CurriculumSemesterDTO curriculumSemesterDTO = curriculumSemesterService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(curriculumSemesterDTO));
+    }
+
+    /**
+     * GET  /curriculum-semesters/:id : get the "id" curriculumSemester.
+     *
+     * @param id the id of the curriculumSemesterDTO to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the curriculumSemesterDTO, or with status 404 (Not Found)
+     */
+    @GetMapping("/curriculum-semesters/update/{id}")
+    @Timed
+    public ResponseEntity<CurriculumSemesterDTO> updateCurriculumSemester(@PathVariable Long id) throws URISyntaxException {
+        log.error("REST request to get CurriculumSemester : {}", id);
+        CurriculumSemesterDTO curriculumSemesterDTO = curriculumSemesterService.findOne(id);
+        curriculumSemesterService.delete(id);
+        curriculumSemesterDTO.setId(null);
+        ResponseEntity<CurriculumSemesterDTO> curriculumSemester = this.createCurriculumSemester(curriculumSemesterDTO);
+        return curriculumSemester;
     }
 
     /**
