@@ -167,6 +167,5 @@ http://localhost:8080/v2/api-docs
 
 Speichern unter target/swagger/swagger.json
 
-`./mvnw test swagger2markup:convertSwagger2markup install`
+`./mvnw test swagger2markup:convertSwagger2markup install -DskipTests=true`
 
-`mvn install -DskipTests=true`
