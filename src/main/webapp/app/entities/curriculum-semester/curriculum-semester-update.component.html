@@ -1,0 +1,22 @@
+<h2>Curriculum Semester Update - Please Wait</h2>
+<div *ngIf="curriculumSemester">
+
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="ceappApp.curriculumSemester.year">Year</span></dt>
+        <dd>
+            <span>{{curriculumSemester.year}}</span>
+        </dd>
+        <dt><span jhiTranslate="ceappApp.curriculumSemester.semester">Semester</span></dt>
+        <dd>
+            <span jhiTranslate="{{'ceappApp.Semester.' + curriculumSemester.semester}}">{{curriculumSemester.semester}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+</div>

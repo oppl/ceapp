@@ -68,14 +68,12 @@ public class CollisionService {
      * Diese Methode berechnet für ein gegebenes Curriculum für ein Semster die Kollisionen
      * in Abhängigkeit von einem spezifischen idealtypischen Studienverlauf
      * @param curId
-     * @param idealPlanYear
-     * @param idealPlanSemester
      * @param year
      * @param semester
      */
     // TODO Idealtypischen Studienplan (Objekt) als Parameter verwenden
     // TODO Curriculum Objekt als Parameter verwenden
-    public void calculateCollisions(Integer curId, Integer idealPlanYear, Semester idealPlanSemester, Integer year, Semester semester) {
+    public void calculateCollisions(Integer curId, Integer year, Semester semester) {
 
         // load CurriculumSemester
         CurriculumSemester currSemester = curriculumSemesterRepository.findByCurriculum_CurIdAndYearAndSemester(curId, year, semester);

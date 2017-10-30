@@ -14,6 +14,7 @@ import {
     curriculumSemesterRoute,
     curriculumSemesterPopupRoute,
 } from './';
+import {CurriculumSemesterUpdateComponent} from "./curriculum-semester-update.component";
 
 const ENTITY_STATES = [
     ...curriculumSemesterRoute,
@@ -32,6 +33,7 @@ const ENTITY_STATES = [
         CurriculumSemesterDeleteDialogComponent,
         CurriculumSemesterPopupComponent,
         CurriculumSemesterDeletePopupComponent,
+        CurriculumSemesterUpdateComponent,
     ],
     entryComponents: [
         CurriculumSemesterComponent,
